@@ -13,6 +13,8 @@
 #include "gl_canvas2d.h"
 
 
+int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
+
 int mx, my; //coordenadas do mouse
 
 int blockSize = 100;
@@ -74,7 +76,7 @@ float yScreenToMatrix(int x, int y)
     return (x * -1.0 / blockSize + y * 2.0 / blockSize);
 }
 
-double counter = -360;
+int offSet = 0;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
@@ -83,34 +85,25 @@ void render()
     float dx =  xScreenToMatrix(mx, my);
     float dy =  yScreenToMatrix(mx, my);
 
-    for (int x = 0; x <= 10; x++){
+    for (int x = 0; x <= 40; x++){
+        for (int y = 0; y <= 5; y++){
+            float xDiff = x-dx;
+            float yDiff = y-dy;
 
-        counter += 0.001;
+            offSet = 0;
 
-        for (int y = -5; y <= 5; y++){
-            int xDiff = std::abs(int(x-dx));
-            int yDiff = std::abs(int(y-dy));
-
-            counter += 0.00005;
-
-            if (counter > 360){
-                counter = -360;
+            if (xDiff > 0 && xDiff < 1 && yDiff > 0 && yDiff < 1){
+                offSet = quarterBlockSize;
             }
-
-            //if (xDiff == 0 && yDiff == 0){
-            //    offSet = quarterBlockSize;
-            //}
-
-            double offSet = sin(counter) * 50;
 
             renderIsometricCube(xMatrixToScreen(x, y), yMatrixToScreen(x, y) - offSet, x, y);
         }
     }
 
+    translate(0, 0);
+
     color(0, 0, 0, 0.1);
     circleFill( mx, my, 10, 10);
-
-    printf("\nmouse X:%d DX:%f Y:%d DY:%f", mx, dx, my, dy);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -138,7 +131,6 @@ void keyboardUp(int key)
 
 int main(void)
 {
-    int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
-    init(&screenWidth, &screenHeight, "Canvas 2D");
+    init(&screenWidth, &screenHeight, "Isometric Grid");
     run();
 }

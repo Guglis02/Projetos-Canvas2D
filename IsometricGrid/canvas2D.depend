@@ -148,3 +148,41 @@
 	<cstdlib>
 	"gl_canvas2d.h"
 
+1673817499 source:e:\projetos canvas2d\isometricgrid\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1621432803 e:\projetos canvas2d\isometricgrid\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1426372440 e:\projetos canvas2d\isometricgrid\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 e:\projetos canvas2d\isometricgrid\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 e:\projetos canvas2d\isometricgrid\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1673908035 source:e:\projetos canvas2d\isometricgrid\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<cstdlib>
+	"gl_canvas2d.h"
+
