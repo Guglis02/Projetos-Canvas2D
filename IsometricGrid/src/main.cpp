@@ -23,6 +23,8 @@ int halfBlockSize = blockSize / 2;
 int quarterBlockSize = blockSize / 4;
 
 bool showGridIndex = false;
+bool waveAnimationX = false;
+bool waveAnimationY = false;
 
 void renderIsometricCube(float x, float y, int testeX, int testeY)
 {
@@ -98,13 +100,33 @@ bool isMouseOverBlock(int x, int y){
 
 int offSet = 0;
 
+float t = 0;
+
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
+    t += 0.04;
+
+    if(t > 2 * 3.1415)
+        t = 0;
+
     for (int x = 0; x <= 40; x++){
-        for (int y = 0; y <= 5; y++){
+        float sinTX = sin(t + x);
+        for (int y = -20; y <= 20; y++){
+            float sinTY = sin(t + y);
+
             offSet = 0;
+
+            if (waveAnimationX)
+            {
+                offSet += sinTX * quarterBlockSize;
+            }
+
+            if (waveAnimationY)
+            {
+                offSet += sinTY * quarterBlockSize;
+            }
 
             if (isMouseOverBlock(x, y)){
                 if (mc)
@@ -125,6 +147,8 @@ void render()
     circleFill( mx, my, 10, 10);
 
     text(50, screenHeight - 50, "1 - Toggle grid index");
+    text(50, screenHeight - 30, "2 - Toggle x-axis wave animation");
+    text(50, screenHeight - 10, "3 - Toggle y-axis wave animation");
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -145,11 +169,21 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-   if (key == 49) {
-        showGridIndex = !showGridIndex;
-   }
+    switch (key) {
+        case 49:
+            showGridIndex = !showGridIndex;
+            break;
+        case 50:
+            waveAnimationX = !waveAnimationX;
+            break;
+        case 51:
+            waveAnimationY = !waveAnimationY;
+            break;
+        default:
+            break;
+    }
 
-   printf("\nClicou Tecla: %d" , key);
+    printf("\nClicou Tecla: %d" , key);
 }
 
 
