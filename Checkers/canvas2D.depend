@@ -150,3 +150,41 @@
 
 1604942360 e:\projetos canvas2d\checkers\src\auxiliar.h
 
+1675918404 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\include\gl\glut.h
+	"freeglut_std.h"
+
+1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1675918404 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\checkers\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<cstdlib>
+	"gl_canvas2d.h"
+
