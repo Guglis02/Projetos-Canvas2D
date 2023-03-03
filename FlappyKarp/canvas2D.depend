@@ -110,11 +110,11 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1673817499 source:e:\projetos canvas2d\canvas2d\src\gl_canvas2d.cpp
+1621432842 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1621432803 e:\projetos canvas2d\canvas2d\src\gl_canvas2d.h
+1621432803 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -122,10 +122,10 @@
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 
-1426372440 e:\projetos canvas2d\canvas2d\include\gl\glut.h
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\include\gl\glut.h
 	"freeglut_std.h"
 
-1437579942 e:\projetos canvas2d\canvas2d\include\gl\freeglut_std.h
+1437579942 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\include\gl\freeglut_std.h
 	<windows.h>
 	<EGL/egl.h>
 	<GLES/gl.h>
@@ -136,91 +136,49 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1426372440 e:\projetos canvas2d\canvas2d\include\gl\freeglut_ext.h
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1673827312 source:e:\projetos canvas2d\canvas2d\src\main.cpp
+1677869426 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
+	"gl_canvas2d.h"
+	"GameManager.h"
+
+1677867221 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gamemanager.h
+	<functional>
 	<cstdlib>
+	<ctime>
+	<vector>
+	"gl_canvas2d.h"
+	"Player.h"
+	"Obstacle.h"
+
+1677869643 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gamemanager.cpp
+	"GameManager.h"
+	"gl_canvas2d.h"
+	"Player.h"
+	"Obstacle.h"
+	<ctime>
+
+1677795571 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\player.cpp
+	"Player.h"
 	"gl_canvas2d.h"
 
-1673817499 source:e:\projetos canvas2d\isometricgrid\src\gl_canvas2d.cpp
-	"gl_canvas2d.h"
-	<GL/glut.h>
-
-1621432803 e:\projetos canvas2d\isometricgrid\src\gl_canvas2d.h
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	<string.h>
-	<GL/glut.h>
-	<GL/freeglut_ext.h>
-
-1426372440 e:\projetos canvas2d\isometricgrid\include\gl\glut.h
-	"freeglut_std.h"
-
-1437579942 e:\projetos canvas2d\isometricgrid\include\gl\freeglut_std.h
-	<windows.h>
-	<EGL/egl.h>
-	<GLES/gl.h>
-	<GLES2/gl2.h>
-	<OpenGL/gl.h>
-	<OpenGL/glu.h>
-	<GL/gl.h>
-	<GL/glu.h>
-	<stdlib.h>
-
-1426372440 e:\projetos canvas2d\isometricgrid\include\gl\freeglut_ext.h
-	<stdarg.h>
-
-1673910096 source:e:\projetos canvas2d\isometricgrid\src\main.cpp
-	<GL/glut.h>
-	<GL/freeglut_ext.h>
-	<math.h>
-	<stdio.h>
-	<stdlib.h>
-	<cstdlib>
+1677791797 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\player.h
+	<functional>
 	"gl_canvas2d.h"
 
-1675918404 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\src\gl_canvas2d.cpp
+1677794727 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\constants.h
+
+1677869810 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.cpp
+	"Obstacle.h"
 	"gl_canvas2d.h"
-	<GL/glut.h>
 
-1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\src\gl_canvas2d.h
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	<string.h>
-	<GL/glut.h>
-	<GL/freeglut_ext.h>
+1677868711 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\include\obstacle.h
 
-1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\include\gl\glut.h
-	"freeglut_std.h"
-
-1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\include\gl\freeglut_std.h
-	<windows.h>
-	<EGL/egl.h>
-	<GLES/gl.h>
-	<GLES2/gl2.h>
-	<OpenGL/gl.h>
-	<OpenGL/glu.h>
-	<GL/gl.h>
-	<GL/glu.h>
-	<stdlib.h>
-
-1675918404 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\include\gl\freeglut_ext.h
-	<stdarg.h>
-
-1675919153 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\isometricgrid\src\main.cpp
-	<GL/glut.h>
-	<GL/freeglut_ext.h>
-	<math.h>
-	<stdio.h>
-	<stdlib.h>
-	<cstdlib>
-	"gl_canvas2d.h"
+1677869786 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.h
 
