@@ -1,0 +1,162 @@
+# depslib dependency file v1.0
+1619121427 source:d:\__ead\projeto friga 2020\aulas\canvas2d_ead\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1619121584 d:\__ead\projeto friga 2020\aulas\canvas2d_ead\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1426372440 d:\__ead\projeto friga 2020\aulas\canvas2d_ead\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 d:\__ead\projeto friga 2020\aulas\canvas2d_ead\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 d:\__ead\projeto friga 2020\aulas\canvas2d_ead\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1619268650 source:d:\__ead\projeto friga 2020\aulas\canvas2d_ead\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+
+1619121427 source:d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1619637447 d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1426372440 d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1619637456 source:d:\__ead\projeto friga 2020\aulas\canvas2d_distribuicao_rar\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+
+1619637456 source:d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+
+1426372440 d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1621432803 d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1621432842 source:d:\__ead\projeto friga 2020\aulas\material distribuicao site\canvas2d\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1678917180 source:e:\github\projetos-canvas2d\digitalclock\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1678913120 e:\github\projetos-canvas2d\digitalclock\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1426372440 e:\github\projetos-canvas2d\digitalclock\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 e:\github\projetos-canvas2d\digitalclock\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 e:\github\projetos-canvas2d\digitalclock\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1678917872 source:e:\github\projetos-canvas2d\digitalclock\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"gl_canvas2d.h"
+	"7SegmentsDisplay.h"
+
+1678917266 e:\github\projetos-canvas2d\digitalclock\src\7segmentsdisplay.h
+
+1678920467 source:e:\github\projetos-canvas2d\digitalclock\src\7segmentsdisplay.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"7SegmentsDisplay.h"
+
