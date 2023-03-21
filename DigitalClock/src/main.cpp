@@ -10,15 +10,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <chrono>
+#include <vector>
+#include <tuple>
 #include "gl_canvas2d.h"
 #include "gl_canvas2d.h"
 #include "7SegmentsDisplay.h"
 
+using namespace std;
 
 int mx, my; //coordenadas do mouse
+int mstate; // estado do mouse
 int screenWidth = 600, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int timeArray[4] = {0, 0, 0, 0};
-
+vector<tuple<int, int>> pointsToDraw;
 
 void getTime()
 {
@@ -68,11 +72,33 @@ void renderFirstClockFrame(float xOffset, float yOffset)
     Draw7SegmentsDisplay(370, 260, 6, 2, timeArray[3]);
 }
 
+bool isHolding = false;
+
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
-    renderFirstClockFrame(100, 210);
+    //renderFirstClockFrame(100, 210);
+
+    for (tuple<int, int> p : pointsToDraw)
+    {
+        color(3);
+        circleFill(get<0>(p),get<1>(p),5,10);
+    }
+
+    if (mstate == 0)
+    {
+        isHolding = true;
+    }
+    if (mstate == 1)
+    {
+        isHolding = false;
+    }
+
+    if (isHolding)
+    {
+        pointsToDraw.push_back(make_tuple(mx, my));
+    }
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -82,6 +108,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
    mx = x; //guarda as coordenadas do mouse para exibir dentro da render()
    my = y;
+   mstate = state;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
