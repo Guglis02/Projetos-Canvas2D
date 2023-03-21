@@ -28,3 +28,8 @@ void Obstacle::Draw()
     rectFill(x, 0, x + width, gapTopPosition);
     rectFill(x, gapBottonPosition, x + width, y);
 }
+
+void Obstacle::Reset()
+{
+    x = 500 + width;
+}

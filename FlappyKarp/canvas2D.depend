@@ -157,7 +157,7 @@
 	"Player.h"
 	"Obstacle.h"
 
-1677869643 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gamemanager.cpp
+1679418967 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\gamemanager.cpp
 	"GameManager.h"
 	"gl_canvas2d.h"
 	"Player.h"
@@ -174,11 +174,11 @@
 
 1677794727 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\constants.h
 
-1677869810 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.cpp
+1679419185 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.cpp
 	"Obstacle.h"
 	"gl_canvas2d.h"
 
 1677868711 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\include\obstacle.h
 
-1677869786 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.h
+1679419262 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\flappykarp\src\obstacle.h
 
