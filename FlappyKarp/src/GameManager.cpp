@@ -75,11 +75,7 @@ void GameManager::ObstacleManager()
         if(obstacles[i].x <= 0)
         {
             printf("\nSaiu da tela");
-
-            /*
-            obstacles.erase(obstacles.begin() + i);
-            i--;
-            obstacles.push_back(Obstacle(screenWidth + 40, screenHeight, rand() % 451));*/
+            obstacles[i].Reset();
         }
     }
 }

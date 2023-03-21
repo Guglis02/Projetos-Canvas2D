@@ -10,6 +10,7 @@ class Obstacle
         float y;
 
         void Update(float deltaTime);
+        void Reset();
     private:
         const int gapHeight = 150;
         float gapTopPosition;
