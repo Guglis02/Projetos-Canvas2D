@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Canvas2D" />
+		<Option title="Clocks" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -44,9 +44,16 @@
 			<Add library="lib/freeglut.lib" />
 		</Linker>
 		<Unit filename="include/GL/glut.h" />
+		<Unit filename="src/7SegmentsDisplay.cpp" />
+		<Unit filename="src/7SegmentsDisplay.h" />
+		<Unit filename="src/auxiliar.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
-		<Extensions />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

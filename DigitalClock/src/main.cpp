@@ -13,6 +13,9 @@
 #include "gl_canvas2d.h"
 #include "gl_canvas2d.h"
 #include "7SegmentsDisplay.h"
+#include <cmath>
+
+using namespace std;
 
 
 int mx, my; //coordenadas do mouse
@@ -68,11 +71,61 @@ void renderFirstClockFrame(float xOffset, float yOffset)
     Draw7SegmentsDisplay(370, 260, 6, 2, timeArray[3]);
 }
 
+float hoursIndicatorX = 0;
+float hoursIndicatorY = 0;
+
+float minutesIndicatorX = 0;
+float minutesIndicatorY = 0;
+
+float secondsIndicatorX = 0;
+float secondsIndicatorY = 0;
+
+float angle = 0;
+
+float degreeToRadians(float degree)
+{
+    return degree * PI / 180.0;
+}
+
+void renderSecondClockFrame(float x, float y)
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t time_now = std::chrono::system_clock::to_time_t(now);
+    std::tm *ptm = std::localtime(&time_now);
+
+    int hour = ptm->tm_hour;
+    int minutes = ptm->tm_min;
+    int seconds = ptm->tm_sec;
+    int milliseconds = ptm->tm_mil;
+
+    color(1);
+    circleFill(x, y, 250, 50);
+
+    color(0);
+    angle = degreeToRadians(30.0 * (hour + minutes / 60.0) - 90);
+    hoursIndicatorX = x + 150.0 * cos(angle);
+    hoursIndicatorY = y + 150.0 * sin(angle);
+    line(x, y, hoursIndicatorX, hoursIndicatorY);
+
+    color(0);
+    angle = degreeToRadians(6.0 * (minutes + seconds / 60.0) - 90);
+    minutesIndicatorX = x + 200.0 * cos(angle);
+    minutesIndicatorY  = y + 200.0 * sin(angle);
+    line(x, y, minutesIndicatorX, minutesIndicatorY);
+
+    color(2);
+    angle = degreeToRadians(6.0 * (seconds + milliseconds / 1000.0) - 90);
+    secondsIndicatorX = x + 100.0 * cos(angle);
+    secondsIndicatorY  = y + 100.0 * sin(angle);
+    line(x, y, secondsIndicatorX, secondsIndicatorY);
+}
+
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
-    renderFirstClockFrame(100, 210);
+    //renderFirstClockFrame(100, 210);
+    renderSecondClockFrame(screenHeight/2, screenWidth/2);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
