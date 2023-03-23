@@ -9,8 +9,9 @@
 #include <list>
 #include "gl_canvas2d.h"
 #include "gl_canvas2d.h"
-#include "Button.h"
+#include "ToolBar.h"
 #include "FunctionType.h"
+#include "Drawing.h"
 
 using namespace std;
 
@@ -20,34 +21,26 @@ int mx, my; //coordenadas do mouse
 int mstate; // estado do mouse
 bool isHolding = false;
 
-vector<tuple<int, int>> pointsToDraw;
-
-vector<Button*> buttons;
-Button* selectedButton = NULL;
-
 int toolBarHeight = 100;
 
-void ToolBarHandler()
-{
-    color(1);
-    rectFill(0, 0, screenWidth, toolBarHeight);
+vector<Drawing*> drawings;
 
-    for (int i = 0; i < buttons.size(); i++)
-    {
-        buttons[i]->Update(screenWidth/5 * (i + 1), 50);
-        if (buttons[i]->GetSelectedState())
-        {
-            selectedButton = buttons[i];
-        }
-    }
-}
+int rectX = 0;
+int rectY = 0;
+
+ToolBar* toolBar = NULL;
 
 void DrawingsCanvasHandler()
 {
-    for (tuple<int, int> p : pointsToDraw)
+    for (Drawing* d : drawings)
     {
-        color(3);
-        point(get<0>(p),get<1>(p));
+        d->Update();
+    }
+
+    if (isHolding && toolBar->selectedButton->GetFunction() == Rect)
+    {
+        color(2);
+        rect(rectX, rectY, mx, my);
     }
 }
 
@@ -56,14 +49,30 @@ void DrawingsCanvasHandler()
 void render()
 {
     DrawingsCanvasHandler();
-    ToolBarHandler();
+    toolBar->Update(screenHeight, screenWidth);
 }
 
 void PencilTool()
 {
     if (isHolding && my >= toolBarHeight)
     {
-        pointsToDraw.push_back(make_tuple(mx, my));
+        Drawing* drawing = new Drawing(mx, my, Pencil);
+        drawings.push_back(drawing);
+    }
+}
+
+void RectTool()
+{
+    if (mstate == 0)
+    {
+        rectX = mx;
+        rectY = my;
+    }
+
+    if(mstate == 1)
+    {
+        Drawing* drawing = new Drawing(rectX, rectY, mx, my, Rect);
+        drawings.push_back(drawing);
     }
 }
 
@@ -79,12 +88,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
    if (mstate == 0)
    {
+       // Se o clique foi na barra de ferramentas
         if (my < toolBarHeight)
         {
-            for (Button* b : buttons)
-            {
-                b->CheckMouseClick(mx, my);
-            }
+            toolBar->CheckButtonCollision(mx, my);
         }
         else
         {
@@ -94,25 +101,6 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     if (mstate == 1)
     {
         isHolding = false;
-    }
-
-    if(!selectedButton)
-    {
-        return;
-    }
-
-    switch (selectedButton->GetFunction())
-    {
-        case Pencil:
-            PencilTool();
-            break;
-        case Clear:
-            pointsToDraw.clear();
-            selectedButton->SetSelectedState(false);
-            selectedButton = NULL;
-            break;
-        default:
-            break;
     }
 }
 
@@ -134,11 +122,6 @@ int main(void)
 {
    init(&screenWidth, &screenHeight, "Paint 2D");
 
-   Button* pencilButton = new Button(80, 80, Pencil, "Lapis");
-   buttons.push_back(pencilButton);
-
-   Button* clearButton = new Button(80,80, Clear, "Limpar");
-   buttons.push_back(clearButton);
-
+   toolBar = new ToolBar(toolBarHeight);
    run();
 }

@@ -45,7 +45,11 @@
 		</Linker>
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
+		<Unit filename="src/Drawing.cpp" />
+		<Unit filename="src/Drawing.h" />
 		<Unit filename="src/FunctionType.h" />
+		<Unit filename="src/ToolBar.cpp" />
+		<Unit filename="src/ToolBar.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
