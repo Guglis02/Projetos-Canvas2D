@@ -31,9 +31,6 @@ void Drawing::Update()
         case Rect:
             rect(x1, y1, x2, y2);
             break;
-        case Circle:
-            circle(x1, y1, x2, y2);
-            break;
         default:
             break;
     }

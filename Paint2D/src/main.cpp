@@ -37,7 +37,7 @@ void DrawingsCanvasHandler()
         d->Update();
     }
 
-    if (isHolding && toolBar->selectedButton->GetFunction() == Rect)
+    if (isHolding && toolBar->selectedButton != NULL && toolBar->selectedButton->GetFunction() == Rect)
     {
         color(2);
         rect(rectX, rectY, mx, my);
@@ -79,15 +79,15 @@ void RectTool()
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-   printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 
-   mx = x; //guarda as coordenadas do mouse para exibir dentro da render()
-   my = y;
+    mx = x; //guarda as coordenadas do mouse para exibir dentro da render()
+    my = y;
 
-   mstate = state;
+    mstate = state;
 
-   if (mstate == 0)
-   {
+    if (mstate == 0)
+    {
        // Se o clique foi na barra de ferramentas
         if (my < toolBarHeight)
         {
@@ -101,6 +101,28 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     if (mstate == 1)
     {
         isHolding = false;
+    }
+
+    if(!toolBar->selectedButton)
+    {
+        return;
+    }
+
+    switch (toolBar->selectedButton->GetFunction())
+    {
+        case Pencil:
+            PencilTool();
+            break;
+        case Rect:
+            RectTool();
+            break;
+        case Clear:
+            drawings.clear();
+            toolBar->selectedButton->SetSelectedState(false);
+            toolBar->selectedButton = NULL;
+            break;
+        default:
+            break;
     }
 }
 

@@ -185,3 +185,75 @@
 	"FunctionType.h"
 	"gl_canvas2d.h"
 
+1679660560 source:c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\button.cpp
+	"Button.h"
+	"gl_canvas2d.h"
+	"FunctionType.h"
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\button.h
+	"FunctionType.h"
+	<string>
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\functiontype.h
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\include\gl\glut.h
+	"freeglut_std.h"
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1679660560 source:c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\drawing.cpp
+	"Drawing.h"
+	"FunctionType.h"
+	"gl_canvas2d.h"
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\drawing.h
+	"FunctionType.h"
+
+1679660560 source:c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1679661082 source:c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<chrono>
+	<vector>
+	<tuple>
+	<list>
+	"gl_canvas2d.h"
+	"gl_canvas2d.h"
+	"ToolBar.h"
+	"FunctionType.h"
+	"Drawing.h"
+
+1679660560 c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\toolbar.h
+	<vector>
+	"Button.h"
+
+1679660560 source:c:\users\gmfreitas\documents\projetos-canvas2d\paint2d\src\toolbar.cpp
+	"ToolBar.h"
+	"gl_canvas2d.h"
+
