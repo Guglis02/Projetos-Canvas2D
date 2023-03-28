@@ -13,6 +13,8 @@ class ToolBar
 
         void Update(int toolBarHeight, int toolBarWidth);
         void CheckButtonCollision(int mx, int my);
+        bool SelectedButtonExists();
+        void DeSelectButton();
 
     private:
         int toolBarHeight = 0;

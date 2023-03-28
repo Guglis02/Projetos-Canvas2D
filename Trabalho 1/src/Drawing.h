@@ -7,7 +7,7 @@ class Drawing
 {
     public:
         Drawing(int x1, int y1, int x2, int y2, FunctionType type);
-        Drawing(int x, int y, FunctionType type);
+        Drawing(int x, int y, int radius, FunctionType type);
 
         void Update();
     private:
@@ -15,6 +15,7 @@ class Drawing
         int y1;
         int x2;
         int y2;
+        int radius;
 
         FunctionType type;
 };

@@ -49,11 +49,11 @@
 		<Unit filename="src/Button.h" />
 		<Unit filename="src/Drawing.cpp" />
 		<Unit filename="src/Drawing.h" />
+		<Unit filename="src/DrawingsCanvas.cpp" />
+		<Unit filename="src/DrawingsCanvas.h" />
 		<Unit filename="src/FunctionType.h" />
-		<Unit filename="src/LayersDisplay.cpp" />
-		<Unit filename="src/LayersDisplay.h" />
-		<Unit filename="src/SliderManager.cpp" />
-		<Unit filename="src/SliderManager.h" />
+		<Unit filename="src/MouseHandler.h" />
+		<Unit filename="src/PointsUtils.h" />
 		<Unit filename="src/ToolBar.cpp" />
 		<Unit filename="src/ToolBar.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />

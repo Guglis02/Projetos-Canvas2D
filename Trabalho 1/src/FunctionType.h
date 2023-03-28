@@ -3,7 +3,6 @@
 
 enum FunctionType {
     None,
-    Pencil,
     Rect,
     Circle,
     Clear

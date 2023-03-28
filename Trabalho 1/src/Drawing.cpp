@@ -12,10 +12,11 @@ Drawing::Drawing(int x1, int y1, int x2, int y2, FunctionType type)
     this->type = type;
 }
 
-Drawing::Drawing(int x, int y, FunctionType type)
+Drawing::Drawing(int x, int y, int radius, FunctionType type)
 {
     this->x1 = x;
     this->y1 = y;
+    this->radius = radius;
 
     this->type = type;
 }
@@ -25,11 +26,11 @@ void Drawing::Update()
     color(3);
     switch(type)
     {
-        case Pencil:
-            point(x1, y1);
-            break;
         case Rect:
             rect(x1, y1, x2, y2);
+            break;
+        case Circle:
+            circle(x1, y1, radius, 32);
             break;
         default:
             break;

@@ -10,10 +10,10 @@ ToolBar::ToolBar(int toolBarHeight, int toolBarWidth)
 
 void ToolBar::StartButtons()
 {
-   Button* pencilButton = new Button(80, 80, Pencil, "Lapis");
+   Button* pencilButton = new Button(80, 80, Rect, "Retangulo");
    buttons.push_back(pencilButton);
 
-   Button* rectButton = new Button(80, 80, Rect, "Retangulo");
+   Button* rectButton = new Button(80, 80, Circle, "Circulo");
    buttons.push_back(rectButton);
 
    Button* clearButton = new Button(80,80, Clear, "Limpar");
@@ -45,6 +45,22 @@ void ToolBar::CheckButtonCollision(int mx, int my)
             selectedButton = b;
         }
     }
+}
+
+bool ToolBar::SelectedButtonExists()
+{
+    return selectedButton != NULL;
+}
+
+void ToolBar::DeSelectButton()
+{
+    if (!selectedButton)
+    {
+        return;
+    }
+
+    selectedButton->SetSelectedState(false);
+    selectedButton = NULL;
 }
 
 

@@ -264,3 +264,85 @@
 1680003981 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\paint2d\src\layersdisplay.h
 	"gl_canvas2d.h"
 
+1679596904 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.cpp
+	"Button.h"
+	"gl_canvas2d.h"
+	"FunctionType.h"
+
+1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
+	"FunctionType.h"
+	<string>
+
+1680026555 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\functiontype.h
+
+1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\glut.h
+	"freeglut_std.h"
+
+1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1680034040 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawing.cpp
+	"Drawing.h"
+	"FunctionType.h"
+	"gl_canvas2d.h"
+
+1680034053 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawing.h
+	"FunctionType.h"
+
+1679596904 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1680033603 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
+	"ToolBar.h"
+	"gl_canvas2d.h"
+
+1680032335 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+	<vector>
+	"Button.h"
+
+1680036018 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	"gl_canvas2d.h"
+	"gl_canvas2d.h"
+	"ToolBar.h"
+	"FunctionType.h"
+	"Drawing.h"
+	"MouseHandler.h"
+	"PointsUtils.h"
+	"DrawingsCanvas.h"
+
+1680035268 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+
+1680031040 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
+
+1680035091 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingscanvas.cpp
+	"DrawingsCanvas.h"
+	"gl_canvas2d.h"
+
+1680034965 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingscanvas.h
+

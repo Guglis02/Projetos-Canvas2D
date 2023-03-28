@@ -3,36 +3,34 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <chrono>
 #include <vector>
-#include <tuple>
-#include <list>
 #include "gl_canvas2d.h"
 #include "gl_canvas2d.h"
 #include "ToolBar.h"
 #include "FunctionType.h"
 #include "Drawing.h"
-#include "LayersDisplay.h"
+#include "MouseHandler.h"
+#include "PointsUtils.h"
+#include "DrawingsCanvas.h"
 
 using namespace std;
 
 int screenWidth = 800, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 
-int mx, my; //coordenadas do mouse
-int mstate; // estado do mouse
-bool isHolding = false;
-
 int toolBarHeight = 100;
-int layerColumnWidth = 300;
 
 vector<Drawing*> drawings;
 
-int rectX = 0;
-int rectY = 0;
+int tempX = 0;
+int tempY = 0;
 
 ToolBar* toolBar = NULL;
-LayersDisplay* layerDisplay = NULL;
+DrawingsCanvas* drawingsCanvas = NULL;
+MouseHandler* mouseHandler = NULL;
 
+FunctionType currentFuncion;
+
+int temporaryCircleRadius = 0;
 void DrawingsCanvasHandler()
 {
     for (Drawing* d : drawings)
@@ -40,10 +38,58 @@ void DrawingsCanvasHandler()
         d->Update();
     }
 
-    if (isHolding && toolBar->selectedButton != NULL && toolBar->selectedButton->GetFunction() == Rect)
+    if(!toolBar->SelectedButtonExists())
+    {
+        currentFuncion = None;
+        return;
+    }
+
+    currentFuncion = toolBar->selectedButton->GetFunction();
+
+    if (mouseHandler->state == 0)
+    {
+        tempX = mouseHandler->x;
+        tempY = mouseHandler->y;
+    }
+
+    if (mouseHandler->isHolding && currentFuncion == Rect)
     {
         color(2);
-        rect(rectX, rectY, mx, my);
+        rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
+    }
+
+    if (mouseHandler->isHolding && currentFuncion == Circle)
+    {
+        color(2);
+        temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
+        circle(tempX, tempY, temporaryCircleRadius, 32);
+    }
+
+    if (mouseHandler->state == 1)
+    {
+        Drawing* drawing = NULL;
+        switch(currentFuncion)
+        {
+            case Rect:
+                drawing = new Drawing(tempX, tempY, mouseHandler->x, mouseHandler->y, Rect);
+                drawings.push_back(drawing);
+                break;
+            case Circle:
+                drawing = new Drawing(tempX, tempY, temporaryCircleRadius, Circle);
+                drawings.push_back(drawing);
+                break;
+            case Clear:
+                drawings.clear();
+                toolBar->DeSelectButton();
+                break;
+            default:
+                break;
+        }
+
+        if (mouseHandler->IsPointerUnder(toolBarHeight))
+        {
+            toolBar->DeSelectButton();
+        }
     }
 }
 
@@ -52,104 +98,56 @@ void DrawingsCanvasHandler()
 void render()
 {
     DrawingsCanvasHandler();
-    toolBar->Update(toolBarHeight, screenWidth - layerColumnWidth);
-    layerDisplay->Update(screenHeight, screenWidth);
-}
-
-void PencilTool()
-{
-    if (isHolding && my >= toolBarHeight)
-    {
-        Drawing* drawing = new Drawing(mx, my, Pencil);
-        drawings.push_back(drawing);
-    }
-}
-
-void RectTool()
-{
-    if (mstate == 0)
-    {
-        rectX = mx;
-        rectY = my;
-    }
-
-    if(mstate == 1)
-    {
-        Drawing* drawing = new Drawing(rectX, rectY, mx, my, Rect);
-        drawings.push_back(drawing);
-    }
+    toolBar->Update(toolBarHeight, screenWidth);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-    printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 
-    mx = x; //guarda as coordenadas do mouse para exibir dentro da render()
-    my = y;
+    mouseHandler->Update(button, state, wheel, direction, x, y);
 
-    mstate = state;
-
-    if (mstate == 0)
+    if (mouseHandler->state == 0)
     {
-       // Se o clique foi na barra de ferramentas
-        if (my < toolBarHeight)
+        if (mouseHandler->IsPointerUnder(toolBarHeight))
         {
-            toolBar->CheckButtonCollision(mx, my);
+
         }
         else
         {
-            isHolding = true;
+            toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
         }
-    }
-    if (mstate == 1)
-    {
-        isHolding = false;
-    }
-
-    if(!toolBar->selectedButton)
-    {
-        return;
-    }
-
-    switch (toolBar->selectedButton->GetFunction())
-    {
-        case Pencil:
-            PencilTool();
-            break;
-        case Rect:
-            RectTool();
-            break;
-        case Clear:
-            drawings.clear();
-            toolBar->selectedButton->SetSelectedState(false);
-            toolBar->selectedButton = NULL;
-            break;
-        default:
-            break;
     }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-   printf("\nClicou Tecla: %d" , key);
+   //printf("\nClicou Tecla: %d" , key);
+
+   if (key == 26 && !drawings.empty())
+   {
+        printf("\nClicou Tecla: %d" , key);
+        drawings.pop_back();
+   }
 }
 
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-   printf("\nLiberou Tecla: %d" , key);
+   //printf("\nLiberou Tecla: %d" , key);
 }
 
 
 int main(void)
 {
-   init(&screenWidth, &screenHeight, "Paint 2D");
+   init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
 
-   toolBar = new ToolBar(toolBarHeight, screenWidth - layerColumnWidth);
-   layerDisplay = new LayersDisplay(screenHeight, layerColumnWidth);
+   mouseHandler = new MouseHandler();
+   toolBar = new ToolBar(toolBarHeight, screenWidth);
+   drawingsCanvas = new DrawingsCanvas(0, toolBarHeight, screenHeight - toolBarHeight, screenWidth);
 
    run();
 }
