@@ -63,4 +63,14 @@ void ToolBar::DeSelectButton()
     selectedButton = NULL;
 }
 
+FunctionType ToolBar::GetCurrentFunction()
+{
+    if (selectedButton)
+    {
+        return selectedButton->GetFunction();
+    }
+
+    return None;
+}
+
 

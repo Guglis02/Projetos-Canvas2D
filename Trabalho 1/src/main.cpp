@@ -1,17 +1,19 @@
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
-#include "gl_canvas2d.h"
+
 #include "gl_canvas2d.h"
 #include "ToolBar.h"
 #include "FunctionType.h"
-#include "Drawing.h"
+#include "Drawings/Drawing.h"
+#include "Drawings/RectangleDrawing.h"
+#include "Drawings/CircleDrawing.h"
 #include "MouseHandler.h"
 #include "PointsUtils.h"
-#include "DrawingsCanvas.h"
 
 using namespace std;
 
@@ -25,26 +27,19 @@ int tempX = 0;
 int tempY = 0;
 
 ToolBar* toolBar = NULL;
-DrawingsCanvas* drawingsCanvas = NULL;
 MouseHandler* mouseHandler = NULL;
 
-FunctionType currentFuncion;
-
-int temporaryCircleRadius = 0;
 void DrawingsCanvasHandler()
 {
     for (Drawing* d : drawings)
     {
-        d->Update();
+        d->Render();
     }
+}
 
-    if(!toolBar->SelectedButtonExists())
-    {
-        currentFuncion = None;
-        return;
-    }
-
-    currentFuncion = toolBar->selectedButton->GetFunction();
+void RectFunction()
+{
+    Drawing* drawing = NULL;
 
     if (mouseHandler->state == 0)
     {
@@ -52,13 +47,34 @@ void DrawingsCanvasHandler()
         tempY = mouseHandler->y;
     }
 
-    if (mouseHandler->isHolding && currentFuncion == Rect)
+    if (mouseHandler->isHolding)
     {
         color(2);
         rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
     }
 
-    if (mouseHandler->isHolding && currentFuncion == Circle)
+    if (mouseHandler->state == 1)
+    {
+        drawing = new RectangleDrawing(tempX, tempY, mouseHandler->x, mouseHandler->y);
+        drawing->SetColor(0,0,150);
+        drawings.push_back(drawing);
+        toolBar->DeSelectButton();
+    }
+}
+
+
+int temporaryCircleRadius = 0;
+void CircleFunction()
+{
+    Drawing* drawing = NULL;
+
+    if (mouseHandler->state == 0)
+    {
+        tempX = mouseHandler->x;
+        tempY = mouseHandler->y;
+    }
+
+    if (mouseHandler->isHolding)
     {
         color(2);
         temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
@@ -67,29 +83,10 @@ void DrawingsCanvasHandler()
 
     if (mouseHandler->state == 1)
     {
-        Drawing* drawing = NULL;
-        switch(currentFuncion)
-        {
-            case Rect:
-                drawing = new Drawing(tempX, tempY, mouseHandler->x, mouseHandler->y, Rect);
-                drawings.push_back(drawing);
-                break;
-            case Circle:
-                drawing = new Drawing(tempX, tempY, temporaryCircleRadius, Circle);
-                drawings.push_back(drawing);
-                break;
-            case Clear:
-                drawings.clear();
-                toolBar->DeSelectButton();
-                break;
-            default:
-                break;
-        }
-
-        if (mouseHandler->IsPointerUnder(toolBarHeight))
-        {
-            toolBar->DeSelectButton();
-        }
+        drawing = new CircleDrawing(tempX, tempY, temporaryCircleRadius, 32);
+        drawing->SetColor(0,0,150);
+        drawings.push_back(drawing);
+        toolBar->DeSelectButton();
     }
 }
 
@@ -108,17 +105,33 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
-    if (mouseHandler->state == 0)
-    {
+
         if (mouseHandler->IsPointerUnder(toolBarHeight))
         {
+            switch(toolBar->GetCurrentFunction())
+            {
+                case Rect:
+                    RectFunction();
+                    break;
+                case Circle:
+                    CircleFunction();
+                    break;
+                case Clear:
+                    drawings.clear();
+                    toolBar->DeSelectButton();
+                    break;
+                default:
+                    break;
+            }
 
         }
         else
         {
-            toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
+            if (mouseHandler->state == 0)
+            {
+                toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
+            }
         }
-    }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -147,7 +160,6 @@ int main(void)
 
    mouseHandler = new MouseHandler();
    toolBar = new ToolBar(toolBarHeight, screenWidth);
-   drawingsCanvas = new DrawingsCanvas(0, toolBarHeight, screenHeight - toolBarHeight, screenWidth);
 
    run();
 }

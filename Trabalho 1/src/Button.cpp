@@ -2,12 +2,14 @@
 #include "gl_canvas2d.h"
 #include "FunctionType.h"
 
-Button::Button(int height, int width, FunctionType func, char* name)
+Button::Button(int height, int width, FunctionType functionType, char* name)
 {
     this->height = height;
     this->width = width;
-    this->func = func;
+    this->functionType = functionType;
     this->name = name;
+
+    this->isSelectable = true;
 }
 
 void Button::Update(int x, int y)
@@ -54,6 +56,6 @@ void Button::SetSelectedState(bool state)
 
 FunctionType Button::GetFunction()
 {
-    return this->func;
+    return this->functionType;
 }
 

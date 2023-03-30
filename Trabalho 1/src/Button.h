@@ -9,7 +9,7 @@ using namespace std;
 class Button
 {
     public:
-        Button(int height, int width, FunctionType func, char* name);
+        Button(int height, int width, FunctionType functionType, char* name);
 
         void Update(int x, int y);
         void CheckMouseClick(int mx, int my);
@@ -26,10 +26,11 @@ class Button
         int left;
         int right;
 
-        FunctionType func;
+        FunctionType functionType;
 
         char* name;
 
+        bool isSelectable = false;
         bool selectedState = false;
 };
 

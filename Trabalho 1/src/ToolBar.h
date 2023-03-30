@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Button.h"
+#include "FunctionType.h"
 
 class ToolBar
 {
@@ -15,6 +16,7 @@ class ToolBar
         void CheckButtonCollision(int mx, int my);
         bool SelectedButtonExists();
         void DeSelectButton();
+        FunctionType GetCurrentFunction();
 
     private:
         int toolBarHeight = 0;

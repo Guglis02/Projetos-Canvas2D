@@ -5,6 +5,7 @@ enum FunctionType {
     None,
     Rect,
     Circle,
+    Triangle,
     Clear
 };
 
