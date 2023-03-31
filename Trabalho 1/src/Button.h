@@ -12,7 +12,7 @@ class Button
         Button(int height, int width, FunctionType functionType, char* name);
 
         void Update(int x, int y);
-        void CheckMouseClick(int mx, int my);
+        bool CheckMouseClick(int mx, int my);
 
         bool GetSelectedState();
         void SetSelectedState(bool state);

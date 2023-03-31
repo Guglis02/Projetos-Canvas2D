@@ -13,7 +13,7 @@ void ToolBar::Update(int x, int y, int height, int width)
     rectFill(x, y, x + width, height);
 
     int buttonsCount = buttons.size();
-    int halfRoundedCount = buttonsCount/2;
+    int halfRoundedCount = (buttonsCount + 1)/2;
 
     for (int i = 0; i < buttonsCount; i++)
     {
@@ -38,8 +38,7 @@ bool ToolBar::CheckButtonCollision(int mx, int my)
 {
     for (Button* b : buttons)
     {
-        b->CheckMouseClick(mx, my);
-        if (b->GetSelectedState())
+        if (b->CheckMouseClick(mx, my) && b->GetSelectedState())
         {
             if (selectedButton)
             {

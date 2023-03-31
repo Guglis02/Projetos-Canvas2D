@@ -31,13 +31,14 @@ void Button::Update(int x, int y)
     text(x, y + 10, name);
 }
 
-void Button::CheckMouseClick(int mx, int my)
+bool Button::CheckMouseClick(int mx, int my)
 {
     if (my >= top && my <= bottom && mx >= left && mx <= right)
     {
-        printf("\n%d", selectedState);
         this->selectedState = !selectedState;
+        return true;
     }
+    return false;
 }
 
 bool Button::GetSelectedState()

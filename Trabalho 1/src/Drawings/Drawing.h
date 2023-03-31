@@ -10,7 +10,6 @@ class Drawing
         void SetColor(float r, float g, float b);
         void SetFillable(bool value);
         void AddPoint(int x, int y, int index);
-
     protected:
         FunctionType type;
         int elementsCounter;
@@ -20,9 +19,9 @@ class Drawing
 
         bool shouldBeFilled = false;
 
-        int r = 0;
-        int g = 0;
-        int b = 0;
+        float r = 0;
+        float g = 0;
+        float b = 0;
 };
 
 #endif // DRAWING_H

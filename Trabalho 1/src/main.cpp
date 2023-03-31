@@ -108,9 +108,13 @@ void TriangleFunction()
 
     if (mouseHandler->state == 1)
     {
-        newDrawing = new TriangleDrawing(tempX, tempY, abs(tempX - mouseHandler->x), (tempY - mouseHandler->y));
-        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-        printf("\n %f %f %f %d %d %d", selectedColor[0],selectedColor[1],selectedColor[2], selectedColor[0],selectedColor[1],selectedColor[2]);
+        newDrawing = new TriangleDrawing(tempX,
+                                         tempY,
+                                         abs(tempX - mouseHandler->x),
+                                         (tempY - mouseHandler->y));
+        newDrawing->SetColor(selectedColor[0],
+                             selectedColor[1],
+                             selectedColor[2]);
         drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
@@ -180,6 +184,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
             selectedColor[0] = colorBar->selectedButton->r;
             selectedColor[1] = colorBar->selectedButton->g;
             selectedColor[2] = colorBar->selectedButton->b;
+            colorBar->DeSelectButton();
         }
     }
 }
@@ -220,10 +225,10 @@ void StartButtons()
 
     for(int i = 0; i < 16; i++)
     {
-        float inc = i / 15.0f;
-        float r = 0.5f + 0.5f * cos(inc * 2 * PI);
-        float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * 2 * PI);
-        float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * 2 * PI);
+        float inc = i / 16.0f;
+        float r = 0.5f + 0.5f * cos(inc * PI_2);
+        float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * PI_2);
+        float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * PI_2);
         float rgb[] = {r, g, b};
         colorBar->CreateButton(50, 50, Color, "", rgb);
     }

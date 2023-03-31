@@ -452,3 +452,90 @@
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
+1680294229 source:e:\github\projetos-canvas2d\trabalho 1\src\button.cpp
+	"Button.h"
+	"gl_canvas2d.h"
+	"FunctionType.h"
+
+1680294264 e:\github\projetos-canvas2d\trabalho 1\src\button.h
+	"FunctionType.h"
+	<string>
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\functiontype.h
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\include\gl\glut.h
+	"freeglut_std.h"
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1680295562 source:e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.cpp
+	"Drawing.h"
+	"FunctionType.h"
+	"gl_canvas2d.h"
+
+1680295577 e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+	"FunctionType.h"
+
+1680293536 source:e:\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1680295510 source:e:\github\projetos-canvas2d\trabalho 1\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	"gl_canvas2d.h"
+	"ToolBar.h"
+	"FunctionType.h"
+	"Drawings/Drawing.h"
+	"Drawings/RectangleDrawing.h"
+	"Drawings/CircleDrawing.h"
+	"Drawings/TriangleDrawing.h"
+	"MouseHandler.h"
+	"PointsUtils.h"
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+	<vector>
+	"Button.h"
+	"FunctionType.h"
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
+	"Drawing.h"
+
+1680295385 e:\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+	"Drawing.h"
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
+	"Drawing.h"
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+
+1680293536 e:\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
+
+1680294330 source:e:\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
+	"ToolBar.h"
+	"gl_canvas2d.h"
+

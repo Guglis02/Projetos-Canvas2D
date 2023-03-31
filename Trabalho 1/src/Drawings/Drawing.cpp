@@ -20,7 +20,6 @@ void Drawing::SetColor(float r, float g, float b)
     this->r = r;
     this->g = g;
     this->b = b;
-    printf("\n %f %f %f", r, g, b);
 }
 
 void Drawing::SetFillable(bool value)
@@ -33,3 +32,4 @@ void Drawing::AddPoint(int x, int y, int index)
     this->xs[index] = x;
     this->ys[index] = y;
 }
+
