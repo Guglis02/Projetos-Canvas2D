@@ -2,44 +2,29 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\MouseHandler.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="938" topLine="17" />
+			<Cursor1 position="973" topLine="24" />
 		</Cursor>
 	</File>
-	<File name="src\Drawing.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\ToolBar.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="938" topLine="29" />
+			<Cursor1 position="459" topLine="3" />
 		</Cursor>
 	</File>
-	<File name="src\Drawing.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\ToolBar.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="315" topLine="0" />
+			<Cursor1 position="1571" topLine="30" />
 		</Cursor>
 	</File>
-	<File name="src\ToolBar.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Button.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1462" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\DrawingsCanvas.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="189" topLine="5" />
-		</Cursor>
-	</File>
-	<File name="src\ToolBar.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="435" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="src\DrawingsCanvas.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2011" topLine="56" />
+			<Cursor1 position="617" topLine="11" />
 		</Cursor>
 	</File>
 	<File name="src\main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1936" topLine="54" />
+			<Cursor1 position="1891" topLine="113" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -8,8 +8,6 @@ Button::Button(int height, int width, FunctionType functionType, char* name)
     this->width = width;
     this->functionType = functionType;
     this->name = name;
-
-    this->isSelectable = true;
 }
 
 void Button::Update(int x, int y)

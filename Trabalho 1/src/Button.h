@@ -30,7 +30,6 @@ class Button
 
         char* name;
 
-        bool isSelectable = false;
         bool selectedState = false;
 };
 

@@ -37,16 +37,21 @@ void DrawingsCanvasHandler()
     }
 }
 
-void RectFunction()
+Drawing* newDrawing;
+
+void StartDrawing()
 {
-    Drawing* drawing = NULL;
+    newDrawing = NULL;
 
     if (mouseHandler->state == 0)
     {
         tempX = mouseHandler->x;
         tempY = mouseHandler->y;
     }
+}
 
+void RectFunction()
+{
     if (mouseHandler->isHolding)
     {
         color(2);
@@ -55,25 +60,16 @@ void RectFunction()
 
     if (mouseHandler->state == 1)
     {
-        drawing = new RectangleDrawing(tempX, tempY, mouseHandler->x, mouseHandler->y);
-        drawing->SetColor(0,0,150);
-        drawings.push_back(drawing);
+        newDrawing = new RectangleDrawing(tempX, tempY, mouseHandler->x, mouseHandler->y);
+        newDrawing->SetColor(0,0,150);
+        drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
 }
 
-
 int temporaryCircleRadius = 0;
 void CircleFunction()
 {
-    Drawing* drawing = NULL;
-
-    if (mouseHandler->state == 0)
-    {
-        tempX = mouseHandler->x;
-        tempY = mouseHandler->y;
-    }
-
     if (mouseHandler->isHolding)
     {
         color(2);
@@ -83,9 +79,9 @@ void CircleFunction()
 
     if (mouseHandler->state == 1)
     {
-        drawing = new CircleDrawing(tempX, tempY, temporaryCircleRadius, 32);
-        drawing->SetColor(0,0,150);
-        drawings.push_back(drawing);
+        newDrawing = new CircleDrawing(tempX, tempY, temporaryCircleRadius, 32);
+        newDrawing->SetColor(0,0,150);
+        drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
 }
@@ -95,6 +91,20 @@ void CircleFunction()
 void render()
 {
     DrawingsCanvasHandler();
+    if (mouseHandler->IsPointerUnder(toolBarHeight))
+    {
+        switch(toolBar->GetCurrentFunction())
+        {
+            case Rect:
+                RectFunction();
+                break;
+            case Circle:
+                CircleFunction();
+                break;
+            default:
+                break;
+        }
+    }
     toolBar->Update(toolBarHeight, screenWidth);
 }
 
@@ -105,33 +115,34 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
-
-        if (mouseHandler->IsPointerUnder(toolBarHeight))
+    if (mouseHandler->IsPointerUnder(toolBarHeight))
+    {
+        switch(toolBar->GetCurrentFunction())
         {
-            switch(toolBar->GetCurrentFunction())
-            {
-                case Rect:
-                    RectFunction();
-                    break;
-                case Circle:
-                    CircleFunction();
-                    break;
-                case Clear:
-                    drawings.clear();
-                    toolBar->DeSelectButton();
-                    break;
-                default:
-                    break;
-            }
-
+            case Rect:
+            case Circle:
+                StartDrawing();
+                break;
+            default:
+                break;
         }
-        else
+    }
+    else
+    {
+        if (mouseHandler->state == 0)
         {
-            if (mouseHandler->state == 0)
-            {
-                toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
-            }
+            toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
         }
+        switch(toolBar->GetCurrentFunction())
+        {
+            case Clear:
+                drawings.clear();
+                toolBar->DeSelectButton();
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
