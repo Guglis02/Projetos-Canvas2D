@@ -20,7 +20,7 @@ using namespace std;
 
 int screenWidth = 1000, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 
-int toolBarHeight = 100;
+int toolBarHeight = 130;
 
 vector<Drawing*> drawings;
 
@@ -194,18 +194,30 @@ void keyboardUp(int key)
    //printf("\nLiberou Tecla: %d" , key);
 }
 
-int defaultButtonColor[3] = {0, 0, 1};
+int defaultButtonWidth = 80;
+int defaultButtonHeight = 50;
+float defaultButtonColor[] = {0, 0, 1};
 void StartButtons()
 {
-    toolBar->CreateButton(80, 80, Rect, "Retangulo", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Circle, "Circulo", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Triangle, "Triangulo", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Poly, "Poligono", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Fill, "Preencher", defaultButtonColor);
-    toolBar->CreateButton(80, 80, BringTop, "Subir", defaultButtonColor);
-    toolBar->CreateButton(80, 80, SendBack, "Descer", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Save, "Salvar", defaultButtonColor);
-    toolBar->CreateButton(80, 80, Clear, "Limpar", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Rect, "Retangulo", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Circle, "Circulo", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Triangle, "Triangulo", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Poly, "Poligono", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Fill, "Preencher", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, BringTop, "Subir", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, SendBack, "Descer", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Save, "Salvar", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Clear, "Limpar", defaultButtonColor);
+
+    for(int i = 0; i < 16; i++)
+    {
+        float inc = i / 15.0f;
+        float r = 0.5f + 0.5f * cos(inc * 2 * PI);
+        float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * 2 * PI);
+        float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * 2 * PI);
+        float rgb[] = {r, g, b};
+        toolBar->CreateButton(50, 50, Color, "", rgb);
+    }
 }
 
 int main(void)

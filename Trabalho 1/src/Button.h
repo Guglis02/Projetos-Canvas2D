@@ -17,7 +17,7 @@ class Button
         bool GetSelectedState();
         void SetSelectedState(bool state);
 
-        void SetColor(int r, int g, int b);
+        void SetColor(float r, float g, float b);
 
         FunctionType GetFunction();
     private:
@@ -29,9 +29,9 @@ class Button
         int left;
         int right;
 
-        int r = 1;
-        int g = 1;
-        int b = 1;
+        float r = 1;
+        float g = 1;
+        float b = 1;
 
         FunctionType functionType;
 

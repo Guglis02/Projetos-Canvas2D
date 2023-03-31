@@ -50,7 +50,7 @@ void Button::SetSelectedState(bool state)
     this->selectedState = state;
 }
 
-void Button::SetColor(int r, int g, int b)
+void Button::SetColor(float r, float g, float b)
 {
     this->r = r;
     this->g = g;

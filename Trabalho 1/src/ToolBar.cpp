@@ -16,11 +16,31 @@ void ToolBar::Update(int toolBarHeight, int toolBarWidth)
 
     for (int i = 0; i < buttonsCount; i++)
     {
-        buttons[i]->Update(toolBarWidth/buttonsCount * (i), 10);
+        // Desenha botões de cores
+        if (buttons[i]->GetFunction() == Color)
+        {
+            if (i < buttonsCount - 8)
+            {
+                buttons[i]->Update(toolBarWidth / 2 + toolBarWidth/16 * (i%8), 10);
+            } else
+            {
+                buttons[i]->Update(toolBarWidth / 2 + toolBarWidth/16 * (i%8), 70);
+            }
+        } else
+        {
+            // Desenha Botões Gerais
+            if (i < 5)
+            {
+                buttons[i]->Update(toolBarWidth/10 * (i%5), 10);
+            } else
+            {
+                buttons[i]->Update(toolBarWidth/10 * (i%5), 70);
+            }
+        }
     }
 }
 
-void ToolBar::CreateButton(int height, int width, FunctionType functionType, char* name, int* rgb)
+void ToolBar::CreateButton(int height, int width, FunctionType functionType, char* name, float* rgb)
 {
     Button* newButton = new Button(height, width, functionType, name);
     newButton->SetColor(rgb[0], rgb[1], rgb[2]);

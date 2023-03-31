@@ -14,7 +14,7 @@ class ToolBar
 
         void Update(int toolBarHeight, int toolBarWidth);
         void CheckButtonCollision(int mx, int my);
-        void CreateButton(int height, int width, FunctionType functionType, char* name, int* rgb);
+        void CreateButton(int height, int width, FunctionType functionType, char* name, float* rgb);
 
         bool SelectedButtonExists();
         void DeSelectButton();

@@ -264,12 +264,12 @@
 1680003981 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\paint2d\src\layersdisplay.h
 	"gl_canvas2d.h"
 
-1680230728 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.cpp
+1680232356 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.cpp
 	"Button.h"
 	"gl_canvas2d.h"
 	"FunctionType.h"
 
-1680229314 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
+1680232342 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
 	"FunctionType.h"
 	<string>
 
@@ -312,16 +312,16 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1680230557 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
+1680232979 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1680229529 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+1680232307 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
 	<vector>
 	"Button.h"
 	"FunctionType.h"
 
-1680230489 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1680233430 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
