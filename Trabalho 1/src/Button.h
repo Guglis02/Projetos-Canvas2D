@@ -16,6 +16,9 @@ class Button
 
         bool GetSelectedState();
         void SetSelectedState(bool state);
+
+        void SetColor(int r, int g, int b);
+
         FunctionType GetFunction();
     private:
         int height;
@@ -25,6 +28,10 @@ class Button
         int bottom;
         int left;
         int right;
+
+        int r = 1;
+        int g = 1;
+        int b = 1;
 
         FunctionType functionType;
 

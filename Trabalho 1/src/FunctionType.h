@@ -6,6 +6,12 @@ enum FunctionType {
     Rect,
     Circle,
     Triangle,
+    Poly,
+    Fill,
+    BringTop,
+    SendBack,
+    Save,
+    Color,
     Clear
 };
 

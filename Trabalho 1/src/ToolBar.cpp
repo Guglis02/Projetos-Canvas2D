@@ -5,19 +5,6 @@ ToolBar::ToolBar(int toolBarHeight, int toolBarWidth)
 {
     this->toolBarHeight = toolBarHeight;
     this->toolBarWidth = toolBarWidth;
-    StartButtons();
-}
-
-void ToolBar::StartButtons()
-{
-   Button* pencilButton = new Button(80, 80, Rect, "Retangulo");
-   buttons.push_back(pencilButton);
-
-   Button* rectButton = new Button(80, 80, Circle, "Circulo");
-   buttons.push_back(rectButton);
-
-   Button* clearButton = new Button(80,80, Clear, "Limpar");
-   buttons.push_back(clearButton);
 }
 
 void ToolBar::Update(int toolBarHeight, int toolBarWidth)
@@ -25,10 +12,19 @@ void ToolBar::Update(int toolBarHeight, int toolBarWidth)
     color(1);
     rectFill(0, 0, toolBarWidth, toolBarHeight);
 
-    for (int i = 0; i < buttons.size(); i++)
+    int buttonsCount = buttons.size();
+
+    for (int i = 0; i < buttonsCount; i++)
     {
-        buttons[i]->Update(toolBarWidth/5 * (i + 1), 50);
+        buttons[i]->Update(toolBarWidth/buttonsCount * (i), 10);
     }
+}
+
+void ToolBar::CreateButton(int height, int width, FunctionType functionType, char* name, int* rgb)
+{
+    Button* newButton = new Button(height, width, functionType, name);
+    newButton->SetColor(rgb[0], rgb[1], rgb[2]);
+    buttons.push_back(newButton);
 }
 
 void ToolBar::CheckButtonCollision(int mx, int my)

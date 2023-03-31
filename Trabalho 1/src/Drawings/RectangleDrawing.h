@@ -21,14 +21,6 @@ class RectangleDrawing : public Drawing
         this->AddPoint(x2, y2, 2);
         this->AddPoint(x1, y2, 3);
     }
-
-    Prototype(int x1, int y1, int x2, int y2)
-    {
-        this->AddPoint(x1, y1, 0);
-        this->AddPoint(x2, y1, 1);
-        this->AddPoint(x2, y2, 2);
-        this->AddPoint(x1, y2, 3);
-    }
 };
 
 

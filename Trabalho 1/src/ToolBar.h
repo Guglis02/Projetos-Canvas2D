@@ -14,16 +14,18 @@ class ToolBar
 
         void Update(int toolBarHeight, int toolBarWidth);
         void CheckButtonCollision(int mx, int my);
+        void CreateButton(int height, int width, FunctionType functionType, char* name, int* rgb);
+
         bool SelectedButtonExists();
         void DeSelectButton();
+
         FunctionType GetCurrentFunction();
 
     private:
         int toolBarHeight = 0;
         int toolBarWidth = 0;
-        vector<Button*> buttons;
 
-        void StartButtons();
+        vector<Button*> buttons;
 };
 
 #endif // TOOLBAR_H

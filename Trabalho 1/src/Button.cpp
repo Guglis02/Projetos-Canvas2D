@@ -12,25 +12,23 @@ Button::Button(int height, int width, FunctionType functionType, char* name)
 
 void Button::Update(int x, int y)
 {
-    this->top = (int)(y - height * 0.5);
-    this->bottom = (int)(y + height * 0.5);
-    this->left = (int)(x - width * 0.5);
-    this->right = (int)(x + width * 0.5);
+    this->top = (int)(y);
+    this->bottom = (int)(y + height);
+    this->left = (int)(x);
+    this->right = (int)(x + width);
 
     if (selectedState)
     {
-        color(3);
+        color(0, 1, 0);
     }
     else
     {
-        color(4);
+        color(r, g, b);
     }
 
-    translate(left, top);
-    rectFill(0, 0, width, height);
+    rectFill(left, top, right, bottom);
     color(0);
-    text(0, 10, name);
-    translate(0,0);
+    text(x, y + 10, name);
 }
 
 void Button::CheckMouseClick(int mx, int my)
@@ -50,6 +48,13 @@ bool Button::GetSelectedState()
 void Button::SetSelectedState(bool state)
 {
     this->selectedState = state;
+}
+
+void Button::SetColor(int r, int g, int b)
+{
+    this->r = r;
+    this->g = g;
+    this->b = b;
 }
 
 FunctionType Button::GetFunction()

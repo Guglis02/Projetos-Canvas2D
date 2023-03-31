@@ -12,12 +12,13 @@
 #include "Drawings/Drawing.h"
 #include "Drawings/RectangleDrawing.h"
 #include "Drawings/CircleDrawing.h"
+#include "Drawings/TriangleDrawing.h"
 #include "MouseHandler.h"
 #include "PointsUtils.h"
 
 using namespace std;
 
-int screenWidth = 800, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
+int screenWidth = 1000, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 
 int toolBarHeight = 100;
 
@@ -86,6 +87,31 @@ void CircleFunction()
     }
 }
 
+float temporaryX[3];
+float temporaryY[3];
+void TriangleFunction()
+{
+    if (mouseHandler->isHolding)
+    {
+        color(2);
+        temporaryX[0] = tempX;
+        temporaryY[0] = tempY + (tempY - mouseHandler->y);
+        temporaryX[1] = tempX + abs(tempX - mouseHandler->x) * 0.5;
+        temporaryY[1] = tempY;
+        temporaryX[2] = tempX + abs(tempX - mouseHandler->x);
+        temporaryY[2] = tempY + (tempY - mouseHandler->y);
+        polygon(temporaryX, temporaryY, 3);
+    }
+
+    if (mouseHandler->state == 1)
+    {
+        newDrawing = new TriangleDrawing(tempX, tempY, abs(tempX - mouseHandler->x), (tempY - mouseHandler->y));
+        newDrawing->SetColor(0,0,150);
+        drawings.push_back(newDrawing);
+        toolBar->DeSelectButton();
+    }
+}
+
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
@@ -100,6 +126,9 @@ void render()
                 break;
             case Circle:
                 CircleFunction();
+                break;
+            case Triangle:
+                TriangleFunction();
                 break;
             default:
                 break;
@@ -121,6 +150,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         {
             case Rect:
             case Circle:
+            case Triangle:
                 StartDrawing();
                 break;
             default:
@@ -164,13 +194,28 @@ void keyboardUp(int key)
    //printf("\nLiberou Tecla: %d" , key);
 }
 
+int defaultButtonColor[3] = {0, 0, 1};
+void StartButtons()
+{
+    toolBar->CreateButton(80, 80, Rect, "Retangulo", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Circle, "Circulo", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Triangle, "Triangulo", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Poly, "Poligono", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Fill, "Preencher", defaultButtonColor);
+    toolBar->CreateButton(80, 80, BringTop, "Subir", defaultButtonColor);
+    toolBar->CreateButton(80, 80, SendBack, "Descer", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Save, "Salvar", defaultButtonColor);
+    toolBar->CreateButton(80, 80, Clear, "Limpar", defaultButtonColor);
+}
 
 int main(void)
 {
-   init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
+    init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
 
-   mouseHandler = new MouseHandler();
-   toolBar = new ToolBar(toolBarHeight, screenWidth);
+    mouseHandler = new MouseHandler();
+    toolBar = new ToolBar(toolBarHeight, screenWidth);
 
-   run();
+    StartButtons();
+
+    run();
 }
