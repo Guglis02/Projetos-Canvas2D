@@ -20,7 +20,7 @@ using namespace std;
 
 int screenWidth = 1000, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 
-int toolBarHeight = 130;
+int height = 130;
 
 vector<Drawing*> drawings;
 
@@ -28,7 +28,10 @@ int tempX = 0;
 int tempY = 0;
 
 ToolBar* toolBar = NULL;
+ToolBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
+
+float selectedColor[] = {0,0,0};
 
 void DrawingsCanvasHandler()
 {
@@ -55,14 +58,14 @@ void RectFunction()
 {
     if (mouseHandler->isHolding)
     {
-        color(2);
+        color(selectedColor[0],selectedColor[1],selectedColor[2]);
         rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
     }
 
     if (mouseHandler->state == 1)
     {
         newDrawing = new RectangleDrawing(tempX, tempY, mouseHandler->x, mouseHandler->y);
-        newDrawing->SetColor(0,0,150);
+        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
         drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
@@ -73,7 +76,7 @@ void CircleFunction()
 {
     if (mouseHandler->isHolding)
     {
-        color(2);
+        color(selectedColor[0],selectedColor[1],selectedColor[2]);
         temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
         circle(tempX, tempY, temporaryCircleRadius, 32);
     }
@@ -81,7 +84,7 @@ void CircleFunction()
     if (mouseHandler->state == 1)
     {
         newDrawing = new CircleDrawing(tempX, tempY, temporaryCircleRadius, 32);
-        newDrawing->SetColor(0,0,150);
+        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
         drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
@@ -93,7 +96,7 @@ void TriangleFunction()
 {
     if (mouseHandler->isHolding)
     {
-        color(2);
+        color(selectedColor[0],selectedColor[1],selectedColor[2]);
         temporaryX[0] = tempX;
         temporaryY[0] = tempY + (tempY - mouseHandler->y);
         temporaryX[1] = tempX + abs(tempX - mouseHandler->x) * 0.5;
@@ -106,7 +109,8 @@ void TriangleFunction()
     if (mouseHandler->state == 1)
     {
         newDrawing = new TriangleDrawing(tempX, tempY, abs(tempX - mouseHandler->x), (tempY - mouseHandler->y));
-        newDrawing->SetColor(0,0,150);
+        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+        printf("\n %f %f %f %d %d %d", selectedColor[0],selectedColor[1],selectedColor[2], selectedColor[0],selectedColor[1],selectedColor[2]);
         drawings.push_back(newDrawing);
         toolBar->DeSelectButton();
     }
@@ -117,7 +121,7 @@ void TriangleFunction()
 void render()
 {
     DrawingsCanvasHandler();
-    if (mouseHandler->IsPointerUnder(toolBarHeight))
+    if (mouseHandler->IsPointerUnder(height))
     {
         switch(toolBar->GetCurrentFunction())
         {
@@ -134,7 +138,8 @@ void render()
                 break;
         }
     }
-    toolBar->Update(toolBarHeight, screenWidth);
+    toolBar->Update(0, 0, height, screenWidth/2);
+    colorBar->Update(screenWidth/2, 0, height, screenWidth/2);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -144,7 +149,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
-    if (mouseHandler->IsPointerUnder(toolBarHeight))
+    if (mouseHandler->IsPointerUnder(height))
     {
         switch(toolBar->GetCurrentFunction())
         {
@@ -159,18 +164,22 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     }
     else
     {
-        if (mouseHandler->state == 0)
+        if (mouseHandler->state == 0 && toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
         {
-            toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y);
-        }
-        switch(toolBar->GetCurrentFunction())
+            switch(toolBar->GetCurrentFunction())
+            {
+                case Clear:
+                    drawings.clear();
+                    toolBar->DeSelectButton();
+                    break;
+                default:
+                    break;
+            }
+        } else if (mouseHandler->state == 0 && colorBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
         {
-            case Clear:
-                drawings.clear();
-                toolBar->DeSelectButton();
-                break;
-            default:
-                break;
+            selectedColor[0] = colorBar->selectedButton->r;
+            selectedColor[1] = colorBar->selectedButton->g;
+            selectedColor[2] = colorBar->selectedButton->b;
         }
     }
 }
@@ -196,7 +205,7 @@ void keyboardUp(int key)
 
 int defaultButtonWidth = 80;
 int defaultButtonHeight = 50;
-float defaultButtonColor[] = {0, 0, 1};
+float defaultButtonColor[] = {0, 0.5, 1};
 void StartButtons()
 {
     toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Rect, "Retangulo", defaultButtonColor);
@@ -216,7 +225,7 @@ void StartButtons()
         float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * 2 * PI);
         float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * 2 * PI);
         float rgb[] = {r, g, b};
-        toolBar->CreateButton(50, 50, Color, "", rgb);
+        colorBar->CreateButton(50, 50, Color, "", rgb);
     }
 }
 
@@ -225,7 +234,8 @@ int main(void)
     init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
 
     mouseHandler = new MouseHandler();
-    toolBar = new ToolBar(toolBarHeight, screenWidth);
+    toolBar = new ToolBar(height, screenWidth/2);
+    colorBar = new ToolBar(height, screenWidth/2);
 
     StartButtons();
 

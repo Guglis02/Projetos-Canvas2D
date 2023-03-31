@@ -8,12 +8,12 @@
 class ToolBar
 {
     public:
-        ToolBar(int toolBarHeight, int toolBarWidth);
+        ToolBar(int height, int width);
 
         Button* selectedButton = NULL;
 
-        void Update(int toolBarHeight, int toolBarWidth);
-        void CheckButtonCollision(int mx, int my);
+        void Update(int x, int y, int height, int width);
+        bool CheckButtonCollision(int mx, int my);
         void CreateButton(int height, int width, FunctionType functionType, char* name, float* rgb);
 
         bool SelectedButtonExists();
@@ -22,8 +22,8 @@ class ToolBar
         FunctionType GetCurrentFunction();
 
     private:
-        int toolBarHeight = 0;
-        int toolBarWidth = 0;
+        int height = 0;
+        int width = 0;
 
         vector<Button*> buttons;
 };

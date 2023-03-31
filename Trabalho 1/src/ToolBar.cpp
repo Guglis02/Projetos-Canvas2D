@@ -1,41 +1,28 @@
 #include "ToolBar.h"
 #include "gl_canvas2d.h"
 
-ToolBar::ToolBar(int toolBarHeight, int toolBarWidth)
+ToolBar::ToolBar(int height, int width)
 {
-    this->toolBarHeight = toolBarHeight;
-    this->toolBarWidth = toolBarWidth;
+    this->height = height;
+    this->width = width;
 }
 
-void ToolBar::Update(int toolBarHeight, int toolBarWidth)
+void ToolBar::Update(int x, int y, int height, int width)
 {
     color(1);
-    rectFill(0, 0, toolBarWidth, toolBarHeight);
+    rectFill(x, y, x + width, height);
 
     int buttonsCount = buttons.size();
+    int halfRoundedCount = buttonsCount/2;
 
     for (int i = 0; i < buttonsCount; i++)
     {
-        // Desenha botões de cores
-        if (buttons[i]->GetFunction() == Color)
+        if (i < halfRoundedCount)
         {
-            if (i < buttonsCount - 8)
-            {
-                buttons[i]->Update(toolBarWidth / 2 + toolBarWidth/16 * (i%8), 10);
-            } else
-            {
-                buttons[i]->Update(toolBarWidth / 2 + toolBarWidth/16 * (i%8), 70);
-            }
+            buttons[i]->Update(x + width/halfRoundedCount * (i%buttonsCount), 10);
         } else
         {
-            // Desenha Botões Gerais
-            if (i < 5)
-            {
-                buttons[i]->Update(toolBarWidth/10 * (i%5), 10);
-            } else
-            {
-                buttons[i]->Update(toolBarWidth/10 * (i%5), 70);
-            }
+            buttons[i]->Update(x + width/halfRoundedCount * (i%halfRoundedCount), 70);
         }
     }
 }
@@ -47,7 +34,7 @@ void ToolBar::CreateButton(int height, int width, FunctionType functionType, cha
     buttons.push_back(newButton);
 }
 
-void ToolBar::CheckButtonCollision(int mx, int my)
+bool ToolBar::CheckButtonCollision(int mx, int my)
 {
     for (Button* b : buttons)
     {
@@ -59,8 +46,10 @@ void ToolBar::CheckButtonCollision(int mx, int my)
                 selectedButton->SetSelectedState(false);
             }
             selectedButton = b;
+            return true;
         }
     }
+    return false;
 }
 
 bool ToolBar::SelectedButtonExists()

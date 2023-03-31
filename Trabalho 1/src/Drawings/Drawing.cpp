@@ -15,11 +15,12 @@ void Drawing::Render()
     }
 }
 
-void Drawing::SetColor(int r, int g, int b)
+void Drawing::SetColor(float r, float g, float b)
 {
     this->r = r;
     this->g = g;
     this->b = b;
+    printf("\n %f %f %f", r, g, b);
 }
 
 void Drawing::SetFillable(bool value)

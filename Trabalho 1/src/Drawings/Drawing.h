@@ -7,7 +7,7 @@ class Drawing
 {
     public:
         void Render();
-        void SetColor(int r, int g, int b);
+        void SetColor(float r, float g, float b);
         void SetFillable(bool value);
         void AddPoint(int x, int y, int index);
 
