@@ -24,10 +24,8 @@ class MouseHandler
             }
         }
 
-        bool IsPointerUnder(int y)
-        {
-            return this->y > y;
-        }
+        bool IsPointerOver(int y) {return this->y < y;}
+        bool IsPointerUnder(int y) {return this->y > y;}
 
         int button;
         int state;

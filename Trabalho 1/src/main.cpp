@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <utility>
+#include <algorithm>
 
 #include "gl_canvas2d.h"
 #include "ToolBar.h"
@@ -18,18 +20,27 @@
 
 using namespace std;
 
-int screenWidth = 1000, screenHeight = 600; //largura e altura inicial da tela. Alteram com o redimensionamento de tela.
+//Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
+int screenWidth = 1000, screenHeight = 600;
 
-int height = 130;
+const int ToolbarHeight = 130;
 
 vector<Drawing*> drawings;
+
+bool drawingMode = false;
 
 int tempX = 0;
 int tempY = 0;
 
+vector<float> tempXs;
+vector<float> tempYs;
+
 ToolBar* toolBar = NULL;
 ToolBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
+
+Drawing* newDrawing;
+Drawing* selectedDrawing;
 
 float selectedColor[] = {0,0,0};
 
@@ -39,54 +50,59 @@ void DrawingsCanvasHandler()
     {
         d->Render();
     }
+
+    if (selectedDrawing)
+    {
+        selectedDrawing->RenderSelectionIndicators();
+    }
 }
 
-Drawing* newDrawing;
+void CheckDrawingSelection()
+{
+    for (Drawing* d : drawings)
+    {
+        if (d->CheckMouseClick(mouseHandler->x, mouseHandler->y))
+        {
+            selectedDrawing = d;
+            return;
+        }
+    }
+    selectedDrawing = NULL;
+}
 
 void StartDrawing()
 {
     newDrawing = NULL;
 
-    if (mouseHandler->state == 0)
-    {
-        tempX = mouseHandler->x;
-        tempY = mouseHandler->y;
-    }
+    tempX = mouseHandler->x;
+    tempY = mouseHandler->y;
+
+    drawingMode = true;
 }
 
 void RectFunction()
 {
-    if (mouseHandler->isHolding)
-    {
-        color(selectedColor[0],selectedColor[1],selectedColor[2]);
-        rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
-    }
-
-    if (mouseHandler->state == 1)
-    {
-        newDrawing = new RectangleDrawing(tempX, tempY, mouseHandler->x, mouseHandler->y);
-        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-        drawings.push_back(newDrawing);
-        toolBar->DeSelectButton();
-    }
+    rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
 }
 
 int temporaryCircleRadius = 0;
 void CircleFunction()
 {
-    if (mouseHandler->isHolding)
-    {
-        color(selectedColor[0],selectedColor[1],selectedColor[2]);
-        temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
-        circle(tempX, tempY, temporaryCircleRadius, 32);
-    }
+    temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
+    circle(tempX, tempY, temporaryCircleRadius, 32);
+}
 
-    if (mouseHandler->state == 1)
+const int circleIndicatorRadius = 5;
+void PolygonFunction()
+{
+    if (tempXs.size() != 0)
     {
-        newDrawing = new CircleDrawing(tempX, tempY, temporaryCircleRadius, 32);
-        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-        drawings.push_back(newDrawing);
-        toolBar->DeSelectButton();
+        polygon(tempXs.data(), tempYs.data(), tempXs.size());
+
+        for (int i = 0; i < tempXs.size(); i++)
+        {
+            circle(tempXs[i], tempYs[i], circleIndicatorRadius, 10);
+        }
     }
 }
 
@@ -94,30 +110,24 @@ float temporaryX[3];
 float temporaryY[3];
 void TriangleFunction()
 {
-    if (mouseHandler->isHolding)
-    {
-        color(selectedColor[0],selectedColor[1],selectedColor[2]);
-        temporaryX[0] = tempX;
-        temporaryY[0] = tempY + (tempY - mouseHandler->y);
-        temporaryX[1] = tempX + abs(tempX - mouseHandler->x) * 0.5;
-        temporaryY[1] = tempY;
-        temporaryX[2] = tempX + abs(tempX - mouseHandler->x);
-        temporaryY[2] = tempY + (tempY - mouseHandler->y);
-        polygon(temporaryX, temporaryY, 3);
-    }
+    temporaryX[0] = tempX;
+    temporaryY[0] = tempY + (tempY - mouseHandler->y);
+    temporaryX[1] = tempX + abs(tempX - mouseHandler->x) * 0.5;
+    temporaryY[1] = tempY;
+    temporaryX[2] = tempX + abs(tempX - mouseHandler->x);
+    temporaryY[2] = tempY + (tempY - mouseHandler->y);
+    polygon(temporaryX, temporaryY, 3);
+}
 
-    if (mouseHandler->state == 1)
-    {
-        newDrawing = new TriangleDrawing(tempX,
-                                         tempY,
-                                         abs(tempX - mouseHandler->x),
-                                         (tempY - mouseHandler->y));
-        newDrawing->SetColor(selectedColor[0],
-                             selectedColor[1],
-                             selectedColor[2]);
-        drawings.push_back(newDrawing);
-        toolBar->DeSelectButton();
-    }
+void AddDrawing()
+{
+    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+    selectedDrawing = newDrawing;
+    drawings.push_back(newDrawing);
+    toolBar->DeSelectButton();
+    drawingMode = false;
+    tempXs.clear();
+    tempYs.clear();
 }
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
@@ -125,7 +135,9 @@ void TriangleFunction()
 void render()
 {
     DrawingsCanvasHandler();
-    if (mouseHandler->IsPointerUnder(height))
+
+    color(selectedColor[0],selectedColor[1],selectedColor[2]);
+    if (drawingMode && mouseHandler->isHolding)
     {
         switch(toolBar->GetCurrentFunction())
         {
@@ -142,8 +154,13 @@ void render()
                 break;
         }
     }
-    toolBar->Update(0, 0, height, screenWidth/2);
-    colorBar->Update(screenWidth/2, 0, height, screenWidth/2);
+    if (toolBar->GetCurrentFunction() == Poly)
+    {
+        PolygonFunction();
+    }
+
+    toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
+    colorBar->Update(screenWidth/2, 0, ToolbarHeight, screenWidth/2);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -153,38 +170,160 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
-    if (mouseHandler->IsPointerUnder(height))
+    // Clicar com o mouse
+    if (mouseHandler->state == 0)
     {
-        switch(toolBar->GetCurrentFunction())
+        // Se eu cliquei na barra de botões
+        if (mouseHandler->IsPointerOver(ToolbarHeight))
         {
-            case Rect:
-            case Circle:
-            case Triangle:
-                StartDrawing();
-                break;
-            default:
-                break;
+            // Se eu cliquei em um botão de função
+            if (toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
+            {
+                switch(toolBar->GetCurrentFunction())
+                {
+                    case Fill:
+                        if (selectedDrawing)
+                        {
+                            selectedDrawing->SwitchFillable();
+                        }
+                        toolBar->DeSelectButton();
+                        break;
+                    case BringTop:
+                        if (selectedDrawing && selectedDrawing != drawings.back())
+                        {
+                            iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
+                                      find(drawings.begin(), drawings.end(), selectedDrawing) + 1);
+                        }
+                        toolBar->DeSelectButton();
+                        break;
+                    case SendBack:
+                        if (selectedDrawing && selectedDrawing != drawings.front())
+                        {
+                            iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
+                                      find(drawings.begin(), drawings.end(), selectedDrawing) - 1);
+                        }
+                        toolBar->DeSelectButton();
+                        break;
+                    case Delete:
+                        if (selectedDrawing)
+                        {
+                            drawings.erase(find(drawings.begin(), drawings.end(), selectedDrawing));
+                            delete selectedDrawing;
+                            selectedDrawing = NULL;
+                        }
+                        toolBar->DeSelectButton();
+                        break;
+                    case Clear:
+                        drawings.clear();
+                        toolBar->DeSelectButton();
+                        selectedDrawing = NULL;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // Se eu cliquei em um botão de cor
+            else if (colorBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
+            {
+                selectedColor[0] = colorBar->selectedButton->r;
+                selectedColor[1] = colorBar->selectedButton->g;
+                selectedColor[2] = colorBar->selectedButton->b;
+                if (selectedDrawing)
+                {
+                    selectedDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                }
+                colorBar->DeSelectButton();
+            }
+
+            tempXs.clear();
+            tempYs.clear();
         }
-    }
-    else
-    {
-        if (mouseHandler->state == 0 && toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
+        // Se eu cliquei no canvas de desenho
+        else
         {
             switch(toolBar->GetCurrentFunction())
             {
-                case Clear:
-                    drawings.clear();
-                    toolBar->DeSelectButton();
+                case Rect:
+                case Circle:
+                case Triangle:
+                    StartDrawing();
+                    break;
+                case Poly:
+                    /*
+                    int numberOfPoints = tempXs.size();
+                    if (pnpoly(numberOfPoints, tempXs.data(), tempYs.data(), mouseHandler->x, mouseHandler->y))
+                    {
+                        int* xs = new int[numberOfPoints];
+                        int* ys = new int[numberOfPoints];
+
+                        for (int i = 0; i < numberOfPoints; i++) {
+                            xs[i] = static_cast<int>(tempXs[i]);
+                            ys[i] = static_cast<int>(tempYs[i]);
+                        }
+
+                        //newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
+                                             newDrawing = new RectangleDrawing(tempX,
+                                                          tempY,
+                                                          mouseHandler->x,
+                                                          mouseHandler->y);
+                        AddDrawing();
+                    } else
+                    {
+                        tempXs.push_back(static_cast<float>(mouseHandler->x));
+                        tempYs.push_back(static_cast<float>(mouseHandler->y));
+                    }*/
+                    break;
+                case None:
+                    // Checa a colisão com as figuras na tela
+                    CheckDrawingSelection();
                     break;
                 default:
                     break;
             }
-        } else if (mouseHandler->state == 0 && colorBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
+        }
+    }
+
+    // Soltar o mouse
+    if (mouseHandler->state == 1)
+    {
+        // Se eu soltar na barra de botões
+        if (mouseHandler->IsPointerOver(ToolbarHeight))
         {
-            selectedColor[0] = colorBar->selectedButton->r;
-            selectedColor[1] = colorBar->selectedButton->g;
-            selectedColor[2] = colorBar->selectedButton->b;
-            colorBar->DeSelectButton();
+            if (drawingMode)
+            {
+                drawingMode = false;
+            }
+        }
+        // Se eu soltar no canvas de desenho
+        else
+        {
+            if (drawingMode)
+            {
+                switch(toolBar->GetCurrentFunction())
+                {
+                    case Rect:
+                        newDrawing = new RectangleDrawing(tempX,
+                                                          tempY,
+                                                          mouseHandler->x,
+                                                          mouseHandler->y);
+                        break;
+                    case Circle:
+                        newDrawing = new CircleDrawing(tempX,
+                                                       tempY,
+                                                       temporaryCircleRadius,
+                                                       32);
+                        break;
+                    case Triangle:
+                        newDrawing = new TriangleDrawing(tempX,
+                                                        tempY,
+                                                        abs(tempX - mouseHandler->x),
+                                                        (tempY - mouseHandler->y));
+                        break;
+                    default:
+                        break;
+                }
+                AddDrawing();
+            }
         }
     }
 }
@@ -221,6 +360,7 @@ void StartButtons()
     toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, BringTop, "Subir", defaultButtonColor);
     toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, SendBack, "Descer", defaultButtonColor);
     toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Save, "Salvar", defaultButtonColor);
+    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Delete, "Deletar", defaultButtonColor);
     toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Clear, "Limpar", defaultButtonColor);
 
     for(int i = 0; i < 16; i++)
@@ -239,8 +379,8 @@ int main(void)
     init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
 
     mouseHandler = new MouseHandler();
-    toolBar = new ToolBar(height, screenWidth/2);
-    colorBar = new ToolBar(height, screenWidth/2);
+    toolBar = new ToolBar(ToolbarHeight, screenWidth/2);
+    colorBar = new ToolBar(ToolbarHeight, screenWidth/2);
 
     StartButtons();
 

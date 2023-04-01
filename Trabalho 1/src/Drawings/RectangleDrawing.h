@@ -20,6 +20,11 @@ class RectangleDrawing : public Drawing
         this->AddPoint(x2, y1, 1);
         this->AddPoint(x2, y2, 2);
         this->AddPoint(x1, y2, 3);
+
+        this->AddSelectionPoint(x1, y1, 0);
+        this->AddSelectionPoint(x2, y1, 1);
+        this->AddSelectionPoint(x2, y2, 2);
+        this->AddSelectionPoint(x1, y2, 3);
     }
 };
 

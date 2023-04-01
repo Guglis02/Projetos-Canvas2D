@@ -8,14 +8,25 @@ class Drawing
     public:
         void Render();
         void SetColor(float r, float g, float b);
-        void SetFillable(bool value);
+        void SwitchFillable();
         void AddPoint(int x, int y, int index);
+        void RenderSelectionIndicators();
+        bool CheckMouseClick(int mx, int my);
     protected:
         FunctionType type;
         int elementsCounter;
 
-        float *xs;
-        float *ys;
+        float* xs;
+        float* ys;
+
+        // Indicadores de que o desenho foi selecionado
+        float cornersXs[4];
+        float cornersYs[4];
+        float rotationIndicatorX;
+        float rotationIndicatorY;
+        const float indicatorBallRadius = 5;
+
+        void AddSelectionPoint(int x, int y, int index);
 
         bool shouldBeFilled = false;
 

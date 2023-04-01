@@ -50,6 +50,7 @@
 		<Unit filename="src/Drawings/CircleDrawing.h" />
 		<Unit filename="src/Drawings/Drawing.cpp" />
 		<Unit filename="src/Drawings/Drawing.h" />
+		<Unit filename="src/Drawings/PolygonDrawing.h" />
 		<Unit filename="src/Drawings/RectangleDrawing.h" />
 		<Unit filename="src/Drawings/TriangleDrawing.h" />
 		<Unit filename="src/FunctionType.h" />
@@ -60,10 +61,6 @@
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

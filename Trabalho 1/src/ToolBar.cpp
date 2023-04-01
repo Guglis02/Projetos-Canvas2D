@@ -38,13 +38,14 @@ bool ToolBar::CheckButtonCollision(int mx, int my)
 {
     for (Button* b : buttons)
     {
-        if (b->CheckMouseClick(mx, my) && b->GetSelectedState())
+        if (b->CheckMouseClick(mx, my))
         {
-            if (selectedButton)
+            if(b->GetSelectedState())
             {
-                selectedButton->SetSelectedState(false);
+                DeSelectButton();
+                selectedButton = b;
+                selectedButton->SetSelectedState(true);
             }
-            selectedButton = b;
             return true;
         }
     }

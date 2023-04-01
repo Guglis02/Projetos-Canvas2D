@@ -35,7 +35,7 @@ bool Button::CheckMouseClick(int mx, int my)
 {
     if (my >= top && my <= bottom && mx >= left && mx <= right)
     {
-        this->selectedState = !selectedState;
+        this->selectedState = !this->selectedState;
         return true;
     }
     return false;

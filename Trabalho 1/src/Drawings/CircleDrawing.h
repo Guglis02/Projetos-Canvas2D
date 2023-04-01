@@ -23,6 +23,11 @@ class CircleDrawing : public Drawing
                 this->AddPoint(x + (cos(ang)*radius), y + (sin(ang)*radius), i);
                 ang+=inc;
             }
+
+            this->AddSelectionPoint(x - radius, y - radius, 0);
+            this->AddSelectionPoint(x + radius, y - radius, 1);
+            this->AddSelectionPoint(x + radius, y + radius, 2);
+            this->AddSelectionPoint(x - radius, y + radius, 3);
         }
 };
 
