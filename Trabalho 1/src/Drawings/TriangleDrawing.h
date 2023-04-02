@@ -12,6 +12,9 @@ class TriangleDrawing : public Drawing
 
         this->elementsCounter = 3;
 
+        this->width = width;
+        this->height = height;
+
         this->xs = new float[this->elementsCounter];
         this->ys = new float[this->elementsCounter];
 

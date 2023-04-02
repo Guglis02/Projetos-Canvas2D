@@ -7,17 +7,48 @@ class Drawing
 {
     public:
         void Render();
-        void SetColor(float r, float g, float b);
+        void RenderSelectionIndicators();
         void SwitchFillable();
         void AddPoint(int x, int y, int index);
-        void RenderSelectionIndicators();
         bool CheckMouseClick(int mx, int my);
+
+        void SetColor(float r, float g, float b);
+        void SetFillFlag(bool value) { this->shouldBeFilled = value; }
+
+        FunctionType GetType() { return this->type; }
+
+        float* GetXs() { return this->xs; }
+
+        float* GetYs() { return this->ys; }
+
+        float* GetColor() { float* color = new float[3];
+                            color[0] = this->r;
+                            color[1] = this->g;
+                            color[2] = this->b;
+                            return color; }
+
+        bool GetFillFlag() { return this->shouldBeFilled; }
+
+        float GetCenterX() { return this->centerX; }
+        float GetCenterY() { return this->centerY; }
+
+        float GetHeight() { return this->height; }
+        float GetWidth() { return this->width; }
+
+        int GetElementsCount() { return elementsCounter; }
+
     protected:
         FunctionType type;
         int elementsCounter;
 
         float* xs;
         float* ys;
+
+        float centerX;
+        float centerY;
+
+        float height;
+        float width;
 
         // Indicadores de que o desenho foi selecionado
         float cornersXs[4];

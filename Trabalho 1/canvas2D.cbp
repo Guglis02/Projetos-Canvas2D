@@ -53,6 +53,7 @@
 		<Unit filename="src/Drawings/PolygonDrawing.h" />
 		<Unit filename="src/Drawings/RectangleDrawing.h" />
 		<Unit filename="src/Drawings/TriangleDrawing.h" />
+		<Unit filename="src/FileHandler.h" />
 		<Unit filename="src/FunctionType.h" />
 		<Unit filename="src/MouseHandler.h" />
 		<Unit filename="src/PointsUtils.h" />

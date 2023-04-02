@@ -13,6 +13,12 @@ class CircleDrawing : public Drawing
             this->xs = new float[div];
             this->ys = new float[div];
 
+            this->centerX = x;
+            this->centerY = y;
+
+            this->width = radius * 2;
+            this->height = radius * 2;
+
             this->elementsCounter = div;
 
             float ang = 0;

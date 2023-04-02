@@ -17,6 +17,7 @@
 #include "Drawings/TriangleDrawing.h"
 #include "Drawings/PolygonDrawing.h"
 #include "MouseHandler.h"
+#include "FileHandler.h"
 #include "PointsUtils.h"
 
 using namespace std;
@@ -214,6 +215,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                         }
                         toolBar->DeSelectButton();
                         break;
+                    case Save:
+                        SaveInFile(drawings);
+                        toolBar->DeSelectButton();
+                        break;
                     case Clear:
                         drawings.clear();
                         toolBar->DeSelectButton();
@@ -378,6 +383,8 @@ int main(void)
     colorBar = new ToolBar(ToolbarHeight, screenWidth/2);
 
     StartButtons();
+
+    LoadFromFile(drawings);
 
     run();
 }

@@ -321,7 +321,7 @@
 	"Button.h"
 	"FunctionType.h"
 
-1680383427 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1680464341 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -337,7 +337,9 @@
 	"Drawings/RectangleDrawing.h"
 	"Drawings/CircleDrawing.h"
 	"Drawings/TriangleDrawing.h"
+	"Drawings/PolygonDrawing.h"
 	"MouseHandler.h"
+	"FileHandler.h"
 	"PointsUtils.h"
 
 1680361001 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
@@ -350,22 +352,22 @@
 
 1680113235 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingscanvas.h
 
-1680377401 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.cpp
+1680459176 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.cpp
 	"Drawing.h"
 	"FunctionType.h"
 	"gl_canvas2d.h"
 	"PointsUtils.h"
 
-1680377417 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1680462696 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
 
 1680377271 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
 	"Drawing.h"
 
-1680373060 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+1680465053 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
 	"Drawing.h"
 
-1680383374 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
+1680465001 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
 	"Drawing.h"
 
 1680268496 source:c:\users\gmfreitas\documents\projetos-canvas2d\trabalho 1\src\button.cpp
@@ -541,4 +543,15 @@
 1680294330 source:e:\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
 	"ToolBar.h"
 	"gl_canvas2d.h"
+
+1680463805 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
+	<limits>
+	<algorithm>
+	"Drawing.h"
+
+1680464834 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
+	<iostream>
+	<fstream>
+	"Drawings/Drawing.h"
+	"FunctionType.h"
 
