@@ -5,6 +5,8 @@
 #include <algorithm>
 #include "Drawing.h"
 
+using namespace std;
+
 class PolygonDrawing : public Drawing
 {
     public:
@@ -18,10 +20,10 @@ class PolygonDrawing : public Drawing
             this->ys = new float[this->elementsCounter];
 
             // Variaveis auxiliares para pegar os pontos extremos e montar o indicador de seleção
-            float minX = numeric_limits<float>::max();
-            float minY = numeric_limits<float>::max();
-            float maxX = numeric_limits<float>::lowest();
-            float maxY = numeric_limits<float>::lowest();
+            int minX = numeric_limits<int>::max();
+            int minY = numeric_limits<int>::max();
+            int maxX = numeric_limits<int>::lowest();
+            int maxY = numeric_limits<int>::lowest();
 
             for(int i = 0; i < elementsCounter; i++)
             {
@@ -40,4 +42,4 @@ class PolygonDrawing : public Drawing
         }
 };
 
-#endif // TRIANGLEDRAWING_H_INCLUDED
+#endif // POLYGONDRAWING_H_INCLUDED

@@ -15,6 +15,7 @@
 #include "Drawings/RectangleDrawing.h"
 #include "Drawings/CircleDrawing.h"
 #include "Drawings/TriangleDrawing.h"
+#include "Drawings/PolygonDrawing.h"
 #include "MouseHandler.h"
 #include "PointsUtils.h"
 
@@ -249,29 +250,23 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                     StartDrawing();
                     break;
                 case Poly:
-                    /*
-                    int numberOfPoints = tempXs.size();
-                    if (pnpoly(numberOfPoints, tempXs.data(), tempYs.data(), mouseHandler->x, mouseHandler->y))
+                    if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->x, mouseHandler->y))
                     {
-                        int* xs = new int[numberOfPoints];
-                        int* ys = new int[numberOfPoints];
+                        int* xs = new int[tempXs.size()];
+                        int* ys = new int[tempXs.size()];
 
-                        for (int i = 0; i < numberOfPoints; i++) {
+                        for (int i = 0; i < tempXs.size(); i++) {
                             xs[i] = static_cast<int>(tempXs[i]);
                             ys[i] = static_cast<int>(tempYs[i]);
                         }
 
-                        //newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
-                                             newDrawing = new RectangleDrawing(tempX,
-                                                          tempY,
-                                                          mouseHandler->x,
-                                                          mouseHandler->y);
+                        newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
                         AddDrawing();
                     } else
                     {
                         tempXs.push_back(static_cast<float>(mouseHandler->x));
                         tempYs.push_back(static_cast<float>(mouseHandler->y));
-                    }*/
+                    }
                     break;
                 case None:
                     // Checa a colisão com as figuras na tela
