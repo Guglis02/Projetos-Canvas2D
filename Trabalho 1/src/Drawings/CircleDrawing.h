@@ -2,6 +2,7 @@
 #define CIRCLEDRAWING_H_INCLUDED
 
 #include "Drawing.h"
+#include "PointsUtils.h"
 
 class CircleDrawing : public Drawing
 {
@@ -21,8 +22,8 @@ class CircleDrawing : public Drawing
 
             this->elementsCounter = div;
 
-            float ang = 0;
-            float inc = PI_2/div;
+            this->ang = 0;
+            this->inc = PI_2/div;
 
             for(int i = 0; i < div; i++)
             {
@@ -30,11 +31,30 @@ class CircleDrawing : public Drawing
                 ang+=inc;
             }
 
-            this->AddSelectionPoint(x - radius, y - radius, 0);
-            this->AddSelectionPoint(x + radius, y - radius, 1);
-            this->AddSelectionPoint(x + radius, y + radius, 2);
-            this->AddSelectionPoint(x - radius, y + radius, 3);
+            SetSelectionPoints();
         }
+
+        void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
+        {
+            this->ang = 0;
+            this->inc = PI_2/this->elementsCounter;
+            this->radius = DistanceBetweenTwoPoints(clickX, clickY, currentX, currentY);
+
+            for(int i = 0; i < this->elementsCounter; i++)
+            {
+                this->AddPoint(clickX + (cos(ang)*radius),
+                               clickY + (sin(ang)*radius), i);
+                ang+=inc;
+            }
+
+            SetSelectionPoints();
+            Render();
+        }
+
+    private:
+        float ang = 0;
+        float inc = 0;
+        float radius = 0;
 };
 
 #endif // CIRCLEDRAWING_H_INCLUDED
