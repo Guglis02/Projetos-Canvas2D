@@ -75,6 +75,7 @@ void CheckDrawingSelection()
 void StartDrawing()
 {
     newDrawing = NULL;
+    selectedDrawing = NULL;
 
     tempX = mouseHandler->x;
     tempY = mouseHandler->y;
@@ -82,17 +83,7 @@ void StartDrawing()
     drawingMode = true;
 }
 
-void RectFunction()
-{
-    rect(tempX, tempY, mouseHandler->x, mouseHandler->y);
-}
 
-int temporaryCircleRadius = 0;
-void CircleFunction()
-{
-    temporaryCircleRadius = DistanceBetweenTwoPoints(tempX, tempY, mouseHandler->x, mouseHandler->y);
-    circle(tempX, tempY, temporaryCircleRadius, 32);
-}
 
 const int circleIndicatorRadius = 5;
 void PolygonFunction()
@@ -106,19 +97,6 @@ void PolygonFunction()
             circle(tempXs[i], tempYs[i], circleIndicatorRadius, 10);
         }
     }
-}
-
-float temporaryX[3];
-float temporaryY[3];
-void TriangleFunction()
-{
-    temporaryX[0] = tempX;
-    temporaryY[0] = mouseHandler->y;
-    temporaryX[1] = tempX + (mouseHandler->x - tempX) * 0.5;
-    temporaryY[1] = tempY;
-    temporaryX[2] = tempX + (mouseHandler->x - tempX);
-    temporaryY[2] = mouseHandler->y;
-    polygon(temporaryX, temporaryY, 3);
 }
 
 void AddDrawing()
@@ -141,28 +119,16 @@ void render()
     color(selectedColor[0],selectedColor[1],selectedColor[2]);
     if (drawingMode && mouseHandler->isHolding)
     {
-        switch(toolBar->GetCurrentFunction())
-        {
-            case Rect:
-                RectFunction();
-                break;
-            case Circle:
-                CircleFunction();
-                break;
-            case Triangle:
-                TriangleFunction();
-                break;
-            default:
-                break;
-        }
+        newDrawing->RenderPrototype(tempX, tempY, mouseHandler->x, mouseHandler->y);
     }
     if (toolBar->GetCurrentFunction() == Poly)
     {
         PolygonFunction();
     }
-    if (selectedDrawing && mouseHandler->isHolding && !mouseHandler->IsPointerOver(ToolbarHeight))
+    if (selectedDrawing && mouseHandler->isDragging)
     {
-        selectedDrawing->Move(mouseHandler->x - selectedDrawing->GetCenterX(), mouseHandler->y - selectedDrawing->GetCenterY());
+        selectedDrawing->Move(mouseHandler->x - selectedDrawing->GetCenterX(),
+                              mouseHandler->y - selectedDrawing->GetCenterY());
     }
 
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
@@ -254,10 +220,27 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
             switch(toolBar->GetCurrentFunction())
             {
                 case Rect:
-                case Circle:
-                case Triangle:
-                    selectedDrawing = NULL;
                     StartDrawing();
+                    newDrawing = new RectangleDrawing(tempX,
+                                  tempY,
+                                  mouseHandler->x,
+                                  mouseHandler->y);
+                    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                    break;
+                case Circle:
+                    StartDrawing();
+                    newDrawing = new CircleDrawing(tempX,
+                                                   tempY,
+                                                   1,
+                                                   32);
+                    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                    break;
+                case Triangle:
+                    StartDrawing();
+                    newDrawing = new TriangleDrawing(tempX,
+                                                    tempY,
+                                                    (mouseHandler->x - tempX),
+                                                    (mouseHandler->y - tempY));
                     break;
                 case Poly:
                     selectedDrawing = NULL;
@@ -305,29 +288,6 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         {
             if (drawingMode)
             {
-                switch(toolBar->GetCurrentFunction())
-                {
-                    case Rect:
-                        newDrawing = new RectangleDrawing(tempX,
-                                                          tempY,
-                                                          mouseHandler->x,
-                                                          mouseHandler->y);
-                        break;
-                    case Circle:
-                        newDrawing = new CircleDrawing(tempX,
-                                                       tempY,
-                                                       temporaryCircleRadius,
-                                                       32);
-                        break;
-                    case Triangle:
-                        newDrawing = new TriangleDrawing(tempX,
-                                                        tempY,
-                                                        (mouseHandler->x - tempX),
-                                                        (mouseHandler->y - tempY));
-                        break;
-                    default:
-                        break;
-                }
                 AddDrawing();
             }
         }

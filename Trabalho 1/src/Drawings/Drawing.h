@@ -9,6 +9,7 @@ class Drawing
     public:
         void Render();
         void RenderSelectionIndicators();
+        virtual void RenderPrototype(int clickX, int clickY, int currentX, int currentY){};
         void SwitchFillable();
         void AddPoint(int x, int y, int index);
         bool CheckMouseClick(int mx, int my);
@@ -19,6 +20,32 @@ class Drawing
             {
                 this->xs[i] += xInc;
                 this->ys[i] += yInc;
+            }
+
+            SetSelectionPoints();
+        }
+
+        void Resize(float xFactor, float yFactor)
+        {
+            float tMatrix[3][3] =
+            {
+                {xFactor, 0, 0},
+                {0, yFactor, 0},
+                {0, 0, 1}
+            };
+
+            for (int i = 0; i < this->elementsCounter; i++)
+            {
+                float point[3] = {this->xs[i], this->ys[i]};
+
+                float newPoint[3] = {0, 0, 0};
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        newPoint[j] += tMatrix[j][k] * point[k];
+                    }
+                }
             }
 
             SetSelectionPoints();

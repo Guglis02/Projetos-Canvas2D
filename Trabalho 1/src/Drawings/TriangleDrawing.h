@@ -19,10 +19,23 @@ class TriangleDrawing : public Drawing
         this->ys = new float[this->elementsCounter];
 
         this->AddPoint(x, y + height, 0);
-        this->AddPoint(x + width / 2, y, 1);
+        this->AddPoint(x + width * 0.5, y, 1);
         this->AddPoint(x + width, y + height, 2);
 
         SetSelectionPoints();
+    }
+
+    void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
+    {
+        this->width = (currentX - clickX);
+        this->height = (currentY - clickY);
+
+        this->AddPoint(clickX, clickY + height, 0);
+        this->AddPoint(clickX + width * 0.5, clickY, 1);
+        this->AddPoint(clickX + width, clickY + height, 2);
+
+        SetSelectionPoints();
+        Render();
     }
 };
 

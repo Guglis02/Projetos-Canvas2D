@@ -21,6 +21,10 @@ class MouseHandler
             } else if (state == 1)
             {
                 isHolding = false;
+                isDragging = false;
+            } else if (isHolding)
+            {
+                isDragging = true;
             }
         }
 
@@ -35,6 +39,7 @@ class MouseHandler
         int y;
 
         bool isHolding = false;
+        bool isDragging = false;
 };
 
 #endif // MOUSEHANDLER_H_INCLUDED

@@ -26,6 +26,17 @@ class RectangleDrawing : public Drawing
 
         SetSelectionPoints();
     }
+
+    void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
+    {
+        this->AddPoint(clickX, clickY, 0);
+        this->AddPoint(currentX, clickY, 1);
+        this->AddPoint(currentX, currentY, 2);
+        this->AddPoint(clickX, currentY, 3);
+
+        SetSelectionPoints();
+        Render();
+    }
 };
 
 
