@@ -2,6 +2,10 @@
 #include "FunctionType.h"
 #include "gl_canvas2d.h"
 #include "PointsUtils.h"
+#include <limits>
+#include <algorithm>
+
+using namespace std;
 
 void Drawing::Render()
 {
@@ -13,6 +17,31 @@ void Drawing::Render()
     {
         polygon(this->xs, this->ys, this->elementsCounter);
     }
+}
+
+void Drawing::SetSelectionPoints()
+{
+    // Variaveis auxiliares para pegar os pontos extremos e montar o indicador de seleção
+    float minX = numeric_limits<float>::max();
+    float minY = numeric_limits<float>::max();
+    float maxX = numeric_limits<float>::lowest();
+    float maxY = numeric_limits<float>::lowest();
+
+    for(int i = 0; i < elementsCounter; i++)
+    {
+        minX = min(xs[i], minX);
+        minY = min(ys[i], minY);
+        maxX = max(xs[i], maxX);
+        maxY = max(ys[i], maxY);
+    }
+
+    this->AddSelectionPoint(minX, minY, 0);
+    this->AddSelectionPoint(maxX, minY, 1);
+    this->AddSelectionPoint(maxX, maxY, 2);
+    this->AddSelectionPoint(minX, maxY, 3);
+
+    this->centerX = (maxX + minX) * 0.5;
+    this->centerY = (maxY + minY) * 0.5;
 }
 
 void Drawing::SetColor(float r, float g, float b)

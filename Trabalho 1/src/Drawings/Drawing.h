@@ -2,6 +2,7 @@
 #define DRAWING_H
 
 #include "FunctionType.h"
+#include <stdio.h>
 
 class Drawing
 {
@@ -11,6 +12,19 @@ class Drawing
         void SwitchFillable();
         void AddPoint(int x, int y, int index);
         bool CheckMouseClick(int mx, int my);
+
+        void Move(int xInc, int yInc)
+        {
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                this->xs[i] += xInc;
+                this->ys[i] += yInc;
+            }
+
+            SetSelectionPoints();
+        }
+
+        void SetSelectionPoints();
 
         void SetColor(float r, float g, float b);
         void SetFillFlag(bool value) { this->shouldBeFilled = value; }

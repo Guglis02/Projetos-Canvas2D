@@ -160,6 +160,10 @@ void render()
     {
         PolygonFunction();
     }
+    if (selectedDrawing && mouseHandler->isHolding && !mouseHandler->IsPointerOver(ToolbarHeight))
+    {
+        selectedDrawing->Move(mouseHandler->x - selectedDrawing->GetCenterX(), mouseHandler->y - selectedDrawing->GetCenterY());
+    }
 
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
     colorBar->Update(screenWidth/2, 0, ToolbarHeight, screenWidth/2);
@@ -252,9 +256,11 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                 case Rect:
                 case Circle:
                 case Triangle:
+                    selectedDrawing = NULL;
                     StartDrawing();
                     break;
                 case Poly:
+                    selectedDrawing = NULL;
                     if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->x, mouseHandler->y))
                     {
                         int* xs = new int[tempXs.size()];

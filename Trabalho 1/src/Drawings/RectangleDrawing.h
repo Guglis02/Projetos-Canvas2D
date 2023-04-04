@@ -16,15 +16,15 @@ class RectangleDrawing : public Drawing
         this->xs = new float[this->elementsCounter];
         this->ys = new float[this->elementsCounter];
 
+        this->height = y1 - y2;
+        this->width = x1 - x2;
+
         this->AddPoint(x1, y1, 0);
         this->AddPoint(x2, y1, 1);
         this->AddPoint(x2, y2, 2);
         this->AddPoint(x1, y2, 3);
 
-        this->AddSelectionPoint(x1, y1, 0);
-        this->AddSelectionPoint(x2, y1, 1);
-        this->AddSelectionPoint(x2, y2, 2);
-        this->AddSelectionPoint(x1, y2, 3);
+        SetSelectionPoints();
     }
 };
 

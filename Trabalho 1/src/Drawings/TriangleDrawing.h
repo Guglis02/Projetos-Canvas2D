@@ -22,10 +22,7 @@ class TriangleDrawing : public Drawing
         this->AddPoint(x + width / 2, y, 1);
         this->AddPoint(x + width, y + height, 2);
 
-        this->AddSelectionPoint(x, y, 0);
-        this->AddSelectionPoint(x + width, y, 1);
-        this->AddSelectionPoint(x + width, y + height, 2);
-        this->AddSelectionPoint(x, y + height, 3);
+        SetSelectionPoints();
     }
 };
 

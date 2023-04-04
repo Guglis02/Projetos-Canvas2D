@@ -30,10 +30,7 @@ class CircleDrawing : public Drawing
                 ang+=inc;
             }
 
-            this->AddSelectionPoint(x - radius, y - radius, 0);
-            this->AddSelectionPoint(x + radius, y - radius, 1);
-            this->AddSelectionPoint(x + radius, y + radius, 2);
-            this->AddSelectionPoint(x - radius, y + radius, 3);
+            SetSelectionPoints();
         }
 };
 
