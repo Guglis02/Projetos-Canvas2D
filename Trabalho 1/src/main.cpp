@@ -113,11 +113,11 @@ float temporaryY[3];
 void TriangleFunction()
 {
     temporaryX[0] = tempX;
-    temporaryY[0] = tempY + (tempY - mouseHandler->y);
-    temporaryX[1] = tempX + abs(tempX - mouseHandler->x) * 0.5;
+    temporaryY[0] = mouseHandler->y;
+    temporaryX[1] = tempX + (mouseHandler->x - tempX) * 0.5;
     temporaryY[1] = tempY;
-    temporaryX[2] = tempX + abs(tempX - mouseHandler->x);
-    temporaryY[2] = tempY + (tempY - mouseHandler->y);
+    temporaryX[2] = tempX + (mouseHandler->x - tempX);
+    temporaryY[2] = mouseHandler->y;
     polygon(temporaryX, temporaryY, 3);
 }
 
@@ -316,8 +316,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                     case Triangle:
                         newDrawing = new TriangleDrawing(tempX,
                                                         tempY,
-                                                        abs(tempX - mouseHandler->x),
-                                                        (tempY - mouseHandler->y));
+                                                        (mouseHandler->x - tempX),
+                                                        (mouseHandler->y - tempY));
                         break;
                     default:
                         break;

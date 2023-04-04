@@ -47,7 +47,7 @@ void SaveInFile(vector<Drawing*> drawings)
             case Triangle:
                 fprintf(file, "%.f %.f %.f %.f ",
                         d->GetXs()[0],
-                        d->GetYs()[0],
+                        d->GetYs()[0] - d->GetHeight(),
                         d->GetWidth(),
                         d->GetHeight());
                 break;
