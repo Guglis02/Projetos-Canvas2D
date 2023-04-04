@@ -34,6 +34,21 @@ void ToolBar::CreateButton(int height, int width, FunctionType functionType, cha
     buttons.push_back(newButton);
 }
 
+int defaultButtonWidth = 80;
+int defaultButtonHeight = 50;
+float defaultButtonColor[] = {0, 0.5, 1};
+
+void ToolBar::CreateButton(FunctionType functionType, char* name)
+{
+    Button* newButton = new Button(defaultButtonHeight,
+                                   defaultButtonWidth,
+                                   functionType, name);
+    newButton->SetColor(defaultButtonColor[0],
+                        defaultButtonColor[1],
+                        defaultButtonColor[2]);
+    buttons.push_back(newButton);
+}
+
 bool ToolBar::CheckButtonCollision(int mx, int my)
 {
     for (Button* b : buttons)

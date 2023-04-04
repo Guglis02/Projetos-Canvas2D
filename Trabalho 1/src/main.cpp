@@ -347,21 +347,18 @@ void keyboardUp(int key)
    //printf("\nLiberou Tecla: %d" , key);
 }
 
-int defaultButtonWidth = 80;
-int defaultButtonHeight = 50;
-float defaultButtonColor[] = {0, 0.5, 1};
 void StartButtons()
 {
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Rect, "Retangulo", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Circle, "Circulo", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Triangle, "Triangulo", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Poly, "Poligono", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Fill, "Preencher", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, BringTop, "Subir", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, SendBack, "Descer", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Save, "Salvar", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Delete, "Deletar", defaultButtonColor);
-    toolBar->CreateButton(defaultButtonHeight, defaultButtonWidth, Clear, "Limpar", defaultButtonColor);
+    toolBar->CreateButton(Rect, "Retangulo");
+    toolBar->CreateButton(Circle, "Circulo");
+    toolBar->CreateButton(Triangle, "Triangulo");
+    toolBar->CreateButton(Poly, "Poligono");
+    toolBar->CreateButton(Fill, "Preencher");
+    toolBar->CreateButton(BringTop, "Subir");
+    toolBar->CreateButton(SendBack, "Descer");
+    toolBar->CreateButton(Save, "Salvar");
+    toolBar->CreateButton(Delete, "Deletar");
+    toolBar->CreateButton(Clear, "Limpar");
 
     for(int i = 0; i < 16; i++)
     {
