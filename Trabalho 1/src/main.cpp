@@ -110,6 +110,8 @@ void AddDrawing()
     tempYs.clear();
 }
 
+int moveInc[2] = {0, 0};
+
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
@@ -129,6 +131,10 @@ void render()
     {
         selectedDrawing->Move(mouseHandler->x - selectedDrawing->GetCenterX(),
                               mouseHandler->y - selectedDrawing->GetCenterY());
+    }
+    if (selectedDrawing && selectedDrawing->isMoving)
+    {
+        selectedDrawing->Move(moveInc[0], moveInc[1]);
     }
 
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
@@ -294,15 +300,45 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     }
 }
 
+
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-   //printf("\nClicou Tecla: %d" , key);
+   printf("\nClicou Tecla: %d" , key);
 
    if (key == 26 && !drawings.empty())
    {
         printf("\nClicou Tecla: %d" , key);
         drawings.pop_back();
+   }
+
+   if (selectedDrawing)
+   {
+       switch(key)
+       {
+            case 200:
+                moveInc[0] = -10;
+                moveInc[1] = 0;
+                selectedDrawing->isMoving = true;
+                break;
+            case 201:
+                moveInc[0] = 0;
+                moveInc[1] = -10;
+                selectedDrawing->isMoving = true;
+                break;
+            case 202:
+                moveInc[0] = 10;
+                moveInc[1] = 0;
+                selectedDrawing->isMoving = true;
+                break;
+            case 203:
+                moveInc[0] = 0;
+                moveInc[1] = 10;
+                selectedDrawing->isMoving = true;
+                break;
+            default:
+                break;
+       }
    }
 }
 
@@ -311,6 +347,13 @@ void keyboard(int key)
 void keyboardUp(int key)
 {
    //printf("\nLiberou Tecla: %d" , key);
+
+   if (selectedDrawing)
+   {
+        moveInc[0] = 0;
+        moveInc[1] = 0;
+        selectedDrawing->isMoving = false;
+   }
 }
 
 void StartButtons()

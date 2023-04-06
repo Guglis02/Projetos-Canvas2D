@@ -497,20 +497,23 @@
 1680293536 e:\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1680568476 source:e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.cpp
+1680645327 source:e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.cpp
 	"Drawing.h"
 	"FunctionType.h"
 	"gl_canvas2d.h"
 	"PointsUtils.h"
+	<limits>
+	<algorithm>
 
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1680740939 e:\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
+	<stdio.h>
 
 1680293536 source:e:\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1680570825 source:e:\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1680740535 source:e:\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -531,25 +534,26 @@
 	"FileHandler.h"
 	"PointsUtils.h"
 
-1680293536 e:\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+1680571184 e:\github\projetos-canvas2d\trabalho 1\src\toolbar.h
 	<vector>
 	"Button.h"
 	"FunctionType.h"
 
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
+1680645327 e:\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
 	"Drawing.h"
 
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+1680645327 e:\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+	"Drawing.h"
+	"PointsUtils.h"
+
+1680645327 e:\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
 	"Drawing.h"
 
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
-	"Drawing.h"
-
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+1680645327 e:\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
 
 1680568476 e:\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
 
-1680568476 source:e:\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
+1680654349 source:e:\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
@@ -562,9 +566,7 @@
 	"Drawings/Drawing.h"
 	"FunctionType.h"
 
-1680568476 e:\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
-	<limits>
-	<algorithm>
+1680645327 e:\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
 	"Drawing.h"
 
 1680570986 e:\github\projetos-canvas2d\trabalho 1\src\filehandler.h

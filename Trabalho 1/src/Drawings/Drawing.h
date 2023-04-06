@@ -78,6 +78,8 @@ class Drawing
 
         int GetElementsCount() { return elementsCounter; }
 
+        bool isMoving = false;
+
     protected:
         FunctionType type;
         int elementsCounter;
