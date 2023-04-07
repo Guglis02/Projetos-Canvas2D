@@ -31,9 +31,6 @@ vector<Drawing*> drawings;
 
 bool drawingMode = false;
 
-int tempX = 0;
-int tempY = 0;
-
 vector<float> tempXs;
 vector<float> tempYs;
 
@@ -45,6 +42,64 @@ Drawing* newDrawing;
 Drawing* selectedDrawing;
 
 float selectedColor[] = {0,0,0};
+
+///
+/// Callbacks
+///
+
+void FillDrawing(void)
+{
+    if (selectedDrawing)
+    {
+        selectedDrawing->SwitchFillable();
+    }
+    toolBar->DeSelectButton();
+}
+
+void BringDrawingTop(void)
+{
+    if (selectedDrawing && selectedDrawing != drawings.back())
+    {
+        iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
+                  find(drawings.begin(), drawings.end(), selectedDrawing) + 1);
+    }
+    toolBar->DeSelectButton();
+}
+
+void SendDrawingBack(void)
+{
+    if (selectedDrawing && selectedDrawing != drawings.front())
+    {
+        iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
+                  find(drawings.begin(), drawings.end(), selectedDrawing) - 1);
+    }
+    toolBar->DeSelectButton();
+}
+
+void DeleteDrawing(void)
+{
+    if (selectedDrawing)
+    {
+        drawings.erase(find(drawings.begin(), drawings.end(), selectedDrawing));
+        delete selectedDrawing;
+        selectedDrawing = NULL;
+    }
+    toolBar->DeSelectButton();
+}
+
+void SaveFile(void)
+{
+    SaveInFile(drawings);
+    toolBar->DeSelectButton();
+}
+
+void ClearCanvas(void)
+{
+    drawings.clear();
+    toolBar->DeSelectButton();
+    selectedDrawing = NULL;
+}
+///
 
 void DrawingsCanvasHandler()
 {
@@ -63,7 +118,7 @@ void CheckDrawingSelection()
 {
     for (Drawing* d : drawings)
     {
-        if (d->CheckMouseClick(mouseHandler->x, mouseHandler->y))
+        if (d->CheckMouseClick(mouseHandler->GetX(), mouseHandler->GetY()))
         {
             selectedDrawing = d;
             return;
@@ -77,13 +132,8 @@ void StartDrawing()
     newDrawing = NULL;
     selectedDrawing = NULL;
 
-    tempX = mouseHandler->x;
-    tempY = mouseHandler->y;
-
     drawingMode = true;
 }
-
-
 
 const int circleIndicatorRadius = 5;
 void PolygonFunction()
@@ -119,23 +169,23 @@ void render()
     DrawingsCanvasHandler();
 
     color(selectedColor[0],selectedColor[1],selectedColor[2]);
-    if (drawingMode && mouseHandler->isHolding)
+    if (drawingMode && mouseHandler->IsHolding())
     {
-        newDrawing->RenderPrototype(tempX, tempY, mouseHandler->x, mouseHandler->y);
+        newDrawing->RenderPrototype(mouseHandler->GetClickX(),
+                                    mouseHandler->GetClickY(),
+                                    mouseHandler->GetX(),
+                                    mouseHandler->GetY());
     }
     if (toolBar->GetCurrentFunction() == Poly)
     {
         PolygonFunction();
     }
-    if (selectedDrawing && mouseHandler->isDragging)
-    {
-        selectedDrawing->Move(mouseHandler->x - selectedDrawing->GetCenterX(),
-                              mouseHandler->y - selectedDrawing->GetCenterY());
-    }
+
     if (selectedDrawing && selectedDrawing->isMoving)
     {
         selectedDrawing->Move(moveInc[0], moveInc[1]);
     }
+
 
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
     colorBar->Update(screenWidth/2, 0, ToolbarHeight, screenWidth/2);
@@ -144,68 +194,19 @@ void render()
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-    //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
     // Clicar com o mouse
-    if (mouseHandler->state == 0)
+    if (mouseHandler->GetState() == 0)
     {
         // Se eu cliquei na barra de botões
         if (mouseHandler->IsPointerOver(ToolbarHeight))
         {
-            // Se eu cliquei em um botão de função
-            if (toolBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
-            {
-                switch(toolBar->GetCurrentFunction())
-                {
-                    case Fill:
-                        if (selectedDrawing)
-                        {
-                            selectedDrawing->SwitchFillable();
-                        }
-                        toolBar->DeSelectButton();
-                        break;
-                    case BringTop:
-                        if (selectedDrawing && selectedDrawing != drawings.back())
-                        {
-                            iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
-                                      find(drawings.begin(), drawings.end(), selectedDrawing) + 1);
-                        }
-                        toolBar->DeSelectButton();
-                        break;
-                    case SendBack:
-                        if (selectedDrawing && selectedDrawing != drawings.front())
-                        {
-                            iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
-                                      find(drawings.begin(), drawings.end(), selectedDrawing) - 1);
-                        }
-                        toolBar->DeSelectButton();
-                        break;
-                    case Delete:
-                        if (selectedDrawing)
-                        {
-                            drawings.erase(find(drawings.begin(), drawings.end(), selectedDrawing));
-                            delete selectedDrawing;
-                            selectedDrawing = NULL;
-                        }
-                        toolBar->DeSelectButton();
-                        break;
-                    case Save:
-                        SaveInFile(drawings);
-                        toolBar->DeSelectButton();
-                        break;
-                    case Clear:
-                        drawings.clear();
-                        toolBar->DeSelectButton();
-                        selectedDrawing = NULL;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            // Se eu cliquei em um botão de cor
-            else if (colorBar->CheckButtonCollision(mouseHandler->x, mouseHandler->y))
+            toolBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY());
+
+            if (colorBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY()))
             {
                 selectedColor[0] = colorBar->selectedButton->r;
                 selectedColor[1] = colorBar->selectedButton->g;
@@ -227,30 +228,30 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
             {
                 case Rect:
                     StartDrawing();
-                    newDrawing = new RectangleDrawing(tempX,
-                                  tempY,
-                                  mouseHandler->x,
-                                  mouseHandler->y);
+                    newDrawing = new RectangleDrawing(mouseHandler->GetClickX(),
+                                                      mouseHandler->GetClickY(),
+                                                      mouseHandler->GetX(),
+                                                      mouseHandler->GetY());
                     newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
                     break;
                 case Circle:
                     StartDrawing();
-                    newDrawing = new CircleDrawing(tempX,
-                                                   tempY,
-                                                   1,
+                    newDrawing = new CircleDrawing(mouseHandler->GetClickX(),
+                                                   mouseHandler->GetClickY(),
+                                                   mouseHandler->GetDiffX(),
                                                    32);
                     newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
                     break;
                 case Triangle:
                     StartDrawing();
-                    newDrawing = new TriangleDrawing(tempX,
-                                                    tempY,
-                                                    (mouseHandler->x - tempX),
-                                                    (mouseHandler->y - tempY));
+                    newDrawing = new TriangleDrawing(mouseHandler->GetClickX(),
+                                                     mouseHandler->GetClickY(),
+                                                     mouseHandler->GetDiffX(),
+                                                     mouseHandler->GetDiffY());
                     break;
                 case Poly:
                     selectedDrawing = NULL;
-                    if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->x, mouseHandler->y))
+                    if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->GetX(), mouseHandler->GetY()))
                     {
                         int* xs = new int[tempXs.size()];
                         int* ys = new int[tempXs.size()];
@@ -264,22 +265,27 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                         AddDrawing();
                     } else
                     {
-                        tempXs.push_back(static_cast<float>(mouseHandler->x));
-                        tempYs.push_back(static_cast<float>(mouseHandler->y));
+                        tempXs.push_back(mouseHandler->GetX());
+                        tempYs.push_back(mouseHandler->GetY());
                     }
                     break;
-                case None:
+                default:
                     // Checa a colisão com as figuras na tela
                     CheckDrawingSelection();
                     break;
-                default:
-                    break;
             }
         }
+        return;
+    }
+
+    if (selectedDrawing && mouseHandler->IsDragging())
+    {
+        selectedDrawing->Move(mouseHandler->GetDiffX(),
+                              mouseHandler->GetDiffY());
     }
 
     // Soltar o mouse
-    if (mouseHandler->state == 1)
+    if (mouseHandler->GetState() == 1)
     {
         // Se eu soltar na barra de botões
         if (mouseHandler->IsPointerOver(ToolbarHeight))
@@ -304,12 +310,13 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-   printf("\nClicou Tecla: %d" , key);
+   //printf("\nClicou Tecla: %d" , key);
 
    if (key == 26 && !drawings.empty())
    {
         printf("\nClicou Tecla: %d" , key);
         drawings.pop_back();
+        selectedDrawing = NULL;
    }
 
    if (selectedDrawing)
@@ -358,16 +365,16 @@ void keyboardUp(int key)
 
 void StartButtons()
 {
-    toolBar->CreateButton(Rect, "Retangulo");
-    toolBar->CreateButton(Circle, "Circulo");
-    toolBar->CreateButton(Triangle, "Triangulo");
-    toolBar->CreateButton(Poly, "Poligono");
-    toolBar->CreateButton(Fill, "Preencher");
-    toolBar->CreateButton(BringTop, "Subir");
-    toolBar->CreateButton(SendBack, "Descer");
-    toolBar->CreateButton(Save, "Salvar");
-    toolBar->CreateButton(Delete, "Deletar");
-    toolBar->CreateButton(Clear, "Limpar");
+    toolBar->CreateButton(Rect, nullptr, "Retangulo");
+    toolBar->CreateButton(Circle, nullptr, "Circulo");
+    toolBar->CreateButton(Triangle, nullptr, "Triangulo");
+    toolBar->CreateButton(Poly, nullptr, "Poligono");
+    toolBar->CreateButton(Fill, FillDrawing, "Preencher");
+    toolBar->CreateButton(BringTop, BringDrawingTop, "Subir");
+    toolBar->CreateButton(SendBack, SendDrawingBack, "Descer");
+    toolBar->CreateButton(Save, SaveFile, "Salvar");
+    toolBar->CreateButton(Delete, DeleteDrawing, "Deletar");
+    toolBar->CreateButton(Clear, ClearCanvas, "Limpar");
 
     for(int i = 0; i < 16; i++)
     {
@@ -376,7 +383,7 @@ void StartButtons()
         float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * PI_2);
         float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * PI_2);
         float rgb[] = {r, g, b};
-        colorBar->CreateButton(50, 50, Color, "", rgb);
+        colorBar->CreateButton(50, 50, Color, nullptr, "", rgb);
     }
 }
 

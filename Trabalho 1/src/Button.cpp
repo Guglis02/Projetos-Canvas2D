@@ -2,11 +2,12 @@
 #include "gl_canvas2d.h"
 #include "FunctionType.h"
 
-Button::Button(int height, int width, FunctionType functionType, char* name)
+Button::Button(int height, int width, FunctionType functionType, function<void()> callback, char* name)
 {
     this->height = height;
     this->width = width;
     this->functionType = functionType;
+    this->callback = callback;
     this->name = name;
 }
 
@@ -35,7 +36,14 @@ bool Button::CheckMouseClick(int mx, int my)
 {
     if (my >= top && my <= bottom && mx >= left && mx <= right)
     {
-        this->selectedState = !this->selectedState;
+        if (callback)
+        {
+            callback();
+        }
+        else
+        {
+            this->selectedState = !this->selectedState;
+        }
         return true;
     }
     return false;

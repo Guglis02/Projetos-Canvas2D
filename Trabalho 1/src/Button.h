@@ -3,13 +3,14 @@
 
 #include "FunctionType.h"
 #include <string>
+#include <functional>
 
 using namespace std;
 
 class Button
 {
     public:
-        Button(int height, int width, FunctionType functionType, char* name);
+        Button(int height, int width, FunctionType functionType, function<void()> callback, char* name);
 
         void Update(int x, int y);
         bool CheckMouseClick(int mx, int my);
@@ -33,6 +34,7 @@ class Button
         int right;
 
         FunctionType functionType;
+        function<void()> callback;
 
         char* name;
 

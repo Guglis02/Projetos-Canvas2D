@@ -27,9 +27,13 @@ void ToolBar::Update(int x, int y, int height, int width)
     }
 }
 
-void ToolBar::CreateButton(int height, int width, FunctionType functionType, char* name, float* rgb)
+void ToolBar::CreateButton(int height, int width, FunctionType functionType, function<void()> callback, char* name, float* rgb)
 {
-    Button* newButton = new Button(height, width, functionType, name);
+    Button* newButton = new Button(height,
+                                   width,
+                                   functionType,
+                                   callback,
+                                   name);
     newButton->SetColor(rgb[0], rgb[1], rgb[2]);
     buttons.push_back(newButton);
 }
@@ -38,11 +42,13 @@ int defaultButtonWidth = 80;
 int defaultButtonHeight = 50;
 float defaultButtonColor[] = {0, 0.5, 1};
 
-void ToolBar::CreateButton(FunctionType functionType, char* name)
+void ToolBar::CreateButton(FunctionType functionType, function<void()> callback, char* name)
 {
     Button* newButton = new Button(defaultButtonHeight,
                                    defaultButtonWidth,
-                                   functionType, name);
+                                   functionType,
+                                   callback,
+                                   name);
     newButton->SetColor(defaultButtonColor[0],
                         defaultButtonColor[1],
                         defaultButtonColor[2]);

@@ -264,14 +264,15 @@
 1680003981 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\paint2d\src\layersdisplay.h
 	"gl_canvas2d.h"
 
-1680365675 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.cpp
+1680899860 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.cpp
 	"Button.h"
 	"gl_canvas2d.h"
 	"FunctionType.h"
 
-1680311394 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
+1680899572 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
 	"FunctionType.h"
 	<string>
+	<functional>
 
 1680379225 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\functiontype.h
 
@@ -312,16 +313,16 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1680365393 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
+1680900490 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.cpp
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1680311394 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+1680899385 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
 	<vector>
 	"Button.h"
 	"FunctionType.h"
 
-1680634053 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1680899914 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -342,7 +343,7 @@
 	"FileHandler.h"
 	"PointsUtils.h"
 
-1680631899 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+1680897762 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
 
 1680374816 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
 
@@ -360,7 +361,7 @@
 	<limits>
 	<algorithm>
 
-1680632958 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1680897021 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
 	<stdio.h>
 
@@ -557,7 +558,7 @@
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1680612279 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
+1680708464 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
 	"Drawing.h"
 
 1680607982 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h

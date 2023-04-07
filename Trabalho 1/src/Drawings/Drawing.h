@@ -25,58 +25,32 @@ class Drawing
             SetSelectionPoints();
         }
 
-        void Resize(float xFactor, float yFactor)
-        {
-            float tMatrix[3][3] =
-            {
-                {xFactor, 0, 0},
-                {0, yFactor, 0},
-                {0, 0, 1}
-            };
-
-            for (int i = 0; i < this->elementsCounter; i++)
-            {
-                float point[3] = {this->xs[i], this->ys[i]};
-
-                float newPoint[3] = {0, 0, 0};
-                for (int j = 0; j < 3; j++)
-                {
-                    for (int k = 0; k < 3; k++)
-                    {
-                        newPoint[j] += tMatrix[j][k] * point[k];
-                    }
-                }
-            }
-
-            SetSelectionPoints();
-        }
-
         void SetSelectionPoints();
 
         void SetColor(float r, float g, float b);
         void SetFillFlag(bool value) { this->shouldBeFilled = value; }
 
-        FunctionType GetType() { return this->type; }
+        FunctionType GetType(void) { return this->type; }
 
-        float* GetXs() { return this->xs; }
+        float* GetXs(void) { return this->xs; }
 
-        float* GetYs() { return this->ys; }
+        float* GetYs(void) { return this->ys; }
 
-        float* GetColor() { float* color = new float[3];
+        float* GetColor(void) { float* color = new float[3];
                             color[0] = this->r;
                             color[1] = this->g;
                             color[2] = this->b;
                             return color; }
 
-        bool GetFillFlag() { return this->shouldBeFilled; }
+        bool GetFillFlag(void) { return this->shouldBeFilled; }
 
-        float GetCenterX() { return this->centerX; }
-        float GetCenterY() { return this->centerY; }
+        float GetCenterX(void) { return this->centerX; }
+        float GetCenterY(void) { return this->centerY; }
 
-        float GetHeight() { return this->height; }
-        float GetWidth() { return this->width; }
+        float GetHeight(void) { return this->height; }
+        float GetWidth(void) { return this->width; }
 
-        int GetElementsCount() { return elementsCounter; }
+        int GetElementsCount(void) { return elementsCounter; }
 
         bool isMoving = false;
 
