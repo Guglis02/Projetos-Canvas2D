@@ -2,6 +2,7 @@
 #define POINTHANDLER_H_INCLUDED
 
 #include <math.h>
+#include <Vector2.h>
 
 static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
 {
@@ -15,6 +16,18 @@ static int pnpoly(int nvert, float *vertx, float *verty, float testx, float test
   for (i = 0, j = nvert-1; i < nvert; j = i++) {
     if ( ((verty[i]>testy) != (verty[j]>testy)) &&
 	 (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+       c = !c;
+  }
+  return c;
+}
+
+// Adaptação usando Vector2
+static int pnpoly(int nvert, Vector2* vert, Vector2 test)
+{
+  int i, j, c = 0;
+  for (i = 0, j = nvert-1; i < nvert; j = i++) {
+    if ( ((vert[i].y>test.y) != (vert[j].y>test.y)) &&
+	 (test.x < (vert[j].x-vert[i].x) * (test.y-vert[i].y) / (vert[j].y-vert[i].y) + vert[i].x) )
        c = !c;
   }
   return c;

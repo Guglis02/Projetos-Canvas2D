@@ -15,8 +15,7 @@ class TriangleDrawing : public Drawing
         this->width = width;
         this->height = height;
 
-        this->xs = new float[this->elementsCounter];
-        this->ys = new float[this->elementsCounter];
+        this->points = new Vector2[this->elementsCounter];
 
         this->AddPoint(x, y + height, 0);
         this->AddPoint(x + width * 0.5, y, 1);

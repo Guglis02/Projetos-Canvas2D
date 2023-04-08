@@ -7,14 +7,13 @@
 class PolygonDrawing : public Drawing
 {
     public:
-        PolygonDrawing(int xs[], int ys[], int elementsCounter)
+        PolygonDrawing(float xs[], float ys[], int elementsCounter)
         {
             this->type = Poly;
 
             this->elementsCounter = elementsCounter;
 
-            this->xs = new float[this->elementsCounter];
-            this->ys = new float[this->elementsCounter];
+            this->points = new Vector2[this->elementsCounter];
 
             for(int i = 0; i < elementsCounter; i++)
             {

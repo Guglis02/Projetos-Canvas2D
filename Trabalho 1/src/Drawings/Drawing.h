@@ -3,6 +3,7 @@
 
 #include "FunctionType.h"
 #include "PointsUtils.h"
+#include "Vector2.h"
 #include <stdio.h>
 
 class Drawing
@@ -17,18 +18,15 @@ class Drawing
 
         void GenerateOriginPoints()
         {
-            this->originXs = new float[this->elementsCounter];
-            this->originYs = new float[this->elementsCounter];
+            this->originPoints = new Vector2[this->elementsCounter];
 
             for (int i = 0; i < elementsCounter; i++)
             {
-                originXs[i] = this->xs[i] - this->cornersXs[0];
-                originYs[i] = this->ys[i] - this->cornersYs[0];
+                originPoints[i] = this->points[i] - this->corners[0];
             }
             for (int i = 0; i < 4; i++)
             {
-                originCornersXs[i] = this->cornersXs[i] - this->cornersXs[0];
-                originCornersYs[i] = this->cornersYs[i] - this->cornersYs[0];
+                originCorners[i] = this->corners[i] - this->corners[0];
             }
         }
 
@@ -36,14 +34,14 @@ class Drawing
         {
             for (int i = 0; i < 4; i++)
             {
-                if (DistanceBetweenTwoPoints(mx, my, cornersXs[i], cornersYs[i]) < IndicatorBallRadius)
+                if (DistanceBetweenTwoPoints(mx, my, corners[i].x, corners[i].y) < IndicatorBallRadius)
                 {
                     printf("\nRedimensionamento iniciado no canto %d", i);
                     isModifying = true;
                     return true;
                 }
             }
-            if (DistanceBetweenTwoPoints(mx, my, rotationIndicatorX, rotationIndicatorY) < IndicatorBallRadius)
+            if (DistanceBetweenTwoPoints(mx, my, rotationIndicator.x, rotationIndicator.x) < IndicatorBallRadius)
             {
                 printf("\nRotação iniciada.");
                 isModifying = true;
@@ -61,18 +59,17 @@ class Drawing
             }
             else
             {
-                Move(xInc, yInc);
+                Move(Vector2(xInc, yInc));
             }
 
             SetSelectionPoints();
         }
 
-        void Move(int xInc, int yInc)
+        void Move(Vector2 inc)
         {
             for (int i = 0; i < elementsCounter; i++)
             {
-                this->xs[i] += xInc;
-                this->ys[i] += yInc;
+                this->points[i] += inc;
             }
         }
 
@@ -83,10 +80,6 @@ class Drawing
 
         FunctionType GetType(void) { return this->type; }
 
-        float* GetXs(void) { return this->xs; }
-
-        float* GetYs(void) { return this->ys; }
-
         float* GetColor(void) { float* color = new float[3];
                             color[0] = this->r;
                             color[1] = this->g;
@@ -95,8 +88,18 @@ class Drawing
 
         bool GetFillFlag(void) { return this->shouldBeFilled; }
 
-        float GetCenterX(void) { return this->centerX; }
-        float GetCenterY(void) { return this->centerY; }
+        float* GetXs(void)
+        {
+            return Vector2::GetXs(this->points, this->elementsCounter);
+        }
+
+        float* GetYs(void)
+        {
+            return Vector2::GetYs(this->points, this->elementsCounter);
+        }
+
+        float GetCenterX(void) { return this->center.x; }
+        float GetCenterY(void) { return this->center.y; }
 
         float GetHeight(void) { return this->height; }
         float GetWidth(void) { return this->width; }
@@ -109,33 +112,26 @@ class Drawing
         FunctionType type;
         int elementsCounter;
 
-        float* xs;
-        float* ys;
+        Vector2* points;
 
-        float centerX;
-        float centerY;
+        Vector2 center;
 
         float height;
         float width;
 
         // Indicadores de que o desenho foi selecionado
-        float cornersXs[4];
-        float cornersYs[4];
-        float rotationIndicatorX;
-        float rotationIndicatorY;
+        Vector2 corners[4];
+        Vector2 rotationIndicator;
         const float IndicatorBallRadius = 7;
 
         // Coordenadas do desenho relacionadas a origem
-        float* originXs;
-        float* originYs;
-        float originCornersXs[4];
-        float originCornersYs[4];
+        Vector2* originPoints;
+        Vector2 originCorners[4];
 
         // Atributos relacionados a modificação do desenho
         bool isModifying = false;
         float angle = 0.0;
-        float xProportion;
-        float yProportion;
+        Vector2 sizeProportion;
 
         void AddSelectionPoint(int x, int y, int index);
 

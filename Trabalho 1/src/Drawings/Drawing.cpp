@@ -2,6 +2,7 @@
 #include "FunctionType.h"
 #include "gl_canvas2d.h"
 #include "PointsUtils.h"
+#include "Vector2.h"
 #include <limits>
 #include <algorithm>
 
@@ -12,10 +13,14 @@ void Drawing::Render()
     color(this->r, this->g, this->b);
     if (shouldBeFilled)
     {
-        polygonFill(this->xs, this->ys, this->elementsCounter);
+        polygonFill(Vector2::GetXs(this->points, elementsCounter),
+                    Vector2::GetYs(this->points, elementsCounter),
+                    this->elementsCounter);
     } else
     {
-        polygon(this->xs, this->ys, this->elementsCounter);
+        polygon(Vector2::GetXs(this->points, elementsCounter),
+                Vector2::GetYs(this->points, elementsCounter),
+                this->elementsCounter);
     }
 }
 
@@ -29,10 +34,10 @@ void Drawing::SetSelectionPoints()
 
     for(int i = 0; i < elementsCounter; i++)
     {
-        minX = min(xs[i], minX);
-        minY = min(ys[i], minY);
-        maxX = max(xs[i], maxX);
-        maxY = max(ys[i], maxY);
+        minX = min(points[i].x, minX);
+        minY = min(points[i].y, minY);
+        maxX = max(points[i].x, maxX);
+        maxY = max(points[i].y, maxY);
     }
 
     this->AddSelectionPoint(minX, minY, 0);
@@ -40,11 +45,9 @@ void Drawing::SetSelectionPoints()
     this->AddSelectionPoint(maxX, maxY, 2);
     this->AddSelectionPoint(minX, maxY, 3);
 
-    this->centerX = (maxX + minX) * 0.5;
-    this->centerY = (maxY + minY) * 0.5;
+    this->center = Vector2((maxX + minX) * 0.5, (maxY + minY) * 0.5);
 
-    this->rotationIndicatorX = centerX;
-    this->rotationIndicatorY = minY - 20;
+    this->rotationIndicator = Vector2(center.x, minY - 20);
 }
 
 void Drawing::SetColor(float r, float g, float b)
@@ -61,34 +64,34 @@ void Drawing::SwitchFillable()
 
 void Drawing::AddPoint(int x, int y, int index)
 {
-    this->xs[index] = x;
-    this->ys[index] = y;
+    this->points[index] = Vector2(x, y);
 }
 
 void Drawing::AddSelectionPoint(int x, int y, int index)
 {
-    this->cornersXs[index] = x;
-    this->cornersYs[index] = y;
+    this->corners[index] = Vector2(x, y);
 }
 
 void Drawing::RenderSelectionIndicators()
 {
     color(1);
-    polygon(cornersXs, cornersYs, 4);
+    polygon(Vector2::GetXs(this->corners, 4),
+            Vector2::GetYs(this->corners, 4),
+            4);
     for (int i = 0; i < 4; i++)
     {
-        circleFill(cornersXs[i], cornersYs[i], IndicatorBallRadius, 10);
+        circleFill(corners[i].x, corners[i].y, IndicatorBallRadius, 10);
     }
 
     color(1);
-    circleFill(rotationIndicatorX, rotationIndicatorY, IndicatorBallRadius, 10);
+    circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
 }
 
 bool Drawing::CheckMouseClick(int mx, int my)
 {
     return pnpoly(this->elementsCounter,
-                  this->xs,
-                  this->ys,
+                  Vector2::GetXs(this->corners, elementsCounter),
+                  Vector2::GetYs(this->corners, elementsCounter),
                   mx, my);
 }
 

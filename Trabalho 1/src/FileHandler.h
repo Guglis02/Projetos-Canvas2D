@@ -120,8 +120,8 @@ void LoadFromFile(vector<Drawing*>&drawings)
             case Poly:{
                 file >> elementsCounter;
 
-                int* xs = new int[elementsCounter];
-                int* ys = new int[elementsCounter];
+                float* xs = new float[elementsCounter];
+                float* ys = new float[elementsCounter];
 
                 for (int i = 0; i < elementsCounter; i++)
                 {

@@ -29,8 +29,7 @@ const int ToolbarHeight = 130;
 
 vector<Drawing*> drawings;
 
-vector<float> tempXs;
-vector<float> tempYs;
+vector<Vector2> tempPoints;
 
 ToolBar* toolBar = NULL;
 ToolBar* colorBar = NULL;
@@ -99,13 +98,16 @@ void ClearCanvas(void)
 const int circleIndicatorRadius = 5;
 void RenderPolygonPrototype()
 {
-    if (tempXs.size() != 0)
+    int numberOfPoints = tempPoints.size();
+    if (numberOfPoints != 0)
     {
-        polygon(tempXs.data(), tempYs.data(), tempXs.size());
+        polygon(Vector2::GetXs(tempPoints.data(), numberOfPoints),
+                Vector2::GetYs(tempPoints.data(), numberOfPoints),
+                numberOfPoints);
 
-        for (int i = 0; i < tempXs.size(); i++)
+        for (int i = 0; i < numberOfPoints; i++)
         {
-            circle(tempXs[i], tempYs[i], circleIndicatorRadius, 10);
+            circle(tempPoints[i].x, tempPoints[i].y, circleIndicatorRadius, 10);
         }
     }
 }
@@ -170,11 +172,10 @@ void AddDrawing()
     drawings.push_back(newDrawing);
     newDrawing = NULL;
     toolBar->DeSelectButton();
-    tempXs.clear();
-    tempYs.clear();
+    tempPoints.clear();
 }
 
-int moveInc[2] = {0, 0};
+Vector2 moveInc;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
@@ -185,7 +186,7 @@ void render()
     // Usado apenas para controlar movimento do desenho com o teclado
     if (selectedDrawing && selectedDrawing->isMoving)
     {
-        selectedDrawing->Move(moveInc[0], moveInc[1]);
+        selectedDrawing->Move(moveInc);
     }
 
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
@@ -212,9 +213,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                 UpdateSelectedColor();
             }
 
-            tempXs.clear();
-            tempYs.clear();
-
+            tempPoints.clear();
             return;
         }
         switch(toolBar->GetCurrentFunction())
@@ -245,22 +244,15 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
                 break;
             case Poly:
                 selectedDrawing = NULL;
-                if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->GetX(), mouseHandler->GetY()))
+                if (pnpoly(tempPoints.size(), tempPoints.data(), Vector2(mouseHandler->GetX(), mouseHandler->GetY())))
                 {
-                    int* xs = new int[tempXs.size()];
-                    int* ys = new int[tempXs.size()];
-
-                    for (int i = 0; i < tempXs.size(); i++) {
-                        xs[i] = static_cast<int>(tempXs[i]);
-                        ys[i] = static_cast<int>(tempYs[i]);
-                    }
-
-                    newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
+                    newDrawing = new PolygonDrawing(Vector2::GetXs(tempPoints.data(), tempPoints.size()),
+                                                    Vector2::GetYs(tempPoints.data(), tempPoints.size()),
+                                                    tempPoints.size());
                     AddDrawing();
                 } else
                 {
-                    tempXs.push_back(mouseHandler->GetX());
-                    tempYs.push_back(mouseHandler->GetY());
+                    tempPoints.push_back(Vector2(mouseHandler->GetX(), mouseHandler->GetY()));
                 }
                 break;
             default:
@@ -316,23 +308,19 @@ void keyboard(int key)
        switch(key)
        {
             case 200:
-                moveInc[0] = -10;
-                moveInc[1] = 0;
+                moveInc.set(-10, 0);
                 selectedDrawing->isMoving = true;
                 break;
             case 201:
-                moveInc[0] = 0;
-                moveInc[1] = -10;
+                moveInc.set(0, -10);
                 selectedDrawing->isMoving = true;
                 break;
             case 202:
-                moveInc[0] = 10;
-                moveInc[1] = 0;
+                moveInc.set(10, 0);
                 selectedDrawing->isMoving = true;
                 break;
             case 203:
-                moveInc[0] = 0;
-                moveInc[1] = 10;
+                moveInc.set(0, 10);
                 selectedDrawing->isMoving = true;
                 break;
             default:
@@ -341,7 +329,6 @@ void keyboard(int key)
    }
 }
 
-
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
@@ -349,8 +336,7 @@ void keyboardUp(int key)
 
    if (selectedDrawing)
    {
-        moveInc[0] = 0;
-        moveInc[1] = 0;
+        moveInc.set(0, 0);
         selectedDrawing->isMoving = false;
    }
 }

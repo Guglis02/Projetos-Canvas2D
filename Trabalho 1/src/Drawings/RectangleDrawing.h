@@ -13,8 +13,7 @@ class RectangleDrawing : public Drawing
 
         this->elementsCounter = 4;
 
-        this->xs = new float[this->elementsCounter];
-        this->ys = new float[this->elementsCounter];
+        this->points = new Vector2[this->elementsCounter];
 
         this->height = y1 - y2;
         this->width = x1 - x2;

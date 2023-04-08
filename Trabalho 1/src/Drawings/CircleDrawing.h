@@ -11,11 +11,9 @@ class CircleDrawing : public Drawing
         {
             this->type = Circle;
 
-            this->xs = new float[div];
-            this->ys = new float[div];
+            this->points = new Vector2[div];
 
-            this->centerX = x;
-            this->centerY = y;
+            this->center = Vector2(x, y);
 
             this->width = radius * 2;
             this->height = radius * 2;
