@@ -15,6 +15,23 @@ class Drawing
         void AddPoint(int x, int y, int index);
         bool CheckMouseClick(int mx, int my);
 
+        void GenerateOriginPoints()
+        {
+            this->originXs = new float[this->elementsCounter];
+            this->originYs = new float[this->elementsCounter];
+
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                originXs[i] = this->xs[i] - this->cornersXs[0];
+                originYs[i] = this->ys[i] - this->cornersYs[0];
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                originCornersXs[i] = this->cornersXs[i] - this->cornersXs[0];
+                originCornersYs[i] = this->cornersYs[i] - this->cornersYs[0];
+            }
+        }
+
         bool CheckMouseInteraction(int mx, int my)
         {
             for (int i = 0; i < 4; i++)
@@ -22,18 +39,32 @@ class Drawing
                 if (DistanceBetweenTwoPoints(mx, my, cornersXs[i], cornersYs[i]) < IndicatorBallRadius)
                 {
                     printf("\nRedimensionamento iniciado no canto %d", i);
-                    // Ativa flag de que to editando a figura
+                    isModifying = true;
                     return true;
                 }
             }
             if (DistanceBetweenTwoPoints(mx, my, rotationIndicatorX, rotationIndicatorY) < IndicatorBallRadius)
             {
                 printf("\nRotação iniciada.");
-                // Ativa flag de que to editando a figura
+                isModifying = true;
                 return true;
             }
-            // Desativa flag de que to editando a figura
+            isModifying = false;
             return false;
+        }
+
+        void EditDrawing(int xInc, int yInc)
+        {
+            if (isModifying)
+            {
+                printf("\nTa editando");
+            }
+            else
+            {
+                Move(xInc, yInc);
+            }
+
+            SetSelectionPoints();
         }
 
         void Move(int xInc, int yInc)
@@ -43,8 +74,6 @@ class Drawing
                 this->xs[i] += xInc;
                 this->ys[i] += yInc;
             }
-
-            SetSelectionPoints();
         }
 
         void SetSelectionPoints();
@@ -96,6 +125,18 @@ class Drawing
         float rotationIndicatorY;
         const float IndicatorBallRadius = 7;
 
+        // Coordenadas do desenho relacionadas a origem
+        float* originXs;
+        float* originYs;
+        float originCornersXs[4];
+        float originCornersYs[4];
+
+        // Atributos relacionados a modificação do desenho
+        bool isModifying = false;
+        float angle = 0.0;
+        float xProportion;
+        float yProportion;
+
         void AddSelectionPoint(int x, int y, int index);
 
         bool shouldBeFilled = false;
@@ -103,6 +144,7 @@ class Drawing
         float r = 0;
         float g = 0;
         float b = 0;
+
 };
 
 #endif // DRAWING_H

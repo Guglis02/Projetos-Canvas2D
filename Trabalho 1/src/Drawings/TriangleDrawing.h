@@ -23,6 +23,7 @@ class TriangleDrawing : public Drawing
         this->AddPoint(x + width, y + height, 2);
 
         SetSelectionPoints();
+        GenerateOriginPoints();
     }
 
     void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
@@ -35,6 +36,7 @@ class TriangleDrawing : public Drawing
         this->AddPoint(clickX + width, clickY + height, 2);
 
         SetSelectionPoints();
+        GenerateOriginPoints();
         Render();
     }
 };

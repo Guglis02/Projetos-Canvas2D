@@ -96,19 +96,6 @@ void ClearCanvas(void)
 }
 //
 // Métodos da render
-void DrawingsCanvasHandler()
-{
-    for (Drawing* d : drawings)
-    {
-        d->Render();
-    }
-
-    if (selectedDrawing)
-    {
-        selectedDrawing->RenderSelectionIndicators();
-    }
-}
-
 const int circleIndicatorRadius = 5;
 void RenderPolygonPrototype()
 {
@@ -123,7 +110,34 @@ void RenderPolygonPrototype()
     }
 }
 
+void DrawingsCanvasHandler()
+{
+    for (Drawing* d : drawings)
+    {
+        d->Render();
+    }
+
+    if (selectedDrawing)
+    {
+        selectedDrawing->RenderSelectionIndicators();
+    }
+
+    color(selectedColor[0],selectedColor[1],selectedColor[2]);
+    if (newDrawing && mouseHandler->IsHolding())
+    {
+        newDrawing->RenderPrototype(mouseHandler->GetClickX(),
+                                    mouseHandler->GetClickY(),
+                                    mouseHandler->GetX(),
+                                    mouseHandler->GetY());
+    }
+
+    if (toolBar->GetCurrentFunction() == Poly)
+    {
+        RenderPolygonPrototype();
+    }
+}
 //
+
 void CheckDrawingSelection()
 {
     for (Drawing* d : drawings)
@@ -167,19 +181,6 @@ int moveInc[2] = {0, 0};
 void render()
 {
     DrawingsCanvasHandler();
-
-    color(selectedColor[0],selectedColor[1],selectedColor[2]);
-    if (newDrawing && mouseHandler->IsHolding())
-    {
-        newDrawing->RenderPrototype(mouseHandler->GetClickX(),
-                                    mouseHandler->GetClickY(),
-                                    mouseHandler->GetX(),
-                                    mouseHandler->GetY());
-    }
-    if (toolBar->GetCurrentFunction() == Poly)
-    {
-        RenderPolygonPrototype();
-    }
 
     // Usado apenas para controlar movimento do desenho com o teclado
     if (selectedDrawing && selectedDrawing->isMoving)
@@ -275,7 +276,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     if (selectedDrawing && mouseHandler->IsDragging())
     {
-        selectedDrawing->Move(mouseHandler->GetDiffX(),
+        selectedDrawing->EditDrawing(mouseHandler->GetDiffX(),
                               mouseHandler->GetDiffY());
     }
 

@@ -25,6 +25,7 @@ class RectangleDrawing : public Drawing
         this->AddPoint(x1, y2, 3);
 
         SetSelectionPoints();
+        GenerateOriginPoints();
     }
 
     void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
@@ -35,6 +36,7 @@ class RectangleDrawing : public Drawing
         this->AddPoint(clickX, currentY, 3);
 
         SetSelectionPoints();
+        GenerateOriginPoints();
         Render();
     }
 };

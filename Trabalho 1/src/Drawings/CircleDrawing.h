@@ -32,6 +32,7 @@ class CircleDrawing : public Drawing
             }
 
             SetSelectionPoints();
+            GenerateOriginPoints();
         }
 
         void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
@@ -48,6 +49,7 @@ class CircleDrawing : public Drawing
             }
 
             SetSelectionPoints();
+            GenerateOriginPoints();
             Render();
         }
 
