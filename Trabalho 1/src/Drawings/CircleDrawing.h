@@ -13,11 +13,6 @@ class CircleDrawing : public Drawing
 
             this->points = new Vector2[div];
 
-            this->center = Vector2(x, y);
-
-            this->width = radius * 2;
-            this->height = radius * 2;
-
             this->elementsCounter = div;
 
             this->ang = 0;

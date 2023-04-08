@@ -45,9 +45,10 @@ void Drawing::SetSelectionPoints()
     this->AddSelectionPoint(maxX, maxY, 2);
     this->AddSelectionPoint(minX, maxY, 3);
 
-    this->center = Vector2((maxX + minX) * 0.5, (maxY + minY) * 0.5);
+    this->height = maxY - minY;
+    this->width = maxX - minX;
 
-    this->rotationIndicator = Vector2(center.x, minY - 20);
+    SetRotationPoint();
 }
 
 void Drawing::SetColor(float r, float g, float b)

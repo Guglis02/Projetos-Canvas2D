@@ -9,6 +9,11 @@ static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
 }
 
+static int DistanceBetweenTwoPoints(Vector2 p1, Vector2 p2)
+{
+    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) * 1.0);
+}
+
 // Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
 static int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
 {
@@ -33,4 +38,17 @@ static int pnpoly(int nvert, Vector2* vert, Vector2 test)
   return c;
 }
 
+static Vector2 GetPerpendicularPoint(Vector2 vec1, Vector2 vec2, Vector2 point)
+{
+    Vector2 segment = vec2 - vec1;
+    Vector2 pointOnSegment = vec1 + segment * (Vector2::DotProduct(point - vec1, segment)
+                                                / Vector2::DotProduct(segment, segment));
+    return pointOnSegment;
+}
+
+static Vector2 rotatePoint(Vector2 point, float angle)
+{
+   return Vector2(point.x * cos(angle) - point.y * sin(angle),
+                  point.x * sin(angle) + point.y * cos(angle));
+}
 #endif // POINTHANDLER_H_INCLUDED

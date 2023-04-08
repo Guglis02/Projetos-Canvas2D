@@ -46,6 +46,11 @@ public:
        y /= norm;
    }
 
+   static float DotProduct(Vector2 vec1, Vector2 vec2)
+   {
+       return vec1.x * vec2.x + vec1.y * vec2.y;
+   }
+
    static float* GetXs(Vector2* vectors, int size)
    {
         float* xs = new float[size];
@@ -81,14 +86,25 @@ public:
        Vector2 aux( x + v.x, y + v.y);
        return( aux );
    }
-
-    Vector2 operator += (const Vector2& v)
-   {
-       Vector2 aux( x += v.x, y += v.y);
-       return( aux );
-   }
    //Adicionem os demais overloads de operadores aqui.
 
+    Vector2 operator += (const Vector2& v)
+    {
+       Vector2 aux( x += v.x, y += v.y);
+       return( aux );
+    }
+
+    Vector2 operator * (const float& f)
+    {
+       Vector2 aux( x * f, y * f);
+       return( aux );
+    }
+
+    Vector2 operator / (const float& f)
+    {
+       Vector2 aux( x / f, y / f);
+       return( aux );
+    }
 
 };
 
