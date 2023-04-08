@@ -29,8 +29,6 @@ const int ToolbarHeight = 130;
 
 vector<Drawing*> drawings;
 
-bool drawingMode = false;
-
 vector<float> tempXs;
 vector<float> tempYs;
 
@@ -43,10 +41,7 @@ Drawing* selectedDrawing;
 
 float selectedColor[] = {0,0,0};
 
-///
-/// Callbacks
-///
-
+// Callbacks
 void FillDrawing(void)
 {
     if (selectedDrawing)
@@ -99,8 +94,8 @@ void ClearCanvas(void)
     toolBar->DeSelectButton();
     selectedDrawing = NULL;
 }
-///
-
+//
+// Métodos da render
 void DrawingsCanvasHandler()
 {
     for (Drawing* d : drawings)
@@ -114,6 +109,21 @@ void DrawingsCanvasHandler()
     }
 }
 
+const int circleIndicatorRadius = 5;
+void RenderPolygonPrototype()
+{
+    if (tempXs.size() != 0)
+    {
+        polygon(tempXs.data(), tempYs.data(), tempXs.size());
+
+        for (int i = 0; i < tempXs.size(); i++)
+        {
+            circle(tempXs[i], tempYs[i], circleIndicatorRadius, 10);
+        }
+    }
+}
+
+//
 void CheckDrawingSelection()
 {
     for (Drawing* d : drawings)
@@ -127,26 +137,16 @@ void CheckDrawingSelection()
     selectedDrawing = NULL;
 }
 
-void StartDrawing()
+void UpdateSelectedColor()
 {
-    newDrawing = NULL;
-    selectedDrawing = NULL;
-
-    drawingMode = true;
-}
-
-const int circleIndicatorRadius = 5;
-void PolygonFunction()
-{
-    if (tempXs.size() != 0)
+    selectedColor[0] = colorBar->selectedButton->r;
+    selectedColor[1] = colorBar->selectedButton->g;
+    selectedColor[2] = colorBar->selectedButton->b;
+    if (selectedDrawing)
     {
-        polygon(tempXs.data(), tempYs.data(), tempXs.size());
-
-        for (int i = 0; i < tempXs.size(); i++)
-        {
-            circle(tempXs[i], tempYs[i], circleIndicatorRadius, 10);
-        }
+        selectedDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
     }
+    colorBar->DeSelectButton();
 }
 
 void AddDrawing()
@@ -154,8 +154,8 @@ void AddDrawing()
     newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
     selectedDrawing = newDrawing;
     drawings.push_back(newDrawing);
+    newDrawing = NULL;
     toolBar->DeSelectButton();
-    drawingMode = false;
     tempXs.clear();
     tempYs.clear();
 }
@@ -169,7 +169,7 @@ void render()
     DrawingsCanvasHandler();
 
     color(selectedColor[0],selectedColor[1],selectedColor[2]);
-    if (drawingMode && mouseHandler->IsHolding())
+    if (newDrawing && mouseHandler->IsHolding())
     {
         newDrawing->RenderPrototype(mouseHandler->GetClickX(),
                                     mouseHandler->GetClickY(),
@@ -178,23 +178,23 @@ void render()
     }
     if (toolBar->GetCurrentFunction() == Poly)
     {
-        PolygonFunction();
+        RenderPolygonPrototype();
     }
 
+    // Usado apenas para controlar movimento do desenho com o teclado
     if (selectedDrawing && selectedDrawing->isMoving)
     {
         selectedDrawing->Move(moveInc[0], moveInc[1]);
     }
 
-
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
     colorBar->Update(screenWidth/2, 0, ToolbarHeight, screenWidth/2);
 }
 
-//funcao para tratamento de mouse: cliques, movimentos e arrastos
+// Funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-    printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 
     mouseHandler->Update(button, state, wheel, direction, x, y);
 
@@ -208,72 +208,67 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
             if (colorBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY()))
             {
-                selectedColor[0] = colorBar->selectedButton->r;
-                selectedColor[1] = colorBar->selectedButton->g;
-                selectedColor[2] = colorBar->selectedButton->b;
-                if (selectedDrawing)
-                {
-                    selectedDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                }
-                colorBar->DeSelectButton();
+                UpdateSelectedColor();
             }
 
             tempXs.clear();
             tempYs.clear();
+
+            return;
         }
-        // Se eu cliquei no canvas de desenho
-        else
+        switch(toolBar->GetCurrentFunction())
         {
-            switch(toolBar->GetCurrentFunction())
-            {
-                case Rect:
-                    StartDrawing();
-                    newDrawing = new RectangleDrawing(mouseHandler->GetClickX(),
-                                                      mouseHandler->GetClickY(),
-                                                      mouseHandler->GetX(),
-                                                      mouseHandler->GetY());
-                    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                    break;
-                case Circle:
-                    StartDrawing();
-                    newDrawing = new CircleDrawing(mouseHandler->GetClickX(),
-                                                   mouseHandler->GetClickY(),
-                                                   mouseHandler->GetDiffX(),
-                                                   32);
-                    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                    break;
-                case Triangle:
-                    StartDrawing();
-                    newDrawing = new TriangleDrawing(mouseHandler->GetClickX(),
-                                                     mouseHandler->GetClickY(),
-                                                     mouseHandler->GetDiffX(),
-                                                     mouseHandler->GetDiffY());
-                    break;
-                case Poly:
-                    selectedDrawing = NULL;
-                    if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->GetX(), mouseHandler->GetY()))
-                    {
-                        int* xs = new int[tempXs.size()];
-                        int* ys = new int[tempXs.size()];
+            case Rect:
+                selectedDrawing = NULL;
+                newDrawing = new RectangleDrawing(mouseHandler->GetClickX(),
+                                                  mouseHandler->GetClickY(),
+                                                  mouseHandler->GetX(),
+                                                  mouseHandler->GetY());
+                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                break;
+            case Circle:
+                selectedDrawing = NULL;
+                newDrawing = new CircleDrawing(mouseHandler->GetClickX(),
+                                               mouseHandler->GetClickY(),
+                                               mouseHandler->GetDiffX(),
+                                               32);
+                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                break;
+            case Triangle:
+                selectedDrawing = NULL;
+                newDrawing = new TriangleDrawing(mouseHandler->GetClickX(),
+                                                 mouseHandler->GetClickY(),
+                                                 mouseHandler->GetDiffX(),
+                                                 mouseHandler->GetDiffY());
+                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+                break;
+            case Poly:
+                selectedDrawing = NULL;
+                if (pnpoly(tempXs.size(), tempXs.data(), tempYs.data(), mouseHandler->GetX(), mouseHandler->GetY()))
+                {
+                    int* xs = new int[tempXs.size()];
+                    int* ys = new int[tempXs.size()];
 
-                        for (int i = 0; i < tempXs.size(); i++) {
-                            xs[i] = static_cast<int>(tempXs[i]);
-                            ys[i] = static_cast<int>(tempYs[i]);
-                        }
-
-                        newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
-                        AddDrawing();
-                    } else
-                    {
-                        tempXs.push_back(mouseHandler->GetX());
-                        tempYs.push_back(mouseHandler->GetY());
+                    for (int i = 0; i < tempXs.size(); i++) {
+                        xs[i] = static_cast<int>(tempXs[i]);
+                        ys[i] = static_cast<int>(tempYs[i]);
                     }
-                    break;
-                default:
-                    // Checa a colisão com as figuras na tela
-                    CheckDrawingSelection();
-                    break;
-            }
+
+                    newDrawing = new PolygonDrawing(xs, ys, tempXs.size());
+                    AddDrawing();
+                } else
+                {
+                    tempXs.push_back(mouseHandler->GetX());
+                    tempYs.push_back(mouseHandler->GetY());
+                }
+                break;
+            default:
+                if (selectedDrawing && selectedDrawing->CheckMouseInteraction(mouseHandler->GetX(), mouseHandler->GetY()))
+                {
+                    return;
+                }
+                CheckDrawingSelection();
+                break;
         }
         return;
     }
@@ -287,21 +282,17 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // Soltar o mouse
     if (mouseHandler->GetState() == 1)
     {
-        // Se eu soltar na barra de botões
-        if (mouseHandler->IsPointerOver(ToolbarHeight))
-        {
-            if (drawingMode)
-            {
-                drawingMode = false;
-            }
-        }
         // Se eu soltar no canvas de desenho
-        else
+        if (mouseHandler->IsPointerUnder(ToolbarHeight))
         {
-            if (drawingMode)
+            if (newDrawing && toolBar->GetCurrentFunction() != Poly)
             {
                 AddDrawing();
             }
+        }
+        else
+        {
+            newDrawing = NULL;
         }
     }
 }

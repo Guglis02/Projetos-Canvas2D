@@ -42,6 +42,9 @@ void Drawing::SetSelectionPoints()
 
     this->centerX = (maxX + minX) * 0.5;
     this->centerY = (maxY + minY) * 0.5;
+
+    this->rotationIndicatorX = centerX;
+    this->rotationIndicatorY = minY - 20;
 }
 
 void Drawing::SetColor(float r, float g, float b)
@@ -70,12 +73,15 @@ void Drawing::AddSelectionPoint(int x, int y, int index)
 
 void Drawing::RenderSelectionIndicators()
 {
-    color(0);
+    color(1);
     polygon(cornersXs, cornersYs, 4);
     for (int i = 0; i < 4; i++)
     {
-        circleFill(cornersXs[i], cornersYs[i], indicatorBallRadius, 10);
+        circleFill(cornersXs[i], cornersYs[i], IndicatorBallRadius, 10);
     }
+
+    color(1);
+    circleFill(rotationIndicatorX, rotationIndicatorY, IndicatorBallRadius, 10);
 }
 
 bool Drawing::CheckMouseClick(int mx, int my)

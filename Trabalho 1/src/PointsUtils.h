@@ -1,6 +1,7 @@
 #ifndef POINTHANDLER_H_INCLUDED
 #define POINTHANDLER_H_INCLUDED
 
+#include <math.h>
 
 static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
 {

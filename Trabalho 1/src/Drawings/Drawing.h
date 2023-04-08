@@ -2,6 +2,7 @@
 #define DRAWING_H
 
 #include "FunctionType.h"
+#include "PointsUtils.h"
 #include <stdio.h>
 
 class Drawing
@@ -13,6 +14,27 @@ class Drawing
         void SwitchFillable();
         void AddPoint(int x, int y, int index);
         bool CheckMouseClick(int mx, int my);
+
+        bool CheckMouseInteraction(int mx, int my)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (DistanceBetweenTwoPoints(mx, my, cornersXs[i], cornersYs[i]) < IndicatorBallRadius)
+                {
+                    printf("\nRedimensionamento iniciado no canto %d", i);
+                    // Ativa flag de que to editando a figura
+                    return true;
+                }
+            }
+            if (DistanceBetweenTwoPoints(mx, my, rotationIndicatorX, rotationIndicatorY) < IndicatorBallRadius)
+            {
+                printf("\nRotação iniciada.");
+                // Ativa flag de que to editando a figura
+                return true;
+            }
+            // Desativa flag de que to editando a figura
+            return false;
+        }
 
         void Move(int xInc, int yInc)
         {
@@ -72,7 +94,7 @@ class Drawing
         float cornersYs[4];
         float rotationIndicatorX;
         float rotationIndicatorY;
-        const float indicatorBallRadius = 5;
+        const float IndicatorBallRadius = 7;
 
         void AddSelectionPoint(int x, int y, int index);
 
