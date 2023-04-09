@@ -20,7 +20,7 @@ class Drawing
         void AddPoint(int x, int y, int index);
         bool CheckMouseClick(int mx, int my);
 
-        void GenerateOriginPoints()
+        void GenerateOriginPoints(void)
         {
             this->originPoints = new Vector2[this->elementsCounter];
 
@@ -40,28 +40,32 @@ class Drawing
             {
                 if (DistanceBetweenTwoPoints(mx, my, corners[i].x, corners[i].y) < IndicatorBallRadius)
                 {
-                    printf("\nRedimensionamento iniciado no canto %d", i);
                     modifyingPointIndex = i;
-                    isModifying = true;
+                    isResizing = true;
+                    isRotating = false;
                     return true;
                 }
             }
-            if (DistanceBetweenTwoPoints(mx, my, rotationIndicator.x, rotationIndicator.x) < IndicatorBallRadius)
+            if (DistanceBetweenTwoPoints(mx, my, this->rotationIndicator.x, this->rotationIndicator.y) < IndicatorBallRadius)
             {
-                printf("\nRotação iniciada.");
-                isModifying = true;
+                isRotating = true;
+                isResizing = false;
                 return true;
             }
-            isModifying = false;
+            isResizing = false;
+            isRotating = false;
             return false;
         }
 
-        void EditDrawing(int xInc, int yInc)
+        void EditDrawing(int mx, int my, int xInc, int yInc)
         {
-            if (isModifying)
+            if (isResizing)
             {
-                printf("\nTa editando");
                 Resize(xInc, yInc);
+            }
+            else if (isRotating)
+            {
+                Rotate(mx, my);
             }
             else
             {
@@ -111,20 +115,22 @@ class Drawing
                 DistanceBetweenTwoPoints(newOriginCorner1, Vector2()),
                 DistanceBetweenTwoPoints(newOriginCorner3, Vector2()));
 
-            // Usa a distância dos pontos e as dimensões originais do desenho pra calcular a proporção
+            // Usa a distância dos pontos e as dimensões originais do desenho pra calcular a proporção do redimensionamento
             Vector2 proportion = Vector2(
                 distanceToOrigin.x / width * 1.0,
                 distanceToOrigin.y / height * 1.0);
 
-            // Calcula distância entre os novos pontos e a outra lateral da caixa de seleção
-            Vector2 distanceToSide = Vector2(
+            // Calcula distância entre os novos pontos e os pontos originais
+            Vector2 distanceMoved = Vector2(
                 DistanceBetweenTwoPoints(newOriginCorner1, GetPerpendicularPoint(originCorners[1], originCorners[2], newOriginCorner1)),
                 DistanceBetweenTwoPoints(newOriginCorner3, GetPerpendicularPoint(originCorners[2], originCorners[3], newOriginCorner3)));
 
-            // Se os pontos ultrapassaram a outra lateral do desenho, a proporção é invertida e o desenho é espelhado
+            // Se a distância dos novos pontos de controle em relação a suas posições originais
+            // for maior do que a distância deles a origem, ou maior do que sua largura, implica que
+            // o desenho foi invertido, logo, a proporção é invertida e o desenho é espelhado
             proportion.set(
-                distanceToSide.x > max(distanceToOrigin.x, width) ? proportion.x * -1 : proportion.x,
-                distanceToSide.y > max(distanceToOrigin.y, height) ? proportion.y * -1 : proportion.y);
+                distanceMoved.x > max(distanceToOrigin.x, width) ? proportion.x * -1 : proportion.x,
+                distanceMoved.y > max(distanceToOrigin.y, height) ? proportion.y * -1 : proportion.y);
 
             // Atualiza pontos do desenho
             for (int i = 0; i < elementsCounter; i++)
@@ -132,24 +138,51 @@ class Drawing
                 Vector2 newPoint = Vector2(originPoints[i].x * proportion.x,
                                            originPoints[i].y * proportion.y);
 
-                Vector2 rotate = rotatePoint(newPoint, angle);
+                Vector2 rotated = RotatePoint(newPoint, angle);
 
-                points[i] = rotate + corners[0];
+                points[i] = rotated + corners[0];
             }
 
             this->sizeProportion.set(proportion);
             SetRotationPoint();
         }
 
-        void SetSelectionPoints();
-        void SetRotationPoint()
+        void Rotate(int mx, int my)
         {
-            Vector2 selectionBoxTop = (corners[0] + corners[1]) / 2;
-            float modifier = sizeProportion.y < 0 ? 1 : -1;
+            Vector2 originToCenter = Vector2((corners[0] + corners[2]) / 2.0);
 
-            this->rotationIndicator.x = selectionBoxTop.x + sin(angle);
-            this->rotationIndicator.y = selectionBoxTop.y + cos(angle) + modifier * rotationIndicatorOffset;
+            float angle = GetAngleBetweenPoints(rotationIndicator - originToCenter,
+                                                Vector2(mx, my) - originToCenter);
+
+            // Rotaciona o indicador de rotação na origem
+
+            Vector2 originRotationPoint = rotationIndicator - originToCenter;
+
+            Vector2 rotated = RotatePoint(originRotationPoint, angle);
+
+            rotationIndicator = rotated + originToCenter;
+
+            // Rotaciona os pontos do desenho na origem
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                rotated = RotatePoint(points[i] - originToCenter, angle);
+                points[i] = rotated + originToCenter;
+            }
+            // Rotaciona os indicadores de seleção na origem
+            for (int i = 0; i < 4; i++)
+            {
+                rotated = RotatePoint(corners[i] - originToCenter, angle);
+                corners[i] = rotated + originToCenter;
+
+                rotated = RotatePoint(originCorners[i], angle);
+                originCorners[i] = rotated;
+            }
+
+            this->angle += angle;
         }
+
+        void SetSelectionPoints(void);
+        void SetRotationPoint(void);
 
         void SetColor(float r, float g, float b);
         void SetFillFlag(bool value) { this->shouldBeFilled = value; }
@@ -174,8 +207,8 @@ class Drawing
             return Vector2::GetYs(this->points, this->elementsCounter);
         }
 
-        float GetCenterX(void) { return (this->corners[0].x + this->corners[1].x) / 2; }
-        float GetCenterY(void) { return (this->corners[0].y + this->corners[3].y) / 2; }
+        float GetCenterX(void) { return (this->corners[0].x + this->corners[2].x) / 2; }
+        float GetCenterY(void) { return (this->corners[0].y + this->corners[2].y) / 2; }
 
         float GetHeight(void) { return this->height; }
         float GetWidth(void) { return this->width; }
@@ -204,8 +237,9 @@ class Drawing
         Vector2 originCorners[4];
 
         // Atributos relacionados a modificação do desenho
-        bool isModifying = false;
-        int modifyingPointIndex = -2;
+        bool isResizing = false;
+        bool isRotating = false;
+        int modifyingPointIndex = -1;
         float angle = 0.0;
         Vector2 sizeProportion;
 

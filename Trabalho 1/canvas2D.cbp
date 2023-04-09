@@ -47,7 +47,6 @@
 		</Linker>
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
-		<Unit filename="src/CallbackButton.h" />
 		<Unit filename="src/Drawings/CircleDrawing.h" />
 		<Unit filename="src/Drawings/Drawing.cpp" />
 		<Unit filename="src/Drawings/Drawing.h" />
@@ -60,6 +59,7 @@
 		<Unit filename="src/PointsUtils.h" />
 		<Unit filename="src/ToolBar.cpp" />
 		<Unit filename="src/ToolBar.h" />
+		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

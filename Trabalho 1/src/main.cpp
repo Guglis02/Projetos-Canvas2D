@@ -268,8 +268,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
     if (selectedDrawing && mouseHandler->IsDragging())
     {
-        selectedDrawing->EditDrawing(mouseHandler->GetDiffX(),
-                              mouseHandler->GetDiffY());
+        selectedDrawing->EditDrawing(mouseHandler->GetX(),
+                                     mouseHandler->GetY(),
+                                     mouseHandler->GetDiffX(),
+                                     mouseHandler->GetDiffY());
     }
 
     // Soltar o mouse

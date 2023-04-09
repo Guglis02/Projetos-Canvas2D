@@ -2,6 +2,7 @@
 #define __VECTOR_2_H__
 
 #include <stdio.h>
+#include <math.h>
 
 class Vector2
 {
@@ -49,6 +50,11 @@ public:
    static float DotProduct(Vector2 vec1, Vector2 vec2)
    {
        return vec1.x * vec2.x + vec1.y * vec2.y;
+   }
+
+   static float CrossProduct(Vector2 vec1, Vector2 vec2)
+   {
+       return vec1.x * vec2.y - vec1.y * vec2.x;
    }
 
    static float* GetXs(Vector2* vectors, int size)

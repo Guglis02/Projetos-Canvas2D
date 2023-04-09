@@ -14,6 +14,15 @@ static int DistanceBetweenTwoPoints(Vector2 p1, Vector2 p2)
     return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) * 1.0);
 }
 
+static float GetAngleBetweenPoints(Vector2 p1, Vector2 p2)
+{
+    float dotProduct = Vector2::DotProduct(p1, p2);
+    float crossProduct = Vector2::CrossProduct(p1, p2);
+    float angle = atan2(fabs(crossProduct), dotProduct);
+
+    return crossProduct < 0 ? angle * -1.0 : angle;
+}
+
 // Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
 static int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
 {
@@ -46,7 +55,7 @@ static Vector2 GetPerpendicularPoint(Vector2 vec1, Vector2 vec2, Vector2 point)
     return pointOnSegment;
 }
 
-static Vector2 rotatePoint(Vector2 point, float angle)
+static Vector2 RotatePoint(Vector2 point, float angle)
 {
    return Vector2(point.x * cos(angle) - point.y * sin(angle),
                   point.x * sin(angle) + point.y * cos(angle));

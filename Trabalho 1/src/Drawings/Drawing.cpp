@@ -48,7 +48,16 @@ void Drawing::SetSelectionPoints()
     this->height = maxY - minY;
     this->width = maxX - minX;
 
-    SetRotationPoint();
+    this->SetRotationPoint();
+}
+
+void Drawing::SetRotationPoint(void)
+{
+    Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) / 2;
+    float modifier = sizeProportion.y < 0 ? 1 : -1;
+
+    this->rotationIndicator.x = selectionBoxTop.x + sin(angle) * modifier * -rotationIndicatorOffset;
+    this->rotationIndicator.y = selectionBoxTop.y + cos(angle) * modifier * rotationIndicatorOffset;
 }
 
 void Drawing::SetColor(float r, float g, float b)
@@ -91,8 +100,8 @@ void Drawing::RenderSelectionIndicators()
 bool Drawing::CheckMouseClick(int mx, int my)
 {
     return pnpoly(this->elementsCounter,
-                  Vector2::GetXs(this->corners, elementsCounter),
-                  Vector2::GetYs(this->corners, elementsCounter),
+                  Vector2::GetXs(this->points, elementsCounter),
+                  Vector2::GetYs(this->points, elementsCounter),
                   mx, my);
 }
 
