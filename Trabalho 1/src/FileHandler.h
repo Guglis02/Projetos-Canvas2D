@@ -4,6 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include "Drawings/Drawing.h"
+#include "Drawings/CircleDrawing.h"
+#include "Drawings/PolygonDrawing.h"
+#include "Drawings/RectangleDrawing.h"
+#include "Drawings/TriangleDrawing.h"
 #include "FunctionType.h"
 
 using namespace std;
@@ -35,8 +39,8 @@ void SaveInFile(vector<Drawing*> drawings)
                 fprintf(file, "%.f %.f %.f %.f ",
                         d->GetXs()[0],
                         d->GetYs()[0],
-                        d->GetXs()[2],
-                        d->GetYs()[2]);
+                        d->GetWidth(),
+                        d->GetHeight());
                 break;
             case Circle:
                 fprintf(file, "%.f %.f %.f ",
@@ -67,12 +71,17 @@ void SaveInFile(vector<Drawing*> drawings)
 
             float* color = d->GetColor();
             bool fillFlag = d->GetFillFlag();
+            float angle = d->GetAngle();
+            Vector2 proportion = d->GetProportion();
 
-            fprintf(file, "%.2f %.2f %.2f %d\n",
+            fprintf(file, "%.2f %.2f %.2f %d %.2f %.2f %.2f\n",
                     color[0],
                     color[1],
                     color[2],
-                    fillFlag);
+                    fillFlag,
+                    angle,
+                    proportion.x,
+                    proportion.y);
     }
 
     fclose(file);
@@ -94,7 +103,7 @@ void LoadFromFile(vector<Drawing*>&drawings)
     FunctionType type;
 
     int typeIndex;
-    float x1, y1, x2, y2, width, height, radius;
+    float x1, y1, width, height, radius;
     int elementsCounter;
 
     for (int i = 0; i < numberOfDrawings; i++)
@@ -106,8 +115,8 @@ void LoadFromFile(vector<Drawing*>&drawings)
         switch (type)
         {
             case Rect:
-                file >> x1 >> y1 >> x2 >> y2;
-                drawing = new RectangleDrawing(x1, y1, x2, y2);
+                file >> x1 >> y1 >> width >> height;
+                drawing = new RectangleDrawing(x1, y1, x1 + width, y1 + height);
                 break;
             case Triangle:
                 file >> x1 >> y1 >> width >> height;
@@ -140,10 +149,15 @@ void LoadFromFile(vector<Drawing*>&drawings)
 
         float r, g, b;
         bool fillFlag;
+        float angle;
+        float proportionX;
+        float proportionY;
 
-        file >> r >> g >> b >> fillFlag;
+        file >> r >> g >> b >> fillFlag >> angle >> proportionX >> proportionY;
         drawing->SetColor(r, g, b);
         drawing->SetFillFlag(fillFlag);
+        drawing->LoadProportion(Vector2(proportionX, proportionY));
+        drawing->ApplyAngle(angle);
 
         drawings.push_back(drawing);
     }

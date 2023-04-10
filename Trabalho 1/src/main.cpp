@@ -1,194 +1,64 @@
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
 
-#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <vector>
-#include <utility>
-#include <algorithm>
 
 #include "gl_canvas2d.h"
 #include "ToolBar.h"
-#include "FunctionType.h"
-#include "Drawings/Drawing.h"
-#include "Drawings/RectangleDrawing.h"
-#include "Drawings/CircleDrawing.h"
-#include "Drawings/TriangleDrawing.h"
-#include "Drawings/PolygonDrawing.h"
-#include "MouseHandler.h"
-#include "FileHandler.h"
-#include "PointsUtils.h"
-
-using namespace std;
+#include "DrawingCanvas.h"
 
 //Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = 1000, screenHeight = 600;
 
 const int ToolbarHeight = 130;
 
-vector<Drawing*> drawings;
-
-vector<Vector2> tempPoints;
-
+DrawingCanvas* drawingCanvas = NULL;
 ToolBar* toolBar = NULL;
 ToolBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
 
-Drawing* newDrawing;
-Drawing* selectedDrawing;
-
-float selectedColor[] = {0,0,0};
-
 // Callbacks
 void FillDrawing(void)
 {
-    if (selectedDrawing)
-    {
-        selectedDrawing->SwitchFillable();
-    }
+    drawingCanvas->FillDrawing();
     toolBar->DeSelectButton();
 }
 
 void BringDrawingTop(void)
 {
-    if (selectedDrawing && selectedDrawing != drawings.back())
-    {
-        iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
-                  find(drawings.begin(), drawings.end(), selectedDrawing) + 1);
-    }
+    drawingCanvas->FillDrawing();
     toolBar->DeSelectButton();
 }
 
 void SendDrawingBack(void)
 {
-    if (selectedDrawing && selectedDrawing != drawings.front())
-    {
-        iter_swap(find(drawings.begin(), drawings.end(), selectedDrawing),
-                  find(drawings.begin(), drawings.end(), selectedDrawing) - 1);
-    }
+    drawingCanvas->SendDrawingBack();
     toolBar->DeSelectButton();
 }
 
 void DeleteDrawing(void)
 {
-    if (selectedDrawing)
-    {
-        drawings.erase(find(drawings.begin(), drawings.end(), selectedDrawing));
-        delete selectedDrawing;
-        selectedDrawing = NULL;
-    }
+    drawingCanvas->DeleteDrawing();
     toolBar->DeSelectButton();
 }
 
 void SaveFile(void)
 {
-    SaveInFile(drawings);
+    drawingCanvas->SaveFile();
     toolBar->DeSelectButton();
 }
 
 void ClearCanvas(void)
 {
-    drawings.clear();
+    drawingCanvas->ClearCanvas();
     toolBar->DeSelectButton();
-    selectedDrawing = NULL;
 }
-//
-// Métodos da render
-const int circleIndicatorRadius = 5;
-void RenderPolygonPrototype()
-{
-    int numberOfPoints = tempPoints.size();
-    if (numberOfPoints != 0)
-    {
-        polygon(Vector2::GetXs(tempPoints.data(), numberOfPoints),
-                Vector2::GetYs(tempPoints.data(), numberOfPoints),
-                numberOfPoints);
-
-        for (int i = 0; i < numberOfPoints; i++)
-        {
-            circle(tempPoints[i].x, tempPoints[i].y, circleIndicatorRadius, 10);
-        }
-    }
-}
-
-void DrawingsCanvasHandler()
-{
-    for (Drawing* d : drawings)
-    {
-        d->Render();
-    }
-
-    if (selectedDrawing)
-    {
-        selectedDrawing->RenderSelectionIndicators();
-    }
-
-    color(selectedColor[0],selectedColor[1],selectedColor[2]);
-    if (newDrawing && mouseHandler->IsHolding())
-    {
-        newDrawing->RenderPrototype(mouseHandler->GetClickX(),
-                                    mouseHandler->GetClickY(),
-                                    mouseHandler->GetX(),
-                                    mouseHandler->GetY());
-    }
-
-    if (toolBar->GetCurrentFunction() == Poly)
-    {
-        RenderPolygonPrototype();
-    }
-}
-//
-
-void CheckDrawingSelection()
-{
-    for (Drawing* d : drawings)
-    {
-        if (d->CheckMouseClick(mouseHandler->GetX(), mouseHandler->GetY()))
-        {
-            selectedDrawing = d;
-            return;
-        }
-    }
-    selectedDrawing = NULL;
-}
-
-void UpdateSelectedColor()
-{
-    selectedColor[0] = colorBar->selectedButton->r;
-    selectedColor[1] = colorBar->selectedButton->g;
-    selectedColor[2] = colorBar->selectedButton->b;
-    if (selectedDrawing)
-    {
-        selectedDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-    }
-    colorBar->DeSelectButton();
-}
-
-void AddDrawing()
-{
-    newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-    selectedDrawing = newDrawing;
-    drawings.push_back(newDrawing);
-    newDrawing = NULL;
-    toolBar->DeSelectButton();
-    tempPoints.clear();
-}
-
-Vector2 moveInc;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
-    DrawingsCanvasHandler();
-
-    // Usado apenas para controlar movimento do desenho com o teclado
-    if (selectedDrawing && selectedDrawing->isMoving)
-    {
-        selectedDrawing->Move(moveInc);
-    }
-
+    drawingCanvas->Update(mouseHandler, toolBar->GetCurrentFunction());
     toolBar->Update(0, 0, ToolbarHeight, screenWidth/2);
     colorBar->Update(screenWidth/2, 0, ToolbarHeight, screenWidth/2);
 }
@@ -210,68 +80,25 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
             if (colorBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY()))
             {
-                UpdateSelectedColor();
+                drawingCanvas->UpdateSelectedColor(colorBar->selectedButton->r,
+                                                   colorBar->selectedButton->g,
+                                                   colorBar->selectedButton->b);
+                colorBar->DeSelectButton();
             }
 
-            tempPoints.clear();
+            drawingCanvas->ResetNewDrawing();
             return;
         }
-        switch(toolBar->GetCurrentFunction())
-        {
-            case Rect:
-                selectedDrawing = NULL;
-                newDrawing = new RectangleDrawing(mouseHandler->GetClickX(),
-                                                  mouseHandler->GetClickY(),
-                                                  mouseHandler->GetX(),
-                                                  mouseHandler->GetY());
-                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                break;
-            case Circle:
-                selectedDrawing = NULL;
-                newDrawing = new CircleDrawing(mouseHandler->GetClickX(),
-                                               mouseHandler->GetClickY(),
-                                               mouseHandler->GetDiffX(),
-                                               32);
-                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                break;
-            case Triangle:
-                selectedDrawing = NULL;
-                newDrawing = new TriangleDrawing(mouseHandler->GetClickX(),
-                                                 mouseHandler->GetClickY(),
-                                                 mouseHandler->GetDiffX(),
-                                                 mouseHandler->GetDiffY());
-                newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
-                break;
-            case Poly:
-                selectedDrawing = NULL;
-                if (pnpoly(tempPoints.size(), tempPoints.data(), Vector2(mouseHandler->GetX(), mouseHandler->GetY())))
-                {
-                    newDrawing = new PolygonDrawing(Vector2::GetXs(tempPoints.data(), tempPoints.size()),
-                                                    Vector2::GetYs(tempPoints.data(), tempPoints.size()),
-                                                    tempPoints.size());
-                    AddDrawing();
-                } else
-                {
-                    tempPoints.push_back(Vector2(mouseHandler->GetX(), mouseHandler->GetY()));
-                }
-                break;
-            default:
-                if (selectedDrawing && selectedDrawing->CheckMouseInteraction(mouseHandler->GetX(), mouseHandler->GetY()))
-                {
-                    return;
-                }
-                CheckDrawingSelection();
-                break;
-        }
+        drawingCanvas->MouseClick(mouseHandler);
         return;
     }
 
-    if (selectedDrawing && mouseHandler->IsDragging())
+    if (mouseHandler->IsDragging())
     {
-        selectedDrawing->EditDrawing(mouseHandler->GetX(),
-                                     mouseHandler->GetY(),
-                                     mouseHandler->GetDiffX(),
-                                     mouseHandler->GetDiffY());
+        if (mouseHandler->IsPointerUnder(ToolbarHeight))
+        {
+            drawingCanvas->MouseDrag(mouseHandler);
+        }
     }
 
     // Soltar o mouse
@@ -280,14 +107,11 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         // Se eu soltar no canvas de desenho
         if (mouseHandler->IsPointerUnder(ToolbarHeight))
         {
-            if (newDrawing && toolBar->GetCurrentFunction() != Poly)
-            {
-                AddDrawing();
-            }
+            drawingCanvas->MouseRelease();
         }
         else
         {
-            newDrawing = NULL;
+            drawingCanvas->ResetNewDrawing();
         }
     }
 }
@@ -296,51 +120,15 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-   //printf("\nClicou Tecla: %d" , key);
-
-   if (key == 26 && !drawings.empty())
-   {
-        printf("\nClicou Tecla: %d" , key);
-        drawings.pop_back();
-        selectedDrawing = NULL;
-   }
-
-   if (selectedDrawing)
-   {
-       switch(key)
-       {
-            case 200:
-                moveInc.set(-10, 0);
-                selectedDrawing->isMoving = true;
-                break;
-            case 201:
-                moveInc.set(0, -10);
-                selectedDrawing->isMoving = true;
-                break;
-            case 202:
-                moveInc.set(10, 0);
-                selectedDrawing->isMoving = true;
-                break;
-            case 203:
-                moveInc.set(0, 10);
-                selectedDrawing->isMoving = true;
-                break;
-            default:
-                break;
-       }
-   }
+    printf("\nClicou Tecla: %d" , key);
+    drawingCanvas->Keyboard(key);
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-   //printf("\nLiberou Tecla: %d" , key);
-
-   if (selectedDrawing)
-   {
-        moveInc.set(0, 0);
-        selectedDrawing->isMoving = false;
-   }
+    //printf("\nLiberou Tecla: %d" , key);
+    drawingCanvas->KeyboardUp(key);
 }
 
 void StartButtons()
@@ -374,10 +162,9 @@ int main(void)
     mouseHandler = new MouseHandler();
     toolBar = new ToolBar(ToolbarHeight, screenWidth/2);
     colorBar = new ToolBar(ToolbarHeight, screenWidth/2);
+    drawingCanvas = new DrawingCanvas();
 
     StartButtons();
-
-    LoadFromFile(drawings);
 
     run();
 }

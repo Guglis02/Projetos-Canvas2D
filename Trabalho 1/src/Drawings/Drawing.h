@@ -147,12 +147,41 @@ class Drawing
             SetRotationPoint();
         }
 
+        void LoadProportion(Vector2 proportion)
+        {
+            // Atualiza pontos do desenho
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                Vector2 newPoint = Vector2(originPoints[i].x * proportion.x,
+                                           originPoints[i].y * proportion.y);
+
+                points[i] = newPoint + corners[0];
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 newPoint = Vector2(originCorners[i].x * proportion.x,
+                                           originCorners[i].y * proportion.y);
+
+                corners[i] = newPoint + corners[0];
+            }
+
+            this->sizeProportion.set(proportion);
+            SetRotationPoint();
+        }
+
         void Rotate(int mx, int my)
         {
             Vector2 originToCenter = Vector2((corners[0] + corners[2]) / 2.0);
 
             float angle = GetAngleBetweenPoints(rotationIndicator - originToCenter,
                                                 Vector2(mx, my) - originToCenter);
+
+            ApplyAngle(angle);
+        }
+
+        void ApplyAngle(float angle)
+        {
+            Vector2 originToCenter = Vector2((corners[0] + corners[2]) / 2.0);
 
             // Rotaciona o indicador de rotação na origem
 
@@ -196,6 +225,8 @@ class Drawing
                             return color; }
 
         bool GetFillFlag(void) { return this->shouldBeFilled; }
+        float GetAngle(void) { return this->angle; }
+        Vector2 GetProportion(void) { return this->sizeProportion; }
 
         float* GetXs(void)
         {
@@ -241,7 +272,7 @@ class Drawing
         bool isRotating = false;
         int modifyingPointIndex = -1;
         float angle = 0.0;
-        Vector2 sizeProportion;
+        Vector2 sizeProportion = Vector2(1,1);
 
         void AddSelectionPoint(int x, int y, int index);
 
