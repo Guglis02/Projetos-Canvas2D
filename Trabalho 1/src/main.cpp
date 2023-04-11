@@ -7,6 +7,8 @@
 #include "ToolBar.h"
 #include "DrawingCanvas.h"
 
+using namespace std;
+
 //Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = 1000, screenHeight = 600;
 
@@ -16,43 +18,6 @@ DrawingCanvas* drawingCanvas = NULL;
 ToolBar* toolBar = NULL;
 ToolBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
-
-// Callbacks
-void FillDrawing(void)
-{
-    drawingCanvas->FillDrawing();
-    toolBar->DeSelectButton();
-}
-
-void BringDrawingTop(void)
-{
-    drawingCanvas->FillDrawing();
-    toolBar->DeSelectButton();
-}
-
-void SendDrawingBack(void)
-{
-    drawingCanvas->SendDrawingBack();
-    toolBar->DeSelectButton();
-}
-
-void DeleteDrawing(void)
-{
-    drawingCanvas->DeleteDrawing();
-    toolBar->DeSelectButton();
-}
-
-void SaveFile(void)
-{
-    drawingCanvas->SaveFile();
-    toolBar->DeSelectButton();
-}
-
-void ClearCanvas(void)
-{
-    drawingCanvas->ClearCanvas();
-    toolBar->DeSelectButton();
-}
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
@@ -116,7 +81,6 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     }
 }
 
-
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
@@ -137,12 +101,12 @@ void StartButtons()
     toolBar->CreateButton(Circle, nullptr, "Circulo");
     toolBar->CreateButton(Triangle, nullptr, "Triangulo");
     toolBar->CreateButton(Poly, nullptr, "Poligono");
-    toolBar->CreateButton(Fill, FillDrawing, "Preencher");
-    toolBar->CreateButton(BringTop, BringDrawingTop, "Subir");
-    toolBar->CreateButton(SendBack, SendDrawingBack, "Descer");
-    toolBar->CreateButton(Save, SaveFile, "Salvar");
-    toolBar->CreateButton(Delete, DeleteDrawing, "Deletar");
-    toolBar->CreateButton(Clear, ClearCanvas, "Limpar");
+    toolBar->CreateButton(Fill, bind(&DrawingCanvas::FillDrawing, drawingCanvas), "Preencher");
+    toolBar->CreateButton(BringTop, bind(&DrawingCanvas::BringDrawingTop, drawingCanvas), "Subir");
+    toolBar->CreateButton(SendBack, bind(&DrawingCanvas::SendDrawingBack, drawingCanvas), "Descer");
+    toolBar->CreateButton(Save, bind(&DrawingCanvas::SaveFile, drawingCanvas), "Salvar");
+    toolBar->CreateButton(Delete, bind(&DrawingCanvas::DeleteDrawing, drawingCanvas), "Deletar");
+    toolBar->CreateButton(Clear, bind(&DrawingCanvas::ClearCanvas, drawingCanvas), "Limpar");
 
     for(int i = 0; i < 16; i++)
     {
@@ -162,7 +126,7 @@ int main(void)
     mouseHandler = new MouseHandler();
     toolBar = new ToolBar(ToolbarHeight, screenWidth/2);
     colorBar = new ToolBar(ToolbarHeight, screenWidth/2);
-    drawingCanvas = new DrawingCanvas();
+    drawingCanvas = new DrawingCanvas(bind(&ToolBar::DeSelectButton, toolBar));
 
     StartButtons();
 

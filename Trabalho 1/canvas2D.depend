@@ -322,7 +322,7 @@
 	"Button.h"
 	"FunctionType.h"
 
-1681158461 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1681213771 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -578,7 +578,7 @@
 	<stdio.h>
 	<math.h>
 
-1681158690 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
+1681214171 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
 	"Drawings/Drawing.h"
 	"MouseHandler.h"
 	"FileHandler.h"
