@@ -13,12 +13,51 @@ using namespace std;
 class Drawing
 {
     public:
-        void Render();
-        void RenderSelectionIndicators();
+        void Render(void)
+        {
+            color(this->r, this->g, this->b);
+            if (shouldBeFilled)
+            {
+                polygonFill(Vector2::GetXs(this->points, elementsCounter),
+                            Vector2::GetYs(this->points, elementsCounter),
+                            this->elementsCounter);
+            } else
+            {
+                polygon(Vector2::GetXs(this->points, elementsCounter),
+                        Vector2::GetYs(this->points, elementsCounter),
+                        this->elementsCounter);
+            }
+        }
+        void RenderSelectionIndicators(void)
+        {
+            color(1);
+            polygon(Vector2::GetXs(this->corners, 4),
+                    Vector2::GetYs(this->corners, 4),
+                    4);
+            for (int i = 0; i < 4; i++)
+            {
+                circleFill(corners[i].x, corners[i].y, IndicatorBallRadius, 10);
+            }
+
+            color(1);
+            circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
+        }
         virtual void RenderPrototype(int clickX, int clickY, int currentX, int currentY){};
-        void SwitchFillable();
-        void AddPoint(int x, int y, int index);
-        bool CheckMouseClick(int mx, int my);
+        void SwitchFillable(void)
+        {
+            this->shouldBeFilled = !this->shouldBeFilled;
+        }
+        void AddPoint(int x, int y, int index)
+        {
+            this->points[index] = Vector2(x, y);
+        }
+        bool CheckMouseClick(int mx, int my)
+        {
+            return pnpoly(this->elementsCounter,
+                          Vector2::GetXs(this->points, elementsCounter),
+                          Vector2::GetYs(this->points, elementsCounter),
+                          mx, my);
+        }
 
         void GenerateOriginPoints(void)
         {
@@ -210,40 +249,78 @@ class Drawing
             this->angle += angle;
         }
 
-        void SetSelectionPoints(void);
-        void SetRotationPoint(void);
+        //
+        // Setters
+        //
+        void SetSelectionPoints(void)
+        {
+            // Variaveis auxiliares para pegar os pontos extremos e montar o indicador de seleção
+            float minX = numeric_limits<float>::max();
+            float minY = numeric_limits<float>::max();
+            float maxX = numeric_limits<float>::lowest();
+            float maxY = numeric_limits<float>::lowest();
 
-        void SetColor(float r, float g, float b);
+            for(int i = 0; i < elementsCounter; i++)
+            {
+                minX = min(points[i].x, minX);
+                minY = min(points[i].y, minY);
+                maxX = max(points[i].x, maxX);
+                maxY = max(points[i].y, maxY);
+            }
+
+            this->AddSelectionPoint(minX, minY, 0);
+            this->AddSelectionPoint(maxX, minY, 1);
+            this->AddSelectionPoint(maxX, maxY, 2);
+            this->AddSelectionPoint(minX, maxY, 3);
+
+            this->height = maxY - minY;
+            this->width = maxX - minX;
+
+            this->SetRotationPoint();
+        }
+        void SetRotationPoint(void)
+        {
+            Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) / 2;
+            float modifier = sizeProportion.y < 0 ? 1 : -1;
+
+            this->rotationIndicator.x = selectionBoxTop.x + sin(angle) * modifier * -rotationIndicatorOffset;
+            this->rotationIndicator.y = selectionBoxTop.y + cos(angle) * modifier * rotationIndicatorOffset;
+        }
+        void SetColor(float r, float g, float b)
+        {
+            this->r = r;
+            this->g = g;
+            this->b = b;
+        }
         void SetFillFlag(bool value) { this->shouldBeFilled = value; }
 
+        //
+        // Getters
+        //
         FunctionType GetType(void) { return this->type; }
-
-        float* GetColor(void) { float* color = new float[3];
-                            color[0] = this->r;
-                            color[1] = this->g;
-                            color[2] = this->b;
-                            return color; }
-
+        float* GetColor(void)
+        {
+            float* color = new float[3];
+            color[0] = this->r;
+            color[1] = this->g;
+            color[2] = this->b;
+            return color;
+        }
         bool GetFillFlag(void) { return this->shouldBeFilled; }
         float GetAngle(void) { return this->angle; }
         Vector2 GetProportion(void) { return this->sizeProportion; }
-
         float* GetXs(void)
         {
             return Vector2::GetXs(this->points, this->elementsCounter);
         }
-
         float* GetYs(void)
         {
             return Vector2::GetYs(this->points, this->elementsCounter);
         }
-
         float GetCenterX(void) { return (this->corners[0].x + this->corners[2].x) / 2; }
         float GetCenterY(void) { return (this->corners[0].y + this->corners[2].y) / 2; }
-
         float GetHeight(void) { return this->height; }
         float GetWidth(void) { return this->width; }
-
         int GetElementsCount(void) { return elementsCounter; }
 
         bool isMoving = false;
@@ -274,14 +351,16 @@ class Drawing
         float angle = 0.0;
         Vector2 sizeProportion = Vector2(1,1);
 
-        void AddSelectionPoint(int x, int y, int index);
+        void AddSelectionPoint(int x, int y, int index)
+        {
+            this->corners[index] = Vector2(x, y);
+        }
 
         bool shouldBeFilled = false;
 
         float r = 0;
         float g = 0;
         float b = 0;
-
 };
 
 #endif // DRAWING_H

@@ -2,55 +2,27 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\Drawings\Drawing.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\main.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="999" topLine="69" />
+			<Cursor1 position="77" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="24" />
+			<Collapse line="32" />
+			<Collapse line="85" />
+			<Collapse line="92" />
+			<Collapse line="98" />
+			<Collapse line="122" />
+		</Folding>
 	</File>
-	<File name="src\FileHandler.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Drawings\PolygonDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="271" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Drawings\CircleDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1213" topLine="24" />
+			<Cursor1 position="548" topLine="7" />
 		</Cursor>
 	</File>
 	<File name="src\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="166" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\main.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1226" topLine="71" />
-		</Cursor>
-		<Folding>
-			<Collapse line="121" />
-		</Folding>
-	</File>
-	<File name="src\Drawings\RectangleDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="525" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="src\Drawings\Drawing.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="9341" topLine="186" />
-		</Cursor>
-		<Folding>
-			<Collapse line="23" />
-			<Collapse line="37" />
-			<Collapse line="60" />
-			<Collapse line="76" />
-			<Collapse line="150" />
-			<Collapse line="220" />
-		</Folding>
-	</File>
-	<File name="src\gl_canvas2d.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="249" topLine="21" />
 		</Cursor>
 	</File>
 	<File name="src\PointsUtils.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -62,26 +34,6 @@
 			<Collapse line="12" />
 			<Collapse line="27" />
 			<Collapse line="39" />
-		</Folding>
-	</File>
-	<File name="src\ToolBar.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="109" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Drawings\PolygonDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="548" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="src\DrawingCanvas.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="387" topLine="93" />
-		</Cursor>
-		<Folding>
-			<Collapse line="165" />
-			<Collapse line="171" />
-			<Collapse line="222" />
 		</Folding>
 	</File>
 	<File name="src\Drawings\TriangleDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -98,5 +50,71 @@
 		<Cursor>
 			<Cursor1 position="1912" topLine="54" />
 		</Cursor>
+	</File>
+	<File name="src\Drawings\RectangleDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="525" topLine="2" />
+		</Cursor>
+	</File>
+	<File name="src\gl_canvas2d.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="249" topLine="21" />
+		</Cursor>
+	</File>
+	<File name="src\Drawings\Drawing.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9762" topLine="123" />
+		</Cursor>
+		<Folding>
+			<Collapse line="23" />
+			<Collapse line="37" />
+			<Collapse line="60" />
+			<Collapse line="76" />
+			<Collapse line="89" />
+			<Collapse line="150" />
+			<Collapse line="220" />
+		</Folding>
+	</File>
+	<File name="src\Drawings\Drawing.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="999" topLine="69" />
+		</Cursor>
+	</File>
+	<File name="src\Drawings\CircleDrawing.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1213" topLine="24" />
+		</Cursor>
+	</File>
+	<File name="src\FileHandler.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="271" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\ToolBar.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="109" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\DrawingCanvas.h" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1415" topLine="18" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="30" />
+			<Collapse line="50" />
+			<Collapse line="61" />
+			<Collapse line="67" />
+			<Collapse line="75" />
+			<Collapse line="110" />
+			<Collapse line="116" />
+			<Collapse line="179" />
+			<Collapse line="190" />
+			<Collapse line="198" />
+			<Collapse line="232" />
+			<Collapse line="256" />
+			<Collapse line="272" />
+			<Collapse line="281" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

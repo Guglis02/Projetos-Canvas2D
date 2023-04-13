@@ -45,9 +45,9 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
             if (colorBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY()))
             {
-                drawingCanvas->UpdateSelectedColor(colorBar->selectedButton->r,
-                                                   colorBar->selectedButton->g,
-                                                   colorBar->selectedButton->b);
+                drawingCanvas->UpdateSelectedColor(colorBar->GetSelectedButton()->r,
+                                                   colorBar->GetSelectedButton()->g,
+                                                   colorBar->GetSelectedButton()->b);
                 colorBar->DeSelectButton();
             }
 
