@@ -26,6 +26,7 @@ class CircleDrawing : public Drawing
 
             SetSelectionPoints();
             GenerateOriginPoints();
+            GenerateAnchor();
         }
 
         void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
@@ -43,9 +44,14 @@ class CircleDrawing : public Drawing
 
             SetSelectionPoints();
             GenerateOriginPoints();
+            GenerateAnchor();
             Render();
         }
 
+        void GenerateAnchor(void)
+        {
+            this->anchor = GetGlobalCenter();
+        }
     private:
         float ang = 0;
         float inc = 0;

@@ -37,21 +37,21 @@ void SaveInFile(vector<Drawing*> drawings)
         {
             case Rect:
                 fprintf(file, "%.f %.f %.f %.f ",
-                        d->GetXs()[0],
-                        d->GetYs()[0],
+                        d->GetAnchor().x,
+                        d->GetAnchor().y,
                         d->GetWidth(),
                         d->GetHeight());
                 break;
             case Circle:
                 fprintf(file, "%.f %.f %.f ",
-                        d->GetCenterX(),
-                        d->GetCenterY(),
+                        d->GetAnchor().x,
+                        d->GetAnchor().y,
                         d->GetWidth() / 2);
                 break;
             case Triangle:
                 fprintf(file, "%.f %.f %.f %.f ",
-                        d->GetXs()[0],
-                        d->GetYs()[0] - d->GetHeight(),
+                        d->GetAnchor().x,
+                        d->GetAnchor().y,
                         d->GetWidth(),
                         d->GetHeight());
                 break;
@@ -61,7 +61,9 @@ void SaveInFile(vector<Drawing*> drawings)
 
                 for (int i = 0; i < elementsCounter; i++)
                 {
-                    fprintf(file, "%.f %.f ", d->GetXs()[i], d->GetYs()[i]);
+                    fprintf(file, "%.f %.f ",
+                                d->GetOriginPoints()[i].x + d->GetAnchor().x,
+                                d->GetOriginPoints()[i].y + d->GetAnchor().y);
                 }
                 break;
             default:

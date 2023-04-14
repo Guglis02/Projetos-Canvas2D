@@ -7,12 +7,16 @@
 #include "gl_canvas2d.h"
 #include <stdio.h>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 class Drawing
 {
     public:
+        //
+        // Render
+        //
         void Render(void)
         {
             color(this->r, this->g, this->b);
@@ -27,6 +31,7 @@ class Drawing
                         Vector2::GetYs(this->points, elementsCounter),
                         this->elementsCounter);
             }
+            color(2);
         }
         void RenderSelectionIndicators(void)
         {
@@ -43,14 +48,10 @@ class Drawing
             circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
         }
         virtual void RenderPrototype(int clickX, int clickY, int currentX, int currentY){};
-        void SwitchFillable(void)
-        {
-            this->shouldBeFilled = !this->shouldBeFilled;
-        }
-        void AddPoint(int x, int y, int index)
-        {
-            this->points[index] = Vector2(x, y);
-        }
+
+        //
+        // Mouse
+        //
         bool CheckMouseClick(int mx, int my)
         {
             return pnpoly(this->elementsCounter,
@@ -58,21 +59,6 @@ class Drawing
                           Vector2::GetYs(this->points, elementsCounter),
                           mx, my);
         }
-
-        void GenerateOriginPoints(void)
-        {
-            this->originPoints = new Vector2[this->elementsCounter];
-
-            for (int i = 0; i < elementsCounter; i++)
-            {
-                originPoints[i] = this->points[i] - this->corners[0];
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                originCorners[i] = this->corners[i] - this->corners[0];
-            }
-        }
-
         bool CheckMouseInteraction(int mx, int my)
         {
             for (int i = 0; i < 4; i++)
@@ -96,6 +82,9 @@ class Drawing
             return false;
         }
 
+        //
+        // Edição de desenho (alguns métodos recebem input do mouse, outros recebem input do arquivo de figuras salvas)
+        //
         void EditDrawing(int mx, int my, int xInc, int yInc)
         {
             if (isResizing)
@@ -122,6 +111,7 @@ class Drawing
             {
                 this->corners[i] += inc;
             }
+            this->anchor += inc;
             this->rotationIndicator += inc;
         }
 
@@ -179,33 +169,36 @@ class Drawing
 
                 Vector2 rotated = RotatePoint(newPoint, angle);
 
-                points[i] = rotated + corners[0];
+                points[i] = rotated + GenerateAndReturnAnchor();
             }
 
             this->sizeProportion.set(proportion);
             SetRotationPoint();
+            GenerateAnchor();
         }
 
         void LoadProportion(Vector2 proportion)
         {
+            Vector2 tempAnchor = GenerateAndReturnAnchor();
             // Atualiza pontos do desenho
-            for (int i = 0; i < elementsCounter; i++)
-            {
-                Vector2 newPoint = Vector2(originPoints[i].x * proportion.x,
-                                           originPoints[i].y * proportion.y);
-
-                points[i] = newPoint + corners[0];
-            }
             for (int i = 0; i < 4; i++)
             {
                 Vector2 newPoint = Vector2(originCorners[i].x * proportion.x,
                                            originCorners[i].y * proportion.y);
 
-                corners[i] = newPoint + corners[0];
+                corners[i] = newPoint + tempAnchor;
+            }
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                Vector2 newPoint = Vector2(originPoints[i].x * proportion.x,
+                                           originPoints[i].y * proportion.y);
+
+                points[i] = newPoint + GenerateAndReturnAnchor();
             }
 
             this->sizeProportion.set(proportion);
             SetRotationPoint();
+            GenerateAnchor();
         }
 
         void Rotate(int mx, int my)
@@ -280,7 +273,7 @@ class Drawing
         }
         void SetRotationPoint(void)
         {
-            Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) / 2;
+            Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) * 0.5;
             float modifier = sizeProportion.y < 0 ? 1 : -1;
 
             this->rotationIndicator.x = selectionBoxTop.x + sin(angle) * modifier * -rotationIndicatorOffset;
@@ -293,7 +286,10 @@ class Drawing
             this->b = b;
         }
         void SetFillFlag(bool value) { this->shouldBeFilled = value; }
-
+        void SwitchFillable(void)
+        {
+            this->shouldBeFilled = !this->shouldBeFilled;
+        }
         //
         // Getters
         //
@@ -309,19 +305,15 @@ class Drawing
         bool GetFillFlag(void) { return this->shouldBeFilled; }
         float GetAngle(void) { return this->angle; }
         Vector2 GetProportion(void) { return this->sizeProportion; }
-        float* GetXs(void)
+        Vector2* GetOriginPoints(void)
         {
-            return Vector2::GetXs(this->points, this->elementsCounter);
+            return this->originPoints;
         }
-        float* GetYs(void)
-        {
-            return Vector2::GetYs(this->points, this->elementsCounter);
-        }
-        float GetCenterX(void) { return (this->corners[0].x + this->corners[2].x) / 2; }
-        float GetCenterY(void) { return (this->corners[0].y + this->corners[2].y) / 2; }
         float GetHeight(void) { return this->height; }
         float GetWidth(void) { return this->width; }
+        Vector2 GetAnchor(void) { return this->anchor; }
         int GetElementsCount(void) { return elementsCounter; }
+        Vector2 GetGlobalCenter(void) { (this->corners[0] + (this->corners[2] - this->corners[0]) * 0.5); }
 
         bool isMoving = false;
 
@@ -331,6 +323,8 @@ class Drawing
 
         Vector2* points;
 
+        // Atributos que serão usados para restaurar o desenho após o load
+        Vector2 anchor;
         float height;
         float width;
 
@@ -351,10 +345,37 @@ class Drawing
         float angle = 0.0;
         Vector2 sizeProportion = Vector2(1,1);
 
+        Vector2 GenerateAndReturnAnchor()
+        {
+            this->GenerateAnchor();
+            return this->anchor;
+        }
+
+        //
+        // Criação de pontos
+        //
         void AddSelectionPoint(int x, int y, int index)
         {
             this->corners[index] = Vector2(x, y);
         }
+        void GenerateOriginPoints(void)
+        {
+            this->originPoints = new Vector2[this->elementsCounter];
+
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                originPoints[i] = this->points[i] - GenerateAndReturnAnchor();
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                originCorners[i] = this->corners[i] - GenerateAndReturnAnchor();
+            }
+        }
+        void AddPoint(int x, int y, int index)
+        {
+            this->points[index] = Vector2(x, y);
+        }
+        virtual void GenerateAnchor(void) {}
 
         bool shouldBeFilled = false;
 

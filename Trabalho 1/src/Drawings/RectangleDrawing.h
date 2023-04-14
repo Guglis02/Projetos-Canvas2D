@@ -21,6 +21,7 @@ class RectangleDrawing : public Drawing
         this->AddPoint(x1, y2, 3);
 
         SetSelectionPoints();
+        GenerateAnchor();
         GenerateOriginPoints();
     }
 
@@ -32,8 +33,14 @@ class RectangleDrawing : public Drawing
         this->AddPoint(clickX, currentY, 3);
 
         SetSelectionPoints();
+        GenerateAnchor();
         GenerateOriginPoints();
         Render();
+    }
+
+    void GenerateAnchor()
+    {
+        this->anchor = corners[0];
     }
 };
 

@@ -2,6 +2,7 @@
 #define TRIANGLEDRAWING_H_INCLUDED
 
 #include "Drawing.h"
+#include <algorithm>
 
 class TriangleDrawing : public Drawing
 {
@@ -23,6 +24,7 @@ class TriangleDrawing : public Drawing
 
         SetSelectionPoints();
         GenerateOriginPoints();
+        GenerateAnchor();
     }
 
     void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
@@ -30,14 +32,23 @@ class TriangleDrawing : public Drawing
         this->width = (currentX - clickX);
         this->height = (currentY - clickY);
 
-        this->AddPoint(clickX, clickY + height, 0);
-        this->AddPoint(clickX + width * 0.5, clickY, 1);
-        this->AddPoint(clickX + width, clickY + height, 2);
+        this->AddPoint(clickX, clickY + max(height, zero), 0);
+        this->AddPoint(clickX + width * 0.5, clickY + min(height, zero), 1);
+        this->AddPoint(clickX + width, clickY + max(height, zero), 2);
 
         SetSelectionPoints();
         GenerateOriginPoints();
+        GenerateAnchor();
         Render();
     }
+
+    void GenerateAnchor()
+    {
+        this->anchor = corners[0];
+    }
+
+    private:
+        float zero = 0;
 };
 
 #endif // TRIANGLEDRAWING_H_INCLUDED

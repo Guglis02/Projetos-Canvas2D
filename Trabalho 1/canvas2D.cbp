@@ -45,11 +45,9 @@
 			<Add library="lib/libopengl32.a" />
 			<Add library="lib/freeglut.lib" />
 		</Linker>
-		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
 		<Unit filename="src/DrawingCanvas.h" />
 		<Unit filename="src/Drawings/CircleDrawing.h" />
-		<Unit filename="src/Drawings/Drawing.cpp" />
 		<Unit filename="src/Drawings/Drawing.h" />
 		<Unit filename="src/Drawings/PolygonDrawing.h" />
 		<Unit filename="src/Drawings/RectangleDrawing.h" />
@@ -58,7 +56,6 @@
 		<Unit filename="src/FunctionType.h" />
 		<Unit filename="src/MouseHandler.h" />
 		<Unit filename="src/PointsUtils.h" />
-		<Unit filename="src/ToolBar.cpp" />
 		<Unit filename="src/ToolBar.h" />
 		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />

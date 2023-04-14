@@ -23,6 +23,11 @@ class PolygonDrawing : public Drawing
             SetSelectionPoints();
             GenerateOriginPoints();
         }
+
+        void GenerateAnchor()
+        {
+            this->anchor =  GetGlobalCenter();
+        }
 };
 
 #endif // POLYGONDRAWING_H_INCLUDED

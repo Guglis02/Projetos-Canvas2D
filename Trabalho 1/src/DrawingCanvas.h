@@ -189,7 +189,16 @@ class DrawingCanvas
 
         void MouseRelease()
         {
-            if (newDrawing && currentFunction != Poly)
+            if (!newDrawing)
+            {
+                return;
+            }
+
+            // Impede a criação de um desenho muito pequeno
+            bool isSizeValid = newDrawing->GetHeight() > minDrawingSize
+                            || newDrawing->GetWidth() > minDrawingSize;
+
+            if (isSizeValid && currentFunction != Poly)
             {
                 AddDrawing();
             }
@@ -231,14 +240,15 @@ class DrawingCanvas
 
         void KeyboardUp(int key)
         {
-       if (selectedDrawing)
-       {
-            moveInc.set(0, 0);
-            selectedDrawing->isMoving = false;
-       }
-    }
+            if (selectedDrawing)
+            {
+                moveInc.set(0, 0);
+                selectedDrawing->isMoving = false;
+            }
+        }
     private:
         const int circleIndicatorRadius = 5;
+        const int minDrawingSize = 5;
 
         vector<Drawing*> drawings;
         vector<Vector2> tempPoints;
@@ -280,15 +290,16 @@ class DrawingCanvas
 
         void CheckDrawingSelection(int mx, int my)
         {
+            Drawing* temp = NULL;
+
             for (Drawing* d : drawings)
             {
                 if (d->CheckMouseClick(mx, my))
                 {
-                    selectedDrawing = d;
-                    return;
+                    temp = d;
                 }
             }
-            selectedDrawing = NULL;
+            selectedDrawing = temp;
         }
 };
 

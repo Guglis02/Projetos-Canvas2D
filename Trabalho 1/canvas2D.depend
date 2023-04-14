@@ -323,7 +323,7 @@
 	"Button.h"
 	"FunctionType.h"
 
-1681388418 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1681499649 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -352,23 +352,25 @@
 	<limits>
 	<algorithm>
 
-1681386790 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1681500310 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
 	"PointsUtils.h"
 	"Vector2.h"
 	"gl_canvas2d.h"
 	<stdio.h>
 	<algorithm>
+	<iostream>
 
-1681002295 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
+1681499798 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
 	"Drawing.h"
 
-1681002290 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+1681499426 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
 	"Drawing.h"
 	"PointsUtils.h"
 
-1681000874 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
+1681499802 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
 	"Drawing.h"
+	<algorithm>
 
 1680268496 source:c:\users\gmfreitas\documents\projetos-canvas2d\trabalho 1\src\button.cpp
 	"Button.h"
@@ -553,10 +555,10 @@
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1681002286 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
+1681499837 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
 	"Drawing.h"
 
-1681388063 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
+1681498797 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
 	<iostream>
 	<fstream>
 	"Drawings/Drawing.h"
@@ -579,7 +581,7 @@
 	<stdio.h>
 	<math.h>
 
-1681214171 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
+1681476239 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
 	"Drawings/Drawing.h"
 	"MouseHandler.h"
 	"FileHandler.h"
