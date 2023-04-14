@@ -31,7 +31,6 @@ class Drawing
                         Vector2::GetYs(this->points, elementsCounter),
                         this->elementsCounter);
             }
-            color(2);
         }
         void RenderSelectionIndicators(void)
         {

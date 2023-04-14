@@ -1,3 +1,22 @@
+/*
+Trabalho 1 – Editor de Figuras Vetoriais
+CG - 2023/1
+Gustavo Machado de Freitas
+
+O que foi implementado:
+● Inserir/excluir figura.
+● Cor da figura.
+● Preenchimento da figura (Bônus).
+● Editar tamanho da figura.
+● Editar orientação da figura (giros de 90 graus).
+● Enviar para frente/traz.
+● Salvar em arquivo e carregar de arquivo.
+
+Extras:
+● (+0,5) Sinalizar qual figura está selecionada.
+● (+1,0) Rotacionar figura em qualquer ângulo.
+● (+1,0) Permitir inserir polígonos quaisquer.
+*/
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
 
@@ -38,7 +57,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // Clicar com o mouse
     if (mouseHandler->GetState() == 0)
     {
-        // Se eu cliquei na barra de bot�es
+        // Se eu cliquei na barra de botões
         if (mouseHandler->IsPointerOver(ToolbarHeight))
         {
             toolBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY());
