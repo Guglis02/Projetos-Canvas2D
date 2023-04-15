@@ -1,7 +1,8 @@
 #ifndef FUNCTIONTYPE_H_INCLUDED
 #define FUNCTIONTYPE_H_INCLUDED
 
-enum FunctionType {
+enum FunctionType
+{
     // Nenhuma função selecionada no momento
     None,
     // Ferramentas de desenho

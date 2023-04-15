@@ -3,68 +3,97 @@
 
 class MouseHandler
 {
-    public:
-        MouseHandler(void)
+public:
+    MouseHandler(void)
+    {
+        this->x = this->oldX = this->clickX = 0;
+        this->y = this->oldY = this->clickY = 0;
+    }
+
+    void Update(int button, int state, int wheel, int direction, int x, int y)
+    {
+        this->button = button;
+        this->state = state;
+        this->wheel = wheel;
+        this->direction = direction;
+        this->oldX = this->x;
+        this->oldY = this->y;
+        this->x = x;
+        this->y = y;
+
+        if (state == 0)
         {
-            this->x = this->oldX = this->clickX = 0;
-            this->y = this->oldY = this->clickY = 0;
+            isHolding = true;
+            this->clickX = x;
+            this->clickY = y;
         }
-
-        void Update(int button, int state, int wheel, int direction, int x, int y)
+        else if (state == 1)
         {
-            this->button = button;
-            this->state = state;
-            this->wheel = wheel;
-            this->direction = direction;
-            this->oldX = this->x;
-            this->oldY = this->y;
-            this->x = x;
-            this->y = y;
-
-            if (state == 0)
-            {
-                isHolding = true;
-                this->clickX = x;
-                this->clickY = y;
-            } else if (state == 1)
-            {
-                isHolding = false;
-                isDragging = false;
-            } else if (isHolding)
-            {
-                isDragging = true;
-            }
+            isHolding = false;
+            isDragging = false;
         }
+        else if (isHolding)
+        {
+            isDragging = true;
+        }
+    }
 
-        float GetX(void) { return this->x; }
-        float GetY(void) { return this->y; }
+    float GetX(void)
+    {
+        return this->x;
+    }
+    float GetY(void)
+    {
+        return this->y;
+    }
 
-        float GetDiffX(void) { return this->x - this->oldX; }
-        float GetDiffY(void) { return this->y - this->oldY; }
+    float GetDiffX(void)
+    {
+        return this->x - this->oldX;
+    }
+    float GetDiffY(void)
+    {
+        return this->y - this->oldY;
+    }
 
-        float GetClickX(void) { return this->clickX; }
-        float GetClickY(void) { return this->clickY; }
+    float GetClickX(void)
+    {
+        return this->clickX;
+    }
+    float GetClickY(void)
+    {
+        return this->clickY;
+    }
 
-        bool IsHolding(void) { return this->isHolding; }
-        bool IsDragging(void) { return this->isDragging; }
+    bool IsHolding(void)
+    {
+        return this->isHolding;
+    }
+    bool IsDragging(void)
+    {
+        return this->isDragging;
+    }
 
-        int GetState(void) { return this->state; }
+    int GetState(void)
+    {
+        return this->state;
+    }
 
-    private:
-        int button;
-        int state;
-        int wheel;
-        int direction;
+private:
+    int button;
+    int state;
+    int wheel;
+    int direction;
 
-        float clickX;
-        float clickY;
-        float oldX;
-        float oldY;
-        float x;
-        float y;
+    float clickX;
+    float clickY;
+    float oldX;
+    float oldY;
+    float x;
+    float y;
 
-        bool isHolding = false;
-        bool isDragging = false;
+    bool isHolding = false;
+    bool isDragging = false;
 };
 
 #endif // MOUSEHANDLER_H_INCLUDED

@@ -6,28 +6,28 @@
 
 class PolygonDrawing : public Drawing
 {
-    public:
-        PolygonDrawing(float xs[], float ys[], int elementsCounter)
+public:
+    PolygonDrawing(float xs[], float ys[], int elementsCounter)
+    {
+        this->type = Poly;
+
+        this->elementsCounter = elementsCounter;
+
+        this->points = new Vector2[this->elementsCounter];
+
+        for(int i = 0; i < elementsCounter; i++)
         {
-            this->type = Poly;
-
-            this->elementsCounter = elementsCounter;
-
-            this->points = new Vector2[this->elementsCounter];
-
-            for(int i = 0; i < elementsCounter; i++)
-            {
-                this->AddPoint(xs[i], ys[i], i);
-            }
-
-            SetSelectionPoints();
-            GenerateOriginPoints();
+            this->AddPoint(xs[i], ys[i], i);
         }
 
-        void GenerateAnchor()
-        {
-            this->anchor =  GetGlobalCenter();
-        }
+        SetSelectionPoints();
+        GenerateOriginPoints();
+    }
+
+    void GenerateAnchor()
+    {
+        this->anchor =  GetGlobalCenter();
+    }
 };
 
 #endif // POLYGONDRAWING_H_INCLUDED

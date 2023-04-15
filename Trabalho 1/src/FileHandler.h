@@ -35,55 +35,55 @@ void SaveInFile(vector<Drawing*> drawings)
         printf("\n FunctionType = %d", type);
         switch (type)
         {
-            case Rect:
-                fprintf(file, "%.f %.f %.f %.f ",
-                        d->GetAnchor().x,
-                        d->GetAnchor().y,
-                        d->GetWidth(),
-                        d->GetHeight());
-                break;
-            case Circle:
-                fprintf(file, "%.f %.f %.f ",
-                        d->GetAnchor().x,
-                        d->GetAnchor().y,
-                        d->GetWidth() / 2);
-                break;
-            case Triangle:
-                fprintf(file, "%.f %.f %.f %.f ",
-                        d->GetAnchor().x,
-                        d->GetAnchor().y,
-                        d->GetWidth(),
-                        d->GetHeight());
-                break;
-            case Poly:
-                elementsCounter = d->GetElementsCount();
-                fprintf(file, "%d ", elementsCounter);
+        case Rect:
+            fprintf(file, "%.f %.f %.f %.f ",
+                    d->GetAnchor().x,
+                    d->GetAnchor().y,
+                    d->GetWidth(),
+                    d->GetHeight());
+            break;
+        case Circle:
+            fprintf(file, "%.f %.f %.f ",
+                    d->GetAnchor().x,
+                    d->GetAnchor().y,
+                    d->GetWidth() / 2);
+            break;
+        case Triangle:
+            fprintf(file, "%.f %.f %.f %.f ",
+                    d->GetAnchor().x,
+                    d->GetAnchor().y,
+                    d->GetWidth(),
+                    d->GetHeight());
+            break;
+        case Poly:
+            elementsCounter = d->GetElementsCount();
+            fprintf(file, "%d ", elementsCounter);
 
-                for (int i = 0; i < elementsCounter; i++)
-                {
-                    fprintf(file, "%.f %.f ",
-                                d->GetOriginPoints()[i].x + d->GetAnchor().x,
-                                d->GetOriginPoints()[i].y + d->GetAnchor().y);
-                }
-                break;
-            default:
-                exit(1);
-                break;
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                fprintf(file, "%.f %.f ",
+                        d->GetOriginPoints()[i].x + d->GetAnchor().x,
+                        d->GetOriginPoints()[i].y + d->GetAnchor().y);
             }
+            break;
+        default:
+            exit(1);
+            break;
+        }
 
-            float* color = d->GetColor();
-            bool fillFlag = d->GetFillFlag();
-            float angle = d->GetAngle();
-            Vector2 proportion = d->GetProportion();
+        float* color = d->GetColor();
+        bool fillFlag = d->GetFillFlag();
+        float angle = d->GetAngle();
+        Vector2 proportion = d->GetProportion();
 
-            fprintf(file, "%.2f %.2f %.2f %d %.2f %.2f %.2f\n",
-                    color[0],
-                    color[1],
-                    color[2],
-                    fillFlag,
-                    angle,
-                    proportion.x,
-                    proportion.y);
+        fprintf(file, "%.2f %.2f %.2f %d %.2f %.2f %.2f\n",
+                color[0],
+                color[1],
+                color[2],
+                fillFlag,
+                angle,
+                proportion.x,
+                proportion.y);
     }
 
     fclose(file);
@@ -121,37 +121,39 @@ void LoadFromFile(vector<Drawing*>&drawings)
 
         switch (type)
         {
-            case Rect:
-                file >> x1 >> y1 >> width >> height;
-                drawing = new RectangleDrawing(x1, y1, x1 + width, y1 + height);
-                break;
-            case Triangle:
-                file >> x1 >> y1 >> width >> height;
-                drawing = new TriangleDrawing(x1, y1, width, height);
-                break;
-            case Circle:
-                file >> x1 >> y1 >> radius;
-                drawing = new CircleDrawing(x1, y1, radius, 32);
-                break;
-            case Poly:{
-                file >> elementsCounter;
+        case Rect:
+            file >> x1 >> y1 >> width >> height;
+            drawing = new RectangleDrawing(x1, y1, x1 + width, y1 + height);
+            break;
+        case Triangle:
+            file >> x1 >> y1 >> width >> height;
+            drawing = new TriangleDrawing(x1, y1, width, height);
+            break;
+        case Circle:
+            file >> x1 >> y1 >> radius;
+            drawing = new CircleDrawing(x1, y1, radius, 32);
+            break;
+        case Poly:
+        {
+            file >> elementsCounter;
 
-                float* xs = new float[elementsCounter];
-                float* ys = new float[elementsCounter];
+            float* xs = new float[elementsCounter];
+            float* ys = new float[elementsCounter];
 
-                for (int i = 0; i < elementsCounter; i++)
-                {
-                    file >> xs[i] >> ys[i];
-                }
+            for (int i = 0; i < elementsCounter; i++)
+            {
+                file >> xs[i] >> ys[i];
+            }
 
-                drawing = new PolygonDrawing(xs, ys, elementsCounter);
-                delete[] xs;
-                delete[] ys;
+            drawing = new PolygonDrawing(xs, ys, elementsCounter);
+            delete[] xs;
+            delete[] ys;
 
-                break;}
-            default:
-                exit(1);
-                break;
+            break;
+        }
+        default:
+            exit(1);
+            break;
         }
 
         float r, g, b;

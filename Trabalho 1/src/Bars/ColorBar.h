@@ -7,7 +7,8 @@
 #include "Bars/SatSlider.h"
 #include "Bars/ValueSlider.h"
 
-class ColorBar : public Bar {
+class ColorBar : public Bar
+{
 public:
     ColorBar(int height, int width) : Bar(height, width)
     {
@@ -16,7 +17,8 @@ public:
         valueSlider = new ValueSlider(0, 0, width/3, height/3, 0.0, 1.0, 0.5);
     }
 
-    void Update(int x, int y, int height, int width) {
+    void Update(int x, int y, int height, int width)
+    {
         Bar::Update(x, y, height, width);
 
         hueSlider->Update(x, y, width/2, height/3);
@@ -52,10 +54,12 @@ public:
         if (hueSlider->IsMouseInside(mx, my))
         {
             hueSlider->OnMouseClick(mx, my);
-        } else if (saturationSlider->IsMouseInside(mx, my))
+        }
+        else if (saturationSlider->IsMouseInside(mx, my))
         {
             saturationSlider->OnMouseClick(mx, my);
-        } else if (valueSlider->IsMouseInside(mx, my))
+        }
+        else if (valueSlider->IsMouseInside(mx, my))
         {
             valueSlider->OnMouseClick(mx, my);
         }
@@ -66,10 +70,12 @@ public:
         if (hueSlider->IsMouseInside(mx, my))
         {
             hueSlider->OnMouseDrag(mx);
-        } else if (saturationSlider->IsMouseInside(mx, my))
+        }
+        else if (saturationSlider->IsMouseInside(mx, my))
         {
             saturationSlider->OnMouseDrag(mx);
-        } else if (valueSlider->IsMouseInside(mx, my))
+        }
+        else if (valueSlider->IsMouseInside(mx, my))
         {
             valueSlider->OnMouseDrag(mx);
         }
@@ -84,10 +90,12 @@ public:
         if (hueSlider->IsMouseInside(mx, my))
         {
             hueSlider->OnMouseRelease();
-        } else if (saturationSlider->IsMouseInside(mx, my))
+        }
+        else if (saturationSlider->IsMouseInside(mx, my))
         {
             saturationSlider->OnMouseRelease();
-        } else if (valueSlider->IsMouseInside(mx, my))
+        }
+        else if (valueSlider->IsMouseInside(mx, my))
         {
             valueSlider->OnMouseRelease();
         }
@@ -97,7 +105,8 @@ private:
     float saturation = 0;
     float value = 0;
 
-    void DrawPreview(void) {
+    void DrawPreview(void)
+    {
         float r, g, b;
         GetRGB(r, g, b);
 
@@ -121,7 +130,8 @@ private:
         valueSlider->SetValue(value);
     }
 
-    void SetHSV(float hue, float saturation, float value) {
+    void SetHSV(float hue, float saturation, float value)
+    {
         this->hue = hue;
         this->saturation = saturation;
         this->value = value;

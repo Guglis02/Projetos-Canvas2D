@@ -6,56 +6,56 @@
 
 class CircleDrawing : public Drawing
 {
-    public:
-        CircleDrawing(int x, int y, int radius, int div)
+public:
+    CircleDrawing(int x, int y, int radius, int div)
+    {
+        this->type = Circle;
+
+        this->points = new Vector2[div];
+
+        this->elementsCounter = div;
+
+        this->ang = 0;
+        this->inc = PI_2/div;
+
+        for(int i = 0; i < div; i++)
         {
-            this->type = Circle;
-
-            this->points = new Vector2[div];
-
-            this->elementsCounter = div;
-
-            this->ang = 0;
-            this->inc = PI_2/div;
-
-            for(int i = 0; i < div; i++)
-            {
-                this->AddPoint(x + (cos(ang)*radius), y + (sin(ang)*radius), i);
-                ang+=inc;
-            }
-
-            SetSelectionPoints();
-            GenerateOriginPoints();
-            GenerateAnchor();
+            this->AddPoint(x + (cos(ang)*radius), y + (sin(ang)*radius), i);
+            ang+=inc;
         }
 
-        void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
+        SetSelectionPoints();
+        GenerateOriginPoints();
+        GenerateAnchor();
+    }
+
+    void RenderPrototype(int clickX, int clickY, int currentX, int currentY)
+    {
+        this->ang = 0;
+        this->inc = PI_2/this->elementsCounter;
+        this->radius = DistanceBetweenTwoPoints(clickX, clickY, currentX, currentY);
+
+        for(int i = 0; i < this->elementsCounter; i++)
         {
-            this->ang = 0;
-            this->inc = PI_2/this->elementsCounter;
-            this->radius = DistanceBetweenTwoPoints(clickX, clickY, currentX, currentY);
-
-            for(int i = 0; i < this->elementsCounter; i++)
-            {
-                this->AddPoint(clickX + (cos(ang)*radius),
-                               clickY + (sin(ang)*radius), i);
-                ang+=inc;
-            }
-
-            SetSelectionPoints();
-            GenerateOriginPoints();
-            GenerateAnchor();
-            Render();
+            this->AddPoint(clickX + (cos(ang)*radius),
+                           clickY + (sin(ang)*radius), i);
+            ang+=inc;
         }
 
-        void GenerateAnchor(void)
-        {
-            this->anchor = GetGlobalCenter();
-        }
-    private:
-        float ang = 0;
-        float inc = 0;
-        float radius = 0;
+        SetSelectionPoints();
+        GenerateOriginPoints();
+        GenerateAnchor();
+        Render();
+    }
+
+    void GenerateAnchor(void)
+    {
+        this->anchor = GetGlobalCenter();
+    }
+private:
+    float ang = 0;
+    float inc = 0;
+    float radius = 0;
 };
 
 #endif // CIRCLEDRAWING_H_INCLUDED

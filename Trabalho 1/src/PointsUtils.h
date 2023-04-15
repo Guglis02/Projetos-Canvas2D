@@ -26,38 +26,40 @@ static float GetAngleBetweenPoints(Vector2 p1, Vector2 p2)
 // Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
 static int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
 {
-  int i, j, c = 0;
-  for (i = 0, j = nvert-1; i < nvert; j = i++) {
-    if ( ((verty[i]>testy) != (verty[j]>testy)) &&
-	 (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
-       c = !c;
-  }
-  return c;
+    int i, j, c = 0;
+    for (i = 0, j = nvert-1; i < nvert; j = i++)
+    {
+        if ( ((verty[i]>testy) != (verty[j]>testy)) &&
+                (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+            c = !c;
+    }
+    return c;
 }
 
 // Adaptação usando Vector2
 static int pnpoly(int nvert, Vector2* vert, Vector2 test)
 {
-  int i, j, c = 0;
-  for (i = 0, j = nvert-1; i < nvert; j = i++) {
-    if ( ((vert[i].y>test.y) != (vert[j].y>test.y)) &&
-	 (test.x < (vert[j].x-vert[i].x) * (test.y-vert[i].y) / (vert[j].y-vert[i].y) + vert[i].x) )
-       c = !c;
-  }
-  return c;
+    int i, j, c = 0;
+    for (i = 0, j = nvert-1; i < nvert; j = i++)
+    {
+        if ( ((vert[i].y>test.y) != (vert[j].y>test.y)) &&
+                (test.x < (vert[j].x-vert[i].x) * (test.y-vert[i].y) / (vert[j].y-vert[i].y) + vert[i].x) )
+            c = !c;
+    }
+    return c;
 }
 
 static Vector2 GetPerpendicularPoint(Vector2 vec1, Vector2 vec2, Vector2 point)
 {
     Vector2 segment = vec2 - vec1;
     Vector2 pointOnSegment = vec1 + segment * (Vector2::DotProduct(point - vec1, segment)
-                                                / Vector2::DotProduct(segment, segment));
+                             / Vector2::DotProduct(segment, segment));
     return pointOnSegment;
 }
 
 static Vector2 RotatePoint(Vector2 point, float angle)
 {
-   return Vector2(point.x * cos(angle) - point.y * sin(angle),
-                  point.x * sin(angle) + point.y * cos(angle));
+    return Vector2(point.x * cos(angle) - point.y * sin(angle),
+                   point.x * sin(angle) + point.y * cos(angle));
 }
 #endif // POINTHANDLER_H_INCLUDED

@@ -6,7 +6,7 @@
 
 class TriangleDrawing : public Drawing
 {
-    public:
+public:
     TriangleDrawing(int x, int y, int width, int height)
     {
         this->type = Triangle;
@@ -47,8 +47,8 @@ class TriangleDrawing : public Drawing
         this->anchor = corners[0];
     }
 
-    private:
-        float zero = 0;
+private:
+    float zero = 0;
 };
 
 #endif // TRIANGLEDRAWING_H_INCLUDED

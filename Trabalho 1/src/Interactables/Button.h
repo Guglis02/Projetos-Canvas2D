@@ -10,92 +10,92 @@ using namespace std;
 
 class Button
 {
-    public:
-        Button(int height, int width, FunctionType functionType, function<void()> callback, char* name)
+public:
+    Button(int height, int width, FunctionType functionType, function<void()> callback, char* name)
+    {
+        this->height = height;
+        this->width = width;
+        this->functionType = functionType;
+        this->callback = callback;
+        this->name = name;
+    }
+
+    void Update(int x, int y)
+    {
+        this->top = (int)(y);
+        this->bottom = (int)(y + height);
+        this->left = (int)(x);
+        this->right = (int)(x + width);
+
+        if (selectedState)
         {
-            this->height = height;
-            this->width = width;
-            this->functionType = functionType;
-            this->callback = callback;
-            this->name = name;
+            color(0, 1, 0);
+        }
+        else
+        {
+            color(r, g, b);
         }
 
-        void Update(int x, int y)
-        {
-            this->top = (int)(y);
-            this->bottom = (int)(y + height);
-            this->left = (int)(x);
-            this->right = (int)(x + width);
+        rectFill(left, top, right, bottom);
+        color(0);
+        text(x, y + 10, name);
+    }
 
-            if (selectedState)
+    bool CheckMouseClick(int mx, int my)
+    {
+        if (my >= top && my <= bottom && mx >= left && mx <= right)
+        {
+            if (callback)
             {
-                color(0, 1, 0);
+                callback();
             }
             else
             {
-                color(r, g, b);
+                this->selectedState = !this->selectedState;
             }
-
-            rectFill(left, top, right, bottom);
-            color(0);
-            text(x, y + 10, name);
+            return true;
         }
+        return false;
+    }
 
-        bool CheckMouseClick(int mx, int my)
-        {
-            if (my >= top && my <= bottom && mx >= left && mx <= right)
-            {
-                if (callback)
-                {
-                    callback();
-                }
-                else
-                {
-                    this->selectedState = !this->selectedState;
-                }
-                return true;
-            }
-            return false;
-        }
+    bool GetSelectedState(void)
+    {
+        return this->selectedState;
+    }
+    void SetSelectedState(bool state)
+    {
+        this->selectedState = state;
+    }
 
-        bool GetSelectedState(void)
-        {
-            return this->selectedState;
-        }
-        void SetSelectedState(bool state)
-        {
-            this->selectedState = state;
-        }
+    void SetColor(float r, float g, float b)
+    {
+        this->r = r;
+        this->g = g;
+        this->b = b;
+    }
+    float r = 1;
+    float g = 1;
+    float b = 1;
 
-        void SetColor(float r, float g, float b)
-        {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-        }
-        float r = 1;
-        float g = 1;
-        float b = 1;
+    FunctionType GetFunction(void)
+    {
+        return this->functionType;
+    }
+private:
+    int height;
+    int width;
 
-        FunctionType GetFunction(void)
-        {
-            return this->functionType;
-        }
-    private:
-        int height;
-        int width;
+    int top;
+    int bottom;
+    int left;
+    int right;
 
-        int top;
-        int bottom;
-        int left;
-        int right;
+    FunctionType functionType;
+    function<void()> callback;
 
-        FunctionType functionType;
-        function<void()> callback;
+    char* name;
 
-        char* name;
-
-        bool selectedState = false;
+    bool selectedState = false;
 };
 
 #endif // BUTTON_H

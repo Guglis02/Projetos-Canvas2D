@@ -116,7 +116,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 //funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-    printf("\nClicou Tecla: %d" , key);
+    printf("\nClicou Tecla: %d", key);
     drawingCanvas->OnKeyboardDown(key);
 }
 

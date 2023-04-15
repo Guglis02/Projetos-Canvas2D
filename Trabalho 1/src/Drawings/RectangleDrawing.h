@@ -5,8 +5,7 @@
 
 class RectangleDrawing : public Drawing
 {
-    public:
-
+public:
     RectangleDrawing(int x1, int y1, int x2, int y2)
     {
         this->type = Rect;
