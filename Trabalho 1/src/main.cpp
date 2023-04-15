@@ -16,6 +16,7 @@ Extras:
 ● (+0,5) Sinalizar qual figura está selecionada.
 ● (+1,0) Rotacionar figura em qualquer ângulo.
 ● (+1,0) Permitir inserir polígonos quaisquer.
+● (+0,5) Alterar cor em espaço HSV.
 */
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
@@ -23,7 +24,8 @@ Extras:
 #include <stdio.h>
 
 #include "gl_canvas2d.h"
-#include "ToolBar.h"
+#include "Bars/ToolBar.h"
+#include "Bars/ColorBar.h"
 #include "DrawingCanvas.h"
 
 using namespace std;
@@ -35,7 +37,7 @@ const int ToolbarHeight = 130;
 
 DrawingCanvas* drawingCanvas = NULL;
 ToolBar* toolBar = NULL;
-ToolBar* colorBar = NULL;
+ColorBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
@@ -58,40 +60,51 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     if (mouseHandler->GetState() == 0)
     {
         // Se eu cliquei na barra de botões
-        if (mouseHandler->IsPointerOver(ToolbarHeight))
+        if (toolBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
         {
             toolBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY());
-
-            if (colorBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY()))
-            {
-                drawingCanvas->UpdateSelectedColor(colorBar->GetSelectedButton()->r,
-                                                   colorBar->GetSelectedButton()->g,
-                                                   colorBar->GetSelectedButton()->b);
-                colorBar->DeSelectButton();
-            }
-
             drawingCanvas->ResetNewDrawing();
             return;
         }
-        drawingCanvas->MouseClick(mouseHandler);
+
+        if (colorBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
+        {
+            colorBar->OnMouseClick(mouseHandler->GetX(), mouseHandler->GetY());
+            drawingCanvas->ResetNewDrawing();
+            return;
+        }
+        drawingCanvas->OnMouseClick(mouseHandler);
         return;
     }
 
     if (mouseHandler->IsDragging())
     {
-        if (mouseHandler->IsPointerUnder(ToolbarHeight))
+        if (toolBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
         {
-            drawingCanvas->MouseDrag(mouseHandler);
+            return;
         }
+        if (colorBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
+        {
+            colorBar->OnMouseDrag(mouseHandler->GetX(),
+                                  mouseHandler->GetY(),
+                                  bind(&DrawingCanvas::UpdateSelectedColor, drawingCanvas, placeholders::_1));
+            return;
+        }
+        drawingCanvas->OnMouseDrag(mouseHandler);
     }
 
     // Soltar o mouse
     if (mouseHandler->GetState() == 1)
     {
-        // Se eu soltar no canvas de desenho
-        if (mouseHandler->IsPointerUnder(ToolbarHeight))
+        if (colorBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
         {
-            drawingCanvas->MouseRelease();
+            colorBar->OnMouseRelease(mouseHandler->GetX(), mouseHandler->GetY());
+            return;
+        }
+        // Se eu soltar no canvas de desenho
+        if (mouseHandler->GetY() > ToolbarHeight)
+        {
+            drawingCanvas->OnMouseRelease();
         }
         else
         {
@@ -104,14 +117,14 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 void keyboard(int key)
 {
     printf("\nClicou Tecla: %d" , key);
-    drawingCanvas->Keyboard(key);
+    drawingCanvas->OnKeyboardDown(key);
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
     //printf("\nLiberou Tecla: %d" , key);
-    drawingCanvas->KeyboardUp(key);
+    drawingCanvas->OnKeyboardUp(key);
 }
 
 void StartButtons()
@@ -126,16 +139,6 @@ void StartButtons()
     toolBar->CreateButton(Save, bind(&DrawingCanvas::SaveFile, drawingCanvas), "Salvar");
     toolBar->CreateButton(Delete, bind(&DrawingCanvas::DeleteDrawing, drawingCanvas), "Deletar");
     toolBar->CreateButton(Clear, bind(&DrawingCanvas::ClearCanvas, drawingCanvas), "Limpar");
-
-    for(int i = 0; i < 16; i++)
-    {
-        float inc = i / 16.0f;
-        float r = 0.5f + 0.5f * cos(inc * PI_2);
-        float g = 0.5f + 0.5f * cos((inc + 1/3.0f) * PI_2);
-        float b = 0.5f + 0.5f * cos((inc + 2/3.0f) * PI_2);
-        float rgb[] = {r, g, b};
-        colorBar->CreateButton(50, 50, Color, nullptr, "", rgb);
-    }
 }
 
 int main(void)
@@ -144,8 +147,9 @@ int main(void)
 
     mouseHandler = new MouseHandler();
     toolBar = new ToolBar(ToolbarHeight, screenWidth/2);
-    colorBar = new ToolBar(ToolbarHeight, screenWidth/2);
-    drawingCanvas = new DrawingCanvas(bind(&ToolBar::DeSelectButton, toolBar));
+    colorBar = new ColorBar(ToolbarHeight, screenWidth/2);
+    drawingCanvas = new DrawingCanvas(bind(&ToolBar::DeSelectButton, toolBar),
+                                      bind(&ColorBar::SetRGB, colorBar, placeholders::_1));
 
     StartButtons();
 

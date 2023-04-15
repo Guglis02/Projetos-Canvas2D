@@ -269,15 +269,15 @@
 	"gl_canvas2d.h"
 	"FunctionType.h"
 
-1681387816 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\button.h
 	"FunctionType.h"
 	"gl_canvas2d.h"
 	<string>
 	<functional>
 
-1680379225 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\functiontype.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\functiontype.h
 
-1679596904 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -310,7 +310,7 @@
 1680113235 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawing.h
 	"FunctionType.h"
 
-1679596904 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
+1681504340 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
@@ -318,22 +318,23 @@
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1681388434 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\toolbar.h
 	<vector>
 	"Button.h"
 	"FunctionType.h"
 
-1681499649 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1681521063 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
 	"gl_canvas2d.h"
-	"ToolBar.h"
+	"Bars/ToolBar.h"
+	"Bars/ColorBar.h"
 	"DrawingCanvas.h"
 
-1680897762 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+1681504963 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
 
-1681001067 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
+1681503527 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
 	<math.h>
 	<Vector2.h>
 
@@ -352,7 +353,7 @@
 	<limits>
 	<algorithm>
 
-1681500310 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1681504539 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
 	"PointsUtils.h"
 	"Vector2.h"
@@ -361,14 +362,14 @@
 	<algorithm>
 	<iostream>
 
-1681499798 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
 	"Drawing.h"
 
-1681499426 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
 	"Drawing.h"
 	"PointsUtils.h"
 
-1681499802 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
 	"Drawing.h"
 	<algorithm>
 
@@ -555,10 +556,10 @@
 	"ToolBar.h"
 	"gl_canvas2d.h"
 
-1681499837 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
 	"Drawing.h"
 
-1681498797 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
 	<iostream>
 	<fstream>
 	"Drawings/Drawing.h"
@@ -577,13 +578,49 @@
 	"Drawings/Drawing.h"
 	"FunctionType.h"
 
-1681001067 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\vector2.h
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\vector2.h
 	<stdio.h>
 	<math.h>
 
-1681476239 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
+1681520590 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
 	"Drawings/Drawing.h"
 	"MouseHandler.h"
 	"FileHandler.h"
 	"FunctionType.h"
+
+1681512272 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\toolbar.h
+	<vector>
+	"Interactables/Button.h"
+	"FunctionType.h"
+	"Bars/Bar.h"
+
+1681518353 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\bar.h
+
+1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\interactables\button.h
+	"FunctionType.h"
+	"gl_canvas2d.h"
+	<string>
+	<functional>
+
+1681521000 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\colorbar.h
+	"ColorUtils.h"
+	"Interactables/Slider.h"
+	"Bars/HueSlider.h"
+	"Bars/SatSlider.h"
+	"Bars/ValueSlider.h"
+
+1681518808 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\colorutils.h
+
+1681520248 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\interactables\slider.h
+	"gl_canvas2d.h"
+	<math.h>
+
+1681517717 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\hueslider.h
+	"ColorUtils.h"
+
+1681518092 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\satslider.h
+	"ColorUtils.h"
+
+1681516869 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\valueslider.h
+	"ColorUtils.h"
 

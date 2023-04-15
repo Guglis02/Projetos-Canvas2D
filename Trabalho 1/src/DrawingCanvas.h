@@ -11,10 +11,11 @@ using namespace std;
 class DrawingCanvas
 {
     public:
-        DrawingCanvas(function<void()> deselectButtonCallback)
+        DrawingCanvas(function<void()> deselectButtonCallback, function<void(float*)> refreshColorCallback)
         {
             LoadFromFile(drawings);
             this->deselectButtonCallback = deselectButtonCallback;
+            this->refreshColorCallback = refreshColorCallback;
         }
 
         // Callbacks
@@ -107,17 +108,17 @@ class DrawingCanvas
             }
         }
 
-        void ResetNewDrawing()
+        void ResetNewDrawing(void)
         {
             newDrawing = NULL;
             tempPoints.clear();
         }
 
-        void UpdateSelectedColor(float r, float g, float b)
+        void UpdateSelectedColor(float* rgb)
         {
-            selectedColor[0] = r;
-            selectedColor[1] = g;
-            selectedColor[2] = b;
+            selectedColor[0] = rgb[0];
+            selectedColor[1] = rgb[1];
+            selectedColor[2] = rgb[2];
 
             if (selectedDrawing)
             {
@@ -125,7 +126,7 @@ class DrawingCanvas
             }
         }
 
-        void MouseClick(MouseHandler* mouseHandler)
+        void OnMouseClick(MouseHandler* mouseHandler)
         {
             switch(currentFunction)
             {
@@ -176,7 +177,7 @@ class DrawingCanvas
             }
         }
 
-        void MouseDrag(MouseHandler* mouseHandler)
+        void OnMouseDrag(MouseHandler* mouseHandler)
         {
             if (selectedDrawing)
             {
@@ -187,7 +188,7 @@ class DrawingCanvas
             }
         }
 
-        void MouseRelease()
+        void OnMouseRelease(void)
         {
             if (!newDrawing)
             {
@@ -204,7 +205,7 @@ class DrawingCanvas
             }
         }
 
-        void Keyboard(int key)
+        void OnKeyboardDown(int key)
         {
             if (key == 26 && !drawings.empty())
            {
@@ -238,7 +239,7 @@ class DrawingCanvas
             }
         }
 
-        void KeyboardUp(int key)
+        void OnKeyboardUp(int key)
         {
             if (selectedDrawing)
             {
@@ -257,6 +258,7 @@ class DrawingCanvas
         Drawing* selectedDrawing = NULL;
 
         function<void()> deselectButtonCallback;
+        function<void(float*)> refreshColorCallback;
 
         float selectedColor[3] = {0, 0, 0};
         FunctionType currentFunction;
@@ -300,6 +302,11 @@ class DrawingCanvas
                 }
             }
             selectedDrawing = temp;
+
+            if (selectedDrawing)
+            {
+                refreshColorCallback(selectedDrawing->GetColor());
+            }
         }
 };
 

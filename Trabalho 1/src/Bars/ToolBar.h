@@ -2,24 +2,20 @@
 #define TOOLBAR_H
 
 #include <vector>
-#include "Button.h"
+#include "Interactables/Button.h"
 #include "FunctionType.h"
+#include "Bars/Bar.h"
 
 using namespace std;
 
-class ToolBar
+class ToolBar : public Bar
 {
     public:
-        ToolBar(int height, int width)
-        {
-            this->height = height;
-            this->width = width;
-        }
+        ToolBar(int height, int width) : Bar(height, width) {}
 
         void Update(int x, int y, int height, int width)
         {
-            color(1);
-            rectFill(x, y, x + width, height);
+            Bar::Update(x, y, height, width);
 
             int buttonsCount = buttons.size();
             int halfRoundedCount = (buttonsCount + 1)/2;
@@ -103,9 +99,6 @@ class ToolBar
             return None;
         }
     private:
-        int height = 0;
-        int width = 0;
-
         const int defaultButtonWidth = 80;
         const int defaultButtonHeight = 50;
         const float defaultButtonColor[3] = {0, 0.5, 1};

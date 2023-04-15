@@ -270,14 +270,6 @@ class Drawing
 
             this->SetRotationPoint();
         }
-        void SetRotationPoint(void)
-        {
-            Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) * 0.5;
-            float modifier = sizeProportion.y < 0 ? 1 : -1;
-
-            this->rotationIndicator.x = selectionBoxTop.x + sin(angle) * modifier * -rotationIndicatorOffset;
-            this->rotationIndicator.y = selectionBoxTop.y + cos(angle) * modifier * rotationIndicatorOffset;
-        }
         void SetColor(float r, float g, float b)
         {
             this->r = r;
@@ -381,6 +373,15 @@ class Drawing
         float r = 0;
         float g = 0;
         float b = 0;
+    private:
+        void SetRotationPoint(void)
+        {
+            Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) * 0.5;
+            float modifier = sizeProportion.y < 0 ? 1 : -1;
+
+            this->rotationIndicator.x = selectionBoxTop.x + sin(angle) * modifier * -rotationIndicatorOffset;
+            this->rotationIndicator.y = selectionBoxTop.y + cos(angle) * modifier * rotationIndicatorOffset;
+        }
 };
 
 #endif // DRAWING_H

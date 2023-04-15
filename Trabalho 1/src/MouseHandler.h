@@ -36,9 +36,6 @@ class MouseHandler
             }
         }
 
-        bool IsPointerOver(int y) {return this->y < y;}
-        bool IsPointerUnder(int y) {return this->y > y;}
-
         float GetX(void) { return this->x; }
         float GetY(void) { return this->y; }
 
