@@ -260,7 +260,7 @@ class DrawingCanvas
         function<void()> deselectButtonCallback;
         function<void(float*)> refreshColorCallback;
 
-        float selectedColor[3] = {0, 0, 0};
+        float selectedColor[3] = {0.5, 0.5, 0.5};
         FunctionType currentFunction;
 
         Vector2 moveInc;

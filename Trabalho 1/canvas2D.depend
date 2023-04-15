@@ -323,7 +323,7 @@
 	"Button.h"
 	"FunctionType.h"
 
-1681521063 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+1681521139 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -353,7 +353,7 @@
 	<limits>
 	<algorithm>
 
-1681504539 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+1681596140 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
 	"FunctionType.h"
 	"PointsUtils.h"
 	"Vector2.h"
@@ -365,7 +365,7 @@
 1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
 	"Drawing.h"
 
-1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+1681522815 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
 	"Drawing.h"
 	"PointsUtils.h"
 
@@ -559,7 +559,7 @@
 1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
 	"Drawing.h"
 
-1681504340 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
+1681596243 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
 	<iostream>
 	<fstream>
 	"Drawings/Drawing.h"
@@ -582,13 +582,13 @@
 	<stdio.h>
 	<math.h>
 
-1681520590 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
+1681596329 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
 	"Drawings/Drawing.h"
 	"MouseHandler.h"
 	"FileHandler.h"
 	"FunctionType.h"
 
-1681512272 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\toolbar.h
+1681523509 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\toolbar.h
 	<vector>
 	"Interactables/Button.h"
 	"FunctionType.h"

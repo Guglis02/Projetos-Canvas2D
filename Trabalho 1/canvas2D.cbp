@@ -45,7 +45,13 @@
 			<Add library="lib/libopengl32.a" />
 			<Add library="lib/freeglut.lib" />
 		</Linker>
-		<Unit filename="src/Button.h" />
+		<Unit filename="src/Bars/Bar.h" />
+		<Unit filename="src/Bars/ColorBar.h" />
+		<Unit filename="src/Bars/HueSlider.h" />
+		<Unit filename="src/Bars/SatSlider.h" />
+		<Unit filename="src/Bars/ToolBar.h" />
+		<Unit filename="src/Bars/ValueSlider.h" />
+		<Unit filename="src/ColorUtils.h" />
 		<Unit filename="src/DrawingCanvas.h" />
 		<Unit filename="src/Drawings/CircleDrawing.h" />
 		<Unit filename="src/Drawings/Drawing.h" />
@@ -54,9 +60,10 @@
 		<Unit filename="src/Drawings/TriangleDrawing.h" />
 		<Unit filename="src/FileHandler.h" />
 		<Unit filename="src/FunctionType.h" />
+		<Unit filename="src/Interactables/Button.h" />
+		<Unit filename="src/Interactables/Slider.h" />
 		<Unit filename="src/MouseHandler.h" />
 		<Unit filename="src/PointsUtils.h" />
-		<Unit filename="src/ToolBar.h" />
 		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />

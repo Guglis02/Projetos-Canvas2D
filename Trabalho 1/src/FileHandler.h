@@ -95,7 +95,12 @@ void LoadFromFile(vector<Drawing*>&drawings)
 
     if (!file.is_open())
     {
-        exit(1);
+        return;
+    }
+
+    if (file.peek() == EOF)
+    {
+        return;
     }
 
     int numberOfDrawings;
