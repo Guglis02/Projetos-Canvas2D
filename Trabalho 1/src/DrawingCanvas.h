@@ -8,6 +8,10 @@
 
 using namespace std;
 
+/** \brief
+ * Classe responsável pelo canvas de desenho,
+ * portanto gerencia boa parte da lógica do programa.
+ */
 class DrawingCanvas
 {
 public:
@@ -73,13 +77,15 @@ public:
     }
     /////////////
 
+    // Método chamado em todo frame
     void Update(MouseHandler* mouseHandler, FunctionType currentFunction)
     {
+        // Desenha os desenhos da lista
         for (Drawing* d : drawings)
         {
             d->Render();
         }
-
+        // Se um desenho estiver selecionado, desenha os indicadores
         if (selectedDrawing)
         {
             selectedDrawing->RenderSelectionIndicators();
@@ -87,6 +93,7 @@ public:
 
         this->currentFunction = currentFunction;
 
+        // Se o usuário estiver desenhando, desenha o protótipo na tela
         color(selectedColor[0],selectedColor[1],selectedColor[2]);
         if (newDrawing && mouseHandler->IsHolding())
         {
@@ -95,8 +102,9 @@ public:
                                         mouseHandler->GetX(),
                                         mouseHandler->GetY());
         }
-
-        if (currentFunction)
+        // Como os polígonos livres são inseridos ponto a ponto
+        // este método é chamado caso seja a função selecionada
+        if (currentFunction == Poly)
         {
             RenderPolygonPrototype();
         }
@@ -107,13 +115,13 @@ public:
             selectedDrawing->Move(moveInc);
         }
     }
-
+    // Reseta desenho que está sendo criado
     void ResetNewDrawing(void)
     {
         newDrawing = NULL;
         tempPoints.clear();
     }
-
+    // Atualiza cor selecionada
     void UpdateSelectedColor(float* rgb)
     {
         selectedColor[0] = rgb[0];
@@ -156,6 +164,7 @@ public:
             break;
         case Poly:
             selectedDrawing = NULL;
+            // Caso o clique seja dentro do protótipo do polígono, o desenho é concluído
             if (pnpoly(tempPoints.size(), tempPoints.data(), Vector2(mouseHandler->GetX(), mouseHandler->GetY())))
             {
                 newDrawing = new PolygonDrawing(Vector2::GetXs(tempPoints.data(), tempPoints.size()),
@@ -163,16 +172,19 @@ public:
                                                 tempPoints.size());
                 AddDrawing();
             }
+            // Senão, outro ponto é adicionado ao protótipo
             else
             {
                 tempPoints.push_back(Vector2(mouseHandler->GetX(), mouseHandler->GetY()));
             }
             break;
         default:
+            // Se um desenho está selecionado, checa os pontos de interação
             if (selectedDrawing && selectedDrawing->CheckMouseInteraction(mouseHandler->GetX(), mouseHandler->GetY()))
             {
                 return;
             }
+            // Checa se está clicando em um desenho
             CheckDrawingSelection(mouseHandler->GetX(), mouseHandler->GetY());
             break;
         }
@@ -208,6 +220,7 @@ public:
 
     void OnKeyboardDown(int key)
     {
+        // Ctrl+Z vai removendo os desenhos, do último ao primeiro
         if (key == 26 && !drawings.empty())
         {
             drawings.pop_back();
@@ -266,6 +279,7 @@ private:
 
     Vector2 moveInc;
 
+    // Desenha o protótipo do polígono
     void RenderPolygonPrototype()
     {
         int numberOfPoints = tempPoints.size();
@@ -282,6 +296,7 @@ private:
         }
     }
 
+    // Adiciona um novo desenho a lista de desenhos a serem renderizados
     void AddDrawing()
     {
         newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
@@ -291,6 +306,8 @@ private:
         ResetNewDrawing();
     }
 
+    // Checa o clique do mouse nos desenhos, priorizando o mais a frente no canvas.
+    // Caso um desenho seja selecionado, atualiza o seletor de cor para corresponder ao desenho.
     void CheckDrawingSelection(int mx, int my)
     {
         Drawing* temp = NULL;

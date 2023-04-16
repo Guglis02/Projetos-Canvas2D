@@ -4,6 +4,9 @@
 #include "Drawing.h"
 #include "PointsUtils.h"
 
+/** \brief
+Classe responsável pelo desenho em formato de círculo.
+ */
 class CircleDrawing : public Drawing
 {
 public:

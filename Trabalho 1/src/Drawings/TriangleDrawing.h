@@ -4,6 +4,9 @@
 #include "Drawing.h"
 #include <algorithm>
 
+/** \brief
+Classe responsável pelo desenho em formato de triângulo.
+*/
 class TriangleDrawing : public Drawing
 {
 public:

@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/** \brief
+Classe que representa um slider.
+*/
 class Slider
 {
 public:
@@ -30,18 +33,18 @@ public:
         this->height = height;
     }
 
+    // Desenha a barra
     void Render(void)
     {
-        // Desenha a barra
         color(0.5f, 0.5f, 0.5f);
         rectFill(x, y, x + width, y + height);
 
         RenderHandler();
     }
 
+    // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
-        // Desenha o handler
         color(1.0f, 1.0f, 1.0f);
         rectFill(x + currentValue * width - sliderWidth * 0.5, y,
                  x + currentValue * width + sliderWidth * 0.5, y + height);

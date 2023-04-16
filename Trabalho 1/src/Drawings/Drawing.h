@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/** \brief
+Classe base dos desenhos, contém boa parte da lógica dos mesmos.
+ */
 class Drawing
 {
 public:
@@ -33,6 +36,7 @@ public:
                     this->elementsCounter);
         }
     }
+    // Desenha caixa de seleção, e seus pontos de interação
     void RenderSelectionIndicators(void)
     {
         color(1);
@@ -47,11 +51,14 @@ public:
         color(1);
         circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
     }
+    // Método virtual chamado pelas classes descendentes,
+    // chamado enquanto o usuário arrasta o mouse no canvas de desenho.
     virtual void RenderPrototype(int clickX, int clickY, int currentX, int currentY) {};
 
     //
     // Mouse
     //
+    // Checa se o mouse clicou dentro do desenho
     bool CheckMouseClick(int mx, int my)
     {
         return pnpoly(this->elementsCounter,
@@ -59,6 +66,8 @@ public:
                       Vector2::GetYs(this->points, elementsCounter),
                       mx, my);
     }
+    // Checa se o mouse clicou em um ponto de interação,
+    // e ativa a flag correspondente no desenho.
     bool CheckMouseInteraction(int mx, int my)
     {
         for (int i = 0; i < 4; i++)
@@ -85,6 +94,8 @@ public:
     //
     // Edição de desenho (alguns métodos recebem input do mouse, outros recebem input do arquivo de figuras salvas)
     //
+
+    // Recebe input do usuário e determina o comportamento do desenho baseado na flag ativada.
     void EditDrawing(int mx, int my, int xInc, int yInc)
     {
         if (isResizing)
@@ -101,6 +112,7 @@ public:
         }
     }
 
+    // Move o desenho de acordo com um vetor incremental
     void Move(Vector2 inc)
     {
         for (int i = 0; i < elementsCounter; i++)
@@ -115,6 +127,7 @@ public:
         this->rotationIndicator += inc;
     }
 
+    // Redimensiona o desenho
     void Resize(int xInc, int yInc)
     {
         Vector2 increment = Vector2(xInc, yInc);
@@ -177,6 +190,7 @@ public:
         GenerateAnchor();
     }
 
+    // Recebe um vetor proporção do arquivo de desenhos salvos e aplica
     void LoadProportion(Vector2 proportion)
     {
         Vector2 tempAnchor = GenerateAndReturnAnchor();
@@ -201,6 +215,8 @@ public:
         GenerateAnchor();
     }
 
+    // Recebe a posição do mouse e calcula o angulo que o desenho deve ser rotacionado
+    // chama o método de rotação.
     void Rotate(int mx, int my)
     {
         Vector2 originToCenter = Vector2((corners[0] + corners[2]) / 2.0);
@@ -211,6 +227,7 @@ public:
         ApplyAngle(angle);
     }
 
+    // Recebe um ângulo e aplica a rotação correspondente no desenho
     void ApplyAngle(float angle)
     {
         Vector2 originToCenter = Vector2((corners[0] + corners[2]) / 2.0);
@@ -405,6 +422,7 @@ protected:
     float g = 0;
     float b = 0;
 private:
+    // Posiciona o ponto de interação da rotação
     void SetRotationPoint(void)
     {
         Vector2 selectionBoxTop = (this->corners[0] + this->corners[1]) * 0.5;

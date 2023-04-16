@@ -6,7 +6,13 @@
 #include "Bars/HueSlider.h"
 #include "Bars/SatSlider.h"
 #include "Bars/ValueSlider.h"
+#include <vector>
 
+/** \brief
+Classe responsável pela barra de escolha de cores.
+Gerencia as barras de Hue, Saturation e Value.
+Mostra um preview da cor selecionada.
+ */
 class ColorBar : public Bar
 {
 public:
@@ -15,6 +21,9 @@ public:
         hueSlider = new HueSlider(0, 0, width/3, height/3, 0.0, 360, 0.5);
         saturationSlider = new SatSlider(0, 0, width/3, height/3, 0.0, 1.0, 0.5);
         valueSlider = new ValueSlider(0, 0, width/3, height/3, 0.0, 1.0, 0.5);
+        sliders.push_back(hueSlider);
+        sliders.push_back(saturationSlider);
+        sliders.push_back(valueSlider);
     }
 
     void Update(int x, int y, int height, int width)
@@ -35,6 +44,7 @@ public:
         UpdateColor();
     }
 
+    // Retorna o valor selecionado nas barras em formato RGB.
     void GetRGB(float& r, float& g, float& b)
     {
         HSVtoRGB(hueSlider->GetValue(),
@@ -43,6 +53,7 @@ public:
                  r, g, b);
     }
 
+    // Recebe um valor em formato RGB, converte pra HSV e chama atualização das barras.
     void SetRGB(float* rgb)
     {
         RGBtoHSV(rgb[0], rgb[1], rgb[2], this->hue, this->saturation, this->value);
@@ -51,33 +62,23 @@ public:
 
     void OnMouseClick(int mx, int my)
     {
-        if (hueSlider->IsMouseInside(mx, my))
+        for (Slider* slider : sliders)
         {
-            hueSlider->OnMouseClick(mx, my);
-        }
-        else if (saturationSlider->IsMouseInside(mx, my))
-        {
-            saturationSlider->OnMouseClick(mx, my);
-        }
-        else if (valueSlider->IsMouseInside(mx, my))
-        {
-            valueSlider->OnMouseClick(mx, my);
+            if (slider->IsMouseInside(mx, my))
+            {
+                slider->OnMouseClick(mx, my);
+            }
         }
     }
 
     void OnMouseDrag(int mx, int my, function<void(float*)> callback)
     {
-        if (hueSlider->IsMouseInside(mx, my))
+        for (Slider* slider : sliders)
         {
-            hueSlider->OnMouseDrag(mx);
-        }
-        else if (saturationSlider->IsMouseInside(mx, my))
-        {
-            saturationSlider->OnMouseDrag(mx);
-        }
-        else if (valueSlider->IsMouseInside(mx, my))
-        {
-            valueSlider->OnMouseDrag(mx);
+            if (slider->IsMouseInside(mx, my))
+            {
+                slider->OnMouseDrag(mx);
+            }
         }
 
         float* rgb = new float[3];
@@ -87,17 +88,12 @@ public:
 
     void OnMouseRelease(int mx, int my)
     {
-        if (hueSlider->IsMouseInside(mx, my))
+        for (Slider* slider : sliders)
         {
-            hueSlider->OnMouseRelease();
-        }
-        else if (saturationSlider->IsMouseInside(mx, my))
-        {
-            saturationSlider->OnMouseRelease();
-        }
-        else if (valueSlider->IsMouseInside(mx, my))
-        {
-            valueSlider->OnMouseRelease();
+            if (slider->IsMouseInside(mx, my))
+            {
+                slider->OnMouseRelease();
+            }
         }
     }
 private:
@@ -105,6 +101,7 @@ private:
     float saturation = 0;
     float value = 0;
 
+    // Desenha preview da cor selecionada
     void DrawPreview(void)
     {
         float r, g, b;
@@ -114,7 +111,8 @@ private:
         rectFill(x + width * 0.5, y, x + width, y + height);
     }
 
-    void UpdateColor()
+    // Atualiza cor selecionada
+    void UpdateColor(void)
     {
         float hue = hueSlider->GetValue() * 360;
         float saturation = saturationSlider->GetValue() * 100;
@@ -123,6 +121,7 @@ private:
         SetHSV(hue, saturation, value);
     }
 
+    // Atualiza barras de cor
     void UpdateBars()
     {
         hueSlider->SetValue(hue);
@@ -130,6 +129,7 @@ private:
         valueSlider->SetValue(value);
     }
 
+    // Setter dos valores
     void SetHSV(float hue, float saturation, float value)
     {
         this->hue = hue;
@@ -140,6 +140,8 @@ private:
     HueSlider* hueSlider = NULL;
     SatSlider* saturationSlider = NULL;
     ValueSlider* valueSlider = NULL;
+
+    vector<Slider*> sliders;
 };
 
 #endif // COLORBAR_H_INCLUDED

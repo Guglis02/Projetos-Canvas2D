@@ -1,6 +1,9 @@
 #ifndef FUNCTIONTYPE_H_INCLUDED
 #define FUNCTIONTYPE_H_INCLUDED
 
+/** \brief
+ * Enum de funções dos botões.
+ */
 enum FunctionType
 {
     // Nenhuma função selecionada no momento

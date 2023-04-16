@@ -3,6 +3,9 @@
 
 #include "ColorUtils.h"
 
+/** \brief
+Slider de value, muda de aparência de acordo com o valor das outras barras
+ */
 class ValueSlider : public Slider
 {
 public:

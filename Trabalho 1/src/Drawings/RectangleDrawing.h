@@ -3,6 +3,9 @@
 
 #include "Drawing.h"
 
+/** \brief
+Classe responsável pelo desenho em formato de retângulo.
+*/
 class RectangleDrawing : public Drawing
 {
 public:

@@ -3,6 +3,9 @@
 
 #include "ColorUtils.h"
 
+/** \brief
+Slider de Hue, muda de aparência de acordo com o valor das outras barras
+ */
 class HueSlider : public Slider
 {
 public:

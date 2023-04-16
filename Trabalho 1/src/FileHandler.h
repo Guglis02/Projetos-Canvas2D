@@ -12,6 +12,11 @@
 
 using namespace std;
 
+/** \brief
+ * Arquivo utilitário contendo funções relacionadas a lidar com arquivos.
+ */
+
+// Recebe a lista de desenhos e decompõe cada um em uma série de atributos
 void SaveInFile(vector<Drawing*> drawings)
 {
     FILE* file = fopen("figuras.gr", "w");
@@ -89,6 +94,8 @@ void SaveInFile(vector<Drawing*> drawings)
     fclose(file);
 }
 
+// Lê no arquivo os atributos e reconstrói os desenhos,
+// adicionando-os na lista.
 void LoadFromFile(vector<Drawing*>&drawings)
 {
     std::ifstream file("figuras.gr");

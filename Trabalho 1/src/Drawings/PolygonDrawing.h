@@ -3,7 +3,9 @@
 
 #include "Drawing.h"
 
-
+/** \brief
+Classe responsável pelo desenho do polígono livre.
+ */
 class PolygonDrawing : public Drawing
 {
 public:
@@ -26,7 +28,7 @@ public:
 
     void GenerateAnchor()
     {
-        this->anchor =  GetGlobalCenter();
+        this->anchor = GetGlobalCenter();
     }
 };
 

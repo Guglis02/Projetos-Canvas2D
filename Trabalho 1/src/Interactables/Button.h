@@ -8,6 +8,9 @@
 
 using namespace std;
 
+/** \brief
+Classe que representa um botão.
+*/
 class Button
 {
 public:
@@ -22,10 +25,10 @@ public:
 
     void Update(int x, int y)
     {
-        this->top = (int)(y);
-        this->bottom = (int)(y + height);
-        this->left = (int)(x);
-        this->right = (int)(x + width);
+        this->top = y;
+        this->bottom = y + height;
+        this->left = x;
+        this->right = x + width;
 
         if (selectedState)
         {
@@ -41,6 +44,9 @@ public:
         text(x, y + 10, name);
     }
 
+    // Checa o clique do mouse
+    // Se o botão possui uma callback, chama ela
+    // Senão, trata-se de um botão selecionável, então a flag é atualizada
     bool CheckMouseClick(int mx, int my)
     {
         if (my >= top && my <= bottom && mx >= left && mx <= right)

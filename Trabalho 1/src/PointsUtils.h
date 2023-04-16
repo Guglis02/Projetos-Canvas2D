@@ -4,6 +4,10 @@
 #include <math.h>
 #include <Vector2.h>
 
+/** \brief
+ * Arquivo utilitário contendo funções relacionadas a pontos.
+ */
+
 static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
 {
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
@@ -49,6 +53,7 @@ static int pnpoly(int nvert, Vector2* vert, Vector2 test)
     return c;
 }
 
+// Calcula e retorna o ponto em segmento que é perpendicular ao segmento formado por vec1 e vec2, mais próximo de point
 static Vector2 GetPerpendicularPoint(Vector2 vec1, Vector2 vec2, Vector2 point)
 {
     Vector2 segment = vec2 - vec1;

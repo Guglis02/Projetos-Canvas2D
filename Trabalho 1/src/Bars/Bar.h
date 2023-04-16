@@ -1,6 +1,10 @@
 #ifndef BAR_H_INCLUDED
 #define BAR_H_INCLUDED
 
+/** \brief
+Classe base das barras da interface.
+Possui um método de atualização e um de checagem do mouse.
+ */
 class Bar
 {
 public:

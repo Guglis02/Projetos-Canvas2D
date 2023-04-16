@@ -1,6 +1,10 @@
 #ifndef MOUSEHANDLER_H_INCLUDED
 #define MOUSEHANDLER_H_INCLUDED
 
+/** \brief
+ * Classe que lida com as propriedades do mouse,
+ * além de gerenciar algumas flags úteis.
+ */
 class MouseHandler
 {
 public:
@@ -10,6 +14,7 @@ public:
         this->y = this->oldY = this->clickY = 0;
     }
 
+    // Atualiza atributos da classe.
     void Update(int button, int state, int wheel, int direction, int x, int y)
     {
         this->button = button;

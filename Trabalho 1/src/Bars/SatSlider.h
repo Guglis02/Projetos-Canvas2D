@@ -3,6 +3,9 @@
 
 #include "ColorUtils.h"
 
+/** \brief
+Slider de saturation, muda de aparência de acordo com o valor das outras barras
+ */
 class SatSlider : public Slider
 {
 public:

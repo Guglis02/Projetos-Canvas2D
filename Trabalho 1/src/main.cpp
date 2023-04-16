@@ -30,7 +30,7 @@ Extras:
 
 using namespace std;
 
-//Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
+// Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = 1000, screenHeight = 600;
 
 const int ToolbarHeight = 130;
@@ -40,8 +40,7 @@ ToolBar* toolBar = NULL;
 ColorBar* colorBar = NULL;
 MouseHandler* mouseHandler = NULL;
 
-//funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
-//globais que podem ser setadas pelo metodo keyboard()
+// Funcao chamada todo frame
 void render()
 {
     drawingCanvas->Update(mouseHandler, toolBar->GetCurrentFunction());
@@ -59,14 +58,12 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // Clicar com o mouse
     if (mouseHandler->GetState() == 0)
     {
-        // Se eu cliquei na barra de botões
         if (toolBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
         {
             toolBar->CheckButtonCollision(mouseHandler->GetX(), mouseHandler->GetY());
             drawingCanvas->ResetNewDrawing();
             return;
         }
-
         if (colorBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
         {
             colorBar->OnMouseClick(mouseHandler->GetX(), mouseHandler->GetY());
@@ -76,7 +73,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         drawingCanvas->OnMouseClick(mouseHandler);
         return;
     }
-
+    // Arrastar o mouse
     if (mouseHandler->IsDragging())
     {
         if (toolBar->IsMouseInside(mouseHandler->GetX(), mouseHandler->GetY()))
@@ -92,7 +89,6 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         }
         drawingCanvas->OnMouseDrag(mouseHandler);
     }
-
     // Soltar o mouse
     if (mouseHandler->GetState() == 1)
     {
@@ -113,20 +109,21 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     }
 }
 
-//funcao chamada toda vez que uma tecla for pressionada
+// Funcao chamada toda vez que uma tecla for pressionada
 void keyboard(int key)
 {
-    printf("\nClicou Tecla: %d", key);
+    //printf("\nClicou Tecla: %d", key);
     drawingCanvas->OnKeyboardDown(key);
 }
 
-//funcao chamada toda vez que uma tecla for liberada
+// Funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
     //printf("\nLiberou Tecla: %d" , key);
     drawingCanvas->OnKeyboardUp(key);
 }
 
+// Inicia botões da interface
 void StartButtons()
 {
     toolBar->CreateButton(Rect, nullptr, "Retangulo");

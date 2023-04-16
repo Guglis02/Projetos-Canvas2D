@@ -1,6 +1,10 @@
 #ifndef COLORUTILS_H_INCLUDED
 #define COLORUTILS_H_INCLUDED
 
+/** \brief
+ * Arquivo utilitário contendo funções relacionadas a conversão de cores.
+ */
+
 static void HSVtoRGB (float h, float s, float v, float& r, float& g, float& b)
 {
     if (s == 0.0f)
