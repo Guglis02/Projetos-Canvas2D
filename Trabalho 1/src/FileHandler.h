@@ -37,7 +37,6 @@ void SaveInFile(vector<Drawing*> drawings)
         int elementsCounter;
 
         fprintf(file, "%d ", type);
-        printf("\n FunctionType = %d", type);
         switch (type)
         {
         case Rect:
@@ -76,15 +75,15 @@ void SaveInFile(vector<Drawing*> drawings)
             break;
         }
 
-        float* color = d->GetColor();
+        Color color = d->GetColor();
         bool fillFlag = d->GetFillFlag();
         float angle = d->GetAngle();
         Vector2 proportion = d->GetProportion();
 
         fprintf(file, "%.2f %.2f %.2f %d %.2f %.2f %.2f\n",
-                color[0],
-                color[1],
-                color[2],
+                color.r,
+                color.g,
+                color.b,
                 fillFlag,
                 angle,
                 proportion.x,
@@ -170,7 +169,7 @@ void LoadFromFile(vector<Drawing*>&drawings)
         float proportionY;
 
         file >> r >> g >> b >> fillFlag >> angle >> proportionX >> proportionY;
-        drawing->SetColor(r, g, b);
+        drawing->SetColor(Color(r, g, b));
         drawing->SetFillFlag(fillFlag);
         drawing->LoadProportion(Vector2(proportionX, proportionY));
         drawing->ApplyAngle(angle);

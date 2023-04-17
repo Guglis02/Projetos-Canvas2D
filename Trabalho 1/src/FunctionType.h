@@ -20,8 +20,6 @@ enum FunctionType
     SendBack,
     // Salva conjunto atual desenhos em um arquivo externo
     Save,
-    // Botões de cor
-    Color,
     // Deleta desenho selecionado
     Delete,
     // Limpa canvas de desenhos

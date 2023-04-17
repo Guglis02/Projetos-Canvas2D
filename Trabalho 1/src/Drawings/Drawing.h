@@ -5,6 +5,7 @@
 #include "PointsUtils.h"
 #include "Vector2.h"
 #include "gl_canvas2d.h"
+#include "Color.h"
 #include <stdio.h>
 #include <algorithm>
 #include <iostream>
@@ -22,7 +23,7 @@ public:
     //
     void Render(void)
     {
-        color(this->r, this->g, this->b);
+        color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.alpha);
         if (shouldBeFilled)
         {
             polygonFill(Vector2::GetXs(this->points, elementsCounter),
@@ -288,11 +289,9 @@ public:
 
         this->SetRotationPoint();
     }
-    void SetColor(float r, float g, float b)
+    void SetColor(Color rgb)
     {
-        this->r = r;
-        this->g = g;
-        this->b = b;
+        this->colorRGB = rgb;
     }
     void SetFillFlag(bool value)
     {
@@ -309,13 +308,10 @@ public:
     {
         return this->type;
     }
-    float* GetColor(void)
+    Color GetColor(void)
     {
-        float* color = new float[3];
-        color[0] = this->r;
-        color[1] = this->g;
-        color[2] = this->b;
-        return color;
+        Color rgb = Color(this->colorRGB.r, this->colorRGB.g, this->colorRGB.b);
+        return rgb;
     }
     bool GetFillFlag(void)
     {
@@ -418,9 +414,7 @@ protected:
 
     bool shouldBeFilled = false;
 
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    Color colorRGB;
 private:
     // Posiciona o ponto de interação da rotação
     void SetRotationPoint(void)

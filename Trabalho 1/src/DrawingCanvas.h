@@ -5,6 +5,7 @@
 #include "MouseHandler.h"
 #include "FileHandler.h"
 #include "FunctionType.h"
+#include "Color.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ using namespace std;
 class DrawingCanvas
 {
 public:
-    DrawingCanvas(function<void()> deselectButtonCallback, function<void(float*)> refreshColorCallback)
+    DrawingCanvas(function<void()> deselectButtonCallback, function<void(Color)> refreshColorCallback)
     {
         LoadFromFile(drawings);
         this->deselectButtonCallback = deselectButtonCallback;
@@ -94,7 +95,7 @@ public:
         this->currentFunction = currentFunction;
 
         // Se o usuário estiver desenhando, desenha o protótipo na tela
-        color(selectedColor[0],selectedColor[1],selectedColor[2]);
+        color(selectedColor.r,selectedColor.g,selectedColor.b, selectedColor.alpha);
         if (newDrawing && mouseHandler->IsHolding())
         {
             newDrawing->RenderPrototype(mouseHandler->GetClickX(),
@@ -122,15 +123,13 @@ public:
         tempPoints.clear();
     }
     // Atualiza cor selecionada
-    void UpdateSelectedColor(float* rgb)
+    void UpdateSelectedColor(Color rgb)
     {
-        selectedColor[0] = rgb[0];
-        selectedColor[1] = rgb[1];
-        selectedColor[2] = rgb[2];
+        selectedColor = rgb;
 
         if (selectedDrawing)
         {
-            selectedDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+            selectedDrawing->SetColor(rgb);
         }
     }
 
@@ -144,7 +143,7 @@ public:
                                               mouseHandler->GetClickY(),
                                               mouseHandler->GetX(),
                                               mouseHandler->GetY());
-            newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+            newDrawing->SetColor(selectedColor);
             break;
         case Circle:
             selectedDrawing = NULL;
@@ -152,7 +151,7 @@ public:
                                            mouseHandler->GetClickY(),
                                            mouseHandler->GetDiffX(),
                                            32);
-            newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+            newDrawing->SetColor(selectedColor);
             break;
         case Triangle:
             selectedDrawing = NULL;
@@ -160,7 +159,7 @@ public:
                                              mouseHandler->GetClickY(),
                                              mouseHandler->GetDiffX(),
                                              mouseHandler->GetDiffY());
-            newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+            newDrawing->SetColor(selectedColor);
             break;
         case Poly:
             selectedDrawing = NULL;
@@ -272,9 +271,9 @@ private:
     Drawing* selectedDrawing = NULL;
 
     function<void()> deselectButtonCallback;
-    function<void(float*)> refreshColorCallback;
+    function<void(Color)> refreshColorCallback;
 
-    float selectedColor[3] = {0.5, 0.5, 0.5};
+    Color selectedColor = Color();
     FunctionType currentFunction;
 
     Vector2 moveInc;
@@ -299,7 +298,7 @@ private:
     // Adiciona um novo desenho a lista de desenhos a serem renderizados
     void AddDrawing()
     {
-        newDrawing->SetColor(selectedColor[0],selectedColor[1],selectedColor[2]);
+        newDrawing->SetColor(selectedColor);
         selectedDrawing = newDrawing;
         drawings.push_back(newDrawing);
         deselectButtonCallback();

@@ -51,6 +51,7 @@
 		<Unit filename="src/Bars/SatSlider.h" />
 		<Unit filename="src/Bars/ToolBar.h" />
 		<Unit filename="src/Bars/ValueSlider.h" />
+		<Unit filename="src/Color.h" />
 		<Unit filename="src/ColorUtils.h" />
 		<Unit filename="src/DrawingCanvas.h" />
 		<Unit filename="src/Drawings/CircleDrawing.h" />

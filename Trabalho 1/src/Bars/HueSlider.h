@@ -17,12 +17,11 @@ public:
     {
         float hueRange = maxVal - minVal;
         float hueStep = hueRange / width;
-        float r, g, b;
         for (int i = 0; i < width; i++)
         {
             float hue = minVal + i * hueStep;
-            HSVtoRGB(hue, sat, value, r, g, b);
-            color(r, g, b);
+            Color rgb = HSVtoRGB(hue, sat, value);
+            color(rgb.r, rgb.g, rgb.b);
             rectFill(x + i, y, x + i + 1, y + height);
         }
 

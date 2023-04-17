@@ -6,6 +6,7 @@
 #include "Bars/HueSlider.h"
 #include "Bars/SatSlider.h"
 #include "Bars/ValueSlider.h"
+#include "Color.h"
 #include <vector>
 
 /** \brief
@@ -45,18 +46,17 @@ public:
     }
 
     // Retorna o valor selecionado nas barras em formato RGB.
-    void GetRGB(float& r, float& g, float& b)
+    Color GetRGB(void)
     {
-        HSVtoRGB(hueSlider->GetValue(),
+        return HSVtoRGB(hueSlider->GetValue(),
                  saturationSlider->GetValue(),
-                 valueSlider->GetValue(),
-                 r, g, b);
+                 valueSlider->GetValue());
     }
 
     // Recebe um valor em formato RGB, converte pra HSV e chama atualização das barras.
-    void SetRGB(float* rgb)
+    void SetRGB(Color rgb)
     {
-        RGBtoHSV(rgb[0], rgb[1], rgb[2], this->hue, this->saturation, this->value);
+        RGBtoHSV(rgb, this->hue, this->saturation, this->value);
         UpdateBars();
     }
 
@@ -71,7 +71,7 @@ public:
         }
     }
 
-    void OnMouseDrag(int mx, int my, function<void(float*)> callback)
+    void OnMouseDrag(int mx, int my, function<void(Color)> callback)
     {
         for (Slider* slider : sliders)
         {
@@ -81,9 +81,7 @@ public:
             }
         }
 
-        float* rgb = new float[3];
-        GetRGB(rgb[0], rgb[1], rgb[2]);
-        callback(rgb);
+        callback(GetRGB());
     }
 
     void OnMouseRelease(int mx, int my)
@@ -104,10 +102,10 @@ private:
     // Desenha preview da cor selecionada
     void DrawPreview(void)
     {
-        float r, g, b;
-        GetRGB(r, g, b);
+        Color rgb;
+        rgb = GetRGB();
 
-        color(r, g, b);
+        color(rgb.r, rgb.g, rgb.b);
         rectFill(x + width * 0.5, y, x + width, y + height);
     }
 

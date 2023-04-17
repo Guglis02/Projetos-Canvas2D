@@ -1,18 +1,21 @@
 #ifndef COLORUTILS_H_INCLUDED
 #define COLORUTILS_H_INCLUDED
 
+#include "Color.h"
+
 /** \brief
  * Arquivo utilitário contendo funções relacionadas a conversão de cores.
  */
 
-static void HSVtoRGB (float h, float s, float v, float& r, float& g, float& b)
+static Color HSVtoRGB (float h, float s, float v)
 {
+    Color rgb;
     if (s == 0.0f)
     {
         // Se a saturação for 0, a cor vai ser em tons de cinza
-        r = v;
-        g = v;
-        b = v;
+        rgb.r = v;
+        rgb.g = v;
+        rgb.b = v;
     }
     else
     {
@@ -27,43 +30,45 @@ static void HSVtoRGB (float h, float s, float v, float& r, float& g, float& b)
         switch (i)
         {
         case 0:
-            r = v;
-            g = t;
-            b = p;
+            rgb.r = v;
+            rgb.g = t;
+            rgb.b = p;
             break;
         case 1:
-            r = q;
-            g = v;
-            b = p;
+            rgb.r = q;
+            rgb.g = v;
+            rgb.b = p;
             break;
         case 2:
-            r = p;
-            g = v;
-            b = t;
+            rgb.r = p;
+            rgb.g = v;
+            rgb.b = t;
             break;
         case 3:
-            r = p;
-            g = q;
-            b = v;
+            rgb.r = p;
+            rgb.g = q;
+            rgb.b = v;
             break;
         case 4:
-            r = t;
-            g = p;
-            b = v;
+            rgb.r = t;
+            rgb.g = p;
+            rgb.b = v;
             break;
         default:
-            r = v;
-            g = p;
-            b = q;
+            rgb.r = v;
+            rgb.g = p;
+            rgb.b = q;
             break;
         }
     }
+
+    return rgb;
 }
 
-static void RGBtoHSV(float r, float g, float b, float& h, float& s, float& v)
+static void RGBtoHSV(Color rgb, float& h, float& s, float& v)
 {
-    float minVal = min(min(r, g), b);
-    float maxVal = max(max(r, g), b);
+    float minVal = min(min(rgb.r, rgb.g), rgb.b);
+    float maxVal = max(max(rgb.r, rgb.g), rgb.b);
     float delta = maxVal - minVal;
 
     if (maxVal == 0.0f)
@@ -81,17 +86,17 @@ static void RGBtoHSV(float r, float g, float b, float& h, float& s, float& v)
     }
     else
     {
-        if (r == maxVal)
+        if (rgb.r == maxVal)
         {
-            h = (g - b) / delta;
+            h = (rgb.g - rgb.b) / delta;
         }
-        else if (g == maxVal)
+        else if (rgb.g == maxVal)
         {
-            h = 2.0f + (b - r) / delta;
+            h = 2.0f + (rgb.b - rgb.r) / delta;
         }
         else
         {
-            h = 4.0f + (r - g) / delta;
+            h = 4.0f + (rgb.r - rgb.g) / delta;
         }
 
         h *= 60.0f;

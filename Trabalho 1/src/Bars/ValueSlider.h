@@ -17,11 +17,9 @@ public:
     {
         for (int i = 0; i < width; i++)
         {
-            float v = static_cast<float>(i) / width;
-            float r, g, b;
-            HSVtoRGB(hue, sat, v, r, g, b);
-
-            color(r, g, b);
+            float value = static_cast<float>(i) / width;
+            Color rgb = HSVtoRGB(hue, sat, value);
+            color(rgb.r, rgb.g, rgb.b);
             rectFill(x + i, y, x + i + 1, y + height);
         }
 
