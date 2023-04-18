@@ -1,7 +1,7 @@
 #ifndef SLIDER_H_INCLUDED
 #define SLIDER_H_INCLUDED
 
-#include "gl_canvas2d.h"
+#include "../gl_canvas2d.h"
 #include <math.h>
 
 using namespace std;
@@ -36,8 +36,8 @@ public:
     // Desenha a barra
     void Render(void)
     {
-        color(0.5f, 0.5f, 0.5f);
-        rectFill(x, y, x + width, y + height);
+        CV::color(0.5f, 0.5f, 0.5f);
+        CV::rectFill(x, y, x + width, y + height);
 
         RenderHandler();
     }
@@ -45,8 +45,8 @@ public:
     // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
-        color(1.0, 1.0, 1.0);
-        rectFill(x + currentValue * width - handlerWidth, y,
+        CV::color(1.0, 1.0, 1.0);
+        CV::rectFill(x + currentValue * width - handlerWidth, y,
                  x + currentValue * width + handlerWidth, y + height);
     }
 

@@ -1,3 +1,18 @@
+/**
+*   Programa para ilustrar os elementos mais basicos do OpenGL e Glut.
+*   - Apresenta os principais recursos do sistema de Janelas GLUT
+*
+*   Autor: Cesar Tadeu Pozzer
+*   UFSM - 2020
+*
+*   pozzer@inf.ufsm.br
+*   pozzer3@gmail.com
+*
+* Referencias GLUT: http://www.opengl.org/documentation/specs/glut/
+*                   http://www.opengl.org/documentation/specs/glut/spec3/node1.html
+**/
+
+
 #include "gl_canvas2d.h"
 #include <GL/glut.h>
 
@@ -33,14 +48,21 @@ void mouseWheelCB(int wheel, int direction, int x, int y);
 void render();
 
 
-void point(float x, float y)
+void CV::point(float x, float y)
 {
    glBegin(GL_POINTS);
       glVertex2d(x, y);
    glEnd();
 }
 
-void line( float x1, float y1, float x2, float y2 )
+void CV::point(Vector2 p)
+{
+   glBegin(GL_POINTS);
+      glVertex2d(p.x, p.y);
+   glEnd();
+}
+
+void CV::line( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINES);
       glVertex2d(x1, y1);
@@ -48,7 +70,7 @@ void line( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
-void rect( float x1, float y1, float x2, float y2 )
+void CV::rect( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINE_LOOP);
       glVertex2d(x1, y1);
@@ -58,7 +80,7 @@ void rect( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
-void rectFill( float x1, float y1, float x2, float y2 )
+void CV::rectFill( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_QUADS);
       glVertex2d(x1, y1);
@@ -67,8 +89,17 @@ void rectFill( float x1, float y1, float x2, float y2 )
       glVertex2d(x2, y1);
    glEnd();
 }
+void CV::rectFill( Vector2 p1, Vector2 p2 )
+{
+   glBegin(GL_QUADS);
+      glVertex2d(p1.x, p1.y);
+      glVertex2d(p1.x, p2.y);
+      glVertex2d(p2.x, p2.y);
+      glVertex2d(p2.x, p1.y);
+   glEnd();
+}
 
-void polygon(float vx[], float vy[], int elems)
+void CV::polygon(float vx[], float vy[], int elems)
 {
    int cont;
    glBegin(GL_LINE_LOOP);
@@ -79,7 +110,7 @@ void polygon(float vx[], float vy[], int elems)
    glEnd();
 }
 
-void polygonFill(float vx[], float vy[], int elems)
+void CV::polygonFill(float vx[], float vy[], int elems)
 {
    int cont;
    glBegin(GL_POLYGON);
@@ -91,25 +122,15 @@ void polygonFill(float vx[], float vy[], int elems)
 
 }
 
-/*opcoes de fontes
-GLUT_STROKE_ROMAN
-GLUT_STROKE_MONO_ROMAN
-GLUT_BITMAP_9_BY_15
-GLUT_BITMAP_8_BY_13
-GLUT_BITMAP_TIMES_ROMAN_10
-GLUT_BITMAP_TIMES_ROMAN_24
-GLUT_BITMAP_HELVETICA_10
-GLUT_BITMAP_HELVETICA_12
-GLUT_BITMAP_HELVETICA_18
-*/
-
-void text(float x, float y, const char c)
-{
-   glRasterPos2i(x, y);
-   glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, c);
-}
-
-void text(float x, float y, const char *t)
+//existem outras fontes de texto que podem ser usadas
+//  GLUT_BITMAP_9_BY_15
+//  GLUT_BITMAP_TIMES_ROMAN_10
+//  etc. Para mais detalhes, acesse https://www.opengl.org/resources/libraries/glut/spec3/node76.html
+//Vejam tambem a funcao glutStrokeWidth(GLUTstrokeFont font, int character)
+//Para textos de qualidade, ver:
+//  https://www.freetype.org/
+//  http://ftgl.sourceforge.net/docs/html/ftgl-tutorial.html
+void CV::text(float x, float y, const char *t)
 {
     int tam = (int)strlen(t);
     for(int c=0; c < tam; c++)
@@ -119,36 +140,12 @@ void text(float x, float y, const char *t)
     }
 }
 
-void text(float x, float y, const int i)
-{
-    char str[100];
-    sprintf(str, "%d", i);
-    int tam = (int)strlen(str);
-    for(int c=0; c < tam; c++)
-    {
-      glRasterPos2i(x + c*10, y);
-      glutBitmapCharacter(GLUT_BITMAP_8_BY_13, str[c]);
-    }
-}
-
-void text(float x, float y, const double d)
-{
-    char str[100];
-    sprintf(str, "%.3f", d);
-    int tam = (int)strlen(str);
-    for(int c=0; c < tam; c++)
-    {
-      glRasterPos2i(x + c*10, y);
-      glutBitmapCharacter(GLUT_BITMAP_8_BY_13, str[c]);
-    }
-}
-
-void clear(float r, float g, float b)
+void CV::clear(float r, float g, float b)
 {
    glClearColor( r, g, b, 1 );
 }
 
-void circle( float x, float y, float radius, int div )
+void CV::circle( float x, float y, float radius, int div )
 {
    float ang = 0, x1, y1;
    float inc = PI_2/div;
@@ -163,7 +160,7 @@ void circle( float x, float y, float radius, int div )
    glEnd();
 }
 
-void circleFill( float x, float y, float radius, int div )
+void CV::circleFill( float x, float y, float radius, int div )
 {
    float ang = 0, x1, y1;
    float inc = PI_2/div;
@@ -180,24 +177,31 @@ void circleFill( float x, float y, float radius, int div )
 
 //coordenada de offset para desenho de objetos.
 //nao armazena translacoes cumulativas.
-void translate(float offsetX, float offsetY)
+void CV::translate(float offsetX, float offsetY)
 {
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslated(offsetX, offsetY, 0);
 }
 
-void color(float r, float g, float b)
+void CV::translate(Vector2 offset)
+{
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
+   glTranslated(offset.x, offset.y, 0);
+}
+
+void CV::color(float r, float g, float b)
 {
    glColor3d(r, g, b);
 }
 
-void color(int idx)
+void CV::color(int idx)
 {
     glColor3fv(Colors[idx]);
 }
 
-void color(float r, float g, float b, float alpha)
+void CV::color(float r, float g, float b, float alpha)
 {
    glColor4d(r, g, b, alpha);
 }
@@ -281,10 +285,6 @@ void display (void)
 {
    glClear(GL_COLOR_BUFFER_BIT );
 
-   //clear(0,0,0);  //tela preta por default. Escolha a cor desejada
-   clear(1, 1, 1); //tela branca por default
-
-
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
@@ -297,7 +297,7 @@ void display (void)
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void init(int *w, int *h, const char *title)
+void CV::init(int *w, int *h, const char *title)
 {
    int argc = 0;
    glutInit(&argc, NULL);
@@ -306,9 +306,8 @@ void init(int *w, int *h, const char *title)
    scrWidth = w;
 
    //habilita MSAA
-   //glutSetOption(GLUT_MULTISAMPLE, 4);
-   //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
-   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+   glutSetOption(GLUT_MULTISAMPLE, 8);
+   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
    //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
 
    glutInitWindowSize (*w, *h);
@@ -333,7 +332,7 @@ void init(int *w, int *h, const char *title)
    printf("GL Version: %s", glGetString(GL_VERSION));
 }
 
-void run()
+void CV::run()
 {
    glutMainLoop();
 }

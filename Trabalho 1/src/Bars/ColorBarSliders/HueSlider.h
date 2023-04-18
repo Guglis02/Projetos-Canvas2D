@@ -1,10 +1,10 @@
 #ifndef HUESLIDER_H_INCLUDED
 #define HUESLIDER_H_INCLUDED
 
-#include "ColorUtils.h"
+#include "../../ColorUtils.h"
 
 /** \brief
-Slider de Hue, muda de aparência de acordo com o valor das outras barras
+Slider de Hue, muda de aparï¿½ncia de acordo com o valor das outras barras
  */
 class HueSlider : public Slider
 {
@@ -21,8 +21,8 @@ public:
         {
             float hue = minVal + i * hueStep;
             Color rgb = HSVtoRGB(hue, sat, value);
-            color(rgb.r, rgb.g, rgb.b);
-            rectFill(x + i, y, x + i + 1, y + height);
+            CV::color(rgb.r, rgb.g, rgb.b);
+            CV::rectFill(x + i, y, x + i + 1, y + height);
         }
 
         RenderHandler();

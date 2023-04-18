@@ -1,16 +1,16 @@
 #ifndef COLORBAR_H_INCLUDED
 #define COLORBAR_H_INCLUDED
 
-#include "ColorUtils.h"
-#include "Interactables/Slider.h"
-#include "Bars/ColorBarSliders/HueSlider.h"
-#include "Bars/ColorBarSliders/SatSlider.h"
-#include "Bars/ColorBarSliders/ValueSlider.h"
-#include "Color.h"
+#include "../ColorUtils.h"
+#include "../Interactables/Slider.h"
+#include "ColorBarSliders/HueSlider.h"
+#include "ColorBarSliders/SatSlider.h"
+#include "ColorBarSliders/ValueSlider.h"
+#include "../Color.h"
 #include <vector>
 
 /** \brief
-Classe responsável pela barra de escolha de cores.
+Classe responsï¿½vel pela barra de escolha de cores.
 Gerencia as barras de Hue, Saturation e Value.
 Mostra um preview da cor selecionada.
  */
@@ -49,11 +49,11 @@ public:
     Color GetRGB(void)
     {
         return HSVtoRGB(hueSlider->GetValue(),
-                 saturationSlider->GetValue(),
-                 valueSlider->GetValue());
+                        saturationSlider->GetValue(),
+                        valueSlider->GetValue());
     }
 
-    // Recebe um valor em formato RGB, converte pra HSV e chama atualização das barras.
+    // Recebe um valor em formato RGB, converte pra HSV e chama atualizaï¿½ï¿½o das barras.
     void SetRGB(Color rgb)
     {
         RGBtoHSV(rgb, this->hue, this->saturation, this->value);
@@ -105,8 +105,8 @@ private:
         Color rgb;
         rgb = GetRGB();
 
-        color(rgb.r, rgb.g, rgb.b);
-        rectFill(x + width * 0.5, y, x + width, y + height);
+        CV::color(rgb.r, rgb.g, rgb.b);
+        CV::rectFill(x + width * 0.5, y, x + width, y + height);
     }
 
     // Atualiza cor selecionada

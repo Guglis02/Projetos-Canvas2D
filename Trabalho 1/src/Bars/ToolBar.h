@@ -2,9 +2,9 @@
 #define TOOLBAR_H
 
 #include <vector>
-#include "Interactables/Button.h"
-#include "FunctionType.h"
-#include "Bars/Bar.h"
+#include "../Interactables/Button.h"
+#include "../FunctionType.h"
+#include "../Bars/Bar.h"
 
 using namespace std;
 

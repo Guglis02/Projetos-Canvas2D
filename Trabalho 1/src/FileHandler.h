@@ -99,7 +99,7 @@ void SaveInFile(vector<Drawing*> drawings)
                << angle << " " << proportion.x << " " << proportion.y << std::endl;
     }
 
-    std::ofstream file("figuras.gr");
+    std::ofstream file("./figuras.gr");
 
     if (!file)
     {
@@ -116,7 +116,7 @@ void SaveInFile(vector<Drawing*> drawings)
 // adicionando-os na lista.
 void LoadFromFile(vector<Drawing*>&drawings)
 {
-    std::ifstream file("figuras.gr");
+    std::ifstream file("./figuras.gr");
     std::stringstream buffer, temp;
 
     if (!file.is_open())
@@ -129,6 +129,7 @@ void LoadFromFile(vector<Drawing*>&drawings)
         return;
     }
 
+    printf("\nleu arquivo");
     temp << file.rdbuf();
     string decrypted = Decrypt(temp.str(), EncryptionKey);
     buffer << decrypted;

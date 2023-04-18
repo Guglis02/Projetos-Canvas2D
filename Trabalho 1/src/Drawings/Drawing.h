@@ -1,11 +1,11 @@
 #ifndef DRAWING_H
 #define DRAWING_H
 
-#include "FunctionType.h"
-#include "PointsUtils.h"
-#include "Vector2.h"
-#include "gl_canvas2d.h"
-#include "Color.h"
+#include "../FunctionType.h"
+#include "../PointsUtils.h"
+#include "../Vector2.h"
+#include "../gl_canvas2d.h"
+#include "../Color.h"
 #include <stdio.h>
 #include <algorithm>
 #include <iostream>
@@ -23,16 +23,16 @@ public:
     //
     void Render(void)
     {
-        color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.alpha);
+        CV::color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.alpha);
         float* xs = Vector2::GetXs(this->points, elementsCounter);
         float* ys = Vector2::GetYs(this->points, elementsCounter);
         if (shouldBeFilled)
         {
-            polygonFill(xs, ys, this->elementsCounter);
+            CV::polygonFill(xs, ys, this->elementsCounter);
         }
         else
         {
-            polygon(xs, ys, elementsCounter);
+            CV::polygon(xs, ys, elementsCounter);
         }
 
         delete[] xs;
@@ -44,18 +44,18 @@ public:
         float* xs = Vector2::GetXs(this->corners, 4);
         float* ys = Vector2::GetYs(this->corners, 4);
 
-        color(1);
-        polygon(xs, ys, 4);
+        CV::color(1);
+        CV::polygon(xs, ys, 4);
 
         delete[] xs;
         delete[] ys;
 
         for (int i = 0; i < 4; i++)
         {
-            circleFill(corners[i].x, corners[i].y, IndicatorBallRadius, 10);
+            CV::circleFill(corners[i].x, corners[i].y, IndicatorBallRadius, 10);
         }
 
-        circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
+        CV::circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
     }
     // Método virtual chamado pelas classes descendentes,
     // chamado enquanto o usuário arrasta o mouse no canvas de desenho.

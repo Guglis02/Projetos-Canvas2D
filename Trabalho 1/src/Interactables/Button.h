@@ -1,15 +1,15 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "FunctionType.h"
-#include "gl_canvas2d.h"
+#include "../FunctionType.h"
+#include "../gl_canvas2d.h"
 #include <string>
 #include <functional>
 
 using namespace std;
 
 /** \brief
-Classe que representa um botão.
+Classe que representa um botï¿½o.
 */
 class Button
 {
@@ -37,21 +37,21 @@ public:
 
         if (selectedState)
         {
-            color(0, 1, 0);
+            CV::color(0, 1, 0);
         }
         else
         {
-            color(r, g, b);
+            CV::color(r, g, b);
         }
 
-        rectFill(left, top, right, bottom);
-        color(0);
-        text(x, y + 10, name);
+        CV::rectFill(left, top, right, bottom);
+        CV::color(0);
+        CV::text(x, y + 10, name);
     }
 
     // Checa o clique do mouse
-    // Se o botão possui uma callback, chama ela
-    // Senão, trata-se de um botão selecionável, então a flag é atualizada
+    // Se o botï¿½o possui uma callback, chama ela
+    // Senï¿½o, trata-se de um botï¿½o selecionï¿½vel, entï¿½o a flag ï¿½ atualizada
     bool CheckMouseClick(int mx, int my)
     {
         if (my >= top && my <= bottom && mx >= left && mx <= right)

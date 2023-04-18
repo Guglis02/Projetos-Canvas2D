@@ -1,10 +1,10 @@
 #ifndef VALUESLIDER_H_INCLUDED
 #define VALUESLIDER_H_INCLUDED
 
-#include "ColorUtils.h"
+#include "../../ColorUtils.h"
 
 /** \brief
-Slider de value, muda de aparência de acordo com o valor das outras barras
+Slider de value, muda de aparï¿½ncia de acordo com o valor das outras barras
  */
 class ValueSlider : public Slider
 {
@@ -19,8 +19,8 @@ public:
         {
             float value = static_cast<float>(i) / width;
             Color rgb = HSVtoRGB(hue, sat, value);
-            color(rgb.r, rgb.g, rgb.b);
-            rectFill(x + i, y, x + i + 1, y + height);
+            CV::color(rgb.r, rgb.g, rgb.b);
+            CV::rectFill(x + i, y, x + i + 1, y + height);
         }
 
         RenderHandler();

@@ -141,7 +141,7 @@ void StartButtons()
 
 int main(void)
 {
-    init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
+    CV::init(&screenWidth, &screenHeight, "Trabalho 1 - Gustavo Machado de Freitas");
 
     mouseHandler = new MouseHandler();
     toolBar = new ToolBar(ToolbarHeight, screenWidth/2);
@@ -151,5 +151,5 @@ int main(void)
 
     StartButtons();
 
-    run();
+    CV::run();
 }

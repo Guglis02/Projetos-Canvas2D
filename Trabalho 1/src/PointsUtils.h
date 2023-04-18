@@ -2,7 +2,7 @@
 #define POINTHANDLER_H_INCLUDED
 
 #include <math.h>
-#include <Vector2.h>
+#include "Vector2.h"
 
 /** \brief
  * Arquivo utilitário contendo funções relacionadas a pontos.

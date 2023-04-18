@@ -1,11 +1,11 @@
 #ifndef BAR_H_INCLUDED
 #define BAR_H_INCLUDED
 
-#include "Color.h"
+#include "../Color.h"
 
 /** \brief
 Classe base das barras da interface.
-Possui um método de atualização e um de checagem do mouse.
+Possui um mï¿½todo de atualizaï¿½ï¿½o e um de checagem do mouse.
  */
 class Bar
 {
@@ -23,8 +23,8 @@ public:
         this->y = y;
         this->width = width;
         this->height = height;
-        color(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-        rectFill(x, y, x + width, height);
+        CV::color(backgroundColor.r, backgroundColor.g, backgroundColor.b);
+        CV::rectFill(x, y, x + width, height);
     }
 
     bool IsMouseInside(int mx, int my)

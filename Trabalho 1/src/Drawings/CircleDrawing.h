@@ -2,7 +2,7 @@
 #define CIRCLEDRAWING_H_INCLUDED
 
 #include "Drawing.h"
-#include "PointsUtils.h"
+#include "../PointsUtils.h"
 
 /** \brief
 Classe responsável pelo desenho em formato de círculo.

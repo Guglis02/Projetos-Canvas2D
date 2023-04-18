@@ -95,7 +95,7 @@ public:
         this->currentFunction = currentFunction;
 
         // Se o usuário estiver desenhando, desenha o protótipo na tela
-        color(selectedColor.r,selectedColor.g,selectedColor.b, selectedColor.alpha);
+        CV::color(selectedColor.r,selectedColor.g,selectedColor.b, selectedColor.alpha);
         if (newDrawing && mouseHandler->IsHolding())
         {
             newDrawing->RenderPrototype(mouseHandler->GetClickX(),
@@ -286,14 +286,14 @@ private:
         {
             float* xs = Vector2::GetXs(tempPoints.data(), numberOfPoints);
             float* ys = Vector2::GetYs(tempPoints.data(), numberOfPoints);
-            polygon(xs, ys, numberOfPoints);
+            CV::polygon(xs, ys, numberOfPoints);
 
             delete[] xs;
             delete[] ys;
 
             for (int i = 0; i < numberOfPoints; i++)
             {
-                circle(tempPoints[i].x, tempPoints[i].y, circleIndicatorRadius, 10);
+                CV::circle(tempPoints[i].x, tempPoints[i].y, circleIndicatorRadius, 10);
             }
         }
     }

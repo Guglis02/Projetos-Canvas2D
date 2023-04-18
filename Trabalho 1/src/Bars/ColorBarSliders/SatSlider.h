@@ -1,10 +1,10 @@
 #ifndef SATSLIDER_H_INCLUDED
 #define SATSLIDER_H_INCLUDED
 
-#include "ColorUtils.h"
+#include "../../ColorUtils.h"
 
 /** \brief
-Slider de saturation, muda de aparência de acordo com o valor das outras barras
+Slider de saturation, muda de aparï¿½ncia de acordo com o valor das outras barras
  */
 class SatSlider : public Slider
 {
@@ -21,8 +21,8 @@ public:
         {
             float sat = minVal + i * satStep;
             Color rgb = HSVtoRGB(hue, sat, value);
-            color(rgb.r, rgb.g, rgb.b);
-            rectFill(x + i, y, x + i + 1, y + height);
+            CV::color(rgb.r, rgb.g, rgb.b);
+            CV::rectFill(x + i, y, x + i + 1, y + height);
         }
         RenderHandler();
     }

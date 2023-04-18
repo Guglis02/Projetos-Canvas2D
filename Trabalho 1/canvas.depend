@@ -1,0 +1,136 @@
+# depslib dependency file v1.0
+1681851555 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1681850760 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1681598912 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\vector2.h
+	<stdio.h>
+	<math.h>
+
+1681858550 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	"gl_canvas2d.h"
+	"Bars/ToolBar.h"
+	"Bars/ColorBar.h"
+	"DrawingCanvas.h"
+
+1681849657 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\toolbar.h
+	<vector>
+	"../Interactables/Button.h"
+	"../FunctionType.h"
+	"../Bars/Bar.h"
+
+1681858425 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\interactables\button.h
+	"../FunctionType.h"
+	"../gl_canvas2d.h"
+	<string>
+	<functional>
+
+1681770816 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\functiontype.h
+
+1681858428 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\bar.h
+	"../Color.h"
+
+1681770765 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\color.h
+
+1681858485 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\colorbar.h
+	"../ColorUtils.h"
+	"../Interactables/Slider.h"
+	"ColorBarSliders/HueSlider.h"
+	"ColorBarSliders/SatSlider.h"
+	"ColorBarSliders/ValueSlider.h"
+	"../Color.h"
+	<vector>
+
+1681771749 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\colorutils.h
+	"Color.h"
+
+1681858455 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\interactables\slider.h
+	"../gl_canvas2d.h"
+	<math.h>
+
+1681858473 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\colorbarsliders\hueslider.h
+	"../../ColorUtils.h"
+
+1681858477 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\colorbarsliders\satslider.h
+	"../../ColorUtils.h"
+
+1681858481 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\bars\colorbarsliders\valueslider.h
+	"../../ColorUtils.h"
+
+1681858510 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawingcanvas.h
+	"Drawings/Drawing.h"
+	"MouseHandler.h"
+	"FileHandler.h"
+	"FunctionType.h"
+	"Color.h"
+
+1681858499 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\drawing.h
+	"../FunctionType.h"
+	"../PointsUtils.h"
+	"../Vector2.h"
+	"../gl_canvas2d.h"
+	"../Color.h"
+	<stdio.h>
+	<algorithm>
+	<iostream>
+
+1681849953 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\pointsutils.h
+	<math.h>
+	"Vector2.h"
+
+1681608265 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\mousehandler.h
+
+1681858813 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\filehandler.h
+	<iostream>
+	<fstream>
+	<sstream>
+	"Drawings/Drawing.h"
+	"Drawings/CircleDrawing.h"
+	"Drawings/PolygonDrawing.h"
+	"Drawings/RectangleDrawing.h"
+	"Drawings/TriangleDrawing.h"
+	"FunctionType.h"
+
+1681849968 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\circledrawing.h
+	"Drawing.h"
+	"../PointsUtils.h"
+
+1681604283 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\polygondrawing.h
+	"Drawing.h"
+
+1681605313 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\rectangledrawing.h
+	"Drawing.h"
+
+1681605326 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trabalho 1\src\drawings\triangledrawing.h
+	"Drawing.h"
+	<algorithm>
+
