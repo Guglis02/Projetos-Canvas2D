@@ -129,7 +129,6 @@ void LoadFromFile(vector<Drawing*>&drawings)
         return;
     }
 
-    printf("\nleu arquivo");
     temp << file.rdbuf();
     string decrypted = Decrypt(temp.str(), EncryptionKey);
     buffer << decrypted;
