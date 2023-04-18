@@ -21,7 +21,7 @@ public:
         this->minVal = minVal;
         this->maxVal = maxVal;
         this->currentValue = initialValue;
-        this->sliderWidth = width * 0.1;
+        this->handlerWidth = width * 0.03;
         this->isDragging = false;
     }
 
@@ -45,15 +45,15 @@ public:
     // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
-        color(1.0f, 1.0f, 1.0f);
-        rectFill(x + currentValue * width - sliderWidth * 0.5, y,
-                 x + currentValue * width + sliderWidth * 0.5, y + height);
+        color(1.0, 1.0, 1.0);
+        rectFill(x + currentValue * width - handlerWidth, y,
+                 x + currentValue * width + handlerWidth, y + height);
     }
 
     void OnMouseClick(float mx, float my)
     {
-        if (mx >= x + currentValue * width - sliderWidth * 0.5
-                && mx <= x + currentValue * width + sliderWidth * 0.5
+        if (mx >= x + currentValue * width - handlerWidth
+                && mx <= x + currentValue * width + handlerWidth
                 && my >= y && my <= y + height)
         {
             isDragging = true;
@@ -79,7 +79,7 @@ public:
         return currentValue * (maxVal - minVal) + minVal;
     }
 
-    float SetValue(float value)
+    void SetValue(float value)
     {
         this->currentValue = (value - minVal) / (maxVal - minVal);
     }
@@ -97,7 +97,7 @@ protected:
     float minVal;
     float maxVal;
     float currentValue;
-    float sliderWidth;
+    float handlerWidth;
     bool isDragging = false;
 };
 

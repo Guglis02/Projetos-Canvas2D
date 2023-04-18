@@ -3,9 +3,9 @@
 
 #include "ColorUtils.h"
 #include "Interactables/Slider.h"
-#include "Bars/HueSlider.h"
-#include "Bars/SatSlider.h"
-#include "Bars/ValueSlider.h"
+#include "Bars/ColorBarSliders/HueSlider.h"
+#include "Bars/ColorBarSliders/SatSlider.h"
+#include "Bars/ColorBarSliders/ValueSlider.h"
 #include "Color.h"
 #include <vector>
 

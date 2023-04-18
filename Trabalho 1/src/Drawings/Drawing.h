@@ -347,7 +347,7 @@ public:
     }
     Vector2 GetGlobalCenter(void)
     {
-        (this->corners[0] + (this->corners[2] - this->corners[0]) * 0.5);
+        return (this->corners[0] + (this->corners[2] - this->corners[0]) * 0.5);
     }
 
     bool isMoving = false;

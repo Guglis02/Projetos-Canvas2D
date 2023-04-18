@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "Drawings/Drawing.h"
 #include "Drawings/CircleDrawing.h"
 #include "Drawings/PolygonDrawing.h"
@@ -14,21 +15,39 @@ using namespace std;
 
 /** \brief
  * Arquivo utilitário contendo funções relacionadas a lidar com arquivos.
+ * Possui métodos auxiliares que usam cifra de ceasar para criptografar o arquivo de figuras.
  */
+
+const int EncryptionKey = 10;
+
+string Encrypt(string str, int key)
+{
+    string encrypted = str;
+    for (char& chr : encrypted)
+    {
+        chr = ((chr + key) % 127);
+    }
+    return encrypted;
+}
+
+string Decrypt(string str, int key)
+{
+    string decrypted = str;
+    for (char& chr : decrypted)
+    {
+        chr = ((chr - key) % 127);
+    }
+    return decrypted;
+}
 
 // Recebe a lista de desenhos e decompõe cada um em uma série de atributos
 void SaveInFile(vector<Drawing*> drawings)
 {
-    FILE* file = fopen("figuras.gr", "w");
-
-    if (!file)
-    {
-        return;
-    }
+    std::stringstream buffer;
 
     int numberOfDrawings = drawings.size();
 
-    fprintf(file, "%d\n", numberOfDrawings);
+    buffer << numberOfDrawings << std::endl;
 
     for (Drawing* d : drawings)
     {
@@ -36,38 +55,34 @@ void SaveInFile(vector<Drawing*> drawings)
 
         int elementsCounter;
 
-        fprintf(file, "%d ", type);
+        buffer << type << " ";
         switch (type)
         {
         case Rect:
-            fprintf(file, "%.f %.f %.f %.f ",
-                    d->GetAnchor().x,
-                    d->GetAnchor().y,
-                    d->GetWidth(),
-                    d->GetHeight());
+            buffer << d->GetAnchor().x << " "
+                   << d->GetAnchor().y << " "
+                   << d->GetWidth() << " "
+                   << d->GetHeight() << " ";
             break;
         case Circle:
-            fprintf(file, "%.f %.f %.f ",
-                    d->GetAnchor().x,
-                    d->GetAnchor().y,
-                    d->GetWidth() / 2);
+            buffer << d->GetAnchor().x << " "
+                   << d->GetAnchor().y << " "
+                   << d->GetWidth() / 2 << " ";
             break;
         case Triangle:
-            fprintf(file, "%.f %.f %.f %.f ",
-                    d->GetAnchor().x,
-                    d->GetAnchor().y,
-                    d->GetWidth(),
-                    d->GetHeight());
+            buffer << d->GetAnchor().x << " "
+                   << d->GetAnchor().y << " "
+                   << d->GetWidth() << " "
+                   << d->GetHeight() << " ";
             break;
         case Poly:
             elementsCounter = d->GetElementsCount();
-            fprintf(file, "%d ", elementsCounter);
+            buffer << elementsCounter << " ";
 
             for (int i = 0; i < elementsCounter; i++)
             {
-                fprintf(file, "%.f %.f ",
-                        d->GetOriginPoints()[i].x + d->GetAnchor().x,
-                        d->GetOriginPoints()[i].y + d->GetAnchor().y);
+                buffer << d->GetOriginPoints()[i].x + d->GetAnchor().x << " "
+                       << d->GetOriginPoints()[i].y + d->GetAnchor().y << " ";
             }
             break;
         default:
@@ -80,17 +95,21 @@ void SaveInFile(vector<Drawing*> drawings)
         float angle = d->GetAngle();
         Vector2 proportion = d->GetProportion();
 
-        fprintf(file, "%.2f %.2f %.2f %d %.2f %.2f %.2f\n",
-                color.r,
-                color.g,
-                color.b,
-                fillFlag,
-                angle,
-                proportion.x,
-                proportion.y);
+        buffer << color.r << " " << color.g << " " << color.b << " " << fillFlag << " "
+               << angle << " " << proportion.x << " " << proportion.y << std::endl;
     }
 
-    fclose(file);
+    std::ofstream file("figuras.gr");
+
+    if (!file)
+    {
+        return;
+    }
+
+    string encrypted = Encrypt(buffer.str(), EncryptionKey);
+    file << encrypted;
+
+    file.close();
 }
 
 // Lê no arquivo os atributos e reconstrói os desenhos,
@@ -98,6 +117,7 @@ void SaveInFile(vector<Drawing*> drawings)
 void LoadFromFile(vector<Drawing*>&drawings)
 {
     std::ifstream file("figuras.gr");
+    std::stringstream buffer, temp;
 
     if (!file.is_open())
     {
@@ -109,8 +129,14 @@ void LoadFromFile(vector<Drawing*>&drawings)
         return;
     }
 
+    temp << file.rdbuf();
+    string decrypted = Decrypt(temp.str(), EncryptionKey);
+    buffer << decrypted;
+
+    file.close();
+
     int numberOfDrawings;
-    file >> numberOfDrawings;
+    buffer >> numberOfDrawings;
 
     Drawing* drawing;
     FunctionType type;
@@ -121,34 +147,34 @@ void LoadFromFile(vector<Drawing*>&drawings)
 
     for (int i = 0; i < numberOfDrawings; i++)
     {
-        file >> typeIndex;
+        buffer >> typeIndex;
 
         type = static_cast<FunctionType>(typeIndex);
 
         switch (type)
         {
         case Rect:
-            file >> x1 >> y1 >> width >> height;
+            buffer >> x1 >> y1 >> width >> height;
             drawing = new RectangleDrawing(x1, y1, x1 + width, y1 + height);
             break;
         case Triangle:
-            file >> x1 >> y1 >> width >> height;
+            buffer >> x1 >> y1 >> width >> height;
             drawing = new TriangleDrawing(x1, y1, width, height);
             break;
         case Circle:
-            file >> x1 >> y1 >> radius;
+            buffer >> x1 >> y1 >> radius;
             drawing = new CircleDrawing(x1, y1, radius, 32);
             break;
         case Poly:
         {
-            file >> elementsCounter;
+            buffer >> elementsCounter;
 
             float* xs = new float[elementsCounter];
             float* ys = new float[elementsCounter];
 
             for (int i = 0; i < elementsCounter; i++)
             {
-                file >> xs[i] >> ys[i];
+                buffer >> xs[i] >> ys[i];
             }
 
             drawing = new PolygonDrawing(xs, ys, elementsCounter);
@@ -168,7 +194,7 @@ void LoadFromFile(vector<Drawing*>&drawings)
         float proportionX;
         float proportionY;
 
-        file >> r >> g >> b >> fillFlag >> angle >> proportionX >> proportionY;
+        buffer >> r >> g >> b >> fillFlag >> angle >> proportionX >> proportionY;
         drawing->SetColor(Color(r, g, b));
         drawing->SetFillFlag(fillFlag);
         drawing->LoadProportion(Vector2(proportionX, proportionY));
@@ -176,9 +202,6 @@ void LoadFromFile(vector<Drawing*>&drawings)
 
         drawings.push_back(drawing);
     }
-
-    file.close();
 }
-
 
 #endif // FILEHANDLER_H_INCLUDED
