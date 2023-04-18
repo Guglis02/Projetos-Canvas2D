@@ -23,6 +23,11 @@ public:
         this->name = name;
     }
 
+    ~Button()
+    {
+        delete[] name;
+    }
+
     void Update(int x, int y)
     {
         this->top = y;

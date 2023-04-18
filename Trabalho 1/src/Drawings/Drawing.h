@@ -24,32 +24,37 @@ public:
     void Render(void)
     {
         color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.alpha);
+        float* xs = Vector2::GetXs(this->points, elementsCounter);
+        float* ys = Vector2::GetYs(this->points, elementsCounter);
         if (shouldBeFilled)
         {
-            polygonFill(Vector2::GetXs(this->points, elementsCounter),
-                        Vector2::GetYs(this->points, elementsCounter),
-                        this->elementsCounter);
+            polygonFill(xs, ys, this->elementsCounter);
         }
         else
         {
-            polygon(Vector2::GetXs(this->points, elementsCounter),
-                    Vector2::GetYs(this->points, elementsCounter),
-                    this->elementsCounter);
+            polygon(xs, ys, elementsCounter);
         }
+
+        delete[] xs;
+        delete[] ys;
     }
     // Desenha caixa de seleção, e seus pontos de interação
     void RenderSelectionIndicators(void)
     {
+        float* xs = Vector2::GetXs(this->corners, 4);
+        float* ys = Vector2::GetYs(this->corners, 4);
+
         color(1);
-        polygon(Vector2::GetXs(this->corners, 4),
-                Vector2::GetYs(this->corners, 4),
-                4);
+        polygon(xs, ys, 4);
+
+        delete[] xs;
+        delete[] ys;
+
         for (int i = 0; i < 4; i++)
         {
             circleFill(corners[i].x, corners[i].y, IndicatorBallRadius, 10);
         }
 
-        color(1);
         circleFill(rotationIndicator.x, rotationIndicator.y, IndicatorBallRadius, 10);
     }
     // Método virtual chamado pelas classes descendentes,
@@ -395,6 +400,7 @@ protected:
     }
     void GenerateOriginPoints(void)
     {
+        delete[] this->originPoints;
         this->originPoints = new Vector2[this->elementsCounter];
 
         for (int i = 0; i < elementsCounter; i++)

@@ -13,10 +13,11 @@ O que foi implementado:
 ● Salvar em arquivo e carregar de arquivo.
 
 Extras:
-● (+0,5) Sinalizar qual figura está selecionada.
-● (+1,0) Rotacionar figura em qualquer ângulo.
-● (+1,0) Permitir inserir polígonos quaisquer.
-● (+0,5) Alterar cor em espaço HSV.
+● Sinalizar qual figura está selecionada.
+● Rotacionar figura em qualquer ângulo.
+● Permitir inserir polígonos quaisquer.
+● Alterar cor em espaço HSV.
+● Aplicar criptografia no arquivo.
 */
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>

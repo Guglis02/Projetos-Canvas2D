@@ -42,6 +42,7 @@ public:
                                        name);
         newButton->SetColor(rgb[0], rgb[1], rgb[2]);
         buttons.push_back(newButton);
+        delete newButton;
     }
 
     void CreateButton(FunctionType functionType, function<void()> callback, char* name)

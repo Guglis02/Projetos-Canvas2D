@@ -284,9 +284,12 @@ private:
         int numberOfPoints = tempPoints.size();
         if (numberOfPoints != 0)
         {
-            polygon(Vector2::GetXs(tempPoints.data(), numberOfPoints),
-                    Vector2::GetYs(tempPoints.data(), numberOfPoints),
-                    numberOfPoints);
+            float* xs = Vector2::GetXs(tempPoints.data(), numberOfPoints);
+            float* ys = Vector2::GetYs(tempPoints.data(), numberOfPoints);
+            polygon(xs, ys, numberOfPoints);
+
+            delete[] xs;
+            delete[] ys;
 
             for (int i = 0; i < numberOfPoints; i++)
             {
