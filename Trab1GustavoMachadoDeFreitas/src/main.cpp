@@ -6,7 +6,6 @@ Gustavo Machado de Freitas
 O que foi implementado:
 ● Inserir/excluir figura.
 ● Cor da figura.
-● Preenchimento da figura (Bônus).
 ● Editar tamanho da figura.
 ● Editar orientação da figura (giros de 90 graus).
 ● Enviar para frente/traz.
@@ -18,6 +17,7 @@ Extras:
 ● Permitir inserir polígonos quaisquer.
 ● Alterar cor em espaço HSV.
 ● Aplicar criptografia no arquivo.
+● Preenchimento da figura.
 */
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
