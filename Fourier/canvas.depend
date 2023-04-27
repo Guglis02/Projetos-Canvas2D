@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1682424720 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1682424788 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1681598912 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\vector2.h
+	<stdio.h>
+	<math.h>
+
+1682428913 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	"gl_canvas2d.h"
+	"Slider.h"
+	"MouseHandler.h"
+
+1682178308 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\slider.h
+	"./gl_canvas2d.h"
+	<math.h>
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\fourier\src\mousehandler.h
+
