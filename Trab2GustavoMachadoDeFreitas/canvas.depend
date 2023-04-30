@@ -474,7 +474,7 @@
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab1gustavomachadodefreitas\src\colorutils.h
 	"Color.h"
 
-1682625131 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab1gustavomachadodefreitas\src\interactables\slider.h
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab1gustavomachadodefreitas\src\interactables\slider.h
 	"../gl_canvas2d.h"
 	<math.h>
 
@@ -538,4 +538,54 @@
 1681930946 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab1gustavomachadodefreitas\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
+
+1681930946 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1682857796 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\glut.h
+	"freeglut_std.h"
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\vector2.h
+	<stdio.h>
+	<math.h>
+
+1682863716 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	"gl_canvas2d.h"
+	"MouseHandler.h"
+	"Chart.h"
+
+1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\mousehandler.h
+
+1682864055 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
+	"gl_canvas2d.h"
+	"Vector2.h"
+	<vector>
+	<string>
 
