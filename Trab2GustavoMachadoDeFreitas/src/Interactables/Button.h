@@ -14,14 +14,10 @@ Classe que representa um botão.
 class Button : public Interactable
 {
 public:
-    Button(int height, int width, function<void()> callback, const string& name)
-        : Interactable(height, width, name)
+    Button(int width, int height, function<void()> callback, const string& name, const string& desc)
+        : Interactable(width, height, name)
     {
         this->callback = callback;
-    }
-
-    void SetDesc(const string& desc)
-    {
         this->desc = desc;
     }
 
@@ -37,22 +33,16 @@ public:
         }
     }
 
-    void CheckMouseClick(int mx, int my)
+    void OnClick(void)
     {
-        if (IsMouseInside(mx, my))
-        {
-            if (callback)
-            {
-                callback();
-            }
-        }
+        callback();
     }
 
-    void SetColor(float r, float g, float b)
+    void SetColor(const float rgb[3])
     {
-        this->r = r;
-        this->g = g;
-        this->b = b;
+        this->r = rgb[0];
+        this->g = rgb[1];
+        this->b = rgb[2];
     }
 private:
     function<void()> callback;

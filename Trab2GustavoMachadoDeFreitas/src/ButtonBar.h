@@ -28,62 +28,75 @@ public:
 
         for (int i = 0; i < buttonsCount; i++)
         {
+            int interactableSpace = x + width/halfRoundedCount;
             if (i < halfRoundedCount)
             {
-                buttons[i]->Update(x + width/halfRoundedCount * (i%buttonsCount), 60);
+                buttons[i]->Update(leftBorder + interactableSpace * (i%buttonsCount), 60);
             }
             else
             {
-                buttons[i]->Update(x + width/halfRoundedCount * (i%halfRoundedCount), 5);
+                buttons[i]->Update(leftBorder + interactableSpace * (i%halfRoundedCount), 5);
             }
             buttons[i]->Render();
         }
     }
 
-    void CreateButton(const char* name, function<void()> callback)
+    void CreateButton(const char* name, const char* desc, function<void()> callback)
     {
-        Button* newButton = new Button(defaultButtonHeight,
-                                       defaultButtonWidth,
-                                       callback,
-                                       name);
-        newButton->SetColor(defaultButtonColor[0],
-                            defaultButtonColor[1],
-                            defaultButtonColor[2]);
+        Button* newButton = new Button(defaultButtonWidth, defaultButtonHeight,
+                                       callback, name, desc);
+        newButton->SetColor(defaultButtonColor);
         buttons.push_back(newButton);
     }
 
-    void CreateButton(const char* name, const char* desc, function<void()> callback)
+    void CreateSlider(const char* name, float minVal, float maxVal, float initialValue, function<void(float)> callback)
     {
-        Button* newButton = new Button(defaultButtonHeight,
-                                       defaultButtonWidth,
-                                       callback,
-                                       name);
-        newButton->SetColor(defaultButtonColor[0],
-                            defaultButtonColor[1],
-                            defaultButtonColor[2]);
-        newButton->SetDesc(desc);
-        buttons.push_back(newButton);
+        Slider* newSlider = new Slider(defaultSliderWidth, defaultSliderHeight,
+                                       minVal, maxVal, initialValue, name, callback);
+        buttons.push_back(newSlider);
     }
 
     void CheckMouseClick(int mx, int my)
     {
-        for (Button* b : buttons)
+        for (Interactable* b : buttons)
         {
-            b->CheckMouseClick(mx, my);
+            if (b->IsMouseInside(mx, my))
+            {
+                b->OnClick();
+            }
+        }
+    }
+
+    void OnMouseDrag(int mx)
+    {
+        for (Interactable* b : buttons)
+        {
+            b->OnDrag(mx);
+        }
+    }
+
+    void OnMouseRelease(void)
+    {
+        for (Interactable* b : buttons)
+        {
+            b->OnRelease();
         }
     }
 
 private:
+    const int leftBorder = 10;
     int x = 0;
     int y = 0;
     int height = 0;
     int width = 0;
 
+    const int defaultSliderWidth = 150;
+    const int defaultSliderHeight = 20;
     const int defaultButtonWidth = 100;
     const int defaultButtonHeight = 50;
     const float defaultButtonColor[3] = {0, 0.5, 1};
 
-    vector<Button*> buttons;
+    vector<Interactable*> buttons;
 };
 
 

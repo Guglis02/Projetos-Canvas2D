@@ -15,9 +15,8 @@
 class ChartManager
 {
 public:
-    ChartManager(int screenWidth, int screenHeight, int valuesToGenerate)
+    ChartManager(int screenWidth, int screenHeight)
     {
-        this->valuesToGenerate = valuesToGenerate;
         StartCharts(screenWidth, screenHeight);
     }
 
@@ -30,12 +29,37 @@ public:
         }
     }
 
+    void SetNumberOfValues(float n)
+    {
+        this->numberOfValues = n;
+    }
+
+    void SetQuantitizationCoefficient(float n)
+    {
+        this->quantitizationCoef = n;
+
+        if (!input.empty())
+        {
+            RefreshCharts();
+        }
+    }
+
+    void SetValuesFreq(float n)
+    {
+        this->valuesFreq = n;
+    }
+
+    void SetValuesAmp(float n)
+    {
+        this->valuesAmp = n;
+    }
+
     void GenerateRandomInput()
     {
         input.clear();
         srand(time(NULL));
 
-        for (int i = 0; i < valuesToGenerate; i++)
+        for (int i = 0; i < numberOfValues; i++)
         {
             input.push_back(rand() % 256 - 128);
         }
@@ -46,11 +70,11 @@ public:
     void GenerateSineInput()
     {
         input.clear();
-        double phaseIncrement = 2.0 * PI / static_cast<double>(valuesToGenerate);
 
-        for (int i = 0; i < valuesToGenerate; i++)
+        for (int i = 0; i < numberOfValues; i++)
         {
-            input.push_back(100 * sin(i * phaseIncrement));
+            double step = i / (double)numberOfValues;
+            input.push_back(valuesAmp * sin(PI_2 * valuesFreq * step));
         }
 
         RefreshCharts();
@@ -59,30 +83,34 @@ public:
     void GenerateStepInput()
     {
         input.clear();
-        int stepSize = valuesToGenerate / 4;
+        int counter = 0;
 
-        for (int i = 0; i < valuesToGenerate; i++)
+        for (int i = 0; i < numberOfValues; i++)
         {
-            if (i % stepSize == 0)
+            if (counter < valuesFreq / 2)
             {
-                input.push_back(100);
+                input.push_back(valuesAmp);
             }
             else
             {
-                input.push_back(-100);
+                input.push_back(-valuesAmp);
             }
+            counter += 1 / (double)numberOfValues;
+            if (counter >= valuesFreq)
+                counter = 0;
         }
 
         RefreshCharts();
     }
 
-    void GenerateSawtoothInput()
+    void GenerateSawtoothInput(void)
     {
         input.clear();
+        double step = 1 / (valuesFreq * numberOfValues);
 
-        for (int i = 0; i < valuesToGenerate; i++)
+        for (int i = 0; i < numberOfValues; i++)
         {
-            input.push_back((i % 100) - 50);
+            input.push_back(fmod(i * step, 1.0) * valuesAmp);
         }
 
         RefreshCharts();
@@ -100,13 +128,15 @@ public:
 
     void LoadInput()
     {
-        printf("\ncarrega");
         LoadFromFile(input);
         RefreshCharts();
     }
 
 private:
-    int valuesToGenerate;
+    int numberOfValues;
+    float quantitizationCoef;
+    float valuesFreq;
+    float valuesAmp;
 
     Chart* inputChart;
     Chart* dctChart;
@@ -140,7 +170,7 @@ private:
     void RefreshCharts()
     {
         this->inputChart->CreatePoints(input);
-        this->dct = Transformations::DiscreteCosineTransform(input, 1.0);
+        this->dct = Transformations::DiscreteCosineTransform(input, quantitizationCoef);
         this->dctChart->CreatePoints(dct);
         this->idct = Transformations::InverseDiscreteCosineTransform(dct);
         this->idctChart->CreatePoints(idct);

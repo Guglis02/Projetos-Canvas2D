@@ -573,7 +573,7 @@
 	<stdio.h>
 	<math.h>
 
-1683472797 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
+1683485100 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -588,7 +588,7 @@
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\mousehandler.h
 
-1683474304 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
+1683485782 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
 	"gl_canvas2d.h"
 	"Vector2.h"
 	<vector>
@@ -600,18 +600,18 @@
 	<vector>
 	"gl_canvas2d.h"
 
-1683474733 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\buttonbar.h
+1683479169 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\buttonbar.h
 	<functional>
 	"Interactables/Button.h"
 	"Interactables/Slider.h"
 
-1683474133 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\button.h
+1683475450 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\button.h
 	"../gl_canvas2d.h"
 	"Interactable.h"
 	<string>
 	<functional>
 
-1683471624 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
+1683485356 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<vector>
@@ -626,11 +626,11 @@
 	<fstream>
 	<sstream>
 
-1683474329 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\interactable.h
+1683479034 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\interactable.h
 	"../gl_canvas2d.h"
 	<string>
 
-1683474621 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\slider.h
+1683481142 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\slider.h
 	"../gl_canvas2d.h"
 	<math.h>
 

@@ -12,12 +12,13 @@ Classe que representa um slider.
 class Slider : public Interactable
 {
 public:
-    Slider(float width, float height, float minVal, float maxVal, float initialValue, const string& name)
-        : Interactable(height, width, name)
+    Slider(float width, float height, float minVal, float maxVal, float initialValue, const string& name, function<void(float)> callback)
+        : Interactable(width, height, name)
     {
         this->minVal = minVal;
         this->maxVal = maxVal;
-        this->currentValue = initialValue;
+        this->callback = callback;
+        this->SetValue(initialValue);
         this->handlerWidth = width * 0.03;
         this->isDragging = false;
     }
@@ -25,8 +26,8 @@ public:
     // Desenha a barra
     void Render(void)
     {
-        CV::color(0.5f, 0.5f, 0.5f);
-        CV::rectFill(left, bottom, right, top);
+        CV::color(0);
+        CV::rectFill(left, bottom, left + width, bottom + height);
 
         RenderHandler();
         RenderLabels();
@@ -37,18 +38,18 @@ public:
         char numericLabel[64];
         CV::color(0);
 
-        sprintf(numericLabel, "%.1f", minVal);
-        CV::text(left, bottom - 10, numericLabel);
-        sprintf(numericLabel, "%.1f", maxVal);
-        CV::text(right, bottom - 10, numericLabel);
+        sprintf(numericLabel, "%.0f", minVal);
+        CV::text(left, top + padding, numericLabel);
+        sprintf(numericLabel, "%.0f", maxVal);
+        CV::text(right - padding * 2, top + padding, numericLabel);
 
-        CV::text(left, top + 10, "Nome");
+        CV::text(left, top + padding * 2, name.c_str());
     }
 
     // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
-        CV::color(1.0, 1.0, 1.0);
+        CV::color(13);
         CV::rectFill( HandlerPos() - handlerWidth, bottom,
                       HandlerPos() + handlerWidth, top);
     }
@@ -58,26 +59,30 @@ public:
         return left + currentValue * width;
     }
 
-    void OnMouseClick(float mx, float my)
+    void OnClick()
     {
-        if (IsMouseInside(mx, my))
-        {
-            isDragging = true;
-        }
+        isDragging = true;
     }
 
-    void OnMouseDrag(float mx)
+    void OnDrag(float mx)
     {
         if (isDragging)
         {
             currentValue = (mx - left) / width;
-            currentValue = min(max(currentValue, minVal), maxVal);
+            currentValue = min(max(currentValue, 0.0f), 1.0f);
+            OnValueChanged();
         }
     }
 
-    void OnMouseRelease(void)
+    void OnRelease(void)
     {
         isDragging = false;
+    }
+
+    void OnValueChanged(void)
+    {
+        float newValue = GetValue();
+        callback(newValue);
     }
 
     float GetValue(void)
@@ -88,13 +93,19 @@ public:
     void SetValue(float value)
     {
         this->currentValue = (value - minVal) / (maxVal - minVal);
+        OnValueChanged();
     }
 
 protected:
+    const int padding = 11;
+    function<void(float)> callback;
+
     float minVal;
     float maxVal;
     float currentValue;
+
     float handlerWidth;
+
     bool isDragging = false;
 };
 

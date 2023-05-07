@@ -17,7 +17,6 @@ using namespace std;
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = 1400, screenHeight = 700;
 const int barHeight = 120;
-const int valuesToGenerate = 500;
 
 MouseHandler* mouseHandler = NULL;
 ButtonBar* buttonBar = NULL;
@@ -47,11 +46,13 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // Arrastar o mouse
     if (mouseHandler->IsDragging())
     {
+        buttonBar->OnMouseDrag(mouseHandler->GetX());
         return;
     }
     // Soltar o mouse
     if (mouseHandler->GetState() == 1)
     {
+        buttonBar->OnMouseRelease();
         return;
     }
 }
@@ -63,13 +64,18 @@ void keyboardUp(int key) {}
 
 void StartButtons()
 {
+    buttonBar->CreateSlider("Quantitizacao", 1, 100, 1, bind(&ChartManager::SetQuantitizationCoefficient, chartManager, placeholders::_1));
+    buttonBar->CreateSlider("Amostras", 32, 512, 200, bind(&ChartManager::SetNumberOfValues, chartManager, placeholders::_1));
+    buttonBar->CreateSlider("Freq", 1, 50, 2, bind(&ChartManager::SetValuesFreq, chartManager, placeholders::_1));
+    buttonBar->CreateSlider("Ampli", 0, 127, 100, bind(&ChartManager::SetValuesAmp, chartManager, placeholders::_1));
+
     buttonBar->CreateButton("Gerar In", "Random", bind(&ChartManager::GenerateRandomInput, chartManager));
     buttonBar->CreateButton("Gerar In", "Seno", bind(&ChartManager::GenerateSineInput, chartManager));
     buttonBar->CreateButton("Gerar In", "Step", bind(&ChartManager::GenerateStepInput, chartManager));
     buttonBar->CreateButton("Gerar In", "Saw Tooth", bind(&ChartManager::GenerateSawtoothInput, chartManager));
-    buttonBar->CreateButton("Carregar In", bind(&ChartManager::LoadInput, chartManager));
-    buttonBar->CreateButton("Salvar In", bind(&ChartManager::SaveInput, chartManager));
-    buttonBar->CreateButton("Salvar Out", bind(&ChartManager::SaveOutput, chartManager));
+    buttonBar->CreateButton("Carregar In", "input.dct", bind(&ChartManager::LoadInput, chartManager));
+    buttonBar->CreateButton("Salvar In", "input.dct", bind(&ChartManager::SaveInput, chartManager));
+    buttonBar->CreateButton("Salvar Out", "output.dct", bind(&ChartManager::SaveOutput, chartManager));
 }
 
 int main(void)
@@ -78,7 +84,7 @@ int main(void)
 
     mouseHandler = new MouseHandler();
     buttonBar = new ButtonBar(barHeight, screenWidth);
-    chartManager = new ChartManager(screenWidth, screenHeight, valuesToGenerate);
+    chartManager = new ChartManager(screenWidth, screenHeight);
 
     StartButtons();
 

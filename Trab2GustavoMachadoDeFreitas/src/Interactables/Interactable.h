@@ -9,10 +9,10 @@ using namespace std;
 class Interactable
 {
 public:
-    Interactable(int height, int width, const string& name)
+    Interactable(int width, int height, const string& name)
     {
-        this->height = height;
         this->width = width;
+        this->height = height;
         this->name = name;
     }
 
@@ -30,6 +30,10 @@ public:
     {
         return my <= top && my >= bottom && mx >= left && mx <= right;
     }
+
+    virtual void OnClick(void){}
+    virtual void OnDrag(float mx){}
+    virtual void OnRelease(void){}
 protected:
     int height;
     int width;
