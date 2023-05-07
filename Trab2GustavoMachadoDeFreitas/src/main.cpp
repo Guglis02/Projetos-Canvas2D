@@ -2,31 +2,32 @@
 #include <GL/freeglut_ext.h>
 
 #include <stdio.h>
+#include <cstdlib>
+#include <ctime>
 
 #include "gl_canvas2d.h"
 #include "MouseHandler.h"
 #include "Chart.h"
+#include "Transformations.h"
+#include "ButtonBar.h"
+#include "ChartManager.h"
 
 using namespace std;
 
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = 1400, screenHeight = 700;
+const int barHeight = 120;
+const int valuesToGenerate = 500;
 
 MouseHandler* mouseHandler = NULL;
-vector<Chart*> charts;
-Chart* inputChart = NULL;
-Chart* idctChart = NULL;
-Chart* dctChart = NULL;
-Chart* diffChart = NULL;
+ButtonBar* buttonBar = NULL;
+ChartManager* chartManager = NULL;
 
 // Funcao chamada todo frame
 void render()
 {
-    for (Chart* chart : charts)
-    {
-        chart->Update(screenWidth * 0.4, screenHeight * 0.3);
-        chart->Render();
-    }
+    buttonBar->Update(barHeight, screenWidth);
+    chartManager->Update(screenWidth, screenHeight);
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -39,6 +40,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // Clicar com o mouse
     if (mouseHandler->GetState() == 0)
     {
+        buttonBar->CheckMouseClick(mouseHandler->GetX(),
+                                   mouseHandler->GetY());
         return;
     }
     // Arrastar o mouse
@@ -54,15 +57,19 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 }
 
 // Funcao chamada toda vez que uma tecla for pressionada
-void keyboard(int key)
-{
-    //printf("\nClicou Tecla: %d", key);
-}
-
+void keyboard(int key) {}
 // Funcao chamada toda vez que uma tecla for liberada
-void keyboardUp(int key)
+void keyboardUp(int key) {}
+
+void StartButtons()
 {
-    //printf("\nLiberou Tecla: %d" , key);
+    buttonBar->CreateButton("Gerar In", "Random", bind(&ChartManager::GenerateRandomInput, chartManager));
+    buttonBar->CreateButton("Gerar In", "Seno", bind(&ChartManager::GenerateSineInput, chartManager));
+    buttonBar->CreateButton("Gerar In", "Step", bind(&ChartManager::GenerateStepInput, chartManager));
+    buttonBar->CreateButton("Gerar In", "Saw Tooth", bind(&ChartManager::GenerateSawtoothInput, chartManager));
+    buttonBar->CreateButton("Carregar In", bind(&ChartManager::LoadInput, chartManager));
+    buttonBar->CreateButton("Salvar In", bind(&ChartManager::SaveInput, chartManager));
+    buttonBar->CreateButton("Salvar Out", bind(&ChartManager::SaveOutput, chartManager));
 }
 
 int main(void)
@@ -70,21 +77,10 @@ int main(void)
     CV::init(&screenWidth, &screenHeight, "Trabalho 2 - Gustavo Machado de Freitas");
 
     mouseHandler = new MouseHandler();
-    vector<Vector2> points;
-    for (float i = 0; i <= 100; i++)
-    {
-        points.push_back(Vector2(i, i * 2.0));
-    }
+    buttonBar = new ButtonBar(barHeight, screenWidth);
+    chartManager = new ChartManager(screenWidth, screenHeight, valuesToGenerate);
 
-    inputChart = new Chart(100, 150 + screenHeight * 0.3, screenWidth * 0.4, screenHeight * 0.3, points, "Input");
-    idctChart = new Chart(100 + 100 + screenWidth * 0.4, 150 + screenHeight * 0.3, screenWidth * 0.4, screenHeight * 0.3, points, "IDCT");
-    dctChart = new Chart(100, 100, screenWidth * 0.4, screenHeight * 0.3, points, "DCT");
-    diffChart = new Chart(100 + 100 + screenWidth * 0.4, 100, screenWidth * 0.4, screenHeight * 0.3, points, "Diff");
-
-    charts.push_back(inputChart);
-    charts.push_back(idctChart);
-    charts.push_back(dctChart);
-    charts.push_back(diffChart);
+    StartButtons();
 
     CV::run();
 }

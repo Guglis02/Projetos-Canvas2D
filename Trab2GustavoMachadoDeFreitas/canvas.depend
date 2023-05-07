@@ -569,23 +569,58 @@
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\vector2.h
+1683381087 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\vector2.h
 	<stdio.h>
 	<math.h>
 
-1682863716 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
+1683472511 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
+	<cstdlib>
+	<ctime>
 	"gl_canvas2d.h"
 	"MouseHandler.h"
 	"Chart.h"
+	"Transformations.h"
+	"ButtonBar.h"
+	"ChartManager.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\mousehandler.h
 
-1682864055 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
+1683471678 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
 	"gl_canvas2d.h"
 	"Vector2.h"
 	<vector>
 	<string>
+	<cstdlib>
+
+1683470952 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\transformations.h
+	<math.h>
+	<vector>
+	"gl_canvas2d.h"
+
+1683470642 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\buttonbar.h
+	<functional>
+	"Interactables/Button.h"
+
+1683470564 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\button.h
+	"../gl_canvas2d.h"
+	<string>
+	<functional>
+
+1683471624 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<vector>
+	<string>
+	"gl_canvas2d.h"
+	"Chart.h"
+	"Transformations.h"
+	"FileHandler.h"
+
+1683469885 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\filehandler.h
+	<iostream>
+	<fstream>
+	<sstream>
 

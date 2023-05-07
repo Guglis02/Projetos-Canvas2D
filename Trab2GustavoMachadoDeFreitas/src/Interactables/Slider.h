@@ -40,20 +40,39 @@ public:
         CV::rectFill(x, y, x + width, y + height);
 
         RenderHandler();
+        RenderLabels();
+    }
+
+    void RenderLabels(void)
+    {
+        char numericLabel[64];
+        CV::color(0);
+
+        sprintf(numericLabel, "%.1f", minVal);
+        CV::text(x, y - 10, numericLabel);
+        sprintf(numericLabel, "%.1f", maxVal);
+        CV::text(x + width, y - 10, numericLabel);
+
+        CV::text(x, y + height + 10, "Nome");
     }
 
     // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
         CV::color(1.0, 1.0, 1.0);
-        CV::rectFill(x + currentValue * width - handlerWidth, y,
-                 x + currentValue * width + handlerWidth, y + height);
+        CV::rectFill( HandlerPos() - handlerWidth, y,
+                      HandlerPos() + handlerWidth, y + height);
+    }
+
+    float HandlerPos(void)
+    {
+        return x + currentValue * width;
     }
 
     void OnMouseClick(float mx, float my)
     {
-        if (mx >= x + currentValue * width - handlerWidth
-                && mx <= x + currentValue * width + handlerWidth
+        if (mx >= HandlerPos() - handlerWidth
+                && mx <= HandlerPos() + handlerWidth
                 && my >= y && my <= y + height)
         {
             isDragging = true;
