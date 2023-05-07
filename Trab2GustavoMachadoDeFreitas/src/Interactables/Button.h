@@ -2,6 +2,7 @@
 #define BUTTON_H
 
 #include "../gl_canvas2d.h"
+#include "Interactable.h"
 #include <string>
 #include <functional>
 
@@ -10,15 +11,13 @@ using namespace std;
 /** \brief
 Classe que representa um botão.
 */
-class Button
+class Button : public Interactable
 {
 public:
     Button(int height, int width, function<void()> callback, const string& name)
+        : Interactable(height, width, name)
     {
-        this->height = height;
-        this->width = width;
         this->callback = callback;
-        this->name = name;
     }
 
     void SetDesc(const string& desc)
@@ -26,26 +25,21 @@ public:
         this->desc = desc;
     }
 
-    void Update(int x, int y)
+    void Render(void)
     {
-        this->top = y;
-        this->bottom = y + height;
-        this->left = x;
-        this->right = x + width;
-
         CV::color(r, g, b);
         CV::rectFill(left, top, right, bottom);
         CV::color(0);
-        CV::text(x + 5, y + 30, name.c_str());
+        CV::text(left + 5, bottom + 30, name.c_str());
         if (!desc.empty())
         {
-            CV::text(x + 5, y + 10, desc.c_str());
+            CV::text(left + 5, bottom + 10, desc.c_str());
         }
     }
 
     void CheckMouseClick(int mx, int my)
     {
-        if (my >= top && my <= bottom && mx >= left && mx <= right)
+        if (IsMouseInside(mx, my))
         {
             if (callback)
             {
@@ -61,21 +55,12 @@ public:
         this->b = b;
     }
 private:
-    int height;
-    int width;
-
-    int top;
-    int bottom;
-    int left;
-    int right;
-
     function<void()> callback;
 
     float r = 1;
     float g = 1;
     float b = 1;
 
-    string name;
     string desc;
 };
 

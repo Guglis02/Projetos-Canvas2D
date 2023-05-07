@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "Interactables/Button.h"
+#include "Interactables/Slider.h"
 
 using namespace std;
 
@@ -23,10 +24,19 @@ public:
         CV::rectFill(x, y, x + width, height);
 
         int buttonsCount = buttons.size();
+        int halfRoundedCount = (buttonsCount + 1) >> 1;
 
         for (int i = 0; i < buttonsCount; i++)
         {
-            buttons[i]->Update(i * (x + width) / buttonsCount, 10);
+            if (i < halfRoundedCount)
+            {
+                buttons[i]->Update(x + width/halfRoundedCount * (i%buttonsCount), 60);
+            }
+            else
+            {
+                buttons[i]->Update(x + width/halfRoundedCount * (i%halfRoundedCount), 5);
+            }
+            buttons[i]->Render();
         }
     }
 

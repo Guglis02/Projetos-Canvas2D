@@ -9,15 +9,12 @@ using namespace std;
 /** \brief
 Classe que representa um slider.
 */
-class Slider
+class Slider : public Interactable
 {
 public:
-    Slider(float x, float y, float width, float height, float minVal, float maxVal, float initialValue)
+    Slider(float width, float height, float minVal, float maxVal, float initialValue, const string& name)
+        : Interactable(height, width, name)
     {
-        this->x = x;
-        this->y = y;
-        this->width = width;
-        this->height = height;
         this->minVal = minVal;
         this->maxVal = maxVal;
         this->currentValue = initialValue;
@@ -25,19 +22,11 @@ public:
         this->isDragging = false;
     }
 
-    void Update(float x, float y, float width, float height)
-    {
-        this->x = x;
-        this->y = y;
-        this->width = width;
-        this->height = height;
-    }
-
     // Desenha a barra
     void Render(void)
     {
         CV::color(0.5f, 0.5f, 0.5f);
-        CV::rectFill(x, y, x + width, y + height);
+        CV::rectFill(left, bottom, right, top);
 
         RenderHandler();
         RenderLabels();
@@ -49,31 +38,29 @@ public:
         CV::color(0);
 
         sprintf(numericLabel, "%.1f", minVal);
-        CV::text(x, y - 10, numericLabel);
+        CV::text(left, bottom - 10, numericLabel);
         sprintf(numericLabel, "%.1f", maxVal);
-        CV::text(x + width, y - 10, numericLabel);
+        CV::text(right, bottom - 10, numericLabel);
 
-        CV::text(x, y + height + 10, "Nome");
+        CV::text(left, top + 10, "Nome");
     }
 
     // Desenha o "pegador" da barra
     void RenderHandler(void)
     {
         CV::color(1.0, 1.0, 1.0);
-        CV::rectFill( HandlerPos() - handlerWidth, y,
-                      HandlerPos() + handlerWidth, y + height);
+        CV::rectFill( HandlerPos() - handlerWidth, bottom,
+                      HandlerPos() + handlerWidth, top);
     }
 
     float HandlerPos(void)
     {
-        return x + currentValue * width;
+        return left + currentValue * width;
     }
 
     void OnMouseClick(float mx, float my)
     {
-        if (mx >= HandlerPos() - handlerWidth
-                && mx <= HandlerPos() + handlerWidth
-                && my >= y && my <= y + height)
+        if (IsMouseInside(mx, my))
         {
             isDragging = true;
         }
@@ -83,7 +70,7 @@ public:
     {
         if (isDragging)
         {
-            currentValue = (mx - x) / width;
+            currentValue = (mx - left) / width;
             currentValue = min(max(currentValue, minVal), maxVal);
         }
     }
@@ -103,16 +90,7 @@ public:
         this->currentValue = (value - minVal) / (maxVal - minVal);
     }
 
-    bool IsMouseInside(int mx, int my)
-    {
-        return my >= y && my <= y + height && mx >= x && mx <= x + width;
-    }
-
 protected:
-    float x;
-    float y;
-    float width;
-    float height;
     float minVal;
     float maxVal;
     float currentValue;
