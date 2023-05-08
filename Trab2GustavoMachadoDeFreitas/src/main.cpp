@@ -64,7 +64,7 @@ void keyboardUp(int key) {}
 
 void StartButtons()
 {
-    buttonBar->CreateSlider("Quantitizacao", 1, 200, 10, bind(&ChartManager::SetQuantitizationCoefficient, chartManager, placeholders::_1));
+    buttonBar->CreateSlider("Quantitizacao", 0, 200, 10, bind(&ChartManager::SetQuantitizationCoefficient, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Amostras", 32, 512, 200, bind(&ChartManager::SetNumberOfValues, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Freq", 1, 50, 2, bind(&ChartManager::SetValuesFreq, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Ampli", 0, 127, 100, bind(&ChartManager::SetValuesAmp, chartManager, placeholders::_1));

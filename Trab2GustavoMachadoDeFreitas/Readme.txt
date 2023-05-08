@@ -21,8 +21,9 @@ Extras:
 
 Interface:
 ● Slider Quantitização 
-	Possui um range de 1 a 200.
-	Determina o coeficiente de quantitização que será aplicado na DCT.
+	Possui um range de 0 a 200.
+	Determina o coeficiente de quantitização que será aplicado após a DCT.
+	Quando o valor está em 0, nenhuma quantitização é aplicada.
 	Mudar seu valor atualiza em tempo real os gráficos.
 ● Slider Amostras
 	Possui um range de 32 a 512, conforme especificado no enunciado.

@@ -106,6 +106,10 @@ private:
         this->maxPoint = Vector2(xMax, yMax);
         this->minPoint = Vector2(xMin, yMin);
         this->range = maxPoint - minPoint;
+        if (this->range.y < 1 && this->range.y > -1)
+        {
+            range.y = 1;
+        }
     }
 
     // Normaliza os valores para "caber" no gráfico

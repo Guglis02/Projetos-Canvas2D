@@ -44,9 +44,14 @@ public:
 
             val = val * coef;
 
-            val = floor(val / quantizationCoefficient) * quantizationCoefficient;
+            val = val * sqrt(2.0/vectorSize);
 
-            output[i] = (val * sqrt(2.0/vectorSize));
+            if (quantizationCoefficient != 0)
+            {
+                val = floor(val / quantizationCoefficient) * quantizationCoefficient;
+            }
+
+            output[i] = (val);
         }
 
         return output;
