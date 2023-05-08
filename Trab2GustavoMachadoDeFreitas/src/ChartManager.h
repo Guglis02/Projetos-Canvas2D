@@ -188,6 +188,7 @@ private:
     void RefreshCharts()
     {
         this->inputChart->CreatePoints(input);
+        printf("\nquantitiza %f", quantitizationCoef);
         this->dct = Transformations::DiscreteCosineTransform(input, quantitizationCoef);
         this->dctChart->CreatePoints(dct);
         this->idct = Transformations::InverseDiscreteCosineTransform(dct);
