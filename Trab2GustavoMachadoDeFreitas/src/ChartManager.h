@@ -93,20 +93,20 @@ public:
     {
         input.clear();
         int counter = 0;
+        double value = valuesAmp;
 
         for (int i = 0; i < numberOfValues; i++)
         {
-            if (counter < valuesFreq / 2)
+            if (counter < numberOfValues / (2 * valuesFreq))
             {
-                input.push_back(valuesAmp);
+                counter++;
             }
             else
             {
-                input.push_back(-valuesAmp);
-            }
-            counter += 1 / (double)numberOfValues;
-            if (counter >= valuesFreq)
+                value = -1 * value;
                 counter = 0;
+            }
+            input.push_back(value);
         }
 
         RefreshCharts();
@@ -116,11 +116,17 @@ public:
     void GenerateSawtoothInput(void)
     {
         input.clear();
-        double step = 1 / (valuesFreq * numberOfValues);
+        double step = valuesAmp * valuesFreq / numberOfValues;
+        double counter = 0;
 
         for (int i = 0; i < numberOfValues; i++)
         {
-            input.push_back(fmod(i * step, 1.0) * valuesAmp);
+            if (counter >= valuesAmp)
+            {
+                counter = 0;
+            }
+            counter += step;
+            input.push_back(counter);
         }
 
         RefreshCharts();

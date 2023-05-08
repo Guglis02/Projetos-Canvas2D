@@ -573,7 +573,7 @@
 	<stdio.h>
 	<math.h>
 
-1683485100 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
+1683545341 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -583,19 +583,19 @@
 	"MouseHandler.h"
 	"Chart.h"
 	"Transformations.h"
-	"ButtonBar.h"
+	"InteractableBar.h"
 	"ChartManager.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\mousehandler.h
 
-1683485782 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
+1683547435 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
 	"gl_canvas2d.h"
 	"Vector2.h"
 	<vector>
 	<string>
 	<cstdlib>
 
-1683470952 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\transformations.h
+1683545341 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\transformations.h
 	<math.h>
 	<vector>
 	"gl_canvas2d.h"
@@ -611,7 +611,7 @@
 	<string>
 	<functional>
 
-1683494509 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
+1683547250 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<vector>
@@ -730,6 +730,11 @@
 	<sstream>
 
 1683509997 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactablebar.h
+	<functional>
+	"Interactables/Button.h"
+	"Interactables/Slider.h"
+
+1683545341 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactablebar.h
 	<functional>
 	"Interactables/Button.h"
 	"Interactables/Slider.h"
