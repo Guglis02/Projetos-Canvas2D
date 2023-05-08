@@ -74,7 +74,7 @@ public:
         for (int i = 0; i < numberOfValues; i++)
         {
             double step = i / (double)numberOfValues;
-            input.push_back(valuesAmp * sin(PI_2 * valuesFreq * step));
+            input.push_back(valuesAmp * sin(PI_2 * step * valuesFreq));
         }
 
         RefreshCharts();

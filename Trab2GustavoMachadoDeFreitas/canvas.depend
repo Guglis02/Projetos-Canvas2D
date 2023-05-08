@@ -611,7 +611,7 @@
 	<string>
 	<functional>
 
-1683485356 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
+1683494509 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<vector>
@@ -621,7 +621,7 @@
 	"Transformations.h"
 	"FileHandler.h"
 
-1683469885 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\filehandler.h
+1683505074 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\filehandler.h
 	<iostream>
 	<fstream>
 	<sstream>

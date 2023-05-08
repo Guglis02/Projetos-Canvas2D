@@ -46,8 +46,10 @@
 		<Unit filename="src/Bar.h" />
 		<Unit filename="src/ButtonBar.h" />
 		<Unit filename="src/Chart.h" />
+		<Unit filename="src/ChartManager.h" />
 		<Unit filename="src/FileHandler.h" />
 		<Unit filename="src/Interactables/Button.h" />
+		<Unit filename="src/Interactables/Interactable.h" />
 		<Unit filename="src/Interactables/Slider.h" />
 		<Unit filename="src/MouseHandler.h" />
 		<Unit filename="src/PointsUtils.h" />

@@ -21,7 +21,8 @@ void SaveInFile(vector<double> values, const char* filePath)
 
     for (double value : values)
     {
-        buffer << value << std::endl;
+        char charValue = static_cast<char>(value);
+        buffer << charValue << std::endl;
     }
 
     std::ofstream file(filePath);
@@ -53,17 +54,18 @@ void LoadFromFile(vector<double>& values)
     unsigned int numberOfValues;
     file >> numberOfValues;
 
-    double value;
-
     values.clear();
     for (int i = 0; i < numberOfValues; i++)
     {
-        if (!(file >> value))
+        char charValue;
+        if (!(file >> charValue))
         {
             // Nâo conseguiu ler valor no arquivo.
             file.close();
             return;
         }
+
+        double value = static_cast<double>(charValue);;
 
         values.push_back(value);
     }

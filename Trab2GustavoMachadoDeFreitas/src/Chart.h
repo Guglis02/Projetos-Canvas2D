@@ -118,9 +118,9 @@ private:
         CV::text(x - border * numericLabelSize, y, numericLabel);
         sprintf(numericLabel, "%.1f", maxPoint.y);
         CV::text(x - border * numericLabelSize, y + height - border, numericLabel);
-        sprintf(numericLabel, "%.1f", minPoint.x);
+        sprintf(numericLabel, "%.0f", minPoint.x);
         CV::text(x, y - border * 2, numericLabel);
-        sprintf(numericLabel, "%.1f", maxPoint.x);
+        sprintf(numericLabel, "%.0f", maxPoint.x);
         CV::text(x + width - border, y - border * 2, numericLabel);
     }
 };
