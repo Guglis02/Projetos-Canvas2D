@@ -12,6 +12,9 @@
 #include "Transformations.h"
 #include "FileHandler.h"
 
+/** \brief
+ * Classe responsável por controlar os gráficos do programa.
+ */
 class ChartManager
 {
 public:
@@ -20,6 +23,7 @@ public:
         StartCharts(screenWidth, screenHeight);
     }
 
+    // Atualiza dimensões dos gráficos.
     void Update(int screenWidth, int screenHeight)
     {
         for (Chart* chart : charts)
@@ -29,11 +33,13 @@ public:
         }
     }
 
+    // Callback do slider de amostras, determina a quantidade
     void SetNumberOfValues(float n)
     {
         this->numberOfValues = n;
     }
 
+    // Callback do slider de quantitização, atualiza em tempo real os gráficos
     void SetQuantitizationCoefficient(float n)
     {
         this->quantitizationCoef = n;
@@ -44,16 +50,17 @@ public:
         }
     }
 
+    // Callbacks usadas nos geradores de seno, step e sawtooth
     void SetValuesFreq(float n)
     {
         this->valuesFreq = n;
     }
-
     void SetValuesAmp(float n)
     {
         this->valuesAmp = n;
     }
 
+    // Gera n valores aleatórios no range -128 a 127
     void GenerateRandomInput()
     {
         input.clear();
@@ -67,6 +74,7 @@ public:
         RefreshCharts();
     }
 
+    // Gera n valores em uma progressão senoide.
     void GenerateSineInput()
     {
         input.clear();
@@ -80,6 +88,7 @@ public:
         RefreshCharts();
     }
 
+    // Gera n valores de uma periodic step function
     void GenerateStepInput()
     {
         input.clear();
@@ -103,6 +112,7 @@ public:
         RefreshCharts();
     }
 
+    // Gera n valores seguindo uma progressão dente de serra.
     void GenerateSawtoothInput(void)
     {
         input.clear();
@@ -149,6 +159,7 @@ private:
     std::vector<double> idct;
     std::vector<double> diff;
 
+    // Inicializa os 4 gráficos em suas respectivas posições
     void StartCharts(int screenWidth, int screenHeight)
     {
         int xPadding = 100;
@@ -167,6 +178,7 @@ private:
         charts.push_back(diffChart);
     }
 
+    // Atualiza os valores dos gráficos
     void RefreshCharts()
     {
         this->inputChart->CreatePoints(input);
@@ -178,6 +190,5 @@ private:
         this->diffChart->CreatePoints(diff);
     }
 };
-
 
 #endif // CHARTMANAGER_H_INCLUDED

@@ -9,7 +9,7 @@
 #include "MouseHandler.h"
 #include "Chart.h"
 #include "Transformations.h"
-#include "ButtonBar.h"
+#include "InteractableBar.h"
 #include "ChartManager.h"
 
 using namespace std;
@@ -19,7 +19,7 @@ int screenWidth = 1400, screenHeight = 700;
 const int barHeight = 120;
 
 MouseHandler* mouseHandler = NULL;
-ButtonBar* buttonBar = NULL;
+InteractableBar* buttonBar = NULL;
 ChartManager* chartManager = NULL;
 
 // Funcao chamada todo frame
@@ -64,7 +64,7 @@ void keyboardUp(int key) {}
 
 void StartButtons()
 {
-    buttonBar->CreateSlider("Quantitizacao", 1, 100, 1, bind(&ChartManager::SetQuantitizationCoefficient, chartManager, placeholders::_1));
+    buttonBar->CreateSlider("Quantitizacao", 1, 200, 1, bind(&ChartManager::SetQuantitizationCoefficient, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Amostras", 32, 512, 200, bind(&ChartManager::SetNumberOfValues, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Freq", 1, 50, 2, bind(&ChartManager::SetValuesFreq, chartManager, placeholders::_1));
     buttonBar->CreateSlider("Ampli", 0, 127, 100, bind(&ChartManager::SetValuesAmp, chartManager, placeholders::_1));
@@ -83,7 +83,7 @@ int main(void)
     CV::init(&screenWidth, &screenHeight, "Trabalho 2 - Gustavo Machado de Freitas");
 
     mouseHandler = new MouseHandler();
-    buttonBar = new ButtonBar(barHeight, screenWidth);
+    buttonBar = new InteractableBar(barHeight, screenWidth);
     chartManager = new ChartManager(screenWidth, screenHeight);
 
     StartButtons();

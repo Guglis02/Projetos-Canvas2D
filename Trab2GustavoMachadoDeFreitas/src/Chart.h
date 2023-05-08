@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/** \brief
+ * Classe responsável pela plotagem de um gráfico.
+ */
 class Chart
 {
 public:
@@ -21,6 +24,7 @@ public:
         this->name = name;
     }
 
+    // Cria um vetor de pontos 2D (Indice, Valor)
     void CreatePoints(vector<double> values)
     {
         points.clear();
@@ -33,7 +37,7 @@ public:
         NormalizePoints();
     }
 
-
+    // Atualiza dimensões do gráfico
     void Update(float width, float height)
     {
         if (this->width == width && this->height == height)
@@ -47,7 +51,8 @@ public:
         NormalizePoints();
     }
 
-    void Render()
+    // Desenha gráfico na tela
+    void Render(void)
     {
         CV::color(1);
         CV::text(x + border, y + height + border, name);
@@ -55,7 +60,7 @@ public:
 
         RenderNumericalLabels();
 
-        // Desenha os pontos do gráfico
+        // Desenha os pontos
         CV::color(0, 0.5, 1);
         for (int i = 1; i < normalizedPoints.size(); i++)
         {
@@ -82,14 +87,16 @@ private:
     vector<Vector2> points;
     vector<Vector2> normalizedPoints;
 
-    void SetRange()
+    // Calcula a faixa de valores
+    void SetRange(void)
     {
         float xMin = points[0].x;
         float xMax = points[0].x;
         float yMin = points[0].y;
         float yMax = points[0].y;
 
-        for (auto point : points) {
+        for (auto point : points)
+        {
             xMin = min(xMin, point.x);
             xMax = max(xMax, point.x);
             yMin = min(yMin, point.y);
@@ -101,7 +108,8 @@ private:
         this->range = maxPoint - minPoint;
     }
 
-    void NormalizePoints()
+    // Normaliza os valores para "caber" no gráfico
+    void NormalizePoints(void)
     {
         for (int i = 0; i < points.size(); i++)
         {
@@ -110,7 +118,8 @@ private:
         }
     }
 
-    void RenderNumericalLabels()
+    // Desenha labels do gráfico
+    void RenderNumericalLabels(void)
     {
         char numericLabel[numericLabelSize];
 

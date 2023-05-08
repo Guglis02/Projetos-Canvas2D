@@ -634,3 +634,103 @@
 	"../gl_canvas2d.h"
 	<math.h>
 
+1683506297 source:e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\glut.h
+	"freeglut_std.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\vector2.h
+	<stdio.h>
+	<math.h>
+
+1683507447 source:e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	<cstdlib>
+	<ctime>
+	"gl_canvas2d.h"
+	"MouseHandler.h"
+	"Chart.h"
+	"Transformations.h"
+	"InteractableBar.h"
+	"ChartManager.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\mousehandler.h
+
+1683508397 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chart.h
+	"gl_canvas2d.h"
+	"Vector2.h"
+	<vector>
+	<string>
+	<cstdlib>
+
+1683509912 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\transformations.h
+	<math.h>
+	<vector>
+	"gl_canvas2d.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\buttonbar.h
+	<functional>
+	"Interactables/Button.h"
+	"Interactables/Slider.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\button.h
+	"../gl_canvas2d.h"
+	"Interactable.h"
+	<string>
+	<functional>
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\interactable.h
+	"../gl_canvas2d.h"
+	<string>
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactables\slider.h
+	"../gl_canvas2d.h"
+	<math.h>
+
+1683508860 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\chartmanager.h
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<vector>
+	<string>
+	"gl_canvas2d.h"
+	"Chart.h"
+	"Transformations.h"
+	"FileHandler.h"
+
+1683506297 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\filehandler.h
+	<iostream>
+	<fstream>
+	<sstream>
+
+1683509997 e:\github\projetos-canvas2d\trab2gustavomachadodefreitas\src\interactablebar.h
+	<functional>
+	"Interactables/Button.h"
+	"Interactables/Slider.h"
+

@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/** \brief
+ * Classe que contém as funções responsáveis
+ * por aplicar DCT, IDCT e calcular a diferença entre o input e os valores restaurados.
+ * A lógica dos códigos foi fortemente baseada nas apresentadas na demo 16 do Canvas2D.
+ */
 class Transformations
 {
 public:

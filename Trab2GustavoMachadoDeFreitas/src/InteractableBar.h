@@ -1,5 +1,5 @@
-#ifndef BUTTONBAR_H_INCLUDED
-#define BUTTONBAR_H_INCLUDED
+#ifndef INTERACTABLEBAR_H_INCLUDED
+#define INTERACTABLEBAR_H_INCLUDED
 
 #include <functional>
 #include "Interactables/Button.h"
@@ -7,15 +7,19 @@
 
 using namespace std;
 
-class ButtonBar
+/** \brief
+ * Classe responsável por gerenciar a barra de elementos interagíveis na interface.
+ */
+class InteractableBar
 {
 public:
-    ButtonBar(int height, int width)
+    InteractableBar(int height, int width)
     {
         this->height = height;
         this->width = width;
     }
 
+    // Atualiza dimensões da barra e de seus elementos
     void Update(int height, int width)
     {
         this->width = width;
@@ -23,42 +27,45 @@ public:
         CV::color(1);
         CV::rectFill(x, y, x + width, height);
 
-        int buttonsCount = buttons.size();
-        int halfRoundedCount = (buttonsCount + 1) >> 1;
+        int elementsCount = elements.size();
+        int halfRoundedCount = (elementsCount + 1) >> 1;
 
-        for (int i = 0; i < buttonsCount; i++)
+        // Dispõe os elementos em duas linhas.
+        for (int i = 0; i < elementsCount; i++)
         {
             int interactableSpace = x + width/halfRoundedCount;
             if (i < halfRoundedCount)
             {
-                buttons[i]->Update(leftBorder + interactableSpace * (i%buttonsCount), 60);
+                elements[i]->Update(leftBorder + interactableSpace * (i%elementsCount), 60);
             }
             else
             {
-                buttons[i]->Update(leftBorder + interactableSpace * (i%halfRoundedCount), 5);
+                elements[i]->Update(leftBorder + interactableSpace * (i%halfRoundedCount), 5);
             }
-            buttons[i]->Render();
+            elements[i]->Render();
         }
     }
 
+    // Cria um botão e adiciona ele na lista.
     void CreateButton(const char* name, const char* desc, function<void()> callback)
     {
         Button* newButton = new Button(defaultButtonWidth, defaultButtonHeight,
                                        callback, name, desc);
         newButton->SetColor(defaultButtonColor);
-        buttons.push_back(newButton);
+        elements.push_back(newButton);
     }
 
+    // Cria um slider e adiciona ele na lista.
     void CreateSlider(const char* name, float minVal, float maxVal, float initialValue, function<void(float)> callback)
     {
         Slider* newSlider = new Slider(defaultSliderWidth, defaultSliderHeight,
                                        minVal, maxVal, initialValue, name, callback);
-        buttons.push_back(newSlider);
+        elements.push_back(newSlider);
     }
 
     void CheckMouseClick(int mx, int my)
     {
-        for (Interactable* b : buttons)
+        for (Interactable* b : elements)
         {
             if (b->IsMouseInside(mx, my))
             {
@@ -69,7 +76,7 @@ public:
 
     void OnMouseDrag(int mx)
     {
-        for (Interactable* b : buttons)
+        for (Interactable* b : elements)
         {
             b->OnDrag(mx);
         }
@@ -77,7 +84,7 @@ public:
 
     void OnMouseRelease(void)
     {
-        for (Interactable* b : buttons)
+        for (Interactable* b : elements)
         {
             b->OnRelease();
         }
@@ -96,8 +103,7 @@ private:
     const int defaultButtonHeight = 50;
     const float defaultButtonColor[3] = {0, 0.5, 1};
 
-    vector<Interactable*> buttons;
+    vector<Interactable*> elements;
 };
 
-
-#endif // BUTTONBAR_H_INCLUDED
+#endif // INTERACTABLEBAR_H_INCLUDED
