@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1684411302 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.cpp
+1684873728 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1684412078 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
+1684873728 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	<string.h>
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
-	"Vector2.h"
+	"VectorHomo.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\glut.h
 	"freeglut_std.h"
@@ -29,7 +29,7 @@
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1684844421 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\vector2.h
+1684844421 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\VectorHomo.h
 	<stdio.h>
 	<math.h>
 
@@ -42,28 +42,41 @@
 	"GameManager.h"
 	"MouseHandler.h"
 
-1684873373 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1684874798 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"MouseHandler.h"
 	"KeyboardHandler.h"
-	"Vector2.h"
+	"VectorHomo.h"
 	"Player.h"
-	"Frames.h"
+	"FpsController.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
-1684867245 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\player.h
+1684873728 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\player.h
 	"gl_canvas2d.h"
-	"Vector2.h"
+	"VectorHomo.h"
 	"Entity.h"
 
-1684413849 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entity.h
-	"Vector2.h"
+1684874112 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entity.h
+	"VectorHomo.h"
+	"Matrix.h"
 
 1684871898 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\keyboardhandler.h
 	<functional>
 	<unordered_map>
 
-1531759395 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\frames.h
+1684874610 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\frames.h
+	<stdio.h>
+	<time.h>
+
+1684873621 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\vectorhomo.h
+	<stdio.h>
+	<math.h>
+
+1682628521 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\matrix.h
+	<vector>
+	"VectorHomo.h"
+
+1684875233 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
 	<stdio.h>
 	<time.h>
 

@@ -1,21 +1,16 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
 
-#include "Vector2.h"
+#include "VectorHomo.h"
+#include "Matrix.h"
 
 class Entity
 {
 public:
-    Entity(Vector2 transform)
+    Entity(VectorHomo transform)
     {
         this->transform = transform;
-    }
-
-    Vector2 transform;
-
-    void Move(Vector2 inc)
-    {
-        this->transform += (inc * moveSpeed);
+        this->matrix = new Matrix();
     }
 
     virtual void Update(){}
@@ -23,6 +18,17 @@ protected:
     virtual void Render(){}
 
     float moveSpeed = 0;
+
+    VectorHomo transform;
+    Matrix* matrix = NULL;
+ 
+    void Move(VectorHomo inc)
+    {
+        matrix->BuildIdentity();
+        matrix->Translation(inc.x, inc.y);
+        this->transform = *matrix * this->transform;
+        matrix->Reset();
+    }
 };
 
 #endif // ENTITY_H_INCLUDED

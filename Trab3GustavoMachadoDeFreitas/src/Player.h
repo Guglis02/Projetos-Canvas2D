@@ -2,17 +2,17 @@
 #define PLAYER_H_INCLUDED
 
 #include "gl_canvas2d.h"
-#include "Vector2.h"
+#include "VectorHomo.h"
 #include "Entity.h"
 
 class Player : public Entity
 {
 public:
-    Player(Vector2 transform)
+    Player(VectorHomo transform)
         : Entity(transform)
     {
         this->moveSpeed = 1;
-        this->movementDirection = Vector2(0, 0);
+        this->movementDirection = VectorHomo(0, 0);
     }
 
     void Update()
@@ -103,22 +103,22 @@ protected:
     {
         if (isMovingUp)
         {
-            movementDirection += Vector2(0, 1);
+            movementDirection += VectorHomo(0, 1);
         }
         if (isMovingDown)
         {
-            movementDirection += Vector2(0, -1);
+            movementDirection += VectorHomo(0, -1);
         }
         if (isMovingLeft)
         {
-            movementDirection += Vector2(-1, 0);
+            movementDirection += VectorHomo(-1, 0);
         }
         if (isMovingRight)
         {
-            movementDirection += Vector2(1, 0);
+            movementDirection += VectorHomo(1, 0);
         }
 
-        if (movementDirection == Vector2(0, 0))
+        if (movementDirection == VectorHomo(0, 0))
         {
             return;
         }
@@ -133,7 +133,7 @@ protected:
     bool isMovingRight = false;
     bool isMovingDown = false;
 
-    Vector2 movementDirection;
+    VectorHomo movementDirection;
 
 };
 #endif // PLAYER_H_INCLUDED

@@ -3,31 +3,29 @@
 
 #include "MouseHandler.h"
 #include "KeyboardHandler.h"
-#include "Vector2.h"
+#include "VectorHomo.h"
 #include "Player.h"
-#include "Frames.h"
+#include "FpsController.h"
 
 class GameManager
 {
 public:
     GameManager()
     {
-        this->fpsController = new Frames();
         this->mouseHandler = new MouseHandler();
         this->keyboardHandler = new KeyboardHandler();
-        this->player = new Player(Vector2(100,100));
+        this->player = new Player(VectorHomo(100,100));
         SetKeyboardCallbacks();
     }
 
     MouseHandler* mouseHandler = NULL;
     KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
-    Frames* fpsController = NULL;
 
     void Update(int screenWidth, int screenHeight)
     {
         char fpsLabel[64];
-        sprintf(fpsLabel, "%.1f", this->fpsController->getFrames());
+        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFrames());
         CV::color(2);
         CV::text(50, screenHeight - 50, fpsLabel);
         this->player->Update();

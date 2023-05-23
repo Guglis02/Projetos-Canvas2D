@@ -45,15 +45,17 @@
 		</Linker>
 		<Unit filename="src/Color.h" />
 		<Unit filename="src/Entity.h" />
+		<Unit filename="src/FpsController.h" />
 		<Unit filename="src/GameManager.h" />
 		<Unit filename="src/Interactables/Button.h" />
 		<Unit filename="src/Interactables/Interactable.h" />
 		<Unit filename="src/Interactables/Slider.h" />
+		<Unit filename="src/KeyboardHandler.h" />
+		<Unit filename="src/Matrix.h" />
 		<Unit filename="src/MouseHandler.h" />
 		<Unit filename="src/Player.h" />
 		<Unit filename="src/PointsUtils.h" />
-		<Unit filename="src/Transformations.h" />
-		<Unit filename="src/Vector2.h" />
+		<Unit filename="src/VectorHomo.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
