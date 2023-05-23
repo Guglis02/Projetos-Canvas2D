@@ -33,7 +33,7 @@
 	<stdio.h>
 	<math.h>
 
-1684843797 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
+1684873222 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -42,11 +42,12 @@
 	"GameManager.h"
 	"MouseHandler.h"
 
-1684872044 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1684873373 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"MouseHandler.h"
 	"KeyboardHandler.h"
 	"Vector2.h"
 	"Player.h"
+	"Frames.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
@@ -61,4 +62,8 @@
 1684871898 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\keyboardhandler.h
 	<functional>
 	<unordered_map>
+
+1531759395 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\frames.h
+	<stdio.h>
+	<time.h>
 

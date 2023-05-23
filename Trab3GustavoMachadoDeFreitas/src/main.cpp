@@ -18,7 +18,7 @@ GameManager* gameManager = NULL;
 // Funcao chamada todo frame
 void render()
 {
-    gameManager->Update();
+    gameManager->Update(screenWidth, screenHeight);
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos

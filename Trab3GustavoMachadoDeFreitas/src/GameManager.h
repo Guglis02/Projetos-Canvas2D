@@ -5,12 +5,14 @@
 #include "KeyboardHandler.h"
 #include "Vector2.h"
 #include "Player.h"
+#include "Frames.h"
 
 class GameManager
 {
 public:
     GameManager()
     {
+        this->fpsController = new Frames();
         this->mouseHandler = new MouseHandler();
         this->keyboardHandler = new KeyboardHandler();
         this->player = new Player(Vector2(100,100));
@@ -20,9 +22,14 @@ public:
     MouseHandler* mouseHandler = NULL;
     KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
+    Frames* fpsController = NULL;
 
-    void Update()
+    void Update(int screenWidth, int screenHeight)
     {
+        char fpsLabel[64];
+        sprintf(fpsLabel, "%.1f", this->fpsController->getFrames());
+        CV::color(2);
+        CV::text(50, screenHeight - 50, fpsLabel);
         this->player->Update();
     }
 
