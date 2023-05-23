@@ -15,36 +15,6 @@ public:
         this->movementDirection = Vector2(0, 0);
     }
 
-    void HandleMovement()
-    {
-        if (isMovingUp)
-        {
-            movementDirection += Vector2(0, 1);
-        }
-        if (isMovingDown)
-        {
-            movementDirection += Vector2(0, -1);
-        }
-        if (isMovingLeft)
-        {
-            movementDirection += Vector2(-1, 0);
-        }
-        if (isMovingRight)
-        {
-            movementDirection += Vector2(1, 0);
-        }
-
-        if (movementDirection == Vector2(0, 0))
-        {
-            return;
-        }
-
-        movementDirection.normalize();
-
-        Move(movementDirection);
-    }
-
-
     void Update()
     {
         HandleMovement();
@@ -52,12 +22,49 @@ public:
         Render();
     }
 
-    bool isMovingUp = false;
-    bool isMovingLeft = false;
-    bool isMovingRight = false;
-    bool isMovingDown = false;
+    void StartMovingUp()
+    {
+        isMovingUp = true;
+    }
 
-    Vector2 movementDirection;
+    void StopMovingUp()
+    {
+        isMovingUp = false;
+        movementDirection.y = 0;
+    }
+
+    void StartMovingLeft()
+    {
+        isMovingLeft = true;
+    }
+
+    void StopMovingLeft()
+    {
+        isMovingLeft = false;
+        movementDirection.x = 0;
+    }
+
+    void StartMovingDown()
+    {
+        isMovingDown = true;
+    }
+
+    void StopMovingDown()
+    {
+        isMovingDown = false;
+        movementDirection.y = 0;
+    }
+
+    void StartMovingRight()
+    {
+        isMovingRight = true;
+    }
+
+    void StopMovingRight()
+    {
+        isMovingRight = false;
+        movementDirection.x = 0;
+    }
 
 protected:
     void Render()
@@ -91,6 +98,42 @@ protected:
 
         CV::translate(0, 0);
     }
-};
 
+    void HandleMovement()
+    {
+        if (isMovingUp)
+        {
+            movementDirection += Vector2(0, 1);
+        }
+        if (isMovingDown)
+        {
+            movementDirection += Vector2(0, -1);
+        }
+        if (isMovingLeft)
+        {
+            movementDirection += Vector2(-1, 0);
+        }
+        if (isMovingRight)
+        {
+            movementDirection += Vector2(1, 0);
+        }
+
+        if (movementDirection == Vector2(0, 0))
+        {
+            return;
+        }
+
+        movementDirection.normalize();
+
+        Move(movementDirection);
+    }
+  
+    bool isMovingUp = false;
+    bool isMovingLeft = false;
+    bool isMovingRight = false;
+    bool isMovingDown = false;
+
+    Vector2 movementDirection;
+
+};
 #endif // PLAYER_H_INCLUDED

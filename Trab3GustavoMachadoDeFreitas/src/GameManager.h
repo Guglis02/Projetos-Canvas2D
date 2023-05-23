@@ -2,6 +2,7 @@
 #define GAMEMANAGER_H_INCLUDED
 
 #include "MouseHandler.h"
+#include "KeyboardHandler.h"
 #include "Vector2.h"
 #include "Player.h"
 
@@ -11,10 +12,13 @@ public:
     GameManager()
     {
         this->mouseHandler = new MouseHandler();
+        this->keyboardHandler = new KeyboardHandler();
         this->player = new Player(Vector2(100,100));
+        SetKeyboardCallbacks();
     }
 
     MouseHandler* mouseHandler = NULL;
+    KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
 
     void Update()
@@ -22,66 +26,40 @@ public:
         this->player->Update();
     }
 
+    void SetKeyboardCallbacks()
+    {
+        this->keyboardHandler->RegisterCallbacks(119, bind(&Player::StartMovingUp, player), bind(&Player::StopMovingUp, player)); // W move pra cima
+        this->keyboardHandler->RegisterCallbacks(201, bind(&Player::StartMovingUp, player), bind(&Player::StopMovingUp, player)); // UP move pra cima
+        this->keyboardHandler->RegisterCallbacks(97, bind(&Player::StartMovingLeft, player), bind(&Player::StopMovingLeft, player)); // A move pra esquerda
+        this->keyboardHandler->RegisterCallbacks(200, bind(&Player::StartMovingLeft, player), bind(&Player::StopMovingLeft, player)); // LEFT move pra esquerda
+        this->keyboardHandler->RegisterCallbacks(115, bind(&Player::StartMovingDown, player), bind(&Player::StopMovingDown, player)); // S move pra baixo
+        this->keyboardHandler->RegisterCallbacks(203, bind(&Player::StartMovingDown, player), bind(&Player::StopMovingDown, player)); // DOWN move pra baixo
+        this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
+        this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
+    }
+
+
     void KeyPressed(int key)
     {
-        switch (key)
-        {
-        case 119:
-        case 201:
-            player->isMovingUp = true;
-            break;
-        case 97:
-        case 200:
-            player->isMovingLeft = true;
-            break;
-        case 115:
-        case 203:
-            player->isMovingDown = true;
-            break;
-        case 100:
-        case 202:
-            player->isMovingRight = true;
-            break;
-        case 27:
-        case 8:
-            printf("\nBack");
-            break;
-        case 32:
-        case 13:
-            printf("\nConfirm");
-            break;
-        default:
-            break;
-        }
+        this->keyboardHandler->KeyPressed(key);
+        // switch (key)
+        // {
+        // case 27:
+        // case 8:
+        //     printf("\nBack");
+        //     break;
+        // case 32:
+        // case 13:
+        //     printf("\nConfirm");
+        //     break;
+        // default:
+        //     break;
+        // }
     }
 
     void KeyReleased(int key)
     {
-        switch (key)
-        {
-        case 119:
-        case 201:
-            player->isMovingUp = false;
-            player->movementDirection.y = 0;
-            break;
-        case 97:
-        case 200:
-            player->isMovingLeft = false;
-            player->movementDirection.x = 0;
-            break;
-        case 115:
-        case 203:
-            player->isMovingDown = false;
-            player->movementDirection.y = 0;
-            break;
-        case 100:
-        case 202:
-            player->isMovingRight = false;
-            player->movementDirection.x = 0;
-            break;
-        default:
-            break;
-        }
+        this->keyboardHandler->KeyReleased(key);
     }
 };
 
