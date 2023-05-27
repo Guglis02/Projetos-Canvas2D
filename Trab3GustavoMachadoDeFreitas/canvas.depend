@@ -103,3 +103,88 @@
 1685040483 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
 	"Entity.h"
 
+1684974390 source:e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1684974390 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"VectorHomo.h"
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\glut.h
+	"freeglut_std.h"
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\vectorhomo.h
+	<stdio.h>
+	<math.h>
+
+1685193895 source:e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	<cstdlib>
+	"gl_canvas2d.h"
+	"GameManager.h"
+	"MouseHandler.h"
+
+1685195137 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+	"MouseHandler.h"
+	"KeyboardHandler.h"
+	"VectorHomo.h"
+	"Entities/Player.h"
+	"Entities/Projectile.h"
+	"Entities/Enemy.h"
+	"FpsController.h"
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\keyboardhandler.h
+	<functional>
+	<unordered_map>
+
+1685195163 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
+	<functional>
+	"../gl_canvas2d.h"
+	"../VectorHomo.h"
+	"Entity.h"
+	"../FpsController.h"
+
+1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
+	"../VectorHomo.h"
+	"../Matrix.h"
+	"../FpsController.h"
+
+1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\matrix.h
+	<vector>
+	"VectorHomo.h"
+
+1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
+	<stdio.h>
+	<time.h>
+
+1685195049 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\projectile.h
+	"../gl_canvas2d.h"
+	"Entity.h"
+
+1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
+	"Entity.h"
+

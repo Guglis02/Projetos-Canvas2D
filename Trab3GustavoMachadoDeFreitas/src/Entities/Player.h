@@ -14,7 +14,7 @@ public:
     Player(VectorHomo transform, function<void()> shootCallback)
         : Entity(transform)
     {
-        this->moveSpeed = 150;
+        this->moveSpeed = 500;
         this->movementDirection = VectorHomo(0, 0);
         this->shootCallback = shootCallback;
     }
@@ -162,7 +162,7 @@ protected:
     bool isShooting = false;
 
     float timeSinceLastShot = 1;
-    float shootCooldown = 0.1;
+    float shootCooldown = 0.3;
 
     function<void()> shootCallback;
 

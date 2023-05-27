@@ -36,14 +36,13 @@ public:
         sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFps());
         CV::color(2);
         CV::text(50, screenHeight - 50, fpsLabel);
-        this->player->Update();
 
         for (auto projectile : friendlyProjectiles)
         {
             projectile->Update();
         }
 
-        CV::translate(0, -1 * this->player->GetPosition().y);
+        this->player->Update();
     }
 
     void InstantiatePlayerProjectile()

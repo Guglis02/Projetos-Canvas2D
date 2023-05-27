@@ -10,7 +10,7 @@ public:
     Projectile(VectorHomo transform) :
     Entity(transform)
     {
-        moveSpeed = 1500;
+        moveSpeed = 1000;
     }
 
     void Update()
