@@ -1,8 +1,9 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
 
-#include "VectorHomo.h"
-#include "Matrix.h"
+#include "../VectorHomo.h"
+#include "../Matrix.h"
+#include "../FpsController.h"
 
 class Entity
 {
@@ -13,6 +14,11 @@ public:
         this->matrix = new Matrix();
     }
 
+    VectorHomo GetPosition()
+    {
+        return transform;
+    }
+
     virtual void Update(){}
 protected:
     virtual void Render(){}
@@ -21,11 +27,12 @@ protected:
 
     VectorHomo transform;
     Matrix* matrix = NULL;
- 
+
     void Move(VectorHomo inc)
     {
         matrix->BuildIdentity();
-        matrix->Translation(inc.x, inc.y);
+        matrix->Translation(inc.x * FpsController::getInstance().normalize(moveSpeed),
+                            inc.y * FpsController::getInstance().normalize(moveSpeed));
         this->transform = *matrix * this->transform;
         matrix->Reset();
     }

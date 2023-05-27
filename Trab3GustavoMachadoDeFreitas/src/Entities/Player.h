@@ -1,27 +1,33 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
-#include "gl_canvas2d.h"
-#include "VectorHomo.h"
+#include <functional>
+
+#include "../gl_canvas2d.h"
+#include "../VectorHomo.h"
 #include "Entity.h"
+#include "../FpsController.h"
 
 class Player : public Entity
 {
 public:
-    Player(VectorHomo transform)
+    Player(VectorHomo transform, function<void()> shootCallback)
         : Entity(transform)
     {
-        this->moveSpeed = 1;
+        this->moveSpeed = 150;
         this->movementDirection = VectorHomo(0, 0);
+        this->shootCallback = shootCallback;
     }
 
     void Update()
     {
         HandleMovement();
+        HandleShooting();
 
         Render();
     }
 
+    // Callbacks
     void StartMovingUp()
     {
         isMovingUp = true;
@@ -64,6 +70,16 @@ public:
     {
         isMovingRight = false;
         movementDirection.x = 0;
+    }
+
+    void StartShooting()
+    {
+        isShooting = true;
+    }
+
+    void StopShooting()
+    {
+        isShooting = false;
     }
 
 protected:
@@ -127,13 +143,29 @@ protected:
 
         Move(movementDirection);
     }
-  
+
+    void HandleShooting()
+    {
+        timeSinceLastShot += FpsController::getInstance().GetDeltaTime();
+
+        if (isShooting && (timeSinceLastShot >= shootCooldown))
+        {
+            shootCallback();
+            timeSinceLastShot = 0;
+        }
+    }
+
     bool isMovingUp = false;
     bool isMovingLeft = false;
     bool isMovingRight = false;
     bool isMovingDown = false;
+    bool isShooting = false;
+
+    float timeSinceLastShot = 1;
+    float shootCooldown = 0.1;
+
+    function<void()> shootCallback;
 
     VectorHomo movementDirection;
-
 };
 #endif // PLAYER_H_INCLUDED

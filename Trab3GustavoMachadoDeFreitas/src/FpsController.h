@@ -8,6 +8,7 @@
 
 // Baseada na classe do professor, porém transformada em um Singleton
 class FpsController {
+private:
     clock_t t1, t2;
     long frameCounter;
     float fps, fps_old;
@@ -24,7 +25,7 @@ public:
         return instance;
     }
 
-    float getFrames() {
+    void getFrames() {
         double timeWindow;
 
         t2 = clock();
@@ -35,12 +36,23 @@ public:
             t1 = t2;
             fps = frameCounter / (timeWindow / CLOCKS_PER_SEC);
             frameCounter = 0;
-            fps_old = fps;
-
-            return fps;
         }
+    }
 
-        return fps_old;
+    float getFps()
+    {
+        return fps;
+    }
+
+    float normalize(float value)
+    {
+        float deltaTime = 1.0f / fps;
+        return value * deltaTime;
+    }
+
+    double GetDeltaTime()
+    {
+        return 1.0f / fps;
     }
 };
 

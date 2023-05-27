@@ -44,7 +44,10 @@
 			<Add library="../lib/freeglut.lib" />
 		</Linker>
 		<Unit filename="src/Color.h" />
-		<Unit filename="src/Entity.h" />
+		<Unit filename="src/Entities/Enemy.h" />
+		<Unit filename="src/Entities/Entity.h" />
+		<Unit filename="src/Entities/Player.h" />
+		<Unit filename="src/Entities/Projectile.h" />
 		<Unit filename="src/FpsController.h" />
 		<Unit filename="src/GameManager.h" />
 		<Unit filename="src/Interactables/Button.h" />
@@ -53,7 +56,6 @@
 		<Unit filename="src/KeyboardHandler.h" />
 		<Unit filename="src/Matrix.h" />
 		<Unit filename="src/MouseHandler.h" />
-		<Unit filename="src/Player.h" />
 		<Unit filename="src/PointsUtils.h" />
 		<Unit filename="src/VectorHomo.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />

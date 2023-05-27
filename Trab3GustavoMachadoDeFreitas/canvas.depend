@@ -42,25 +42,29 @@
 	"GameManager.h"
 	"MouseHandler.h"
 
-1684874798 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1685045163 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"MouseHandler.h"
 	"KeyboardHandler.h"
 	"VectorHomo.h"
-	"Player.h"
+	"Entities/Player.h"
+	"Entities/Projectile.h"
+	"Entities/Enemy.h"
 	"FpsController.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
-1684873728 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\player.h
+1685035064 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\player.h
 	"gl_canvas2d.h"
 	"VectorHomo.h"
 	"Entity.h"
+	"FpsController.h"
 
-1684874112 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entity.h
+1685033901 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entity.h
 	"VectorHomo.h"
 	"Matrix.h"
+	"FpsController.h"
 
-1684871898 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\keyboardhandler.h
+1685037672 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\keyboardhandler.h
 	<functional>
 	<unordered_map>
 
@@ -76,7 +80,26 @@
 	<vector>
 	"VectorHomo.h"
 
-1684875233 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
+1685044201 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
 	<stdio.h>
 	<time.h>
+
+1685045112 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
+	<functional>
+	"../gl_canvas2d.h"
+	"../VectorHomo.h"
+	"Entity.h"
+	"../FpsController.h"
+
+1685042729 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
+	"../VectorHomo.h"
+	"../Matrix.h"
+	"../FpsController.h"
+
+1685040559 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\projectile.h
+	"../gl_canvas2d.h"
+	"Entity.h"
+
+1685040483 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
+	"Entity.h"
 

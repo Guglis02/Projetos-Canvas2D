@@ -4,7 +4,9 @@
 #include "MouseHandler.h"
 #include "KeyboardHandler.h"
 #include "VectorHomo.h"
-#include "Player.h"
+#include "Entities/Player.h"
+#include "Entities/Projectile.h"
+#include "Entities/Enemy.h"
 #include "FpsController.h"
 
 class GameManager
@@ -14,7 +16,7 @@ public:
     {
         this->mouseHandler = new MouseHandler();
         this->keyboardHandler = new KeyboardHandler();
-        this->player = new Player(VectorHomo(100,100));
+        this->player = new Player(VectorHomo(100,100), bind(&GameManager::InstantiatePlayerProjectile, this));
         SetKeyboardCallbacks();
     }
 
@@ -22,13 +24,31 @@ public:
     KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
 
+    vector<Projectile*> friendlyProjectiles;
+    vector<Enemy*> enemies;
+
     void Update(int screenWidth, int screenHeight)
     {
+        CV::translate(0, 0);
+
+        FpsController::getInstance().getFrames();
         char fpsLabel[64];
-        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFrames());
+        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFps());
         CV::color(2);
         CV::text(50, screenHeight - 50, fpsLabel);
         this->player->Update();
+
+        for (auto projectile : friendlyProjectiles)
+        {
+            projectile->Update();
+        }
+
+        CV::translate(0, -1 * this->player->GetPosition().y);
+    }
+
+    void InstantiatePlayerProjectile()
+    {
+        friendlyProjectiles.push_back(new Projectile(this->player->GetPosition()));
     }
 
     void SetKeyboardCallbacks()
@@ -41,25 +61,12 @@ public:
         this->keyboardHandler->RegisterCallbacks(203, bind(&Player::StartMovingDown, player), bind(&Player::StopMovingDown, player)); // DOWN move pra baixo
         this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
         this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
+        this->keyboardHandler->RegisterCallbacks(32, bind(&Player::StartShooting, player), bind(&Player::StopShooting, player)); // SPACE atira
     }
-
 
     void KeyPressed(int key)
     {
         this->keyboardHandler->KeyPressed(key);
-        // switch (key)
-        // {
-        // case 27:
-        // case 8:
-        //     printf("\nBack");
-        //     break;
-        // case 32:
-        // case 13:
-        //     printf("\nConfirm");
-        //     break;
-        // default:
-        //     break;
-        // }
     }
 
     void KeyReleased(int key)
