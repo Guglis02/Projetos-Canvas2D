@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Trabalho3_GustavoMachado" />
+		<Option title="Trabalho2_GustavoMachado" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -43,24 +43,7 @@
 			<Add library="../lib/libopengl32.a" />
 			<Add library="../lib/freeglut.lib" />
 		</Linker>
-		<Unit filename="src/Bmp/Bmp.h" />
-		<Unit filename="src/Bmp/bmp.cpp" />
-		<Unit filename="src/BorderController.h" />
-		<Unit filename="src/Color.h" />
-		<Unit filename="src/Entities/Enemy.h" />
-		<Unit filename="src/Entities/Entity.h" />
-		<Unit filename="src/Entities/Player.h" />
-		<Unit filename="src/Entities/Projectile.h" />
-		<Unit filename="src/FpsController.h" />
-		<Unit filename="src/GameManager.h" />
-		<Unit filename="src/Interactables/Button.h" />
-		<Unit filename="src/Interactables/Interactable.h" />
-		<Unit filename="src/Interactables/Slider.h" />
-		<Unit filename="src/KeyboardHandler.h" />
-		<Unit filename="src/Matrix.h" />
-		<Unit filename="src/MouseHandler.h" />
-		<Unit filename="src/PointsUtils.h" />
-		<Unit filename="src/VectorHomo.h" />
+		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

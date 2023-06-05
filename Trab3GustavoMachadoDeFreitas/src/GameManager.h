@@ -4,6 +4,7 @@
 #include "MouseHandler.h"
 #include "KeyboardHandler.h"
 #include "VectorHomo.h"
+#include "BorderController.h"
 #include "Entities/Player.h"
 #include "Entities/Projectile.h"
 #include "Entities/Enemy.h"
@@ -12,10 +13,11 @@
 class GameManager
 {
 public:
-    GameManager()
+    GameManager(int screenWidth, int screenHeight)
     {
         this->mouseHandler = new MouseHandler();
         this->keyboardHandler = new KeyboardHandler();
+        this->borderController = new BorderController(100, screenWidth, screenHeight);
         this->player = new Player(VectorHomo(100,100), bind(&GameManager::InstantiatePlayerProjectile, this));
         SetKeyboardCallbacks();
     }
@@ -23,12 +25,21 @@ public:
     MouseHandler* mouseHandler = NULL;
     KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
+    BorderController* borderController = NULL;
 
     vector<Projectile*> friendlyProjectiles;
     vector<Enemy*> enemies;
 
+    int screenWidth;
+    int screenHeight;
+    float enemyCooldown = 10.0;
+    float timeSinceLastEnemy = enemyCooldown;
+
     void Update(int screenWidth, int screenHeight)
     {
+        this->screenWidth = screenWidth;
+        this->screenHeight = screenHeight;
+
         CV::translate(0, 0);
 
         FpsController::getInstance().getFrames();
@@ -37,10 +48,14 @@ public:
         CV::color(2);
         CV::text(50, screenHeight - 50, fpsLabel);
 
+        borderController->Update(100);
+
         for (auto projectile : friendlyProjectiles)
         {
             projectile->Update();
         }
+
+        HandleEnemies();
 
         this->player->Update();
     }
@@ -48,6 +63,27 @@ public:
     void InstantiatePlayerProjectile()
     {
         friendlyProjectiles.push_back(new Projectile(this->player->GetPosition()));
+    }
+
+    void InstantiateEnemy()
+    {
+        enemies.push_back(new Enemy(this->player->GetPosition() + VectorHomo(0, screenHeight - 100)));
+    }
+
+    void HandleEnemies()
+    {
+        timeSinceLastEnemy += FpsController::getInstance().GetDeltaTime();
+
+        if (timeSinceLastEnemy >= enemyCooldown)
+        {
+            InstantiateEnemy();
+            timeSinceLastEnemy = 0;
+        }
+
+        for (auto enemy : enemies)
+        {
+            enemy->Update();
+        }
     }
 
     void SetKeyboardCallbacks()

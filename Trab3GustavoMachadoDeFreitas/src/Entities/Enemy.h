@@ -9,7 +9,7 @@ public:
     Enemy(VectorHomo transform) :
     Entity(transform)
     {
-        moveSpeed = 1000;        
+        moveSpeed = 100;        
     }
     
     void Update()

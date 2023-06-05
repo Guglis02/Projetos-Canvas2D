@@ -18,7 +18,7 @@ GameManager* gameManager = NULL;
 // Funcao chamada todo frame
 void render()
 {
-    for (int i = 0; i <= screenHeight; i++)
+    /*for (int i = 0; i <= screenHeight; i++)
     {
         for (int j = 0; j <= screenWidth; j++)
         {
@@ -26,7 +26,7 @@ void render()
             CV::color(colorIndex);
             CV::point(i, j);
         }
-    }
+    }*/
     gameManager->Update(screenWidth, screenHeight);
 }
 
@@ -53,7 +53,7 @@ int main(void)
 {
     CV::init(&screenWidth, &screenHeight, "Trabalho 3 - Gustavo Machado de Freitas");
 
-    gameManager = new GameManager();
+    gameManager = new GameManager(screenWidth, screenHeight);
 
     CV::run();
 }

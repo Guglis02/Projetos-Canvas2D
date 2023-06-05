@@ -161,8 +161,8 @@ protected:
     bool isMovingDown = false;
     bool isShooting = false;
 
-    float timeSinceLastShot = 1;
     float shootCooldown = 0.3;
+    float timeSinceLastShot = shootCooldown;
 
     function<void()> shootCallback;
 
