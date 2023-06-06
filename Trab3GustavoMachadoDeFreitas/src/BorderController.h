@@ -17,7 +17,7 @@ class BorderController
         this->screenWidth = screenWidth;
         this->screenHeight = screenHeight;
 
-        //GenerateControlPoints(controlPoints);
+        GenerateControlPoints(controlPoints);
     }
 
     void Update(float downSpeed)
@@ -28,54 +28,57 @@ class BorderController
         }
 
         points.clear();
-        for (int i = 0; i < controlPoints.size() - 3; i++)
+        for (int i = 0; i < controlPoints.size() - 4; i++)
         {
             for (float t = 0; t <= 1; t += 0.1f)
             {
                 VectorHomo p = BSpline3(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2], controlPoints[i + 3], t);
-                points.push_back(p);
+                if (p.y > 0 && p.y < screenHeight)
+                {
+                    points.push_back(p);
+                }
             }
         }
 
-        DrawBorder(points);
+        DrawBorder();
 
-        // for (int i = 0; i < controlPoints.size(); i++)
-        // {
-        //     CV::circleFill(controlPoints[i].x, controlPoints[i].y, 10, 5);
-        //     if (controlPoints[i].y < 0 - screenHeight / 10)
-        //     {
-        //         controlPoints.erase(controlPoints.begin() + i);
-        //         i--;
-        //         VectorHomo p(rand() % 100 + x, rand() % 100 + screenHeight);
-        //         controlPoints.push_back(p);
-        //     }
-        // }
+        for (int i = 0; i < controlPoints.size(); i++)
+        {
+            if (controlPoints[i].y < 0 - screenHeight >> 1)
+            {
+                controlPoints.erase(controlPoints.begin() + i);
+                i--;
+                VectorHomo p(rand() % 100 + x, screenHeight * 1.5);
+                controlPoints.push_back(p);
+            }
+        }
     }
+
+    vector<VectorHomo> points;
+
     private:
 
     int x;
     int screenWidth;
     int screenHeight;
+    float distanceBetweenControlPoints = 100;
 
-    vector<VectorHomo> points;
     vector<VectorHomo> controlPoints;
 
-    // void GenerateControlPoints(vector<VectorHomo>& points)
-    // {
-    //     int numberOfPoints = (screenHeight % 10) + 2;
-    //     float distanceBetweenPoints = screenHeight / 10;
-    //     float startingHeight = 0 - distanceBetweenPoints;
+    void GenerateControlPoints(vector<VectorHomo>& cPoints)
+    {
+        int numberOfPoints = (screenHeight / distanceBetweenControlPoints) * 2.0;
+        float startingHeight = 0 - screenHeight >> 1;
 
-    //     for (int i = 0; i < numberOfPoints; i++)
-    //     {
-    //         VectorHomo p(rand() % 200 + (x - 100),
-    //                     startingHeight + (distanceBetweenPoints * i));
-    //         points.push_back(p);
-    //     }
-    // }
+        for (int i = 0; i < numberOfPoints; i++)
+        {
+            VectorHomo p(rand() % 100 + (x - 50),
+                        startingHeight + (distanceBetweenControlPoints * i));
+            cPoints.push_back(p);
+        }
+    }
 
-
-    void DrawBorder(vector<VectorHomo> points)
+    void DrawBorder()
     {
         CV::color(5);
         for (int i = 0; i < points.size() - 1; i++)

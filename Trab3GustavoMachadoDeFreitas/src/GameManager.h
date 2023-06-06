@@ -17,7 +17,8 @@ public:
     {
         this->mouseHandler = new MouseHandler();
         this->keyboardHandler = new KeyboardHandler();
-        this->borderController = new BorderController(100, screenWidth, screenHeight);
+        this->leftBorder = new BorderController(150, screenWidth, screenHeight);
+        this->rightBorder = new BorderController(screenWidth - 150, screenWidth, screenHeight);
         this->player = new Player(VectorHomo(100,100), bind(&GameManager::InstantiatePlayerProjectile, this));
         SetKeyboardCallbacks();
     }
@@ -25,7 +26,8 @@ public:
     MouseHandler* mouseHandler = NULL;
     KeyboardHandler* keyboardHandler = NULL;
     Player* player = NULL;
-    BorderController* borderController = NULL;
+    BorderController* leftBorder = NULL;
+    BorderController* rightBorder = NULL;
 
     vector<Projectile*> friendlyProjectiles;
     vector<Enemy*> enemies;
@@ -48,7 +50,10 @@ public:
         CV::color(2);
         CV::text(50, screenHeight - 50, fpsLabel);
 
-        borderController->Update(100);
+        leftBorder->Update(100.0);
+        rightBorder->Update(100.0);
+
+        PaintBackground();
 
         for (auto projectile : friendlyProjectiles)
         {
@@ -58,6 +63,29 @@ public:
         HandleEnemies();
 
         this->player->Update();
+    }
+    
+    void PaintBackground()
+    {
+        for (int i = 0; i < leftBorder->points.size(); i++)
+        {
+            VectorHomo leftPoint = leftBorder->points[i];
+            VectorHomo rightPoint = rightBorder->points[i];
+
+            for (int j = 0; j < screenWidth; j++)
+            {
+                if (j < leftPoint.x || j > rightPoint.x)
+                {
+                    CV::color(1,0.5,0.5);
+                }
+                else
+                {
+                    CV::color(0.5,1,0.5);
+                }
+
+                CV::point(j, i);
+            }
+        }
     }
 
     void InstantiatePlayerProjectile()

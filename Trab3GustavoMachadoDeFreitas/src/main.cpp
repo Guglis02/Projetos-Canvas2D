@@ -18,15 +18,15 @@ GameManager* gameManager = NULL;
 // Funcao chamada todo frame
 void render()
 {
-    /*for (int i = 0; i <= screenHeight; i++)
-    {
-        for (int j = 0; j <= screenWidth; j++)
-        {
-            int colorIndex = (i + j ) % 11;
-            CV::color(colorIndex);
-            CV::point(i, j);
-        }
-    }*/
+    // for (int i = 0; i <= screenHeight; i++)
+    // {
+    //     for (int j = 0; j <= screenWidth; j++)
+    //     {
+    //         int colorIndex = (i + j ) % 11;
+    //         CV::color(colorIndex);
+    //         CV::point(i, j);
+    //     }
+    // }
     gameManager->Update(screenWidth, screenHeight);
 }
 

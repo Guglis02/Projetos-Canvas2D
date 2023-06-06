@@ -46,6 +46,9 @@ public:
 
     float normalize(float value)
     {
+        if (fps == 0) {
+            return 0;
+        }
         float deltaTime = 1.0f / fps;
         return value * deltaTime;
     }

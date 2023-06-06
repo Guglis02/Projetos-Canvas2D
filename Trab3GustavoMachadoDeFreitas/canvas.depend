@@ -33,7 +33,7 @@
 	<stdio.h>
 	<math.h>
 
-1685802655 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
+1686005737 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -42,7 +42,7 @@
 	"GameManager.h"
 	"MouseHandler.h"
 
-1685804123 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1686010038 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"MouseHandler.h"
 	"KeyboardHandler.h"
 	"VectorHomo.h"
@@ -81,7 +81,7 @@
 	<vector>
 	"VectorHomo.h"
 
-1685046074 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
+1686007371 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\fpscontroller.h
 	<stdio.h>
 	<time.h>
 
@@ -189,7 +189,7 @@
 1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
 	"Entity.h"
 
-1685931306 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
+1686009542 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
 	<vector>
 	"VectorHomo.h"
 	"gl_canvas2d.h"
