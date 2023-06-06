@@ -4,9 +4,9 @@
 #include <functional>
 
 #include "../gl_canvas2d.h"
-#include "../VectorHomo.h"
+#include "../Utils/VectorHomo.h"
 #include "Entity.h"
-#include "../FpsController.h"
+#include "../Utils/FpsController.h"
 
 class Player : public Entity
 {

@@ -1,9 +1,9 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
 
-#include "../VectorHomo.h"
-#include "../Matrix.h"
-#include "../FpsController.h"
+#include "../Utils/VectorHomo.h"
+#include "../Utils/Matrix.h"
+#include "../Utils/FpsController.h"
 #include <vector>
 
 using namespace std;

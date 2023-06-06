@@ -6,7 +6,6 @@
 
 #include "gl_canvas2d.h"
 #include "GameManager.h"
-#include "MouseHandler.h"
 
 // using namespace std;
 
@@ -18,15 +17,6 @@ GameManager* gameManager = NULL;
 // Funcao chamada todo frame
 void render()
 {
-    // for (int i = 0; i <= screenHeight; i++)
-    // {
-    //     for (int j = 0; j <= screenWidth; j++)
-    //     {
-    //         int colorIndex = (i + j ) % 11;
-    //         CV::color(colorIndex);
-    //         CV::point(i, j);
-    //     }
-    // }
     gameManager->Update(screenWidth, screenHeight);
 }
 
@@ -34,7 +24,6 @@ void render()
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
     //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
-    //gameManager->mouseHandler->Update(button, state, wheel, direction, x, y);
 }
 
 // Funcao chamada toda vez que uma tecla for pressionada

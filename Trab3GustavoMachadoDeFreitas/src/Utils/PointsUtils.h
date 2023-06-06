@@ -1,11 +1,11 @@
-#ifndef POINTHANDLER_H_INCLUDED
-#define POINTHANDLER_H_INCLUDED
+#ifndef POINTUTILS_H_INCLUDED
+#define POINTUTILS_H_INCLUDED
 
 #include <math.h>
 #include "VectorHomo.h"
 
 /** \brief
- * Arquivo utilitário contendo funções relacionadas a pontos.
+ * Arquivo utilitï¿½rio contendo funï¿½ï¿½es relacionadas a pontos.
  */
 
 static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
@@ -40,7 +40,7 @@ static int pnpoly(int nvert, float *vertx, float *verty, float testx, float test
     return c;
 }
 
-// Adaptação usando Vector2
+// Adaptaï¿½ï¿½o usando Vector2
 static int pnpoly(int nvert, VectorHomo* vert, VectorHomo test)
 {
     int i, j, c = 0;
@@ -53,7 +53,7 @@ static int pnpoly(int nvert, VectorHomo* vert, VectorHomo test)
     return c;
 }
 
-// Calcula e retorna o ponto em segmento que é perpendicular ao segmento formado por vec1 e vec2, mais próximo de point
+// Calcula e retorna o ponto em segmento que ï¿½ perpendicular ao segmento formado por vec1 e vec2, mais prï¿½ximo de point
 static VectorHomo GetPerpendicularPoint(VectorHomo vec1, VectorHomo vec2, VectorHomo point)
 {
     VectorHomo segment = vec2 - vec1;
@@ -67,4 +67,4 @@ static VectorHomo RotatePoint(VectorHomo point, float angle)
     return VectorHomo(point.x * cos(angle) - point.y * sin(angle),
                    point.x * sin(angle) + point.y * cos(angle));
 }
-#endif // POINTHANDLER_H_INCLUDED
+#endif // POINTUTILS_H_INCLUDED

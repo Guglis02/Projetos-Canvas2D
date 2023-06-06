@@ -3,6 +3,11 @@
 
 #include "Entity.h"
 
+enum class EnemyState {
+    Attacking,
+    Roaming
+};
+
 class Enemy : public Entity
 {
 public:
@@ -19,7 +24,7 @@ public:
     
     void Update()
     {
-        Move(VectorHomo(0, -1));
+        //Move(VectorHomo(0, 0));
 
         Render();
     }
@@ -49,5 +54,7 @@ protected:
         CV::translate(0, 0);
     }
 };
+
+
 
 #endif // ENEMY_H_INCLUDED

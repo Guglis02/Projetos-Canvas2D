@@ -2,9 +2,10 @@
 #define BORDERCONTROLLER_H_INCLUDED
 
 #include <vector>
-#include "VectorHomo.h"
+#include "./Utils/VectorHomo.h"
+#include "./Utils/CurveUtils.h"
 #include "gl_canvas2d.h"
-#include "FpsController.h"
+#include "./Utils/FpsController.h"
 
 using namespace std;
 
@@ -85,17 +86,6 @@ class BorderController
         {
             CV::line(points[i], points[i + 1]);
         }
-    }
-
-    VectorHomo BSpline3(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHomo p4, float t)
-    {
-        float asixth = 1.0f / 6.0f;
-        float tcube = t * t * t;
-        float tsquare = t * t;
-        return p1 * asixth * pow((1 - t), 3)
-            + p2 * asixth * (3 * tcube - 6 * tsquare + 4)
-            + p3 * asixth * (-3 * tcube + 3 * tsquare + 3 * t + 1)
-            + p4 * asixth * tcube;
     }
 };
 
