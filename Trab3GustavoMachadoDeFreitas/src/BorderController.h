@@ -44,7 +44,7 @@ class BorderController
 
         for (int i = 0; i < controlPoints.size(); i++)
         {
-            if (controlPoints[i].y < 0 - screenHeight >> 1)
+            if (controlPoints[i].y < (0 - screenHeight >> 1))
             {
                 controlPoints.erase(controlPoints.begin() + i);
                 i--;

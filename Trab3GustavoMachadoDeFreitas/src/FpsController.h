@@ -25,7 +25,7 @@ public:
         return instance;
     }
 
-    void getFrames() {
+    void updateFrames() {
         double timeWindow;
 
         t2 = clock();

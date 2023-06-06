@@ -10,7 +10,12 @@ public:
     Projectile(VectorHomo transform) :
     Entity(transform)
     {
-        moveSpeed = 1000;
+        this->moveSpeed = 1000;        
+        
+        this->hitbox.push_back(VectorHomo(-5, 0));
+        this->hitbox.push_back(VectorHomo(-5, 25));
+        this->hitbox.push_back(VectorHomo(5, 25));
+        this->hitbox.push_back(VectorHomo(5, 0));
     }
 
     void Update()

@@ -17,6 +17,11 @@ public:
         this->moveSpeed = 500;
         this->movementDirection = VectorHomo(0, 0);
         this->shootCallback = shootCallback;
+
+        this->hitbox.push_back(VectorHomo(-32, -32));
+        this->hitbox.push_back(VectorHomo(-32, 50));
+        this->hitbox.push_back(VectorHomo(32, 50));
+        this->hitbox.push_back(VectorHomo(32, -32));
     }
 
     void Update()

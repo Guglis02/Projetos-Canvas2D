@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <vector>
 
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
@@ -15,6 +16,8 @@
 #define PI   3.14159265359
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 1
+
+using namespace std;
 
 class CV //classe Canvas2D
 {
@@ -38,6 +41,17 @@ public:
 
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(float vx[], float vy[], int n_elems);
+    static void polygon(vector<VectorHomo> v)
+    {
+        float vx[v.size()];
+        float vy[v.size()];
+        for (int i = 0; i < v.size(); i++)
+        {
+            vx[i] = v[i].x;
+            vy[i] = v[i].y;
+        }
+        polygon(vx, vy, v.size());
+    }
     static void polygonFill(float vx[], float vy[], int n_elems);
 
     //centro e raio do circulo

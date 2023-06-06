@@ -4,6 +4,9 @@
 #include "../VectorHomo.h"
 #include "../Matrix.h"
 #include "../FpsController.h"
+#include <vector>
+
+using namespace std;
 
 class Entity
 {
@@ -19,6 +22,18 @@ public:
         return transform;
     }
 
+    vector<VectorHomo> GetHitbox()
+    {
+        vector<VectorHomo> updatedHitbox;
+
+        for (auto point : hitbox)
+        {
+            updatedHitbox.push_back(this->transform + point);
+        }
+
+        return updatedHitbox;
+    }
+
     virtual void Update(){}
 protected:
     virtual void Render(){}
@@ -27,6 +42,7 @@ protected:
 
     VectorHomo transform;
     Matrix* matrix = NULL;
+    vector<VectorHomo> hitbox;
 
     void Move(VectorHomo inc)
     {

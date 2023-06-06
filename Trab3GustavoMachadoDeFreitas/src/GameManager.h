@@ -42,18 +42,16 @@ public:
         this->screenWidth = screenWidth;
         this->screenHeight = screenHeight;
 
-        CV::translate(0, 0);
-
-        FpsController::getInstance().getFrames();
-        char fpsLabel[64];
-        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFps());
-        CV::color(2);
-        CV::text(50, screenHeight - 50, fpsLabel);
-
         leftBorder->Update(100.0);
         rightBorder->Update(100.0);
 
         PaintBackground();
+
+        FpsController::getInstance().updateFrames();
+        char fpsLabel[64];
+        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFps());
+        CV::color(2);
+        CV::text(50, screenHeight - 50, fpsLabel);
 
         for (auto projectile : friendlyProjectiles)
         {
@@ -63,8 +61,56 @@ public:
         HandleEnemies();
 
         this->player->Update();
+
+        DrawGizmos();
+    }
+
+    void DrawGizmos()
+    {
+        CV::color(1,1,1);
+        
+        for (auto projectile : friendlyProjectiles)
+        {
+            CV::polygon(projectile->GetHitbox());
+        }
+
+        for (auto enemy : enemies)
+        {
+            CV::polygon(enemy->GetHitbox());
+        }
+
+        CV::polygon(player->GetHitbox());
     }
     
+    // int lastH = 0;
+    // void PaintBackground()
+    // {
+    //     for (int i = 0; i < leftBorder->points.size(); i++)
+    //     {
+    //         VectorHomo leftPoint = leftBorder->points[i];
+    //         VectorHomo rightPoint = rightBorder->points[i];
+
+    //         for (int h = lastH; h < leftPoint.y; h++)
+    //         {
+    //             for (int j = 0; j < screenWidth; j++)
+    //             {
+    //                 if (j < leftPoint.x || j > rightPoint.x)
+    //                 {
+    //                     CV::color(1,0.5,0.5);
+    //                 }
+    //                 else
+    //                 {
+    //                     CV::color(0.5,1,0.5);
+    //                 }
+
+    //                 CV::point(j, h);
+    //             }
+    //         }
+
+    //         lastH = leftPoint.y;
+    //     }
+    // }
+    int lastH = 0;
     void PaintBackground()
     {
         for (int i = 0; i < leftBorder->points.size(); i++)
@@ -72,19 +118,17 @@ public:
             VectorHomo leftPoint = leftBorder->points[i];
             VectorHomo rightPoint = rightBorder->points[i];
 
-            for (int j = 0; j < screenWidth; j++)
-            {
-                if (j < leftPoint.x || j > rightPoint.x)
-                {
-                    CV::color(1,0.5,0.5);
-                }
-                else
-                {
-                    CV::color(0.5,1,0.5);
-                }
+            for (int h = lastH; h < leftPoint.y; h++)
+            {                
+                CV::color(0.180, 0.220, 0.259);
+                CV::line(0, h, leftPoint.x, h);
+                CV::line(rightPoint.x, h, screenWidth, h);
 
-                CV::point(j, i);
+                CV::color(0.098, 0.125, 0.157);
+                CV::line(leftPoint.x, h, rightPoint.x, h);
             }
+
+            lastH = leftPoint.y;
         }
     }
 

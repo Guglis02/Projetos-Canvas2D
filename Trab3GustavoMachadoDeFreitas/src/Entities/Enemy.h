@@ -9,7 +9,12 @@ public:
     Enemy(VectorHomo transform) :
     Entity(transform)
     {
-        moveSpeed = 100;        
+        moveSpeed = 100; 
+
+        this->hitbox.push_back(VectorHomo(-32, -32));
+        this->hitbox.push_back(VectorHomo(-32, 32));
+        this->hitbox.push_back(VectorHomo(32, 32));
+        this->hitbox.push_back(VectorHomo(32, -32));       
     }
     
     void Update()
@@ -21,8 +26,27 @@ public:
 protected:
     void Render()
     {
-        CV::color(4);
-        CV::circleFill(transform.x, transform.y, 20, 20);
+        CV::translate(transform);
+
+        CV::color(0.5f, 0.5f, 0.5f);
+
+        // Asas
+        CV::rectFill(VectorHomo(-32, 32),
+                     VectorHomo(-28, -32));
+        CV::rectFill(VectorHomo(32, 32),
+                     VectorHomo(28, -32));
+
+        // Hastes
+        CV::rectFill(VectorHomo(-32, 5),
+                     VectorHomo(0, -5));
+        CV::rectFill(VectorHomo(32, 5),
+                     VectorHomo(0, -5));
+
+        CV::color(0.6f, 0.6f, 0.6f);
+        CV::circleFill(0, 0, 16, 16);
+
+
+        CV::translate(0, 0);
     }
 };
 
