@@ -14,6 +14,9 @@ class EnemiesManager
 public:
     EnemiesManager(int screenWidth, int screenHeight, int borderWidth)
     {
+        this->screenWidth = screenWidth;
+        this->screenHeight = screenHeight;
+
         float swarmWidth = screenWidth - (borderWidth << 1);
         float swarmHeight = screenHeight >> 1;
 
@@ -52,10 +55,14 @@ public:
 
     vector<vector<Enemy*>> swarm;
 private:
+    int screenWidth;
+    int screenHeight;
+
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 0.5;
+    const float EnemyCooldown = 60;
     float timeSinceLastEnemy = EnemyCooldown;
+    bool nextEnemySpawnsLeft = false;    
 
     int swarmColumns;
     int swarmRows;
@@ -84,9 +91,19 @@ private:
             return;
         }
 
-        VectorHomo position = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
-                                         (row * swarmSpacing) + swarmY);
+        float spawnX = (nextEnemySpawnsLeft) ? -100 : screenWidth + 100;
+        nextEnemySpawnsLeft = !nextEnemySpawnsLeft;
+        float spawnY = rand() % screenHeight;
+
+        VectorHomo position = VectorHomo(spawnX, spawnY);
+        VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
+                                         (row * swarmSpacing) + swarmY);        
+                                         
+        VectorHomo control1 = VectorHomo((target.x + position.x) / 2, position.y);
+        VectorHomo control2 = VectorHomo((target.x + position.x) / 2, target.y);
+
         swarm[row][col] = new Enemy(position);
+        swarm[row][col]->SetupRoaming(position, target, control1, control2);
     }
 };
 

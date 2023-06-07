@@ -98,7 +98,7 @@ private:
             {
                 if (enemy != nullptr)
                 {
-                    enemy->Update();
+                    CV::polygon(enemy->GetHitbox());
                 }
             }
         }

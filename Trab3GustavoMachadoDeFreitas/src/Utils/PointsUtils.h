@@ -8,12 +8,12 @@
  * Arquivo utilit�rio contendo fun��es relacionadas a pontos.
  */
 
-static int DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
+static float DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
 {
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
 }
 
-static int DistanceBetweenTwoPoints(VectorHomo p1, VectorHomo p2)
+static float DistanceBetweenTwoPoints(VectorHomo p1, VectorHomo p2)
 {
     return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) * 1.0);
 }

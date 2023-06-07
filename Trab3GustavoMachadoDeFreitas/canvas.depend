@@ -109,14 +109,15 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1684974390 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	<string.h>
+	<vector>
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
-	"VectorHomo.h"
+	"./Utils/VectorHomo.h"
 
 1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\include\gl\glut.h
 	"freeglut_std.h"
@@ -139,23 +140,23 @@
 	<stdio.h>
 	<math.h>
 
-1685193895 source:e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
+1686092503 source:e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
 	<cstdlib>
 	"gl_canvas2d.h"
 	"GameManager.h"
-	"MouseHandler.h"
 
-1685195137 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
-	"MouseHandler.h"
-	"KeyboardHandler.h"
-	"VectorHomo.h"
+1686101500 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+	"./Utils/KeyboardHandler.h"
+	"./Utils/VectorHomo.h"
+	"BorderController.h"
 	"Entities/Player.h"
 	"Entities/Projectile.h"
 	"Entities/Enemy.h"
-	"FpsController.h"
+	"./Utils/FpsController.h"
+	"EnemiesManager.h"
 
 1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
@@ -163,17 +164,18 @@
 	<functional>
 	<unordered_map>
 
-1685195163 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
 	<functional>
 	"../gl_canvas2d.h"
-	"../VectorHomo.h"
+	"../Utils/VectorHomo.h"
 	"Entity.h"
-	"../FpsController.h"
+	"../Utils/FpsController.h"
 
-1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
-	"../VectorHomo.h"
-	"../Matrix.h"
-	"../FpsController.h"
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
+	"../Utils/VectorHomo.h"
+	"../Utils/Matrix.h"
+	"../Utils/FpsController.h"
+	<vector>
 
 1684974389 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\matrix.h
 	<vector>
@@ -183,12 +185,17 @@
 	<stdio.h>
 	<time.h>
 
-1685195049 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\projectile.h
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\projectile.h
 	"../gl_canvas2d.h"
 	"Entity.h"
 
-1685193558 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
+1686096484 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
 	"Entity.h"
+	"../Utils/VectorHomo.h"
+	"../Utils/FpsController.h"
+	"../Utils/CurveUtils.h"
+	"../Utils/PointsUtils.h"
+	"../gl_canvas2d.h"
 
 1686085428 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
 	<vector>
@@ -228,5 +235,49 @@
 	"VectorHomo.h"
 
 1686085308 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\curveutils.h
+	"VectorHomo.h"
+
+1650887927 source:e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bmp\bmp.cpp
+	"Bmp.h"
+	<string.h>
+
+1531759698 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bmp\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\vectorhomo.h
+	<stdio.h>
+	<math.h>
+
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\keyboardhandler.h
+	<functional>
+	<unordered_map>
+
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
+	<vector>
+	"./Utils/VectorHomo.h"
+	"./Utils/CurveUtils.h"
+	"gl_canvas2d.h"
+	"./Utils/FpsController.h"
+
+1686094377 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\curveutils.h
+	"VectorHomo.h"
+
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\fpscontroller.h
+	<stdio.h>
+	<time.h>
+
+1686092503 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\matrix.h
+	<vector>
+	"VectorHomo.h"
+
+1686096760 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
+	"./Entities/Enemy.h"
+	"./Utils/VectorHomo.h"
+	"./Utils/FpsController.h"
+	<vector>
+
+1686096890 e:\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\pointsutils.h
+	<math.h>
 	"VectorHomo.h"
 
