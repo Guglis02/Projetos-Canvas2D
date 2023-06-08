@@ -5,6 +5,7 @@
 #include "./Utils/VectorHomo.h"
 #include "./Utils/CurveUtils.h"
 #include "./Utils/PointsUtils.h"
+#include "./Utils/GlobalConsts.h"
 #include "gl_canvas2d.h"
 #include "./Utils/FpsController.h"
 
@@ -13,11 +14,9 @@ using namespace std;
 class BorderController
 {
     public:
-    BorderController(int x, int screenWidth, int screenHeight)
+    BorderController(int x)
     {
         this->x = x;
-        this->screenWidth = screenWidth;
-        this->screenHeight = screenHeight;
 
         GenerateControlPoints(controlPoints);
     }
@@ -52,16 +51,14 @@ class BorderController
     private:
 
     int x;
-    int screenWidth;
-    int screenHeight;
-    float distanceBetweenControlPoints = 100;
+    float const distanceBetweenControlPoints = 100;
+    float const startingHeight = 0 - ConstScreenHeight >> 1;
 
     vector<VectorHomo> controlPoints;
 
     void GenerateControlPoints(vector<VectorHomo>& cPoints)
     {
-        int numberOfPoints = (screenHeight / distanceBetweenControlPoints) * 2.0;
-        float startingHeight = 0 - screenHeight >> 1;
+        int numberOfPoints = (ConstScreenHeight / distanceBetweenControlPoints) * 2.0;
 
         for (int i = 0; i < numberOfPoints; i++)
         {
@@ -79,7 +76,7 @@ class BorderController
             for (float t = 0; t <= 1; t += 0.1f)
             {
                 VectorHomo p = BSpline3(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2], controlPoints[i + 3], t);
-                if (p.y > 0 && p.y < screenHeight)
+                if (!IsOutOfBounds(p, distanceBetweenControlPoints))
                 {
                     points.push_back(p);
                 }
@@ -91,11 +88,11 @@ class BorderController
     {
         for (int i = 0; i < controlPoints.size(); i++)
         {
-            if (controlPoints[i].y < (0 - screenHeight >> 1))
+            if (controlPoints[i].y < startingHeight)
             {
                 controlPoints.erase(controlPoints.begin() + i);
                 i--;
-                VectorHomo p(rand() % 100 + x, screenHeight * 1.5);
+                VectorHomo p(rand() % 100 + (x - 50), ConstScreenHeight * 1.5);
                 controlPoints.push_back(p);
             }
         }

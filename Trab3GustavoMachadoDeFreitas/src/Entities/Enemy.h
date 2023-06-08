@@ -83,7 +83,7 @@ protected:
     int const pointValue = 10;
     function<void(int)> deathCallback;
 
-    float shootCooldown = 1;
+    float shootCooldown = 3;
     float timeSinceLastShot = shootCooldown;
 
     function<void(VectorHomo)> shootCallback;

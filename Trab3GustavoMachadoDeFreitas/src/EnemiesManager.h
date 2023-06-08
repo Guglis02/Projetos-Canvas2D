@@ -4,6 +4,7 @@
 #include "./Entities/Enemy.h"
 #include "./Utils/VectorHomo.h"
 #include "./Utils/FpsController.h"
+#include "./Utils/GlobalConsts.h"
 
 #include <vector>
 
@@ -12,18 +13,15 @@ using namespace std;
 class EnemiesManager
 {
 public:
-    EnemiesManager(int screenWidth, int screenHeight, int borderWidth)
+    EnemiesManager(int borderWidth)
     {
-        this->screenWidth = screenWidth;
-        this->screenHeight = screenHeight;
+        float swarmWidth = ConstScreenWidth - (borderWidth << 1);
+        float swarmHeight = ConstScreenHeight >> 1;
 
-        float swarmWidth = screenWidth - (borderWidth << 1);
-        float swarmHeight = screenHeight >> 1;
+        this->swarmX = borderWidth;
+        this->swarmY = swarmHeight + EnemySize + EnemyPadding;
 
-        this->swarmX = borderWidth + EnemySize + EnemyPadding;
-        this->swarmY = swarmHeight;
-
-        this->swarmSpacing = 2 * EnemySize + EnemyPadding;
+        this->swarmSpacing = 2 * (EnemySize + EnemyPadding);
         this->swarmColumns = swarmWidth / swarmSpacing - 1;
         this->swarmRows = swarmHeight / swarmSpacing - 1;
 
@@ -80,9 +78,6 @@ public:
 
     vector<vector<Enemy*>> swarm;
 private:
-    int screenWidth;
-    int screenHeight;
-
     const int EnemySize = 32;
     const int EnemyPadding = 10;
     const float EnemyCooldown = 5;
@@ -119,9 +114,9 @@ private:
             return;
         }
 
-        float spawnX = (nextEnemySpawnsLeft) ? -100 : screenWidth + 100;
+        float spawnX = (nextEnemySpawnsLeft) ? -100 : ConstScreenWidth + 100;
         nextEnemySpawnsLeft = !nextEnemySpawnsLeft;
-        float spawnY = rand() % screenHeight;
+        float spawnY = rand() % ConstScreenHeight;
 
         VectorHomo position = VectorHomo(spawnX, spawnY);
         VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,

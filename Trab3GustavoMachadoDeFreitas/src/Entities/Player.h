@@ -33,6 +33,22 @@ public:
         Render();
     }
 
+    bool CheckCollision(vector<VectorHomo> hitbox)
+    {
+        if (Entity::CheckCollision(hitbox))
+        {
+            OnHit();
+            return true;
+        }
+
+        return false;
+    }
+
+    void OnHit()
+    {
+        printf("\n Tomei porrada bicho");
+    }
+
     // Callbacks
     void StartMovingUp()
     {
@@ -120,7 +136,13 @@ protected:
 
         movementDirection.normalize();
 
+        VectorHomo oldTransform = transform;        
         Move(movementDirection);
+
+        if (IsOutOfBounds(GetHitbox()))
+        {
+            transform = oldTransform;
+        }
     }
 
     void HandleShooting()

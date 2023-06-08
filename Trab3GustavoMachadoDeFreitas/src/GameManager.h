@@ -9,34 +9,32 @@
 #include "Entities/FriendlyProjectile.h"
 #include "Entities/Enemy.h"
 #include "./Utils/FpsController.h"
+#include "./Utils/GlobalConsts.h"
 #include "UIManager.h"
 #include "EnemiesManager.h"
 
 class GameManager
 {
 public:
-    GameManager(int screenWidth, int screenHeight)
+    GameManager()
     {
         this->keyboardHandler = new KeyboardHandler();
 
-        this->leftBorder = new BorderController(BorderWidth, screenWidth, screenHeight);
-        this->rightBorder = new BorderController(screenWidth - BorderWidth, screenWidth, screenHeight);
+        this->leftBorder = new BorderController(BorderWidth);
+        this->rightBorder = new BorderController(ConstScreenWidth - BorderWidth);
 
-        this->enemiesManager = new EnemiesManager(screenWidth, screenHeight, BorderWidth);
+        this->enemiesManager = new EnemiesManager(BorderWidth);
         this->enemiesManager->SetCallbacks(bind(&GameManager::EnemyDeathCallback, this, placeholders::_1),
                                            bind(&GameManager::InstantiateEnemyProjectile, this, placeholders::_1));
 
-        this->player = new Player(VectorHomo(100, 100), bind(&GameManager::InstantiatePlayerProjectile, this));
-        this->uiManager = new UIManager(screenWidth, screenHeight);
+        this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200), bind(&GameManager::InstantiatePlayerProjectile, this));
+        this->uiManager = new UIManager();
 
         SetKeyboardCallbacks();
     }
 
-    void Update(int screenWidth, int screenHeight)
+    void Update()
     {
-        this->screenWidth = screenWidth;
-        this->screenHeight = screenHeight;
-
         FpsController::getInstance().updateFrames();
 
         leftBorder->Update(100.0);
@@ -51,30 +49,16 @@ public:
             PaintBackgroundLinha();
         }
 
-        for (auto it = friendlyProjectiles.begin(); it != friendlyProjectiles.end();)
+        for (auto it = projectiles.begin(); it != projectiles.end();)
         {
             auto projectile = *it;
             projectile->Update();
-            if (this->enemiesManager->CheckCollision(projectile->GetHitbox())
-                || projectile->GetPosition().y > screenHeight)
+            if (IsOutOfBounds(projectile->GetPosition())
+                || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox()))
+                || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
             {
                 projectile->OnHit();
-                it = friendlyProjectiles.erase(it);
-            }
-            else
-            {
-                ++it;
-            }
-        }
-
-        for (auto it = enemiesProjectiles.begin(); it != enemiesProjectiles.end();)
-        {
-            auto projectile = *it;
-            projectile->Update();
-            if (projectile->GetPosition().y < 0)
-            {
-                projectile->OnHit();
-                it = enemiesProjectiles.erase(it);
+                it = projectiles.erase(it);
             }
             else
             {
@@ -114,22 +98,19 @@ private:
     EnemiesManager *enemiesManager = NULL;
     UIManager * uiManager = NULL;
 
-    vector<FriendlyProjectile *> friendlyProjectiles;
-    vector<EnemyProjectile *> enemiesProjectiles;
+    vector<Projectile *> projectiles;
 
     int playerScore = 0;
 
-    int screenWidth;
-    int screenHeight;
     int flag = 0;
 
-    const int BorderWidth = 150;
+    const int BorderWidth = 100;
 
     void DrawGizmos()
     {
         CV::color(1, 1, 1);
 
-        for (auto projectile : friendlyProjectiles)
+        for (auto projectile : projectiles)
         {
             CV::polygon(projectile->GetHitbox());
         }
@@ -158,7 +139,7 @@ private:
 
             for (int h = lastH; h < leftPoint.y; h++)
             {
-                for (int j = 0; j < screenWidth; j++)
+                for (int j = 0; j < ConstScreenWidth; j++)
                 {
                     if (j < leftPoint.x || j > rightPoint.x)
                     {
@@ -188,7 +169,7 @@ private:
             {
                 CV::color(0.180, 0.220, 0.259);
                 CV::line(0, h, leftPoint.x, h);
-                CV::line(rightPoint.x, h, screenWidth, h);
+                CV::line(rightPoint.x, h, ConstScreenWidth, h);
 
                 CV::color(0.098, 0.125, 0.157);
                 CV::line(leftPoint.x, h, rightPoint.x, h);
@@ -200,12 +181,12 @@ private:
 
     void InstantiatePlayerProjectile()
     {
-        friendlyProjectiles.push_back(new FriendlyProjectile(this->player->GetPosition()));
+        projectiles.push_back(new FriendlyProjectile(this->player->GetPosition()));
     }
 
     void InstantiateEnemyProjectile(VectorHomo position)
     {
-        enemiesProjectiles.push_back(new EnemyProjectile(position));
+        projectiles.push_back(new EnemyProjectile(position));
     }
 
     void SetKeyboardCallbacks()

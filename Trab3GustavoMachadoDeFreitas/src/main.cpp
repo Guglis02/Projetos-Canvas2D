@@ -6,18 +6,19 @@
 
 #include "gl_canvas2d.h"
 #include "GameManager.h"
+#include "./Utils/GlobalConsts.h"
 
 // using namespace std;
 
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
-int screenWidth = 940, screenHeight = 940;
+int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 GameManager* gameManager = NULL;
 
 // Funcao chamada todo frame
 void render()
 {
-    gameManager->Update(screenWidth, screenHeight);
+    gameManager->Update();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -42,7 +43,7 @@ int main(void)
 {
     CV::init(&screenWidth, &screenHeight, "Trabalho 3 - Gustavo Machado de Freitas");
 
-    gameManager = new GameManager(screenWidth, screenHeight);
+    gameManager = new GameManager();
 
     CV::run();
 }

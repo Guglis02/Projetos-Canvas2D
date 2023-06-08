@@ -2,15 +2,14 @@
 #define UIMANAGER_H_INCLUDED
 
 #include "./Utils/FpsController.h"
+#include "./Utils/GlobalConsts.h"
 #include "gl_canvas2d.h"
 
 class UIManager
 {
 public:
-    UIManager(int screenWidth, int screenHeight)
+    UIManager()
     {
-        this->screenWidth = screenWidth;
-        this->screenHeight = screenHeight;
     }
 
     void Update()
@@ -25,9 +24,6 @@ public:
     }
 
 private:
-    int screenWidth;
-    int screenHeight;
-
     int uiPlayerScore = 0;
 
     void RenderFpsCounter()
@@ -35,7 +31,7 @@ private:
         char fpsLabel[64];
         sprintf(fpsLabel, "FPS: %.1f", FpsController::getInstance().getFps());
         CV::color(2);
-        CV::text(100, screenHeight - 200, fpsLabel);
+        CV::text(100, ConstScreenHeight - 50, fpsLabel);
     }
 
     void RenderPlayerScore()
@@ -43,7 +39,7 @@ private:
         char playerScoreLabel[64];
         sprintf(playerScoreLabel, "Score: %d", uiPlayerScore);
         CV::color(2);
-        CV::text(screenWidth >> 1, screenHeight - 150, playerScoreLabel);
+        CV::text(ConstScreenWidth >> 1, ConstScreenHeight - 50, playerScoreLabel);
     }
 };
 

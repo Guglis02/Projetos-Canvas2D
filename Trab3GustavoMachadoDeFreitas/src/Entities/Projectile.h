@@ -35,4 +35,10 @@ protected:
     }
 };
 
+template<typename T>
+static bool IsOfType(Projectile* projectile)
+{
+    return dynamic_cast<T*>(projectile) != nullptr;
+}
+
 #endif // PROJECTILE_H_INCLUDED
