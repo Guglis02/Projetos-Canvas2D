@@ -20,14 +20,17 @@ public:
 
     void Update()
     {
-        Move(VectorHomo(0, 1));
+        Move(moveDirection);
 
         Render();
     }
 protected:
+    int colorIndex;
+    VectorHomo moveDirection;
+
     void Render()
     {
-        CV::color(3);
+        CV::color(colorIndex);
         CV::rectFill(transform.x - 5, transform.y, transform.x + 5, transform.y + 25);
     }
 };

@@ -5,9 +5,11 @@
 #include "./Utils/VectorHomo.h"
 #include "BorderController.h"
 #include "Entities/Player.h"
-#include "Entities/Projectile.h"
+#include "Entities/EnemyProjectile.h"
+#include "Entities/FriendlyProjectile.h"
 #include "Entities/Enemy.h"
 #include "./Utils/FpsController.h"
+#include "UIManager.h"
 #include "EnemiesManager.h"
 
 class GameManager
@@ -16,10 +18,17 @@ public:
     GameManager(int screenWidth, int screenHeight)
     {
         this->keyboardHandler = new KeyboardHandler();
+
         this->leftBorder = new BorderController(BorderWidth, screenWidth, screenHeight);
         this->rightBorder = new BorderController(screenWidth - BorderWidth, screenWidth, screenHeight);
+
         this->enemiesManager = new EnemiesManager(screenWidth, screenHeight, BorderWidth);
+        this->enemiesManager->SetCallbacks(bind(&GameManager::EnemyDeathCallback, this, placeholders::_1),
+                                           bind(&GameManager::InstantiateEnemyProjectile, this, placeholders::_1));
+
         this->player = new Player(VectorHomo(100, 100), bind(&GameManager::InstantiatePlayerProjectile, this));
+        this->uiManager = new UIManager(screenWidth, screenHeight);
+
         SetKeyboardCallbacks();
     }
 
@@ -27,6 +36,8 @@ public:
     {
         this->screenWidth = screenWidth;
         this->screenHeight = screenHeight;
+
+        FpsController::getInstance().updateFrames();
 
         leftBorder->Update(100.0);
         rightBorder->Update(100.0);
@@ -40,23 +51,50 @@ public:
             PaintBackgroundLinha();
         }
 
-        FpsController::getInstance().updateFrames();
-        char fpsLabel[64];
-        sprintf(fpsLabel, "%.1f", FpsController::getInstance().getFps());
-        CV::color(2);
-        CV::text(50, screenHeight - 50, fpsLabel);
-
-        for (auto projectile : friendlyProjectiles)
+        for (auto it = friendlyProjectiles.begin(); it != friendlyProjectiles.end();)
         {
+            auto projectile = *it;
             projectile->Update();
+            if (this->enemiesManager->CheckCollision(projectile->GetHitbox())
+                || projectile->GetPosition().y > screenHeight)
+            {
+                projectile->OnHit();
+                it = friendlyProjectiles.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+
+        for (auto it = enemiesProjectiles.begin(); it != enemiesProjectiles.end();)
+        {
+            auto projectile = *it;
+            projectile->Update();
+            if (projectile->GetPosition().y < 0)
+            {
+                projectile->OnHit();
+                it = enemiesProjectiles.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
         }
 
         this->enemiesManager->Update();
         this->player->Update();
 
         DrawGizmos();
+
+        this->uiManager->SetPlayerScore(playerScore);
+        this->uiManager->Update();
     }
 
+    void EnemyDeathCallback(int enemyValue)
+    {
+        playerScore += enemyValue;
+    }
 
     void KeyPressed(int key)
     {
@@ -74,8 +112,12 @@ private:
     BorderController *leftBorder = NULL;
     BorderController *rightBorder = NULL;
     EnemiesManager *enemiesManager = NULL;
+    UIManager * uiManager = NULL;
 
-    vector<Projectile *> friendlyProjectiles;
+    vector<FriendlyProjectile *> friendlyProjectiles;
+    vector<EnemyProjectile *> enemiesProjectiles;
+
+    int playerScore = 0;
 
     int screenWidth;
     int screenHeight;
@@ -158,7 +200,12 @@ private:
 
     void InstantiatePlayerProjectile()
     {
-        friendlyProjectiles.push_back(new Projectile(this->player->GetPosition()));
+        friendlyProjectiles.push_back(new FriendlyProjectile(this->player->GetPosition()));
+    }
+
+    void InstantiateEnemyProjectile(VectorHomo position)
+    {
+        enemiesProjectiles.push_back(new EnemyProjectile(position));
     }
 
     void SetKeyboardCallbacks()

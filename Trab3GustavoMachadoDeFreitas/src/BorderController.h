@@ -4,6 +4,7 @@
 #include <vector>
 #include "./Utils/VectorHomo.h"
 #include "./Utils/CurveUtils.h"
+#include "./Utils/PointsUtils.h"
 #include "gl_canvas2d.h"
 #include "./Utils/FpsController.h"
 
@@ -28,31 +29,22 @@ class BorderController
             controlPoints[i].y -= FpsController::getInstance().normalize(downSpeed);
         }
 
-        points.clear();
-        for (int i = 0; i < controlPoints.size() - 4; i++)
-        {
-            for (float t = 0; t <= 1; t += 0.1f)
-            {
-                VectorHomo p = BSpline3(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2], controlPoints[i + 3], t);
-                if (p.y > 0 && p.y < screenHeight)
-                {
-                    points.push_back(p);
-                }
-            }
-        }
-
+        CalculateCurvePoints();
         DrawBorder();
+        DeleteOutOfBoundsControlPoints();
+    }
 
-        for (int i = 0; i < controlPoints.size(); i++)
+    bool CheckCollision(vector<VectorHomo> hitbox)
+    {
+        for (auto point : points)
         {
-            if (controlPoints[i].y < (0 - screenHeight >> 1))
+            if (pnpoly(hitbox.size(), hitbox.data(), point))
             {
-                controlPoints.erase(controlPoints.begin() + i);
-                i--;
-                VectorHomo p(rand() % 100 + x, screenHeight * 1.5);
-                controlPoints.push_back(p);
+                return true;
             }
         }
+
+        return false;
     }
 
     vector<VectorHomo> points;
@@ -76,6 +68,36 @@ class BorderController
             VectorHomo p(rand() % 100 + (x - 50),
                         startingHeight + (distanceBetweenControlPoints * i));
             cPoints.push_back(p);
+        }
+    }
+
+    void CalculateCurvePoints()
+    {
+        points.clear();
+        for (int i = 0; i < controlPoints.size() - 4; i++)
+        {
+            for (float t = 0; t <= 1; t += 0.1f)
+            {
+                VectorHomo p = BSpline3(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2], controlPoints[i + 3], t);
+                if (p.y > 0 && p.y < screenHeight)
+                {
+                    points.push_back(p);
+                }
+            }
+        }
+    }
+
+    void DeleteOutOfBoundsControlPoints()
+    {
+        for (int i = 0; i < controlPoints.size(); i++)
+        {
+            if (controlPoints[i].y < (0 - screenHeight >> 1))
+            {
+                controlPoints.erase(controlPoints.begin() + i);
+                i--;
+                VectorHomo p(rand() % 100 + x, screenHeight * 1.5);
+                controlPoints.push_back(p);
+            }
         }
     }
 

@@ -4,6 +4,7 @@
 #include "../Utils/VectorHomo.h"
 #include "../Utils/Matrix.h"
 #include "../Utils/FpsController.h"
+#include "../Utils/PointsUtils.h"
 #include <vector>
 
 using namespace std;
@@ -15,6 +16,9 @@ public:
     {
         this->transform = transform;
         this->matrix = new Matrix();
+    }
+    ~Entity()
+    {
     }
 
     VectorHomo GetPosition()
@@ -32,6 +36,24 @@ public:
         }
 
         return updatedHitbox;
+    }
+
+    bool CheckCollision(vector<VectorHomo> hitbox)
+    {
+        for (auto point : hitbox)
+        {
+            if (pnpoly(GetHitbox().size(), GetHitbox().data(), point))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void OnHit()
+    {
+        delete this;
     }
 
     virtual void Update(){}

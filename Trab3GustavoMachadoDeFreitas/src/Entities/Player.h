@@ -5,6 +5,7 @@
 
 #include "../gl_canvas2d.h"
 #include "../Utils/VectorHomo.h"
+#include "../Utils/VectorArts.h"
 #include "Entity.h"
 #include "../Utils/FpsController.h"
 
@@ -90,34 +91,7 @@ public:
 protected:
     void Render()
     {
-        CV::translate(transform);
-
-        CV::color(0.5f, 0.5f, 0.5f);
-
-        float lx[] = {-32, -20, -5, -5};
-        float ly[] = {5, 50, 50, 5};
-        CV::polygonFill(lx, ly, 4);
-
-        float rx[] = {32, 20, 5, 5};
-        float ry[] = {5, 50, 50, 5};
-        CV::polygonFill(rx, ry, 4);
-
-        CV::color(0.6f, 0.6f, 0.6f);
-        CV::circleFill(0, 0, 32, 32);
-
-        CV::color(0.7f, 0.7f, 0.7f);
-        CV::circleFill(0, 0, 10, 10);
-        CV::rectFill(-32, 5, 32, -5);
-
-        CV::rectFill(32, 32, 40, 20);
-        float bx[] = {0, 32, 40, 5};
-        float by[] = {0, 20, 20, -5};
-        CV::polygonFill(bx, by, 4);
-
-        CV::color(0, 0, 0);
-        CV::circle(0, 0, 10, 10);
-
-        CV::translate(0, 0);
+        DrawMillenniumFalcon(transform);
     }
 
     void HandleMovement()

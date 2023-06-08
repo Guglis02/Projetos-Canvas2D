@@ -6,7 +6,6 @@
                 "${workspaceFolder}/**",
                 "C:/Users/gugli/OneDrive/Documents/Github/Projetos-Canvas2D/lib/*",
                 "C:/Users/gugli/OneDrive/Documents/Github/Projetos-Canvas2D/*",
-                "C:/Program Files (x86)/CodeBlocks/MinGW/lib/gcc/mingw32/5.1.0/include/**"
             ],
             "defines": [
                 "_DEBUG",

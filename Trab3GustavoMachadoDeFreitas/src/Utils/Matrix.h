@@ -13,6 +13,8 @@ class Matrix {
             Reset();
         }
 
+        ~Matrix() = delete;
+
         vector<vector<float>> BuildIdentity()
         {
             vector<vector<float>> aux;

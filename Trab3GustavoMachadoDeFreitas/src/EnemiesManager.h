@@ -20,15 +20,21 @@ public:
         float swarmWidth = screenWidth - (borderWidth << 1);
         float swarmHeight = screenHeight >> 1;
 
-        this->swarmX = borderWidth;
+        this->swarmX = borderWidth + EnemySize + EnemyPadding;
         this->swarmY = swarmHeight;
 
         this->swarmSpacing = 2 * EnemySize + EnemyPadding;
-        this->swarmColumns = swarmWidth / swarmSpacing;
+        this->swarmColumns = swarmWidth / swarmSpacing - 1;
         this->swarmRows = swarmHeight / swarmSpacing - 1;
 
-        // Initialize the 2D vector with nullptrs
         swarm.resize(swarmRows, vector<Enemy*>(swarmColumns, nullptr));
+    }
+
+    SetCallbacks(function<void(int)> enemyDeathCallback,
+                function<void(VectorHomo)> enemyShotCallback)
+    {
+        this->enemyDeathCallback = enemyDeathCallback;
+        this->enemyShotCallback = enemyShotCallback;
     }
 
     void Update()
@@ -53,6 +59,25 @@ public:
         }
     }
 
+    bool CheckCollision(vector<VectorHomo> hitbox)
+    {
+        for (int i = 0; i < swarmRows; i++)
+        {
+            for (int j = 0; j < swarmColumns; j++)
+            {
+                if (swarm[i][j] != nullptr && swarm[i][j]->CheckCollision(hitbox))
+                {
+                    swarm[i][j]->OnHit();
+                    swarm[i][j] = nullptr;
+                    return true;
+                }
+            }
+        }
+
+
+        return false;
+    }
+
     vector<vector<Enemy*>> swarm;
 private:
     int screenWidth;
@@ -60,9 +85,12 @@ private:
 
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 60;
+    const float EnemyCooldown = 5;
     float timeSinceLastEnemy = EnemyCooldown;
-    bool nextEnemySpawnsLeft = false;    
+    bool nextEnemySpawnsLeft = false;
+
+    function<void(int)> enemyDeathCallback;
+    function<void(VectorHomo)> enemyShotCallback;
 
     int swarmColumns;
     int swarmRows;
@@ -97,12 +125,12 @@ private:
 
         VectorHomo position = VectorHomo(spawnX, spawnY);
         VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
-                                         (row * swarmSpacing) + swarmY);        
-                                         
+                                         (row * swarmSpacing) + swarmY);
+
         VectorHomo control1 = VectorHomo((target.x + position.x) / 2, position.y);
         VectorHomo control2 = VectorHomo((target.x + position.x) / 2, target.y);
 
-        swarm[row][col] = new Enemy(position);
+        swarm[row][col] = new Enemy(position, enemyDeathCallback, enemyShotCallback);
         swarm[row][col]->SetupRoaming(position, target, control1, control2);
     }
 };

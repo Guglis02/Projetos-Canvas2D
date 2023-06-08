@@ -6,26 +6,34 @@
 #include "../Utils/FpsController.h"
 #include "../Utils/CurveUtils.h"
 #include "../Utils/PointsUtils.h"
+#include "../Utils/VectorArts.h"
 #include "../gl_canvas2d.h"
 
 enum EnemyState {
-    Attacking,
+    InPlace,
     Roaming
 };
 
 class Enemy : public Entity
 {
 public:
-    Enemy(VectorHomo transform) :
+    Enemy(VectorHomo transform,
+        function<void(int)> deathCallback,
+        function<void(VectorHomo)> shootCallback) :
     Entity(transform)
     {
         state = Roaming;
         moveSpeed = 100;
+        this->deathCallback = deathCallback;
+        this->shootCallback = shootCallback;
 
         this->hitbox.push_back(VectorHomo(-32, -32));
         this->hitbox.push_back(VectorHomo(-32, 32));
         this->hitbox.push_back(VectorHomo(32, 32));
         this->hitbox.push_back(VectorHomo(32, -32));
+    }
+    ~Enemy()
+    {
     }
 
     void Update()
@@ -37,7 +45,16 @@ public:
 
         if (DistanceBetweenTwoPoints(transform, targetPoint) < 1.0)
         {
-            state = Attacking;
+            state = InPlace;
+        }
+
+        timeSinceLastShot += FpsController::getInstance().GetDeltaTime();
+
+        // Existe uma chance aleatória do inimigo atirar 
+        if (rand() % 500 == 1 && (timeSinceLastShot >= shootCooldown))
+        {
+            shootCallback(transform);
+            timeSinceLastShot = 0;
         }
 
         Render();
@@ -50,12 +67,26 @@ public:
         this->controlPoint1 = controlPoint1;
         this->controlPoint2 = controlPoint2;
     }
+
+    void OnHit()
+    {
+        deathCallback(pointValue);
+        Entity::OnHit();
+    }
 protected:
     EnemyState state;
     VectorHomo targetPoint;
     VectorHomo startingPoint;
     VectorHomo controlPoint1;
     VectorHomo controlPoint2;
+
+    int const pointValue = 10;
+    function<void(int)> deathCallback;
+
+    float shootCooldown = 1;
+    float timeSinceLastShot = shootCooldown;
+
+    function<void(VectorHomo)> shootCallback;
 
     void MoveToTarget()
     {
@@ -80,30 +111,8 @@ protected:
 
     void Render()
     {
-        CV::translate(transform);
-
-        CV::color(0.5f, 0.5f, 0.5f);
-
-        // Asas
-        CV::rectFill(VectorHomo(-32, 32),
-                     VectorHomo(-28, -32));
-        CV::rectFill(VectorHomo(32, 32),
-                     VectorHomo(28, -32));
-
-        // Hastes
-        CV::rectFill(VectorHomo(-32, 5),
-                     VectorHomo(0, -5));
-        CV::rectFill(VectorHomo(32, 5),
-                     VectorHomo(0, -5));
-
-        CV::color(0.6f, 0.6f, 0.6f);
-        CV::circleFill(0, 0, 16, 16);
-
-
-        CV::translate(0, 0);
+        DrawTieFighter(transform);
     }
 };
-
-
 
 #endif // ENEMY_H_INCLUDED

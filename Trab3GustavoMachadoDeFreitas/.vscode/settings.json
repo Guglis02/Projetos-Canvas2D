@@ -65,7 +65,8 @@
         "xstddef": "cpp",
         "xstring": "cpp",
         "xtr1common": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "ranges": "cpp"
     },
-    "C_Cpp.default.compilerPath": "c:\\Program Files (x86)\\CodeBlocks\\MinGW\\bin\\g++.exe"
+    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\gcc.exe"
 }
