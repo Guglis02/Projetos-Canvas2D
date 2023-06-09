@@ -1,48 +1,33 @@
-Trabalho 2 – Transformada Discreta de Cosseno
+Trabalho 3 – Jogo 2D de Nave
 CG - 2023/1
 Gustavo Machado de Freitas
 
 O que foi implementado:
-● Leitura das amostras do arquivo de entrada no formato especificado.
-● Aplicação da DCT sobre as amostras de entrada.
-● Usar vetor de quantização 1D ( e plotar o resultado ). Permitir que o usuário possa
-ajustar os valores.
-● Aplicação da transformada inversa (IDCT) para reconstrução dos dados originais.
-● Calcular a diferença entre a entrada e os dados reconstruídos.
-● Plotagem dos gráficos das quatro diferentes amostragens. O tamanho do gráfico
-deve se adaptar horizontalmente à quantidade de amostras lidas.
-● Salvar o resultado reconstruído em um arquivo “output.dct”, no mesmo formato do
-arquivo original.
-● Exibir as N funções bases usadas na DCT.
+● Player se move nas 4 direções.
+● Laterais do cenário colidem com o jogador.
+● Cenário infinito gerado proceduralmente.
+● Curvas das bordas desenhadas com B-spline.
+● A nave deve poder disparar contra os inimigos e vice-versa.
+● Placar de pontuação
+● Nave e inimigos desenhados com formas geométricas.
+● Controle de FPS
 
 Extras:
-● (+1) Implementação de uma interface interativa.
-● (+1) Gerador de inputs.
+● Sistema de HP com I-Frames. (Player não morre instantaneamente)
+● Modo "quality" com texturas aplicadas ao background.
+● Inimigos percorrem curvas de bezier para se posicionarem no cenário.
+● Mais de um tipo de inimigo.
+● Cutscenes de derrota e vitória.
 
-Interface:
-● Slider Quantitização 
-	Possui um range de 0 a 200.
-	Determina o coeficiente de quantitização que será aplicado após a DCT.
-	Quando o valor está em 0, nenhuma quantitização é aplicada.
-	Mudar seu valor atualiza em tempo real os gráficos.
-● Slider Amostras
-	Possui um range de 32 a 512, conforme especificado no enunciado.
-	Determina quantas amostras serão geradas.
-● Slider Frequência
-  	Possui um range de 1 a 50 
-	Determina a frequência para os geradores de input baseados em funções periódicas.
-● Slider Amplitude
-	Possui um range de 0 a 127.
-	Determina a amplitude para os geradores de input baseados em funções periódicas.
-● Gerar In Random
-● Gerar In Seno
-● Gerar In Step
-● Gerar In SawTooth
-	Esses botões geram inputs de acordo com os parâmetros especificados nos sliders.
-● Carregar In input.dct
-	Faz o load do arquivo input.dct, que contém um conjunto de valores.
-● Salvar In input.dct
-	Salva o input atual no arquivo input.dct.
-● Salvar Out output.dct
-	Salva o valor restaurado (pós IDCT) no arquivo output.dct	
+Controles:
+● WASD/Setinhas
+	Movem o jogador pela tela.
+● Espaço
+	Atira.
+● Q
+	Alterna entre modo de performance e modo de qualidade visual.
+● E
+	Inicia partida no modo infinito.
+● T
+	Inicia partida no modo com objetivo de pontos.
   
