@@ -93,4 +93,34 @@ static void DrawTieFighter(VectorHomo position)
     CV::translate(0, 0);
 }
 
+static void DrawTieBomber(VectorHomo position)
+{
+    CV::translate(position);
+
+    CV::color(0.6f, 0.6f, 0.6f);
+
+    // Hastes
+    CV::rectFill(VectorHomo(-32, 5),
+                    VectorHomo(32, -5));
+
+    // Canhões
+    CV::elipsisFill(-10, 0, 10, 16, 16);
+    CV::color(0.5f, 0.5f, 0.5f);
+    CV::elipsisFill(10, 0, 10, 14, 16);
+
+    CV::color(0.7f, 0.7f, 0.7f);
+
+    // Asas                    
+    float lx[] = {-32, -20, -20, -32};
+    float ly[] = {32, 20, -20, -32};
+    CV::polygonFill(lx, ly, 4);
+
+    float rx[] = {32, 20, 20, 32};
+    float ry[] = {32, 20, -20, -32};
+    CV::polygonFill(rx, ry, 4);
+
+
+    CV::translate(0, 0);
+}
+
 #endif // VECTORARTS_H_INCLUDED

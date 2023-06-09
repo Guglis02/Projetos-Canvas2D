@@ -43,19 +43,7 @@ public:
             MoveToTarget();
         }
 
-        if (DistanceBetweenTwoPoints(transform, targetPoint) < 1.0)
-        {
-            state = InPlace;
-        }
-
-        timeSinceLastShot += FpsController::getInstance().GetDeltaTime();
-
-        // Existe uma chance aleatória do inimigo atirar 
-        if (rand() % 500 == 1 && (timeSinceLastShot >= shootCooldown))
-        {
-            shootCallback(transform);
-            timeSinceLastShot = 0;
-        }
+        HandleShooting();
 
         Render();
     }
@@ -80,33 +68,39 @@ protected:
     VectorHomo controlPoint1;
     VectorHomo controlPoint2;
 
-    int const pointValue = 10;
+    int pointValue = 10;
     function<void(int)> deathCallback;
 
     float shootCooldown = 3;
     float timeSinceLastShot = shootCooldown;
+    VectorHomo shotOffset = VectorHomo(0, -16);
 
     function<void(VectorHomo)> shootCallback;
 
+    float t = 0;
     void MoveToTarget()
     {
-        // float t = 1.0 / DistanceBetweenTwoPoints(transform, targetPoint);
-        // printf("t: %f\n", t);
+        t += FpsController::getInstance().GetDeltaTime() * 0.5;
 
-        // for (float i = 0; i <= 1; i += 0.01)
-        // {
-        //     VectorHomo p = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, i);
-        //     CV::color(4);
-        //     CV::point(p.x, p.y);
-        // }
+        transform = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, t);
 
-        // transform = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, t);
+        if (t >= 1)
+        {
+            transform = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, 1);
+            state = InPlace;
+        }
+    }
 
-        VectorHomo direction = targetPoint - startingPoint;
-        direction.normalize();
-        // CV::line(transform, transform + direction * 100);
+    void HandleShooting()
+    {        
+        timeSinceLastShot += FpsController::getInstance().GetDeltaTime();
 
-        Move(direction);
+        // Existe uma chance aleatória do inimigo atirar
+        if (rand() % 500 == 1 && (timeSinceLastShot >= shootCooldown))
+        {
+            shootCallback(transform + shotOffset);
+            timeSinceLastShot = 0;
+        }
     }
 
     void Render()

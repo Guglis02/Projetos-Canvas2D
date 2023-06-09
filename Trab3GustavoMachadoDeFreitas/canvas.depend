@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1686246372 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.cpp
+1686313229 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1686246378 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
+1686313234 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -43,7 +43,7 @@
 	"GameManager.h"
 	"./Utils/GlobalConsts.h"
 
-1686276709 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1686280189 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"./Utils/KeyboardHandler.h"
 	"./Utils/VectorHomo.h"
 	"BorderController.h"
@@ -56,6 +56,7 @@
 	"UIManager.h"
 	"EnemiesManager.h"
 	"Bmp/Bmp.h"
+	"GameState.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
@@ -109,7 +110,7 @@
 	"../gl_canvas2d.h"
 	"Entity.h"
 
-1686239152 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
+1686314236 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
 	"Entity.h"
 	"../Utils/VectorHomo.h"
 	"../Utils/FpsController.h"
@@ -227,8 +228,9 @@
 	<stdio.h>
 	<stdlib.h>
 
-1686276047 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
+1686314682 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
 	"./Entities/Enemy.h"
+	"./Entities/BomberEnemy.h"
 	"./Utils/VectorHomo.h"
 	"./Utils/FpsController.h"
 	"./Utils/GlobalConsts.h"
@@ -301,10 +303,11 @@
 	<math.h>
 	"VectorHomo.h"
 
-1686261628 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
+1686312740 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
 	"./Utils/FpsController.h"
 	"./Utils/GlobalConsts.h"
 	"gl_canvas2d.h"
+	"GameManager.h"
 
 1686238360 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\friendlyprojectile.h
 	"Projectile.h"
@@ -312,9 +315,14 @@
 1686238339 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemyprojectile.h
 	"Projectile.h"
 
-1686272128 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\vectorarts.h
+1686313884 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\vectorarts.h
 	"../gl_canvas2d.h"
 	"VectorHomo.h"
 
-1686239752 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\globalconsts.h
+1686312764 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\globalconsts.h
+
+1686280005 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamestate.h
+
+1686314777 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\bomberenemy.h
+	"Enemy.h"
 

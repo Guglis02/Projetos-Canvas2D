@@ -4,6 +4,7 @@
 #include "./Utils/FpsController.h"
 #include "./Utils/GlobalConsts.h"
 #include "gl_canvas2d.h"
+#include "GameManager.h"
 
 class UIManager
 {
@@ -19,6 +20,27 @@ public:
         RenderPlayerScore();
         RenderLowerBar();
         RenderPlayerHP();
+    }
+
+    void DrawStartScreen()
+    {
+        float halfWidth = ConstScreenWidth >> 1;
+        float halfHeight = ConstScreenHeight >> 1;
+
+        CV::color(2);
+        CentralizeTextX(halfHeight, "Press E to start endless mode");
+        CentralizeTextX(halfHeight - 15, "Press S to start 200 points run");
+        CentralizeTextX(halfHeight - 30, "Press Q to toggle game quality");
+    }
+
+    void CentralizeTextX(int textY, const char* text)
+    {
+        float halfWidth = ConstScreenWidth >> 1;
+
+        float textX = halfWidth - (strlen(text) * ApproximateFontSize) / 2;
+
+        CV::color(2);
+        CV::text(textX, textY, text);
     }
 
     void SetPlayerScore(int playerScore)
@@ -42,7 +64,7 @@ private:
     int uiPlayerMaxHP = 0;
 
     void RenderUpperBar()
-    {        
+    {
         CV::color(1);
         CV::rectFill(0, ConstScreenHeight, ConstScreenWidth, ConstScreenHeight - 20);
     }
@@ -60,7 +82,7 @@ private:
         char playerScoreLabel[64];
         sprintf(playerScoreLabel, "Score: %d", uiPlayerScore);
         CV::color(2);
-        CV::text(ConstScreenWidth >> 1, ConstScreenHeight - 15, playerScoreLabel);
+        CentralizeTextX(ConstScreenHeight - 15, playerScoreLabel);
     }
 
     void RenderLowerBar()

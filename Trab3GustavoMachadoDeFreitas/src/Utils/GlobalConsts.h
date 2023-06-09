@@ -27,4 +27,6 @@ static bool IsOutOfBounds(vector<VectorHomo> point)
     return false;
 }
 
+int const ApproximateFontSize = 10;
+
 #endif // GLOBALCONSTS_H_INCLUDED

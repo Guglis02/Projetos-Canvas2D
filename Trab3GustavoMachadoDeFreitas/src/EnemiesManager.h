@@ -2,6 +2,7 @@
 #define ENEMIESMANAGER_H_INCLUDED
 
 #include "./Entities/Enemy.h"
+#include "./Entities/BomberEnemy.h"
 #include "./Utils/VectorHomo.h"
 #include "./Utils/FpsController.h"
 #include "./Utils/GlobalConsts.h"
@@ -80,7 +81,7 @@ public:
 private:
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 5.0;
+    const float EnemyCooldown = 4.0;
     float timeSinceLastEnemy = EnemyCooldown;
     bool nextEnemySpawnsLeft = false;
 
@@ -120,12 +121,19 @@ private:
 
         VectorHomo position = VectorHomo(spawnX, spawnY);
         VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
-                                         (row * swarmSpacing) + swarmY);
+                                        (row * swarmSpacing) + swarmY);
 
         VectorHomo control1 = VectorHomo((target.x + position.x) / 2, position.y);
         VectorHomo control2 = VectorHomo((target.x + position.x) / 2, target.y);
 
-        swarm[row][col] = new Enemy(position, enemyDeathCallback, enemyShotCallback);
+        if (rand() % 2 == 1)
+        {
+            swarm[row][col] = new BomberEnemy(position, enemyDeathCallback, enemyShotCallback);
+        }
+        else
+        {
+            swarm[row][col] = new Enemy(position, enemyDeathCallback, enemyShotCallback);
+        }
         swarm[row][col]->SetupRoaming(position, target, control1, control2);
     }
 };

@@ -13,10 +13,12 @@
 #include "UIManager.h"
 #include "EnemiesManager.h"
 #include "Bmp/Bmp.h"
+#include "GameState.h"
 
 class GameManager
 {
 public:
+
     GameManager()
     {
         this->keyboardHandler = new KeyboardHandler();
@@ -64,15 +66,34 @@ public:
             PaintBackgroundWithLines();
         }
 
-        HandleProjectiles();
-        HandlePlayerCollisions();
+        if (gameState == GameState::StartScreen)
+        {
+            this->uiManager->DrawStartScreen();
+        }
 
-        this->enemiesManager->Update();
-        this->player->Update();
+        if (gameState == GameState::Endless || gameState == GameState::TrenchRun)
+        {
+            HandleProjectiles();
+            HandlePlayerCollisions();
 
-        this->uiManager->SetPlayerScore(playerScore);
-        this->uiManager->SetPlayerHP(this->player->GetHP());
+            this->enemiesManager->Update();
+            this->player->Update();
+
+            this->uiManager->SetPlayerScore(playerScore);
+            this->uiManager->SetPlayerHP(this->player->GetHP());
+        }
+
         this->uiManager->Update();
+    }
+
+    void StartEndlessMode()
+    {
+        gameState = GameState::Endless;
+    }
+
+    void StartTrenchRun()
+    {
+        gameState = GameState::TrenchRun;
     }
 
     void EnemyDeathCallback(int enemyValue)
@@ -107,6 +128,8 @@ private:
     UIManager * uiManager = NULL;
 
     const float downSpeed = 100.0;
+
+    GameState gameState = GameState::StartScreen;
 
     int texturesWidth;
     int texturesHeight;
@@ -257,7 +280,9 @@ private:
         this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
         this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
         this->keyboardHandler->RegisterCallbacks(32, bind(&Player::StartShooting, player), bind(&Player::StopShooting, player));        // SPACE atira
-        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&GameManager::ToggleQualityMode, this));        // Q Ativa/Desativa modo de qualidade
+        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&GameManager::ToggleQualityMode, this));    // Q Ativa/Desativa modo de qualidade
+        this->keyboardHandler->RegisterCallbacks(101, nullptr, bind(&GameManager::StartEndlessMode, this));     // E Ativa modo endless
+        this->keyboardHandler->RegisterCallbacks(116, nullptr, bind(&GameManager::StartTrenchRun, this));       // T Ativa o modo trench run
     }
 };
 
