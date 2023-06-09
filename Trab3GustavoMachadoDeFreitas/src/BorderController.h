@@ -46,6 +46,11 @@ class BorderController
         return false;
     }
 
+    int GetX()
+    {
+        return x;
+    }
+
     vector<VectorHomo> points;
 
     private:
@@ -71,12 +76,12 @@ class BorderController
     void CalculateCurvePoints()
     {
         points.clear();
-        for (int i = 0; i < controlPoints.size() - 4; i++)
+        for (int i = 0; i < controlPoints.size() - 3; i++)
         {
             for (float t = 0; t <= 1; t += 0.1f)
             {
                 VectorHomo p = BSpline3(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2], controlPoints[i + 3], t);
-                if (!IsOutOfBounds(p, distanceBetweenControlPoints))
+                if (!IsOutOfBounds(p, 1))
                 {
                     points.push_back(p);
                 }

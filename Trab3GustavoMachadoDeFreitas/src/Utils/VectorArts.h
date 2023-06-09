@@ -36,6 +36,38 @@ static void DrawMillenniumFalcon(VectorHomo position)
     CV::translate(0, 0);
 }
 
+static void DrawMillenniumFalconWireframe(VectorHomo position)
+{
+    CV::translate(position);
+
+    CV::color(0.5f, 0.5f, 0.5f);
+
+    float lx[] = {-32, -20, -5, -5};
+    float ly[] = {5, 50, 50, 5};
+    CV::polygon(lx, ly, 4);
+
+    float rx[] = {32, 20, 5, 5};
+    float ry[] = {5, 50, 50, 5};
+    CV::polygon(rx, ry, 4);
+
+    CV::color(0.6f, 0.6f, 0.6f);
+    CV::circle(0, 0, 32, 32);
+
+    CV::color(0.7f, 0.7f, 0.7f);
+    CV::circle(0, 0, 10, 10);
+    CV::rect(-32, 5, 32, -5);
+
+    CV::rect(32, 32, 40, 20);
+    float bx[] = {0, 32, 40, 5};
+    float by[] = {0, 20, 20, -5};
+    CV::polygon(bx, by, 4);
+
+    CV::color(0, 0, 0);
+    CV::circle(0, 0, 10, 10);
+
+    CV::translate(0, 0);
+}
+
 static void DrawTieFighter(VectorHomo position)
 {
     CV::translate(position);

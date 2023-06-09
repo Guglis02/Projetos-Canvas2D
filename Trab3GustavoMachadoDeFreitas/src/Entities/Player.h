@@ -12,12 +12,13 @@
 class Player : public Entity
 {
 public:
-    Player(VectorHomo transform, function<void()> shootCallback)
+    Player(VectorHomo transform, function<void()> shootCallback, function<void()> onDeathCallback)
         : Entity(transform)
     {
         this->moveSpeed = 500;
         this->movementDirection = VectorHomo(0, 0);
         this->shootCallback = shootCallback;
+        this->onDeathCallback = onDeathCallback;
 
         this->hitbox.push_back(VectorHomo(-32, -32));
         this->hitbox.push_back(VectorHomo(-32, 50));
@@ -29,6 +30,15 @@ public:
     {
         HandleMovement();
         HandleShooting();
+
+        if (isInvincible)
+        {
+            invincibilityTimer -= FpsController::getInstance().GetDeltaTime();;
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+            }
+        }
 
         Render();
     }
@@ -46,7 +56,37 @@ public:
 
     void OnHit()
     {
-        printf("\n Tomei porrada bicho");
+        if (!isInvincible)
+        {
+            hp--;
+            isInvincible = true;
+            invincibilityTimer = invincibilityDuration;
+        }
+
+        if (hp <= 0)
+        {
+            onDeathCallback();
+        }
+    }
+
+    int GetHP()
+    {
+        return hp;
+    }
+
+    void SetHP(int hp)
+    {
+        this->hp = hp;
+    }
+
+    int GetMaxHP()
+    {
+        return maxHp;
+    }
+
+    void SetPosition(VectorHomo position)
+    {
+        transform = position;
     }
 
     // Callbacks
@@ -107,7 +147,14 @@ public:
 protected:
     void Render()
     {
-        DrawMillenniumFalcon(transform);
+        if (isInvincible && fmod(invincibilityTimer, 0.2f) < 0.1f)
+        {
+            DrawMillenniumFalconWireframe(transform);
+        }
+        else
+        {
+            DrawMillenniumFalcon(transform);
+        }
     }
 
     void HandleMovement()
@@ -160,12 +207,20 @@ protected:
     bool isMovingLeft = false;
     bool isMovingRight = false;
     bool isMovingDown = false;
-    bool isShooting = false;
+    bool isShooting = false;    
+    
+    bool isInvincible = false;
+    float invincibilityDuration = 2.0f;
+    float invincibilityTimer = 0.0f;
 
     float shootCooldown = 0.3;
     float timeSinceLastShot = shootCooldown;
 
+    float maxHp = 5;
+    float hp = maxHp;
+
     function<void()> shootCallback;
+    function<void()> onDeathCallback;
 
     VectorHomo movementDirection;
 };

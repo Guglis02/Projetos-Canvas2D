@@ -12,6 +12,7 @@
 #include "./Utils/GlobalConsts.h"
 #include "UIManager.h"
 #include "EnemiesManager.h"
+#include "Bmp/Bmp.h"
 
 class GameManager
 {
@@ -27,8 +28,22 @@ public:
         this->enemiesManager->SetCallbacks(bind(&GameManager::EnemyDeathCallback, this, placeholders::_1),
                                            bind(&GameManager::InstantiateEnemyProjectile, this, placeholders::_1));
 
-        this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200), bind(&GameManager::InstantiatePlayerProjectile, this));
+        this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200),
+                                  bind(&GameManager::InstantiatePlayerProjectile, this),
+                                  bind(&GameManager::PlayerDeathCallback, this));
+
         this->uiManager = new UIManager();
+        this->uiManager->SetPlayerMaxHP(this->player->GetMaxHP());
+
+        Bmp* upperTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/UpperTrench.bmp");
+        upperTrenchBmp->convertBGRtoRGB();
+        this->upperTrenchTexture = upperTrenchBmp->getImage();
+        Bmp* lowerTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/LowerTrench.bmp");
+        lowerTrenchBmp->convertBGRtoRGB();
+        this->lowerTrenchTexture = lowerTrenchBmp->getImage();
+
+        this->texturesWidth = upperTrenchBmp->getWidth();
+        this->texturesHeight = upperTrenchBmp->getHeight();
 
         SetKeyboardCallbacks();
     }
@@ -37,41 +52,26 @@ public:
     {
         FpsController::getInstance().updateFrames();
 
-        leftBorder->Update(100.0);
-        rightBorder->Update(100.0);
+        leftBorder->Update(downSpeed);
+        rightBorder->Update(downSpeed);
 
-        if (flag == 1)
+        if (qualityMode)
         {
-            PaintBackground();
+            PaintBackgroundWithDots();
         }
         else
         {
-            PaintBackgroundLinha();
+            PaintBackgroundWithLines();
         }
 
-        for (auto it = projectiles.begin(); it != projectiles.end();)
-        {
-            auto projectile = *it;
-            projectile->Update();
-            if (IsOutOfBounds(projectile->GetPosition())
-                || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox()))
-                || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
-            {
-                projectile->OnHit();
-                it = projectiles.erase(it);
-            }
-            else
-            {
-                ++it;
-            }
-        }
+        HandleProjectiles();
+        HandlePlayerCollisions();
 
         this->enemiesManager->Update();
         this->player->Update();
 
-        DrawGizmos();
-
         this->uiManager->SetPlayerScore(playerScore);
+        this->uiManager->SetPlayerHP(this->player->GetHP());
         this->uiManager->Update();
     }
 
@@ -80,8 +80,16 @@ public:
         playerScore += enemyValue;
     }
 
+    void PlayerDeathCallback()
+    {
+        playerScore = 0;
+        player->SetHP(player->GetMaxHP());
+        player->SetPosition(VectorHomo(ConstScreenWidth >> 1, 200));
+    }
+
     void KeyPressed(int key)
     {
+        //printf("Key pressed: %d\n", key);
         this->keyboardHandler->KeyPressed(key);
     }
 
@@ -98,67 +106,76 @@ private:
     EnemiesManager *enemiesManager = NULL;
     UIManager * uiManager = NULL;
 
+    const float downSpeed = 100.0;
+
+    int texturesWidth;
+    int texturesHeight;
+    uchar* upperTrenchTexture = NULL;
+    uchar* lowerTrenchTexture = NULL;
+
     vector<Projectile *> projectiles;
 
     int playerScore = 0;
 
-    int flag = 0;
+    bool qualityMode = false;
+    void ToggleQualityMode()
+    {
+        qualityMode = !qualityMode;
+    }
 
     const int BorderWidth = 100;
 
-    void DrawGizmos()
-    {
-        CV::color(1, 1, 1);
-
-        for (auto projectile : projectiles)
-        {
-            CV::polygon(projectile->GetHitbox());
-        }
-
-        for (auto& row : this->enemiesManager->swarm)
-        {
-            for (auto& enemy : row)
-            {
-                if (enemy != nullptr)
-                {
-                    CV::polygon(enemy->GetHitbox());
-                }
-            }
-        }
-
-        CV::polygon(player->GetHitbox());
-    }
-
     int lastH = 0;
-    void PaintBackground()
+    int textureIterator = 0;
+    void PaintBackgroundWithDots()
     {
+
+        if (lowerTrenchTexture == nullptr || upperTrenchTexture == nullptr)
+        {
+            return;
+        }
+
+        // Para cada ponto amostrado da borda
         for (int i = 0; i < leftBorder->points.size(); i++)
         {
             VectorHomo leftPoint = leftBorder->points[i];
             VectorHomo rightPoint = rightBorder->points[i];
 
+            // Para cada linha entre o ponto anterior e o atual
             for (int h = lastH; h < leftPoint.y; h++)
             {
-                for (int j = 0; j < ConstScreenWidth; j++)
+                // Para cada pixel da linha
+                for (int j = 0; j < ConstScreenWidth*3; j+=3)
                 {
-                    if (j < leftPoint.x || j > rightPoint.x)
+                    textureIterator = textureIterator % texturesHeight;
+                    int pos = textureIterator * ((3 * (texturesWidth + 1) / 4) * 4) + j;
+                    int pixelX = j/3;
+
+                    if (pixelX > leftPoint.x && pixelX < rightPoint.x)
                     {
-                        CV::color(0.180, 0.220, 0.259);
+                        CV::color(
+                            (float)lowerTrenchTexture[pos] / 255.0,
+                            (float)lowerTrenchTexture[pos + 1] / 255.0,
+                            (float)lowerTrenchTexture[pos + 2] / 255.0);
                     }
                     else
                     {
-                        CV::color(0.098, 0.125, 0.157);
+                        CV::color(
+                            (float)upperTrenchTexture[pos] / 255.0,
+                            (float)upperTrenchTexture[pos + 1] / 255.0,
+                            (float)upperTrenchTexture[pos + 2] / 255.0);
                     }
 
-                    CV::point(j, h);
+                    CV::point(pixelX, h);
                 }
+                textureIterator++;
             }
 
             lastH = leftPoint.y;
         }
     }
 
-    void PaintBackgroundLinha()
+    void PaintBackgroundWithLines()
     {
         for (int i = 0; i < leftBorder->points.size(); i++)
         {
@@ -176,6 +193,46 @@ private:
             }
 
             lastH = leftPoint.y;
+        }
+    }
+
+    void HandleProjectiles()
+    {
+        for (auto it = projectiles.begin(); it != projectiles.end();)
+        {
+            auto projectile = *it;
+            projectile->Update();
+            if (IsOutOfBounds(projectile->GetPosition())
+                || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox()))
+                || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
+            {
+                projectile->OnHit();
+                it = projectiles.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
+
+    void HandlePlayerCollisions()
+    {
+        if (player->GetPosition().x < ConstScreenWidth >> 1 &&
+            (leftBorder->CheckCollision(player->GetHitbox())
+            || player->GetPosition().x < BorderWidth))
+        {
+            player->OnHit();
+        }
+        if (player->GetPosition().x > ConstScreenWidth >> 1 &&
+            (rightBorder->CheckCollision(player->GetHitbox())
+            || player->GetPosition().x > ConstScreenWidth - BorderWidth))
+        {
+            player->OnHit();
+        }
+        if (enemiesManager->CheckCollision(player->GetHitbox()))
+        {
+            player->OnHit();
         }
     }
 
@@ -200,6 +257,7 @@ private:
         this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
         this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
         this->keyboardHandler->RegisterCallbacks(32, bind(&Player::StartShooting, player), bind(&Player::StopShooting, player));        // SPACE atira
+        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&GameManager::ToggleQualityMode, this));        // Q Ativa/Desativa modo de qualidade
     }
 };
 

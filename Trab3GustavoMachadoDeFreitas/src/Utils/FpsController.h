@@ -55,6 +55,9 @@ public:
 
     double GetDeltaTime()
     {
+        if (fps == 0) {
+            return 0;
+        }
         return 1.0f / fps;
     }
 };

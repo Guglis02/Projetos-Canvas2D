@@ -80,7 +80,7 @@ public:
 private:
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 5;
+    const float EnemyCooldown = 5.0;
     float timeSinceLastEnemy = EnemyCooldown;
     bool nextEnemySpawnsLeft = false;
 
