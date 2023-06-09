@@ -4,6 +4,8 @@
 #include "../gl_canvas2d.h"
 #include "VectorHomo.h"
 
+// Arquivo contendo desenhos vetoriais
+
 static void DrawMillenniumFalcon(VectorHomo position)
 {
     CV::translate(position);
@@ -76,19 +78,18 @@ static void DrawTieFighter(VectorHomo position)
 
     // Asas
     CV::rectFill(VectorHomo(-32, 32),
-                    VectorHomo(-28, -32));
+                 VectorHomo(-28, -32));
     CV::rectFill(VectorHomo(32, 32),
-                    VectorHomo(28, -32));
+                 VectorHomo(28, -32));
 
     // Hastes
     CV::rectFill(VectorHomo(-32, 5),
-                    VectorHomo(0, -5));
+                 VectorHomo(0, -5));
     CV::rectFill(VectorHomo(32, 5),
-                    VectorHomo(0, -5));
+                 VectorHomo(0, -5));
 
     CV::color(0.6f, 0.6f, 0.6f);
     CV::circleFill(0, 0, 16, 16);
-
 
     CV::translate(0, 0);
 }
@@ -101,7 +102,7 @@ static void DrawTieBomber(VectorHomo position)
 
     // Hastes
     CV::rectFill(VectorHomo(-32, 5),
-                    VectorHomo(32, -5));
+                 VectorHomo(32, -5));
 
     // Canhões
     CV::elipsisFill(-10, 0, 10, 16, 16);
@@ -110,7 +111,7 @@ static void DrawTieBomber(VectorHomo position)
 
     CV::color(0.7f, 0.7f, 0.7f);
 
-    // Asas                    
+    // Asas
     float lx[] = {-32, -20, -20, -32};
     float ly[] = {32, 20, -20, -32};
     CV::polygonFill(lx, ly, 4);
@@ -118,7 +119,6 @@ static void DrawTieBomber(VectorHomo position)
     float rx[] = {32, 20, 20, 32};
     float ry[] = {32, 20, -20, -32};
     CV::polygonFill(rx, ry, 4);
-
 
     CV::translate(0, 0);
 }

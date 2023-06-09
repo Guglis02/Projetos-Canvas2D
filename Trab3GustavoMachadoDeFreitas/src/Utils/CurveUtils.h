@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// Arquivo com funções para cálculo de curvas
+
 static VectorHomo Bezier3(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHomo p4, float t)
 {
     float tcube = t * t * t;
@@ -26,15 +28,6 @@ static VectorHomo BSpline3(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHo
         + p2 * asixth * (3 * tcube - 6 * tsquare + 4) 
         + p3 * asixth * (-3 * tcube + 3 * tsquare + 3 * t + 1) 
         + p4 * asixth * tcube;
-}
-
-static VectorHomo BezierCurveDerivative(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHomo p4, float t)
-{
-    float oneMinusT = 1.0f - t;
-
-    return (p2 - p1) * 3.0f * oneMinusT * oneMinusT
-        + (p3 - p2) * 6.0f * oneMinusT * t
-        + (p4 - p3) * 3.0f * t * t;
 }
 
 #endif // POINTUTILS_H_INCLUDED

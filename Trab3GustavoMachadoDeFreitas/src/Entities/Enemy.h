@@ -9,18 +9,21 @@
 #include "../Utils/VectorArts.h"
 #include "../gl_canvas2d.h"
 
-enum EnemyState {
+// Estados em que um inimigo pode estar
+enum EnemyState
+{
     InPlace,
     Roaming
 };
 
+// Classe base para todos os inimigos do jogo
 class Enemy : public Entity
 {
 public:
     Enemy(VectorHomo transform,
-        function<void(int)> deathCallback,
-        function<void(VectorHomo)> shootCallback) :
-    Entity(transform)
+          function<void(int)> deathCallback,
+          function<void(VectorHomo)> shootCallback)
+        : Entity(transform)
     {
         state = Roaming;
         moveSpeed = 100;
@@ -48,7 +51,12 @@ public:
         Render();
     }
 
-    void SetupRoaming(VectorHomo startingPoint, VectorHomo target, VectorHomo controlPoint1, VectorHomo controlPoint2)
+    // Recebe os pontos de controle da curva de Bezier que o inimigo deve seguir
+    void SetupRoaming(
+        VectorHomo startingPoint,
+        VectorHomo target,
+        VectorHomo controlPoint1,
+        VectorHomo controlPoint2)
     {
         this->startingPoint = startingPoint;
         this->targetPoint = target;
@@ -61,6 +69,7 @@ public:
         deathCallback(pointValue);
         Entity::OnHit();
     }
+
 protected:
     EnemyState state;
     VectorHomo targetPoint;
@@ -68,16 +77,19 @@ protected:
     VectorHomo controlPoint1;
     VectorHomo controlPoint2;
 
+    // Valor de pontos que o player ganha matando este inimigo
     int pointValue = 10;
     function<void(int)> deathCallback;
 
     float shootCooldown = 3;
     float timeSinceLastShot = shootCooldown;
+    // O quão abaixo do inimigo o tiro deve spawnar
     VectorHomo shotOffset = VectorHomo(0, -16);
 
     function<void(VectorHomo)> shootCallback;
 
     float t = 0;
+    // Interpola posição do inimigo através de uma curva de Bezier
     void MoveToTarget()
     {
         t += FpsController::getInstance().GetDeltaTime() * 0.5;
@@ -92,7 +104,7 @@ protected:
     }
 
     void HandleShooting()
-    {        
+    {
         timeSinceLastShot += FpsController::getInstance().GetDeltaTime();
 
         // Existe uma chance aleatória do inimigo atirar

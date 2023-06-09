@@ -15,10 +15,10 @@
 #include "CutscenesManager.h"
 #include "BackgroundManager.h"
 
+// Classe principal que comanda o funcionamento do jogo.
 class GameManager
 {
 public:
-
     GameManager()
     {
         this->keyboardHandler = new KeyboardHandler();
@@ -95,11 +95,14 @@ public:
         ResetEntities();
     }
 
+    // Quando um inimigo morre, soma o valor dele na pontuação total
+    // caso o player esteja jogando o modo com final, verifica se a pontuação
+    // já é suficiente para ganhar o jogo.
     void EnemyDeathCallback(int enemyValue)
     {
         playerScore += enemyValue;
 
-        if (gameState == GameState::TrenchRun && playerScore >= 200)
+        if (gameState == GameState::TrenchRun && playerScore >= TargetPoints)
         {
             gameState = GameState::Victory;
         }
@@ -112,7 +115,7 @@ public:
 
     void KeyPressed(int key)
     {
-        //printf("Key pressed: %d\n", key);
+        // printf("Key pressed: %d\n", key);
         this->keyboardHandler->KeyPressed(key);
     }
 
@@ -125,9 +128,9 @@ private:
     KeyboardHandler *keyboardHandler = NULL;
     Player *player = NULL;
     EnemiesManager *enemiesManager = NULL;
-    UIManager * uiManager = NULL;
-    CutscenesManager * cutscenesManager = NULL;
-    BackgroundManager * backgroundManager = NULL;
+    UIManager *uiManager = NULL;
+    CutscenesManager *cutscenesManager = NULL;
+    BackgroundManager *backgroundManager = NULL;
 
     const float downSpeed = 100.0;
     const int BorderWidth = 100;
@@ -138,15 +141,15 @@ private:
 
     int playerScore = 0;
 
+    // Verifica se algum projétil está fora da tela
+    // ou colidiu com alguma entidade.
     void HandleProjectiles()
     {
         for (auto it = projectiles.begin(); it != projectiles.end();)
         {
             auto projectile = *it;
             projectile->Update();
-            if (IsOutOfBounds(projectile->GetPosition())
-                || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox()))
-                || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
+            if (IsOutOfBounds(projectile->GetPosition()) || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox())) || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
             {
                 projectile->OnHit();
                 it = projectiles.erase(it);
@@ -158,23 +161,25 @@ private:
         }
     }
 
+    // Checa colisões do player com as bordas e com os inimigos
     void HandlePlayerCollisions()
     {
         if (player->GetPosition().x < ConstScreenWidth >> 1 &&
-            (backgroundManager->CheckLeftCollision(player->GetHitbox())
-            || player->GetPosition().x < BorderWidth))
+            (backgroundManager->CheckLeftCollision(player->GetHitbox()) || player->GetPosition().x < BorderWidth))
         {
             player->OnHit();
+            return;
         }
         if (player->GetPosition().x > ConstScreenWidth >> 1 &&
-            (backgroundManager->CheckRightCollision(player->GetHitbox())
-            || player->GetPosition().x > ConstScreenWidth - BorderWidth))
+            (backgroundManager->CheckRightCollision(player->GetHitbox()) || player->GetPosition().x > ConstScreenWidth - BorderWidth))
         {
             player->OnHit();
+            return;
         }
         if (enemiesManager->CheckCollision(player->GetHitbox()))
         {
             player->OnHit();
+            return;
         }
     }
 
@@ -212,9 +217,9 @@ private:
         this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
         this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
         this->keyboardHandler->RegisterCallbacks(32, bind(&Player::StartShooting, player), bind(&Player::StopShooting, player));        // SPACE atira
-        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&BackgroundManager::ToggleQualityMode, backgroundManager));    // Q Ativa/Desativa modo de qualidade
-        this->keyboardHandler->RegisterCallbacks(101, nullptr, bind(&GameManager::StartEndlessMode, this));     // E Ativa modo endless
-        this->keyboardHandler->RegisterCallbacks(116, nullptr, bind(&GameManager::StartTrenchRun, this));       // T Ativa o modo trench run
+        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&BackgroundManager::ToggleQualityMode, backgroundManager));         // Q Ativa/Desativa modo de qualidade
+        this->keyboardHandler->RegisterCallbacks(101, nullptr, bind(&GameManager::StartEndlessMode, this));                             // E Ativa modo endless
+        this->keyboardHandler->RegisterCallbacks(116, nullptr, bind(&GameManager::StartTrenchRun, this));                               // T Ativa o modo trench run
     }
 };
 

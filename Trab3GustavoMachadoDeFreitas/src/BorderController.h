@@ -6,19 +6,19 @@
 #include "./Utils/CurveUtils.h"
 #include "./Utils/PointsUtils.h"
 #include "./Utils/GlobalConsts.h"
-#include "gl_canvas2d.h"
 #include "./Utils/FpsController.h"
 
 using namespace std;
 
+// Classe responsável por controlar a geração e movimentação de uma borda
 class BorderController
 {
-    public:
+public:
     BorderController(int x)
     {
         this->x = x;
 
-        GenerateControlPoints(controlPoints);
+        GenerateControlPoints();
     }
 
     void Update(float downSpeed)
@@ -29,7 +29,6 @@ class BorderController
         }
 
         CalculateCurvePoints();
-        DrawBorder();
         DeleteOutOfBoundsControlPoints();
     }
 
@@ -53,26 +52,27 @@ class BorderController
 
     vector<VectorHomo> points;
 
-    private:
-
+private:
     int x;
     float const distanceBetweenControlPoints = 100;
     float const startingHeight = 0 - (ConstScreenHeight >> 1);
 
     vector<VectorHomo> controlPoints;
 
-    void GenerateControlPoints(vector<VectorHomo>& cPoints)
+    // Gera os pontos de controle da curva
+    void GenerateControlPoints()
     {
         int numberOfPoints = (ConstScreenHeight / distanceBetweenControlPoints) * 2.0;
 
         for (int i = 0; i < numberOfPoints; i++)
         {
             VectorHomo p(rand() % 100 + (x - 50),
-                        startingHeight + (distanceBetweenControlPoints * i));
-            cPoints.push_back(p);
+                         startingHeight + (distanceBetweenControlPoints * i));
+            controlPoints.push_back(p);
         }
     }
 
+    // Calcula os pontos da curva
     void CalculateCurvePoints()
     {
         points.clear();
@@ -89,6 +89,8 @@ class BorderController
         }
     }
 
+    // Deleta os pontos de controle que estão fora da tela
+    // e cria novos pontos de controle para substituir os deletados
     void DeleteOutOfBoundsControlPoints()
     {
         for (unsigned int i = 0; i < controlPoints.size(); i++)
@@ -100,15 +102,6 @@ class BorderController
                 VectorHomo p(rand() % 100 + (x - 50), ConstScreenHeight * 1.5);
                 controlPoints.push_back(p);
             }
-        }
-    }
-
-    void DrawBorder()
-    {
-        CV::color(5);
-        for (unsigned int i = 0; i < points.size() - 1; i++)
-        {
-            CV::line(points[i], points[i + 1]);
         }
     }
 };

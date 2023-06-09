@@ -4,9 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
-/** \brief
- * Classe representando um vetor 2d homog�neo.
- */
+// Classe que representa um vetor 2d homogêneo.
 
 class VectorHomo
 {

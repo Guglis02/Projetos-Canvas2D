@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Classe base para todas as entidades do jogo
 class Entity
 {
 public:
@@ -54,16 +55,18 @@ public:
         delete this;
     }
 
-    virtual void Update(){}
+    virtual void Update() {}
+
 protected:
-    virtual void Render(){}
+    virtual void Render() {}
 
     float moveSpeed = 0;
 
     VectorHomo transform;
-    Matrix* matrix = NULL;
+    Matrix *matrix = NULL;
     vector<VectorHomo> hitbox;
 
+    // Recebe um vetor direção e o multiplica pela velocidade de movimento normalizada pelo FPS
     void Move(VectorHomo inc)
     {
         matrix->BuildIdentity();

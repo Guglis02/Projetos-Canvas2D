@@ -3,13 +3,15 @@
 
 #include "Enemy.h"
 
+// Variante de inimigo com dois canhões que disparam em intervalos diferentes
+// e vale mais pontos
 class BomberEnemy : public Enemy
 {
 public:
     BomberEnemy(VectorHomo transform,
-        function<void(int)> deathCallback,
-        function<void(VectorHomo)> shootCallback) :
-    Enemy(transform, deathCallback, shootCallback)
+                function<void(int)> deathCallback,
+                function<void(VectorHomo)> shootCallback)
+        : Enemy(transform, deathCallback, shootCallback)
     {
         pointValue = 20;
     }
@@ -40,7 +42,7 @@ protected:
     }
 
     void HandleShooting()
-    {        
+    {
         timeSinceLastLeftShot += FpsController::getInstance().GetDeltaTime();
         timeSinceLastRightShot += FpsController::getInstance().GetDeltaTime();
 

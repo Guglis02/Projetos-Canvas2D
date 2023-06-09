@@ -6,6 +6,7 @@
 #include "gl_canvas2d.h"
 #include "GameManager.h"
 
+// Classe responsável por gerenciar a UI do jogo
 class UIManager
 {
 public:
@@ -35,15 +36,9 @@ public:
     {
         CV::color(2);
         CentralizeTextX(halfHeight - 15, "Press E to start endless mode");
-        CentralizeTextX(halfHeight - 30, "Press T to start 200 points run");
-    }
-
-    void CentralizeTextX(int textY, const char* text)
-    {
-        float textX = halfWidth - (strlen(text) * ApproximateFontSize) / 2;
-
-        CV::color(2);
-        CV::text(textX, textY, text);
+        char targetPointsLabel[64];
+        sprintf(targetPointsLabel, "Press T to start the %d points run", TargetPoints);
+        CentralizeTextX(halfHeight - 30, targetPointsLabel);
     }
 
     void SetPlayerScore(int playerScore)
@@ -117,6 +112,14 @@ private:
         sprintf(playerHPLabel, "HP: %d/%d", uiPlayerHP, uiPlayerMaxHP);
         CV::color(2);
         CV::text(ConstScreenWidth - 100, 10, playerHPLabel);
+    }
+
+    void CentralizeTextX(int textY, const char *text)
+    {
+        float textX = halfWidth - (strlen(text) * ApproximateFontSize) / 2;
+
+        CV::color(2);
+        CV::text(textX, textY, text);
     }
 };
 

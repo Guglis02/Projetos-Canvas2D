@@ -11,26 +11,30 @@
 
 using namespace std;
 
+// Classe responsável por gerenciar os inimigos do jogo
 class EnemiesManager
 {
 public:
     EnemiesManager(int borderWidth)
     {
+        // Calcula dimensões do enxame
         float swarmWidth = ConstScreenWidth - (borderWidth << 1);
         float swarmHeight = ConstScreenHeight >> 1;
 
+        // Calcula posição inicial do enxame
         this->swarmX = borderWidth;
         this->swarmY = swarmHeight + EnemySize + EnemyPadding;
 
+        // Calcula disposição dos inimigos
         this->swarmSpacing = 2 * (EnemySize + EnemyPadding);
         this->swarmColumns = swarmWidth / swarmSpacing - 1;
         this->swarmRows = swarmHeight / swarmSpacing - 1;
 
-        swarm.resize(swarmRows, vector<Enemy*>(swarmColumns, nullptr));
+        swarm.resize(swarmRows, vector<Enemy *>(swarmColumns, nullptr));
     }
 
     void SetCallbacks(function<void(int)> enemyDeathCallback,
-                function<void(VectorHomo)> enemyShotCallback)
+                      function<void(VectorHomo)> enemyShotCallback)
     {
         this->enemyDeathCallback = enemyDeathCallback;
         this->enemyShotCallback = enemyShotCallback;
@@ -46,9 +50,9 @@ public:
             timeSinceLastEnemy = 0;
         }
 
-        for (auto& row : swarm)
+        for (auto &row : swarm)
         {
-            for (auto& enemy : row)
+            for (auto &enemy : row)
             {
                 if (enemy != nullptr)
                 {
@@ -60,9 +64,9 @@ public:
 
     void Reset()
     {
-        for (auto& row : swarm)
+        for (auto &row : swarm)
         {
-            for (auto& enemy : row)
+            for (auto &enemy : row)
             {
                 if (enemy != nullptr)
                 {
@@ -88,11 +92,11 @@ public:
             }
         }
 
-
         return false;
     }
 
-    vector<vector<Enemy*>> swarm;
+    vector<vector<Enemy *>> swarm;
+
 private:
     const int EnemySize = 32;
     const int EnemyPadding = 10;
@@ -111,6 +115,7 @@ private:
 
     void InstantiateEnemy()
     {
+        // Procura por uma posição vazia no enxame
         int row = -1, col = -1;
         for (int i = 0; i < swarmRows; i++)
         {
@@ -125,23 +130,27 @@ private:
             }
         }
 
+        // Se não encontrou, não instancia
         if (row == -1 && col == -1)
         {
             return;
         }
 
+        // Calcula posição de spawn do inimigo
         float spawnX = (nextEnemySpawnsLeft) ? -100 : ConstScreenWidth + 100;
         nextEnemySpawnsLeft = !nextEnemySpawnsLeft;
         float spawnY = rand() % ConstScreenHeight;
 
+        // Calcula pontos de controle da trajetória que o inimigo irá percorrer até sua posição no enxame
         VectorHomo position = VectorHomo(spawnX, spawnY);
         VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
-                                        (row * swarmSpacing) + swarmY);
+                                       (row * swarmSpacing) + swarmY);
 
         VectorHomo control1 = VectorHomo((target.x + position.x) / 2, position.y);
         VectorHomo control2 = VectorHomo((target.x + position.x) / 2, target.y);
 
-        if (rand() % 2 == 1)
+        // Escolhe aleatoriamente o tipo de inimigo a ser instanciado
+        if (rand() % 3 == 1)
         {
             swarm[row][col] = new BomberEnemy(position, enemyDeathCallback, enemyShotCallback);
         }

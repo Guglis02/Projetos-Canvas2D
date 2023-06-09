@@ -8,12 +8,10 @@
 #include "GameManager.h"
 #include "./Utils/GlobalConsts.h"
 
-// using namespace std;
-
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
-GameManager* gameManager = NULL;
+GameManager *gameManager = NULL;
 
 // Funcao chamada todo frame
 void render()
@@ -24,7 +22,7 @@ void render()
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-    //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    // printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 }
 
 // Funcao chamada toda vez que uma tecla for pressionada

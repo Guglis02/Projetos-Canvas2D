@@ -10,6 +10,7 @@
 #include "../Utils/GlobalConsts.h"
 #include "Entity.h"
 
+// Classe que representa o jogador
 class Player : public Entity
 {
 public:
@@ -55,6 +56,8 @@ public:
         return false;
     }
 
+    // O usuário fica temporariamente invencível após ser atingido
+    // Caso seu hp chegue a 0, ele morre.
     void OnHit()
     {
         if (!isInvincible)
@@ -90,7 +93,7 @@ public:
         transform = position;
     }
 
-    // Callbacks
+    // Callbacks do teclado
     void StartMovingUp()
     {
         isMovingUp = true;
@@ -148,6 +151,8 @@ public:
 protected:
     void Render()
     {
+        // Faz o jogador piscar quando invencível
+        // A intensidade do brilho é proporcional ao tempo restante de invencibilidade
         if (isInvincible && fmod(invincibilityTimer, 0.2f) < 0.1f)
         {
             DrawMillenniumFalconWireframe(transform);
@@ -187,6 +192,7 @@ protected:
         VectorHomo oldTransform = transform;
         Move(movementDirection);
 
+        // Não deixa o jogador sair da tela
         if (IsOutOfBounds(GetHitbox()))
         {
             transform = oldTransform;

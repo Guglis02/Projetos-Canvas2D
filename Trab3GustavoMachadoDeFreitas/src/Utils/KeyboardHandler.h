@@ -6,11 +6,13 @@
 
 using namespace std;
 
+// Classe que gerencia os callbacks de teclado
 class KeyboardHandler
 {
 public:
     KeyboardHandler(void)
-    {}
+    {
+    }
 
     void RegisterCallbacks(int key, function<void()> pressCallback, function<void()> releaseCallback)
     {

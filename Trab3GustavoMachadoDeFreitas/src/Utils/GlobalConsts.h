@@ -1,9 +1,13 @@
 #ifndef GLOBALCONSTS_H_INCLUDED
 #define GLOBALCONSTS_H_INCLUDED
 
+// Arquivo com constantes globais
+
+// Tamanhos da tela
 int const ConstScreenWidth = 800;
 int const ConstScreenHeight = 736;
 
+// Métodos utilitários envolvendo o tamanho da tela
 static bool IsOutOfBounds(VectorHomo point)
 {
     return point.x < 0 || point.x > ConstScreenWidth || point.y < 0 || point.y > ConstScreenHeight;
@@ -27,6 +31,10 @@ static bool IsOutOfBounds(vector<VectorHomo> point)
     return false;
 }
 
+// Tamanho da fonte usada no canvas
 int const ApproximateFontSize = 10;
+
+// Quantos pontos o jogador precisa para vencer o modo trench run
+int const TargetPoints = 200;
 
 #endif // GLOBALCONSTS_H_INCLUDED

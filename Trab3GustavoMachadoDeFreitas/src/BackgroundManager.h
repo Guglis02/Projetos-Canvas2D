@@ -3,6 +3,7 @@
 
 #include "BorderController.h"
 
+// Classe responsável por gerenciar o background e as bordas do jogo
 class BackgroundManager
 {
 public:
@@ -11,10 +12,11 @@ public:
         this->leftBorder = new BorderController(borderWidth);
         this->rightBorder = new BorderController(ConstScreenWidth - borderWidth);
 
-        Bmp* upperTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/UpperTrench.bmp");
+        // Importa Bmps
+        Bmp *upperTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/UpperTrench.bmp");
         upperTrenchBmp->convertBGRtoRGB();
         this->upperTrenchTexture = upperTrenchBmp->getImage();
-        Bmp* lowerTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/LowerTrench.bmp");
+        Bmp *lowerTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/LowerTrench.bmp");
         lowerTrenchBmp->convertBGRtoRGB();
         this->lowerTrenchTexture = lowerTrenchBmp->getImage();
 
@@ -24,6 +26,7 @@ public:
 
     void Update(int downSpeed)
     {
+        // "Desce" o background de acordo uma velocidade
         leftBorder->Update(downSpeed);
         rightBorder->Update(downSpeed);
 
@@ -54,18 +57,21 @@ public:
 
     BorderController *leftBorder = NULL;
     BorderController *rightBorder = NULL;
+
 private:
     int borderWidth;
 
     int texturesWidth;
     int texturesHeight;
-    uchar* upperTrenchTexture = NULL;
-    uchar* lowerTrenchTexture = NULL;
+    uchar *upperTrenchTexture = NULL;
+    uchar *lowerTrenchTexture = NULL;
 
     bool qualityMode = false;
 
     int lastH = 0;
     int textureIterator = 0;
+    // Pinta o background com as texturas importadas
+    // levando em consideração as bordas
     void PaintBackgroundWithDots()
     {
         if (lowerTrenchTexture == nullptr || upperTrenchTexture == nullptr)
@@ -83,11 +89,11 @@ private:
             for (int h = lastH; h < leftPoint.y; h++)
             {
                 // Para cada pixel da linha
-                for (int j = 0; j < ConstScreenWidth*3; j+=3)
+                for (int j = 0; j < ConstScreenWidth * 3; j += 3)
                 {
                     textureIterator = textureIterator % texturesHeight;
                     int pos = textureIterator * ((3 * (texturesWidth + 1) / 4) * 4) + j;
-                    int pixelX = j/3;
+                    int pixelX = j / 3;
 
                     if (pixelX > leftPoint.x && pixelX < rightPoint.x)
                     {

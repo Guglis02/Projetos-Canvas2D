@@ -3,15 +3,16 @@
 
 #include "Projectile.h"
 
+// Classe que representa um projétil inimigo
 class EnemyProjectile : public Projectile
 {
 public:
-    EnemyProjectile(VectorHomo transform) :
-    Projectile(transform)
+    EnemyProjectile(VectorHomo transform) : Projectile(transform)
     {
         this->moveDirection = VectorHomo(0, -1);
         this->colorIndex = 3;
     }
+
 protected:
 };
 
