@@ -18,6 +18,9 @@ Extras:
 ● Inimigos percorrem curvas de bezier para se posicionarem no cenário.
 ● Mais de um tipo de inimigo.
 ● Cutscenes de derrota e vitória.
+● Conforme o tempo passa, inimigos spawnam com maior frequência.
+● Último highscore é salvo caso o jogo seja fechado e carregado na próxima vez que o jogo for aberto.
+
 
 Controles:
 ● WASD/Setinhas

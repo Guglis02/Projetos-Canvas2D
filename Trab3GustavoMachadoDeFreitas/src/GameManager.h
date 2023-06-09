@@ -14,6 +14,7 @@
 #include "GameState.h"
 #include "CutscenesManager.h"
 #include "BackgroundManager.h"
+#include "./Utils/FileHandler.h"
 
 // Classe principal que comanda o funcionamento do jogo.
 class GameManager
@@ -39,6 +40,8 @@ public:
         this->backgroundManager = new BackgroundManager(BorderWidth);
 
         SetKeyboardCallbacks();
+        LoadFromFile(highScore);
+        this->uiManager->SetHighScore(highScore);
     }
 
     void Update()
@@ -68,13 +71,17 @@ public:
 
         if (gameState == GameState::Endless || gameState == GameState::TrenchRun)
         {
+            runTime += FpsController::getInstance().GetDeltaTime();
+
             HandleProjectiles();
             HandlePlayerCollisions();
 
             this->enemiesManager->Update();
             this->player->Update();
 
+            this->uiManager->SetTime(runTime);
             this->uiManager->SetPlayerScore(playerScore);
+            this->uiManager->SetHighScore(highScore);
             this->uiManager->SetPlayerHP(this->player->GetHP());
         }
 
@@ -101,6 +108,11 @@ public:
     void EnemyDeathCallback(int enemyValue)
     {
         playerScore += enemyValue;
+
+        if (playerScore > highScore)
+        {
+            highScore = playerScore;
+        }
 
         if (gameState == GameState::TrenchRun && playerScore >= TargetPoints)
         {
@@ -134,11 +146,13 @@ private:
 
     const float downSpeed = 100.0;
     const int BorderWidth = 100;
+    float runTime = 0.0;
 
     GameState gameState = GameState::StartScreen;
 
     vector<Projectile *> projectiles;
 
+    int highScore = 0;
     int playerScore = 0;
 
     // Verifica se algum projétil está fora da tela
@@ -194,8 +208,10 @@ private:
     }
 
     void ResetPlayer()
-    {
+    {        
+        runTime = 0;
         playerScore = 0;
+        SaveInFile(highScore);
         player->SetHP(player->GetMaxHP());
         player->SetPosition(VectorHomo(ConstScreenWidth >> 1, 200));
     }

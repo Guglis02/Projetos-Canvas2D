@@ -17,11 +17,11 @@ public:
     void Update()
     {
         RenderUpperBar();
-        RenderFpsCounter();
-        RenderPlayerScore();
+        RenderScores();
         RenderClock();
         RenderLowerBar();
         RenderPlayerHP();
+        RenderFpsCounter();
     }
 
     void DrawStartScreen()
@@ -33,12 +33,19 @@ public:
     }
 
     void DrawGameOverScreen()
-    {
+    {    
+        char auxLabel[64];
         CV::color(2);
-        CentralizeTextX(halfHeight - 15, "Press E to start endless mode");
-        char targetPointsLabel[64];
-        sprintf(targetPointsLabel, "Press T to start the %d points run", TargetPoints);
-        CentralizeTextX(halfHeight - 30, targetPointsLabel);
+        sprintf(auxLabel, "Your scored %d points in %.1f seconds!", uiPlayerScore, uiTime);
+        CentralizeTextX(halfHeight - 15, auxLabel);
+        CentralizeTextX(halfHeight - 30, "Press E to start endless mode");
+        sprintf(auxLabel, "Press T to start the %d points run", TargetPoints);
+        CentralizeTextX(halfHeight - 45, auxLabel);
+    }
+
+    void SetHighScore(int highScore)
+    {
+        this->uiHighScore = highScore;
     }
 
     void SetPlayerScore(int playerScore)
@@ -63,6 +70,7 @@ public:
 
 private:
     int uiPlayerScore = 0;
+    int uiHighScore = 0;
     int uiPlayerHP = 0;
     int uiPlayerMaxHP = 0;
     float uiTime = 0;
@@ -81,15 +89,17 @@ private:
         char fpsLabel[64];
         sprintf(fpsLabel, "FPS: %.1f", FpsController::getInstance().getFps());
         CV::color(2);
-        CV::text(50, ConstScreenHeight - 15, fpsLabel);
+        CV::text(ConstScreenWidth - 100, 5, fpsLabel);
     }
 
-    void RenderPlayerScore()
+    void RenderScores()
     {
-        char playerScoreLabel[64];
-        sprintf(playerScoreLabel, "Score: %d", uiPlayerScore);
+        char scoreLabel[64];
         CV::color(2);
-        CentralizeTextX(ConstScreenHeight - 15, playerScoreLabel);
+        sprintf(scoreLabel, "High Score: %d", uiHighScore);
+        CV::text(10, ConstScreenHeight - 15, scoreLabel);
+        sprintf(scoreLabel, "Score: %d", uiPlayerScore);
+        CentralizeTextX(ConstScreenHeight - 15, scoreLabel);
     }
 
     void RenderClock()
@@ -111,7 +121,7 @@ private:
         char playerHPLabel[64];
         sprintf(playerHPLabel, "HP: %d/%d", uiPlayerHP, uiPlayerMaxHP);
         CV::color(2);
-        CV::text(ConstScreenWidth - 100, 10, playerHPLabel);
+        CV::text(10, 5, playerHPLabel);
     }
 
     void CentralizeTextX(int textY, const char *text)

@@ -43,6 +43,14 @@ public:
     void Update()
     {
         timeSinceLastEnemy += FpsController::getInstance().GetDeltaTime();
+        timeSinceLastCdReduction += FpsController::getInstance().GetDeltaTime();
+
+        if (timeSinceLastCdReduction >= reduceEnemySpawnCdEvery)
+        {
+            EnemyCooldown = max(EnemyCooldown - enemySpawnCdReduction, 0.4f);
+
+            timeSinceLastCdReduction = 0;
+        }
 
         if (timeSinceLastEnemy >= EnemyCooldown)
         {
@@ -100,9 +108,15 @@ public:
 private:
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 2.5;
+
+    float EnemyCooldown = 1.5;
     float timeSinceLastEnemy = EnemyCooldown;
     bool nextEnemySpawnsLeft = false;
+
+    // A cada 10 segundos reduz o cooldown dos inimigos em 0.1s
+    float reduceEnemySpawnCdEvery = 10;
+    float enemySpawnCdReduction = 0.1;
+    float timeSinceLastCdReduction = 0;
 
     function<void(int)> enemyDeathCallback;
     function<void(VectorHomo)> enemyShotCallback;
