@@ -58,6 +58,21 @@ public:
         }
     }
 
+    void Reset()
+    {
+        for (auto& row : swarm)
+        {
+            for (auto& enemy : row)
+            {
+                if (enemy != nullptr)
+                {
+                    delete enemy;
+                    enemy = nullptr;
+                }
+            }
+        }
+    }
+
     bool CheckCollision(vector<VectorHomo> hitbox)
     {
         for (int i = 0; i < swarmRows; i++)

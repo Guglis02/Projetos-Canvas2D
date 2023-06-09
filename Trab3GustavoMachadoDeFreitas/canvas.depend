@@ -43,10 +43,9 @@
 	"GameManager.h"
 	"./Utils/GlobalConsts.h"
 
-1686280189 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
+1686322336 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamemanager.h
 	"./Utils/KeyboardHandler.h"
 	"./Utils/VectorHomo.h"
-	"BorderController.h"
 	"Entities/Player.h"
 	"Entities/EnemyProjectile.h"
 	"Entities/FriendlyProjectile.h"
@@ -55,8 +54,9 @@
 	"./Utils/GlobalConsts.h"
 	"UIManager.h"
 	"EnemiesManager.h"
-	"Bmp/Bmp.h"
 	"GameState.h"
+	"CutscenesManager.h"
+	"BackgroundManager.h"
 
 1681930946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\mousehandler.h
 
@@ -91,13 +91,14 @@
 	<stdio.h>
 	<time.h>
 
-1686276610 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
+1686322288 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
 	<functional>
 	"../gl_canvas2d.h"
 	"../Utils/VectorHomo.h"
 	"../Utils/VectorArts.h"
-	"Entity.h"
 	"../Utils/FpsController.h"
+	"../Utils/GlobalConsts.h"
+	"Entity.h"
 
 1686236834 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
 	"../Utils/VectorHomo.h"
@@ -228,7 +229,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1686314682 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
+1686321476 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
 	"./Entities/Enemy.h"
 	"./Entities/BomberEnemy.h"
 	"./Utils/VectorHomo.h"
@@ -303,7 +304,7 @@
 	<math.h>
 	"VectorHomo.h"
 
-1686312740 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
+1686321980 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
 	"./Utils/FpsController.h"
 	"./Utils/GlobalConsts.h"
 	"gl_canvas2d.h"
@@ -321,8 +322,15 @@
 
 1686312764 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\globalconsts.h
 
-1686280005 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamestate.h
+1686317673 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gamestate.h
 
 1686314777 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\bomberenemy.h
 	"Enemy.h"
+
+1686322218 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\cutscenesmanager.h
+	"./Bmp/Bmp.h"
+	<vector>
+
+1686322316 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\backgroundmanager.h
+	"BorderController.h"
 

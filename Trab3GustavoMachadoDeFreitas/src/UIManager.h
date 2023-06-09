@@ -18,25 +18,28 @@ public:
         RenderUpperBar();
         RenderFpsCounter();
         RenderPlayerScore();
+        RenderClock();
         RenderLowerBar();
         RenderPlayerHP();
     }
 
     void DrawStartScreen()
     {
-        float halfWidth = ConstScreenWidth >> 1;
-        float halfHeight = ConstScreenHeight >> 1;
-
         CV::color(2);
         CentralizeTextX(halfHeight, "Press E to start endless mode");
-        CentralizeTextX(halfHeight - 15, "Press S to start 200 points run");
+        CentralizeTextX(halfHeight - 15, "Press T to start 200 points run");
         CentralizeTextX(halfHeight - 30, "Press Q to toggle game quality");
+    }
+
+    void DrawGameOverScreen()
+    {
+        CV::color(2);
+        CentralizeTextX(halfHeight - 15, "Press E to start endless mode");
+        CentralizeTextX(halfHeight - 30, "Press T to start 200 points run");
     }
 
     void CentralizeTextX(int textY, const char* text)
     {
-        float halfWidth = ConstScreenWidth >> 1;
-
         float textX = halfWidth - (strlen(text) * ApproximateFontSize) / 2;
 
         CV::color(2);
@@ -46,6 +49,11 @@ public:
     void SetPlayerScore(int playerScore)
     {
         this->uiPlayerScore = playerScore;
+    }
+
+    void SetTime(float seconds)
+    {
+        this->uiTime = seconds;
     }
 
     void SetPlayerHP(int playerHP)
@@ -62,6 +70,10 @@ private:
     int uiPlayerScore = 0;
     int uiPlayerHP = 0;
     int uiPlayerMaxHP = 0;
+    float uiTime = 0;
+
+    float halfWidth = ConstScreenWidth >> 1;
+    float halfHeight = ConstScreenHeight >> 1;
 
     void RenderUpperBar()
     {
@@ -83,6 +95,14 @@ private:
         sprintf(playerScoreLabel, "Score: %d", uiPlayerScore);
         CV::color(2);
         CentralizeTextX(ConstScreenHeight - 15, playerScoreLabel);
+    }
+
+    void RenderClock()
+    {
+        char clockLabel[64];
+        sprintf(clockLabel, "Time: %.1f", uiTime);
+        CV::color(2);
+        CV::text(ConstScreenWidth - 200, ConstScreenHeight - 15, clockLabel);
     }
 
     void RenderLowerBar()

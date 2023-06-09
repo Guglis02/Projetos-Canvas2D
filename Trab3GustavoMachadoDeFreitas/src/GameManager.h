@@ -3,7 +3,6 @@
 
 #include "./Utils/KeyboardHandler.h"
 #include "./Utils/VectorHomo.h"
-#include "BorderController.h"
 #include "Entities/Player.h"
 #include "Entities/EnemyProjectile.h"
 #include "Entities/FriendlyProjectile.h"
@@ -12,8 +11,9 @@
 #include "./Utils/GlobalConsts.h"
 #include "UIManager.h"
 #include "EnemiesManager.h"
-#include "Bmp/Bmp.h"
 #include "GameState.h"
+#include "CutscenesManager.h"
+#include "BackgroundManager.h"
 
 class GameManager
 {
@@ -23,29 +23,20 @@ public:
     {
         this->keyboardHandler = new KeyboardHandler();
 
-        this->leftBorder = new BorderController(BorderWidth);
-        this->rightBorder = new BorderController(ConstScreenWidth - BorderWidth);
+        this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200),
+                                  bind(&GameManager::InstantiatePlayerProjectile, this),
+                                  bind(&GameManager::PlayerDeathCallback, this));
 
         this->enemiesManager = new EnemiesManager(BorderWidth);
         this->enemiesManager->SetCallbacks(bind(&GameManager::EnemyDeathCallback, this, placeholders::_1),
                                            bind(&GameManager::InstantiateEnemyProjectile, this, placeholders::_1));
 
-        this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200),
-                                  bind(&GameManager::InstantiatePlayerProjectile, this),
-                                  bind(&GameManager::PlayerDeathCallback, this));
-
         this->uiManager = new UIManager();
         this->uiManager->SetPlayerMaxHP(this->player->GetMaxHP());
 
-        Bmp* upperTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/UpperTrench.bmp");
-        upperTrenchBmp->convertBGRtoRGB();
-        this->upperTrenchTexture = upperTrenchBmp->getImage();
-        Bmp* lowerTrenchBmp = new Bmp("./Trab3GustavoMachadoDeFreitas/images/LowerTrench.bmp");
-        lowerTrenchBmp->convertBGRtoRGB();
-        this->lowerTrenchTexture = lowerTrenchBmp->getImage();
+        this->cutscenesManager = new CutscenesManager();
 
-        this->texturesWidth = upperTrenchBmp->getWidth();
-        this->texturesHeight = upperTrenchBmp->getHeight();
+        this->backgroundManager = new BackgroundManager(BorderWidth);
 
         SetKeyboardCallbacks();
     }
@@ -54,17 +45,21 @@ public:
     {
         FpsController::getInstance().updateFrames();
 
-        leftBorder->Update(downSpeed);
-        rightBorder->Update(downSpeed);
+        if (gameState == GameState::GameOver)
+        {
+            this->cutscenesManager->GameOverCutscene();
+            this->uiManager->DrawGameOverScreen();
+            return;
+        }
 
-        if (qualityMode)
+        if (gameState == GameState::Victory)
         {
-            PaintBackgroundWithDots();
+            this->cutscenesManager->VictoryCutscene();
+            this->uiManager->DrawGameOverScreen();
+            return;
         }
-        else
-        {
-            PaintBackgroundWithLines();
-        }
+
+        backgroundManager->Update(downSpeed);
 
         if (gameState == GameState::StartScreen)
         {
@@ -89,23 +84,30 @@ public:
     void StartEndlessMode()
     {
         gameState = GameState::Endless;
+        ResetPlayer();
+        ResetEntities();
     }
 
     void StartTrenchRun()
     {
         gameState = GameState::TrenchRun;
+        ResetPlayer();
+        ResetEntities();
     }
 
     void EnemyDeathCallback(int enemyValue)
     {
         playerScore += enemyValue;
+
+        if (gameState == GameState::TrenchRun && playerScore >= 200)
+        {
+            gameState = GameState::Victory;
+        }
     }
 
     void PlayerDeathCallback()
     {
-        playerScore = 0;
-        player->SetHP(player->GetMaxHP());
-        player->SetPosition(VectorHomo(ConstScreenWidth >> 1, 200));
+        gameState = GameState::GameOver;
     }
 
     void KeyPressed(int key)
@@ -122,102 +124,19 @@ public:
 private:
     KeyboardHandler *keyboardHandler = NULL;
     Player *player = NULL;
-    BorderController *leftBorder = NULL;
-    BorderController *rightBorder = NULL;
     EnemiesManager *enemiesManager = NULL;
     UIManager * uiManager = NULL;
+    CutscenesManager * cutscenesManager = NULL;
+    BackgroundManager * backgroundManager = NULL;
 
     const float downSpeed = 100.0;
+    const int BorderWidth = 100;
 
     GameState gameState = GameState::StartScreen;
-
-    int texturesWidth;
-    int texturesHeight;
-    uchar* upperTrenchTexture = NULL;
-    uchar* lowerTrenchTexture = NULL;
 
     vector<Projectile *> projectiles;
 
     int playerScore = 0;
-
-    bool qualityMode = false;
-    void ToggleQualityMode()
-    {
-        qualityMode = !qualityMode;
-    }
-
-    const int BorderWidth = 100;
-
-    int lastH = 0;
-    int textureIterator = 0;
-    void PaintBackgroundWithDots()
-    {
-
-        if (lowerTrenchTexture == nullptr || upperTrenchTexture == nullptr)
-        {
-            return;
-        }
-
-        // Para cada ponto amostrado da borda
-        for (int i = 0; i < leftBorder->points.size(); i++)
-        {
-            VectorHomo leftPoint = leftBorder->points[i];
-            VectorHomo rightPoint = rightBorder->points[i];
-
-            // Para cada linha entre o ponto anterior e o atual
-            for (int h = lastH; h < leftPoint.y; h++)
-            {
-                // Para cada pixel da linha
-                for (int j = 0; j < ConstScreenWidth*3; j+=3)
-                {
-                    textureIterator = textureIterator % texturesHeight;
-                    int pos = textureIterator * ((3 * (texturesWidth + 1) / 4) * 4) + j;
-                    int pixelX = j/3;
-
-                    if (pixelX > leftPoint.x && pixelX < rightPoint.x)
-                    {
-                        CV::color(
-                            (float)lowerTrenchTexture[pos] / 255.0,
-                            (float)lowerTrenchTexture[pos + 1] / 255.0,
-                            (float)lowerTrenchTexture[pos + 2] / 255.0);
-                    }
-                    else
-                    {
-                        CV::color(
-                            (float)upperTrenchTexture[pos] / 255.0,
-                            (float)upperTrenchTexture[pos + 1] / 255.0,
-                            (float)upperTrenchTexture[pos + 2] / 255.0);
-                    }
-
-                    CV::point(pixelX, h);
-                }
-                textureIterator++;
-            }
-
-            lastH = leftPoint.y;
-        }
-    }
-
-    void PaintBackgroundWithLines()
-    {
-        for (int i = 0; i < leftBorder->points.size(); i++)
-        {
-            VectorHomo leftPoint = leftBorder->points[i];
-            VectorHomo rightPoint = rightBorder->points[i];
-
-            for (int h = lastH; h < leftPoint.y; h++)
-            {
-                CV::color(0.180, 0.220, 0.259);
-                CV::line(0, h, leftPoint.x, h);
-                CV::line(rightPoint.x, h, ConstScreenWidth, h);
-
-                CV::color(0.098, 0.125, 0.157);
-                CV::line(leftPoint.x, h, rightPoint.x, h);
-            }
-
-            lastH = leftPoint.y;
-        }
-    }
 
     void HandleProjectiles()
     {
@@ -242,13 +161,13 @@ private:
     void HandlePlayerCollisions()
     {
         if (player->GetPosition().x < ConstScreenWidth >> 1 &&
-            (leftBorder->CheckCollision(player->GetHitbox())
+            (backgroundManager->CheckLeftCollision(player->GetHitbox())
             || player->GetPosition().x < BorderWidth))
         {
             player->OnHit();
         }
         if (player->GetPosition().x > ConstScreenWidth >> 1 &&
-            (rightBorder->CheckCollision(player->GetHitbox())
+            (backgroundManager->CheckRightCollision(player->GetHitbox())
             || player->GetPosition().x > ConstScreenWidth - BorderWidth))
         {
             player->OnHit();
@@ -269,6 +188,19 @@ private:
         projectiles.push_back(new EnemyProjectile(position));
     }
 
+    void ResetPlayer()
+    {
+        playerScore = 0;
+        player->SetHP(player->GetMaxHP());
+        player->SetPosition(VectorHomo(ConstScreenWidth >> 1, 200));
+    }
+
+    void ResetEntities()
+    {
+        this->projectiles.clear();
+        this->enemiesManager->Reset();
+    }
+
     void SetKeyboardCallbacks()
     {
         this->keyboardHandler->RegisterCallbacks(119, bind(&Player::StartMovingUp, player), bind(&Player::StopMovingUp, player));       // W move pra cima
@@ -280,7 +212,7 @@ private:
         this->keyboardHandler->RegisterCallbacks(100, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // D move pra direita
         this->keyboardHandler->RegisterCallbacks(202, bind(&Player::StartMovingRight, player), bind(&Player::StopMovingRight, player)); // RIGHT move pra direita
         this->keyboardHandler->RegisterCallbacks(32, bind(&Player::StartShooting, player), bind(&Player::StopShooting, player));        // SPACE atira
-        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&GameManager::ToggleQualityMode, this));    // Q Ativa/Desativa modo de qualidade
+        this->keyboardHandler->RegisterCallbacks(113, nullptr, bind(&BackgroundManager::ToggleQualityMode, backgroundManager));    // Q Ativa/Desativa modo de qualidade
         this->keyboardHandler->RegisterCallbacks(101, nullptr, bind(&GameManager::StartEndlessMode, this));     // E Ativa modo endless
         this->keyboardHandler->RegisterCallbacks(116, nullptr, bind(&GameManager::StartTrenchRun, this));       // T Ativa o modo trench run
     }

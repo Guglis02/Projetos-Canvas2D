@@ -6,7 +6,8 @@ enum class GameState
     StartScreen,
     Endless,
     TrenchRun,
-    GameOver
+    GameOver,
+    Victory
 };
 
 #endif // GAMESTATE_H_INCLUDED

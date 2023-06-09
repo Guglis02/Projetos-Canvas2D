@@ -6,8 +6,9 @@
 #include "../gl_canvas2d.h"
 #include "../Utils/VectorHomo.h"
 #include "../Utils/VectorArts.h"
-#include "Entity.h"
 #include "../Utils/FpsController.h"
+#include "../Utils/GlobalConsts.h"
+#include "Entity.h"
 
 class Player : public Entity
 {
@@ -33,7 +34,7 @@ public:
 
         if (isInvincible)
         {
-            invincibilityTimer -= FpsController::getInstance().GetDeltaTime();;
+            invincibilityTimer -= FpsController::getInstance().GetDeltaTime();
             if (invincibilityTimer <= 0)
             {
                 isInvincible = false;
@@ -183,7 +184,7 @@ protected:
 
         movementDirection.normalize();
 
-        VectorHomo oldTransform = transform;        
+        VectorHomo oldTransform = transform;
         Move(movementDirection);
 
         if (IsOutOfBounds(GetHitbox()))
@@ -207,8 +208,8 @@ protected:
     bool isMovingLeft = false;
     bool isMovingRight = false;
     bool isMovingDown = false;
-    bool isShooting = false;    
-    
+    bool isShooting = false;
+
     bool isInvincible = false;
     float invincibilityDuration = 2.0f;
     float invincibilityTimer = 0.0f;
