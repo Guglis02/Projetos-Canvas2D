@@ -52,19 +52,4 @@ static int pnpoly(int nvert, VectorHomo* vert, VectorHomo test)
     }
     return c;
 }
-
-// Calcula e retorna o ponto em segmento que � perpendicular ao segmento formado por vec1 e vec2, mais pr�ximo de point
-static VectorHomo GetPerpendicularPoint(VectorHomo vec1, VectorHomo vec2, VectorHomo point)
-{
-    VectorHomo segment = vec2 - vec1;
-    VectorHomo pointOnSegment = vec1 + segment * (VectorHomo::DotProduct(point - vec1, segment)
-                             / VectorHomo::DotProduct(segment, segment));
-    return pointOnSegment;
-}
-
-static VectorHomo RotatePoint(VectorHomo point, float angle)
-{
-    return VectorHomo(point.x * cos(angle) - point.y * sin(angle),
-                   point.x * sin(angle) + point.y * cos(angle));
-}
 #endif // POINTUTILS_H_INCLUDED

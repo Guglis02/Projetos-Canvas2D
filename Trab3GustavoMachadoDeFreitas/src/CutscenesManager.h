@@ -11,7 +11,7 @@ public:
     {
         char path[100];
         Bmp* bmp = NULL;
-        for (int i = 0; i < 18; i++)
+        for (int i = 1; i <= 18; i++)
         {
             sprintf(path, "./Trab3GustavoMachadoDeFreitas/images/GameOverFrames/GameOver%d.bmp", i);
             bmp = new Bmp(path);
@@ -68,7 +68,7 @@ private:
     int texturesHeight;
 
     float timeSinceLastFrame = 0;
-    int currentFrame = 0;
+    unsigned int currentFrame = 0;
 
     vector<uchar*> gameOverFrames;
     vector<uchar*> victoryFrames;

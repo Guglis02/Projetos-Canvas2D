@@ -65,7 +65,7 @@ void Bmp::load(const char *fileName)
      return;
   }
 
-  printf("\n\nCarregando arquivo %s", fileName);
+  //printf("\n\nCarregando arquivo %s", fileName);
 
   //le o HEADER componente a componente devido ao problema de alinhamento de bytes. Usando
   //o comando fread(header, sizeof(HEADER),1,fp) sao lidos 16 bytes ao inves de 14
@@ -93,13 +93,13 @@ void Bmp::load(const char *fileName)
   bits   = info.bits;
   bytesPerLine =(3 * (width + 1) / 4) * 4;
   imagesize    = bytesPerLine*height;
-  int delta    = bytesPerLine - (3 * width);
+//  int delta    = bytesPerLine - (3 * width);
 
-  printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
-  printf("\nbytesPerLine: %d", bytesPerLine);
-  printf("\nbytesPerLine: %d", width * 3);
-  printf("\ndelta: %d", delta);
-  printf("\nimagesize: %d %d", imagesize, info.imagesize);
+//   printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
+//   printf("\nbytesPerLine: %d", bytesPerLine);
+//   printf("\nbytesPerLine: %d", width * 3);
+//   printf("\ndelta: %d", delta);
+//   printf("\nimagesize: %d %d", imagesize, info.imagesize);
 
   //realiza diversas verificacoes de erro e compatibilidade
   if( header.type != 19778 )

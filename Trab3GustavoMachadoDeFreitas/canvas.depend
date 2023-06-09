@@ -3,7 +3,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1686313234 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
+1686323502 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -100,7 +100,7 @@
 	"../Utils/GlobalConsts.h"
 	"Entity.h"
 
-1686236834 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
+1686322798 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\entity.h
 	"../Utils/VectorHomo.h"
 	"../Utils/Matrix.h"
 	"../Utils/FpsController.h"
@@ -212,7 +212,7 @@
 	"../Utils/PointsUtils.h"
 	"../gl_canvas2d.h"
 
-1686261864 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
+1686323582 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bordercontroller.h
 	<vector>
 	"./Utils/VectorHomo.h"
 	"./Utils/CurveUtils.h"
@@ -221,7 +221,7 @@
 	"gl_canvas2d.h"
 	"./Utils/FpsController.h"
 
-1686249610 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bmp\bmp.cpp
+1686323086 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\bmp\bmp.cpp
 	"Bmp.h"
 	<string.h>
 
@@ -229,7 +229,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1686321476 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
+1686323705 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\enemiesmanager.h
 	"./Entities/Enemy.h"
 	"./Entities/BomberEnemy.h"
 	"./Utils/VectorHomo.h"
@@ -300,7 +300,7 @@
 	<math.h>
 	"VectorHomo.h"
 
-1686224946 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\pointsutils.h
+1686323454 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\pointsutils.h
 	<math.h>
 	"VectorHomo.h"
 
@@ -327,10 +327,10 @@
 1686314777 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\bomberenemy.h
 	"Enemy.h"
 
-1686322218 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\cutscenesmanager.h
+1686323560 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\cutscenesmanager.h
 	"./Bmp/Bmp.h"
 	<vector>
 
-1686322316 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\backgroundmanager.h
+1686323585 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\backgroundmanager.h
 	"BorderController.h"
 

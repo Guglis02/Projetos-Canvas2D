@@ -45,7 +45,7 @@ public:
     {
         float vx[v.size()];
         float vy[v.size()];
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned int i = 0; i < v.size(); i++)
         {
             vx[i] = v[i].x;
             vy[i] = v[i].y;

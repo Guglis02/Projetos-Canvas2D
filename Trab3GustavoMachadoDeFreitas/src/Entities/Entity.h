@@ -17,9 +17,7 @@ public:
         this->transform = transform;
         this->matrix = new Matrix();
     }
-    ~Entity()
-    {
-    }
+    virtual ~Entity() {}
 
     VectorHomo GetPosition()
     {

@@ -74,7 +74,7 @@ private:
         }
 
         // Para cada ponto amostrado da borda
-        for (int i = 0; i < leftBorder->points.size(); i++)
+        for (unsigned int i = 0; i < leftBorder->points.size(); i++)
         {
             VectorHomo leftPoint = leftBorder->points[i];
             VectorHomo rightPoint = rightBorder->points[i];
@@ -115,7 +115,7 @@ private:
 
     void PaintBackgroundWithLines()
     {
-        for (int i = 0; i < leftBorder->points.size(); i++)
+        for (unsigned int i = 0; i < leftBorder->points.size(); i++)
         {
             VectorHomo leftPoint = leftBorder->points[i];
             VectorHomo rightPoint = rightBorder->points[i];

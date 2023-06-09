@@ -23,7 +23,7 @@ class BorderController
 
     void Update(float downSpeed)
     {
-        for (int i = 0; i < controlPoints.size(); i++)
+        for (unsigned int i = 0; i < controlPoints.size(); i++)
         {
             controlPoints[i].y -= FpsController::getInstance().normalize(downSpeed);
         }
@@ -57,7 +57,7 @@ class BorderController
 
     int x;
     float const distanceBetweenControlPoints = 100;
-    float const startingHeight = 0 - ConstScreenHeight >> 1;
+    float const startingHeight = 0 - (ConstScreenHeight >> 1);
 
     vector<VectorHomo> controlPoints;
 
@@ -76,7 +76,7 @@ class BorderController
     void CalculateCurvePoints()
     {
         points.clear();
-        for (int i = 0; i < controlPoints.size() - 3; i++)
+        for (unsigned int i = 0; i < controlPoints.size() - 3; i++)
         {
             for (float t = 0; t <= 1; t += 0.1f)
             {
@@ -91,7 +91,7 @@ class BorderController
 
     void DeleteOutOfBoundsControlPoints()
     {
-        for (int i = 0; i < controlPoints.size(); i++)
+        for (unsigned int i = 0; i < controlPoints.size(); i++)
         {
             if (controlPoints[i].y < startingHeight)
             {
@@ -106,7 +106,7 @@ class BorderController
     void DrawBorder()
     {
         CV::color(5);
-        for (int i = 0; i < points.size() - 1; i++)
+        for (unsigned int i = 0; i < points.size() - 1; i++)
         {
             CV::line(points[i], points[i + 1]);
         }

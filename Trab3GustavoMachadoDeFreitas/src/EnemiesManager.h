@@ -29,7 +29,7 @@ public:
         swarm.resize(swarmRows, vector<Enemy*>(swarmColumns, nullptr));
     }
 
-    SetCallbacks(function<void(int)> enemyDeathCallback,
+    void SetCallbacks(function<void(int)> enemyDeathCallback,
                 function<void(VectorHomo)> enemyShotCallback)
     {
         this->enemyDeathCallback = enemyDeathCallback;
@@ -96,7 +96,7 @@ public:
 private:
     const int EnemySize = 32;
     const int EnemyPadding = 10;
-    const float EnemyCooldown = 4.0;
+    const float EnemyCooldown = 2.5;
     float timeSinceLastEnemy = EnemyCooldown;
     bool nextEnemySpawnsLeft = false;
 
