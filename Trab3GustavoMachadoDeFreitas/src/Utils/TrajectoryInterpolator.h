@@ -13,18 +13,20 @@ class TrajectoryInterpolator
 public:
     TrajectoryInterpolator(
         VectorHomo startingPoint,
-        VectorHomo target)
+        VectorHomo target,
+        float interpolationSpeed)
     {
         this->start = startingPoint;
         this->target = target;
         this->control1 = VectorHomo((target.x + start.x) / 2, start.y);
         this->control2 = VectorHomo((target.x + start.x) / 2, target.y);
+        this->interpolationSpeed = interpolationSpeed;
     }
 
     // Atualiza a posição atual da trajetória
     void Update()
     {
-        t+= FpsController::getInstance().GetDeltaTime() * 0.5;
+        t += FpsController::getInstance().GetDeltaTime() * interpolationSpeed;
         t = min(t, 1.0f);
 
         if (t == 1)
@@ -62,6 +64,7 @@ protected:
     VectorHomo target;
     VectorHomo control1;
     VectorHomo control2;
+    float interpolationSpeed = 0.5f;
 
     VectorHomo currentPosition;
     float t = 0;

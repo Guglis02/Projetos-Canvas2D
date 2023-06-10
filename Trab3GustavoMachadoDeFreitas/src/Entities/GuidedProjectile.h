@@ -12,7 +12,7 @@ public:
     GuidedProjectile(VectorHomo transform, Enemy* target) : FriendlyProjectile(transform)
     {
         this->target = target;
-        this->trajectoryInterpolator = new TrajectoryInterpolator(transform, target->GetPosition());
+        this->trajectoryInterpolator = new TrajectoryInterpolator(transform, target->GetPosition(), 1.5);
         this->colorIndex = 2;
     }
     ~GuidedProjectile()

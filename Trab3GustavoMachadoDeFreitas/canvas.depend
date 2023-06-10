@@ -114,7 +114,7 @@
 	"../gl_canvas2d.h"
 	"Entity.h"
 
-1686414202 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
+1686429704 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemy.h
 	"Entity.h"
 	"./GuidedProjectile.h"
 	"../Utils/VectorHomo.h"
@@ -355,12 +355,12 @@
 	"Entity.h"
 	<functional>
 
-1686422090 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\guidedprojectile.h
+1686429737 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\guidedprojectile.h
 	"FriendlyProjectile.h"
 	"../Utils/TrajectoryInterpolator.h"
 	"./Enemy.h"
 
-1686422387 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\trajectoryinterpolator.h
+1686429680 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\trajectoryinterpolator.h
 	"../Utils/VectorHomo.h"
 	"../Utils/FpsController.h"
 	"../Utils/CurveUtils.h"

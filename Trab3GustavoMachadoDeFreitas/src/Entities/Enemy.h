@@ -36,7 +36,7 @@ public:
         this->deathCallback = deathCallback;
         this->shootCallback = shootCallback;
 
-        trajectoryInterpolator = new TrajectoryInterpolator(transform, swarmPosition);
+        trajectoryInterpolator = new TrajectoryInterpolator(transform, swarmPosition, 0.5);
 
         this->hitbox.push_back(VectorHomo(-32, -32));
         this->hitbox.push_back(VectorHomo(-32, 32));
