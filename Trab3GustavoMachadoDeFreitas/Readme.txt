@@ -20,6 +20,11 @@ Extras:
 ● Cutscenes de derrota e vitória.
 ● Conforme o tempo passa, inimigos spawnam com maior frequência.
 ● Último highscore é salvo caso o jogo seja fechado e carregado na próxima vez que o jogo for aberto.
+● PickUps
+	● Munições especiais que buscam o inimigo calculando trajetórias curvas.
+	● Escudos
+	● Vidas
+
 
 
 Controles:
