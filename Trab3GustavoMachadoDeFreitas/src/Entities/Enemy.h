@@ -2,12 +2,17 @@
 #define ENEMY_H_INCLUDED
 
 #include "Entity.h"
+#include "./GuidedProjectile.h"
 #include "../Utils/VectorHomo.h"
 #include "../Utils/FpsController.h"
 #include "../Utils/CurveUtils.h"
 #include "../Utils/PointsUtils.h"
 #include "../Utils/VectorArts.h"
+#include "../Utils/TrajectoryInterpolator.h"
 #include "../gl_canvas2d.h"
+#include <vector>
+
+using namespace std;
 
 // Estados em que um inimigo pode estar
 enum EnemyState
@@ -21,6 +26,7 @@ class Enemy : public Entity
 {
 public:
     Enemy(VectorHomo transform,
+          VectorHomo swarmPosition,
           function<void(int)> deathCallback,
           function<void(VectorHomo)> shootCallback)
         : Entity(transform)
@@ -30,6 +36,8 @@ public:
         this->deathCallback = deathCallback;
         this->shootCallback = shootCallback;
 
+        trajectoryInterpolator = new TrajectoryInterpolator(transform, swarmPosition);
+
         this->hitbox.push_back(VectorHomo(-32, -32));
         this->hitbox.push_back(VectorHomo(-32, 32));
         this->hitbox.push_back(VectorHomo(32, 32));
@@ -37,6 +45,7 @@ public:
     }
     ~Enemy()
     {
+        delete trajectoryInterpolator;
     }
 
     void Update()
@@ -51,31 +60,20 @@ public:
         Render();
     }
 
-    // Recebe os pontos de controle da curva de Bezier que o inimigo deve seguir
-    void SetupRoaming(
-        VectorHomo startingPoint,
-        VectorHomo target,
-        VectorHomo controlPoint1,
-        VectorHomo controlPoint2)
-    {
-        this->startingPoint = startingPoint;
-        this->targetPoint = target;
-        this->controlPoint1 = controlPoint1;
-        this->controlPoint2 = controlPoint2;
-    }
-
     void OnHit()
     {
         deathCallback(pointValue);
         Entity::OnHit();
     }
 
+    bool IsInPlace()
+    {
+        return state == InPlace;
+    }
+
 protected:
     EnemyState state;
-    VectorHomo targetPoint;
-    VectorHomo startingPoint;
-    VectorHomo controlPoint1;
-    VectorHomo controlPoint2;
+    TrajectoryInterpolator* trajectoryInterpolator;
 
     // Valor de pontos que o player ganha matando este inimigo
     int pointValue = 10;
@@ -88,17 +86,15 @@ protected:
 
     function<void(VectorHomo)> shootCallback;
 
-    float t = 0;
     // Interpola posição do inimigo através de uma curva de Bezier
     void MoveToTarget()
     {
-        t += FpsController::getInstance().GetDeltaTime() * 0.5;
+        trajectoryInterpolator->Update();
 
-        transform = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, t);
+        transform = trajectoryInterpolator->GetCurrentPosition();
 
-        if (t >= 1)
+        if (trajectoryInterpolator->IsFinished())
         {
-            transform = Bezier3(startingPoint, controlPoint1, controlPoint2, targetPoint, 1);
             state = InPlace;
         }
     }

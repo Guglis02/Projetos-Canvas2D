@@ -14,8 +14,7 @@ public:
     {
         Reset();
     }
-
-    ~Matrix() = delete;
+    ~Matrix() {}
 
     // Constroi uma matriz identidade
     vector<vector<float>> BuildIdentity()
@@ -35,26 +34,10 @@ public:
         return (aux);
     }
 
-    // Aplica transformação em si mesma, usada para concatenar operações
-    void ApplyToSelf(vector<vector<float>> transformation)
+    void Translation(VectorHomo v)
     {
-        vector<vector<float>> aux = BuildIdentity();
-
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                aux[i][j] = 0.0f;
-                for (int k = 0; k < 3; k++)
-                {
-                    aux[i][j] += matrix[i][k] * transformation[k][j];
-                }
-            }
-        }
-
-        matrix = aux;
+        Translation(v.x, v.y);
     }
-
     void Translation(float x, float y)
     {
         vector<vector<float>> aux = BuildIdentity();
@@ -63,6 +46,10 @@ public:
         ApplyToSelf(aux);
     }
 
+    void Rotation(VectorHomo v)
+    {
+        Rotation(v.x);
+    }
     void Rotation(float angle)
     {
         vector<vector<float>> aux = BuildIdentity();
@@ -73,6 +60,10 @@ public:
         ApplyToSelf(aux);
     }
 
+    void Scale(VectorHomo v)
+    {
+        Scale(v.x, v.y);
+    }
     void Scale(float x, float y)
     {
         vector<vector<float>> aux = BuildIdentity();
@@ -119,6 +110,26 @@ public:
 
 private:
     vector<vector<float>> matrix;
+
+    // Aplica transformação em si mesma, usada para concatenar operações
+    void ApplyToSelf(vector<vector<float>> transformation)
+    {
+        vector<vector<float>> aux = BuildIdentity();
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                aux[i][j] = 0.0f;
+                for (int k = 0; k < 3; k++)
+                {
+                    aux[i][j] += matrix[i][k] * transformation[k][j];
+                }
+            }
+        }
+
+        matrix = aux;
+    }
 };
 
 #endif // MATRIX_H_INCLUDED

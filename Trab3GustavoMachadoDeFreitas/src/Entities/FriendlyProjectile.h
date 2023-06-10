@@ -12,6 +12,7 @@ public:
         this->moveDirection = VectorHomo(0, 1);
         this->colorIndex = 2;
     }
+    ~FriendlyProjectile() {}
 
 protected:
 };

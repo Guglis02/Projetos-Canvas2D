@@ -103,6 +103,22 @@ public:
         return false;
     }
 
+    Enemy* GetRandomEnemy()
+    {
+        for (int i = 0; i < swarmRows; i++)
+        {
+            for (int j = 0; j < swarmColumns; j++)
+            {
+                if (swarm[i][j] != nullptr)
+                {
+                    return swarm[i][j];
+                }
+            }
+        }
+
+        return nullptr;
+    }
+
     vector<vector<Enemy *>> swarm;
 
 private:
@@ -127,25 +143,52 @@ private:
     int swarmY;
     int swarmSpacing;
 
-    void InstantiateEnemy()
+    // Procura por uma posição vazia no enxame
+    // Começa buscando pelo meio do enxame e vai aumentando o raio de busca  
+    VectorHomo FindEmptySpot()
     {
-        // Procura por uma posição vazia no enxame
         int row = -1, col = -1;
-        for (int i = 0; i < swarmRows; i++)
+        int middleRow = swarmRows / 2;
+        int middleCol = swarmColumns / 2;
+        int radius = 1;
+        bool foundEmptyPosition = false;
+
+        while (!foundEmptyPosition)
         {
-            for (int j = 0; j < swarmColumns; j++)
+            for (int i = middleRow - radius; i <= middleRow + radius; i++)
             {
-                if (swarm[i][j] == nullptr)
+                for (int j = middleCol - radius; j <= middleCol + radius; j++)
                 {
-                    row = i;
-                    col = j;
+                    if (i >= 0 && i < swarmRows && j >= 0 && j < swarmColumns && swarm[i][j] == nullptr)
+                    {
+                        row = i;
+                        col = j;
+                        foundEmptyPosition = true;
+                        break;
+                    }
+                }
+                if (foundEmptyPosition)
+                {
                     break;
                 }
             }
+            radius++;
+            if (radius > swarmRows && radius > swarmColumns)
+            {
+                break;
+            }
         }
 
+        return VectorHomo(col, row);
+    }
+
+    void InstantiateEnemy()
+    {
+        // Procura por uma posição vazia no enxame
+        VectorHomo emptySpot = FindEmptySpot();
+
         // Se não encontrou, não instancia
-        if (row == -1 && col == -1)
+        if (emptySpot.x == -1 && emptySpot.y == -1)
         {
             return;
         }
@@ -155,24 +198,19 @@ private:
         nextEnemySpawnsLeft = !nextEnemySpawnsLeft;
         float spawnY = rand() % ConstScreenHeight;
 
-        // Calcula pontos de controle da trajetória que o inimigo irá percorrer até sua posição no enxame
-        VectorHomo position = VectorHomo(spawnX, spawnY);
-        VectorHomo target = VectorHomo((col * swarmSpacing) + swarmSpacing + swarmX,
-                                       (row * swarmSpacing) + swarmY);
-
-        VectorHomo control1 = VectorHomo((target.x + position.x) / 2, position.y);
-        VectorHomo control2 = VectorHomo((target.x + position.x) / 2, target.y);
+        VectorHomo spawnPosition = VectorHomo(spawnX, spawnY);
+        VectorHomo targetPosition = VectorHomo((emptySpot.x * swarmSpacing) + swarmSpacing + swarmX,
+                                       (emptySpot.y * swarmSpacing) + swarmY);
 
         // Escolhe aleatoriamente o tipo de inimigo a ser instanciado
         if (rand() % 3 == 1)
         {
-            swarm[row][col] = new BomberEnemy(position, enemyDeathCallback, enemyShotCallback);
+            swarm[emptySpot.y][emptySpot.x] = new BomberEnemy(spawnPosition, targetPosition, enemyDeathCallback, enemyShotCallback);
         }
         else
         {
-            swarm[row][col] = new Enemy(position, enemyDeathCallback, enemyShotCallback);
+            swarm[emptySpot.y][emptySpot.x] = new Enemy(spawnPosition, targetPosition, enemyDeathCallback, enemyShotCallback);
         }
-        swarm[row][col]->SetupRoaming(position, target, control1, control2);
     }
 };
 

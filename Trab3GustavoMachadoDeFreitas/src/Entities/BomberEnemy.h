@@ -9,9 +9,10 @@ class BomberEnemy : public Enemy
 {
 public:
     BomberEnemy(VectorHomo transform,
+                VectorHomo swarmPosition,
                 function<void(int)> deathCallback,
                 function<void(VectorHomo)> shootCallback)
-        : Enemy(transform, deathCallback, shootCallback)
+        : Enemy(transform, swarmPosition, deathCallback, shootCallback)
     {
         pointValue = 20;
     }

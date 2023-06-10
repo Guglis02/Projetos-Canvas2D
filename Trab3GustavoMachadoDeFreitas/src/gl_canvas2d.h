@@ -67,7 +67,8 @@ public:
         circleFill(pos.x, pos.y, radius, div);
     }
 
-    static void elipsisFill( float x, float y, float radiusX, float radiusY, int div );
+    static void ellipsisFill( float x, float y, float radiusX, float radiusY, int div );
+    static void ellipsisFill( float x, float y, float radiusX, float radiusY, int div, float angle );
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);

@@ -4,40 +4,13 @@
 #include <math.h>
 #include "VectorHomo.h"
 
-// Arquivo utilitário contendo funções relacionadas a pontos.
-
-static float DistanceBetweenTwoPoints(int x1, int y1, int x2, int y2)
+// Retorna o angulo em radianos entre o vetor e o eixo x
+static float GetAngleWithXAxis(VectorHomo v)
 {
-    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
-}
-
-static float DistanceBetweenTwoPoints(VectorHomo p1, VectorHomo p2)
-{
-    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) * 1.0);
-}
-
-static float GetAngleBetweenPoints(VectorHomo p1, VectorHomo p2)
-{
-    float dotProduct = VectorHomo::DotProduct(p1, p2);
-    float crossProduct = VectorHomo::CrossProduct(p1, p2);
-    float angle = atan2(fabs(crossProduct), dotProduct);
-
-    return crossProduct < 0 ? angle * -1.0 : angle;
+    return atan2(v.y, v.x);
 }
 
 // Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
-static int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
-{
-    int i, j, c = 0;
-    for (i = 0, j = nvert - 1; i < nvert; j = i++)
-    {
-        if (((verty[i] > testy) != (verty[j] > testy)) &&
-            (testx < (vertx[j] - vertx[i]) * (testy - verty[i]) / (verty[j] - verty[i]) + vertx[i]))
-            c = !c;
-    }
-    return c;
-}
-
 // Adapta��o usando Vector2
 static int pnpoly(int nvert, VectorHomo *vert, VectorHomo test)
 {

@@ -66,6 +66,17 @@ public:
         y /= norm;
     }
 
+    VectorHomo rotate(float angle)
+    {
+        float x1 = x;
+        float y1 = y;
+
+        x = x1 * cos(angle) - y1 * sin(angle);
+        y = x1 * sin(angle) + y1 * cos(angle);
+
+        return *this;
+    }
+
     static float DotProduct(VectorHomo vec1, VectorHomo vec2)
     {
         return vec1.x * vec2.x + vec1.y * vec2.y;

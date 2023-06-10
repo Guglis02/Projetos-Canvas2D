@@ -175,7 +175,7 @@ void CV::circleFill( float x, float y, float radius, int div )
    glEnd();
 }
 
-void CV::elipsisFill( float x, float y, float radiusX, float radiusY, int div )
+void CV::ellipsisFill( float x, float y, float radiusX, float radiusY, int div )
 {
    float ang = 0, x1, y1;
    float inc = PI_2/div;
@@ -185,6 +185,21 @@ void CV::elipsisFill( float x, float y, float radiusX, float radiusY, int div )
          x1 = (cos(ang)*radiusX);
          y1 = (sin(ang)*radiusY);
          glVertex2d(x1+x, y1+y);
+         ang+=inc;
+      }
+   glEnd();
+}
+
+void CV::ellipsisFill( float x, float y, float radiusX, float radiusY, int div, float angle )
+{
+   float ang = 0, x1, y1;
+   float inc = PI_2/div;
+   glBegin(GL_POLYGON);
+      for(int lado = 1; lado <= div; lado++) //GL_POLYGON desenha um poligono CONVEXO preenchido.
+      {
+         x1 = (cos(ang)*radiusX);
+         y1 = (sin(ang)*radiusY);
+         glVertex2d(x1*cos(angle) - y1*sin(angle) + x, x1*sin(angle) + y1*cos(angle) + y);
          ang+=inc;
       }
    glEnd();

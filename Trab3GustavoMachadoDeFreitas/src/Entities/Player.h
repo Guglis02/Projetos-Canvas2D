@@ -14,7 +14,7 @@
 class Player : public Entity
 {
 public:
-    Player(VectorHomo transform, function<void()> shootCallback, function<void()> onDeathCallback)
+    Player(VectorHomo transform, function<void(bool)> shootCallback, function<void()> onDeathCallback)
         : Entity(transform)
     {
         this->moveSpeed = 500;
@@ -60,6 +60,12 @@ public:
     // Caso seu hp chegue a 0, ele morre.
     void OnHit()
     {
+        if (isShielded)
+        {
+            isShielded = false;
+            return;
+        }
+
         if (!isInvincible)
         {
             hp--;
@@ -93,7 +99,7 @@ public:
         transform = position;
     }
 
-    // Callbacks do teclado
+    // Callbacks
     void StartMovingUp()
     {
         isMovingUp = true;
@@ -148,6 +154,21 @@ public:
         isShooting = false;
     }
 
+    void ApplyShieldBuff()
+    {
+        isShielded = true;
+    }
+
+    void ApplyMissileBuff()
+    {
+        isMissileBuffed = true;
+    }
+
+    void ApplyHpBuff()
+    {
+        hp = min(hp + 1, maxHp);
+    }
+
 protected:
     void Render()
     {
@@ -160,6 +181,12 @@ protected:
         else
         {
             DrawMillenniumFalcon(transform);
+        }
+
+        if (isShielded)
+        {
+            CV::color(0, 1, 1);
+            CV::circle(transform, 50, 32);
         }
     }
 
@@ -205,7 +232,11 @@ protected:
 
         if (isShooting && (timeSinceLastShot >= shootCooldown))
         {
-            shootCallback();
+            shootCallback(isMissileBuffed);
+            if (isMissileBuffed)
+            {
+                isMissileBuffed = false;
+            }
             timeSinceLastShot = 0;
         }
     }
@@ -215,6 +246,9 @@ protected:
     bool isMovingRight = false;
     bool isMovingDown = false;
     bool isShooting = false;
+
+    bool isShielded = false;
+    bool isMissileBuffed = false;
 
     bool isInvincible = false;
     float invincibilityDuration = 2.0f;
@@ -226,7 +260,7 @@ protected:
     float maxHp = 5;
     float hp = maxHp;
 
-    function<void()> shootCallback;
+    function<void(bool)> shootCallback;
     function<void()> onDeathCallback;
 
     VectorHomo movementDirection;

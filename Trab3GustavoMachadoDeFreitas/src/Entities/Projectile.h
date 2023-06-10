@@ -17,6 +17,7 @@ public:
         this->hitbox.push_back(VectorHomo(5, 25));
         this->hitbox.push_back(VectorHomo(5, 0));
     }
+    ~Projectile() {}
 
     void Update()
     {

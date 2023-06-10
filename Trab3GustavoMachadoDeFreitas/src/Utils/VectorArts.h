@@ -3,6 +3,7 @@
 
 #include "../gl_canvas2d.h"
 #include "VectorHomo.h"
+#include "./Matrix.h"
 
 // Arquivo contendo desenhos vetoriais
 
@@ -105,9 +106,9 @@ static void DrawTieBomber(VectorHomo position)
                  VectorHomo(32, -5));
 
     // Canhões
-    CV::elipsisFill(-10, 0, 10, 16, 16);
+    CV::ellipsisFill(-10, 0, 10, 16, 16);
     CV::color(0.5f, 0.5f, 0.5f);
-    CV::elipsisFill(10, 0, 10, 14, 16);
+    CV::ellipsisFill(10, 0, 10, 14, 16);
 
     CV::color(0.7f, 0.7f, 0.7f);
 

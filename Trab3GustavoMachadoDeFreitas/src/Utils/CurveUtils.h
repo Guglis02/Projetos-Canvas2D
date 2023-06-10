@@ -30,4 +30,16 @@ static VectorHomo BSpline3(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHo
         + p4 * asixth * tcube;
 }
 
-#endif // POINTUTILS_H_INCLUDED
+static VectorHomo Bezier3Derivative(VectorHomo p1, VectorHomo p2, VectorHomo p3, VectorHomo p4, float t)
+{
+    float oneMinusT = 1.0f - t;
+    float tsquare = t * t;
+    float oneMinusTSquare = oneMinusT * oneMinusT;
+
+    return p1 * (-3 * oneMinusTSquare) 
+        + p2 * (3 * oneMinusTSquare - 6 * oneMinusT * t) 
+        + p3 * (6 * oneMinusT * t - 3 * tsquare) 
+        + p4 * (3 * tsquare);
+}
+
+#endif // CURVEUTILS_H_INCLUDED

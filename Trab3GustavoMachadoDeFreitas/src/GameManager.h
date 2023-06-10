@@ -6,6 +6,7 @@
 #include "Entities/Player.h"
 #include "Entities/EnemyProjectile.h"
 #include "Entities/FriendlyProjectile.h"
+#include "Entities/GuidedProjectile.h"
 #include "Entities/Enemy.h"
 #include "./Utils/FpsController.h"
 #include "./Utils/GlobalConsts.h"
@@ -15,6 +16,7 @@
 #include "CutscenesManager.h"
 #include "BackgroundManager.h"
 #include "./Utils/FileHandler.h"
+#include "PowerUpsManager.h"
 
 // Classe principal que comanda o funcionamento do jogo.
 class GameManager
@@ -25,12 +27,17 @@ public:
         this->keyboardHandler = new KeyboardHandler();
 
         this->player = new Player(VectorHomo(ConstScreenWidth >> 1, 200),
-                                  bind(&GameManager::InstantiatePlayerProjectile, this),
+                                  bind(&GameManager::InstantiatePlayerProjectile, this, placeholders::_1),
                                   bind(&GameManager::PlayerDeathCallback, this));
 
         this->enemiesManager = new EnemiesManager(BorderWidth);
         this->enemiesManager->SetCallbacks(bind(&GameManager::EnemyDeathCallback, this, placeholders::_1),
                                            bind(&GameManager::InstantiateEnemyProjectile, this, placeholders::_1));
+
+        this->powerUpsManager = new PowerUpsManager(BorderWidth);
+        this->powerUpsManager->SetCallbacks(bind(&Player::ApplyShieldBuff, player),
+                                            bind(&Player::ApplyMissileBuff, player),
+                                            bind(&Player::ApplyHpBuff, player));
 
         this->uiManager = new UIManager();
         this->uiManager->SetPlayerMaxHP(this->player->GetMaxHP());
@@ -76,6 +83,7 @@ public:
             HandleProjectiles();
             HandlePlayerCollisions();
 
+            this->powerUpsManager->Update();
             this->enemiesManager->Update();
             this->player->Update();
 
@@ -143,6 +151,7 @@ private:
     UIManager *uiManager = NULL;
     CutscenesManager *cutscenesManager = NULL;
     BackgroundManager *backgroundManager = NULL;
+    PowerUpsManager *powerUpsManager = NULL;
 
     const float downSpeed = 100.0;
     const int BorderWidth = 100;
@@ -163,7 +172,19 @@ private:
         {
             auto projectile = *it;
             projectile->Update();
-            if (IsOutOfBounds(projectile->GetPosition()) || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox())) || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
+
+            GuidedProjectile* guidedProjectile = dynamic_cast<GuidedProjectile*>(projectile);
+            if (guidedProjectile != nullptr && guidedProjectile->ShouldDie())
+            {
+                printf("Guided projectile should die\n");
+                projectile->OnHit();
+                it = projectiles.erase(it);
+                return;
+            } 
+
+            if (IsOutOfBounds(projectile->GetPosition()) 
+            || (IsOfType<FriendlyProjectile>(projectile) && enemiesManager->CheckCollision(projectile->GetHitbox())) 
+            || (IsOfType<EnemyProjectile>(projectile) && player->CheckCollision(projectile->GetHitbox())))
             {
                 projectile->OnHit();
                 it = projectiles.erase(it);
@@ -195,11 +216,22 @@ private:
             player->OnHit();
             return;
         }
+        if (powerUpsManager->CheckCollision(player->GetHitbox()))
+        {
+            return;
+        }
     }
 
-    void InstantiatePlayerProjectile()
+    void InstantiatePlayerProjectile(bool isBuffed)
     {
-        projectiles.push_back(new FriendlyProjectile(this->player->GetPosition()));
+        if (isBuffed)
+        {
+            projectiles.push_back(new GuidedProjectile(
+                this->player->GetPosition(), 
+                this->enemiesManager->GetRandomEnemy()));
+        } else {
+            projectiles.push_back(new FriendlyProjectile(this->player->GetPosition()));
+        }
     }
 
     void InstantiateEnemyProjectile(VectorHomo position)
