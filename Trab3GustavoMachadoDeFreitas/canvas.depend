@@ -355,7 +355,7 @@
 	"Entity.h"
 	<functional>
 
-1686429737 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\guidedprojectile.h
+1686433786 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\guidedprojectile.h
 	"FriendlyProjectile.h"
 	"../Utils/TrajectoryInterpolator.h"
 	"./Enemy.h"
