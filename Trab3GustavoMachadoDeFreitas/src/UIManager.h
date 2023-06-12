@@ -33,7 +33,7 @@ public:
     }
 
     void DrawGameOverScreen()
-    {    
+    {
         char auxLabel[64];
         CV::color(2);
         sprintf(auxLabel, "Your scored %d points in %.1f seconds!", uiPlayerScore, uiTime);
@@ -118,10 +118,21 @@ private:
 
     void RenderPlayerHP()
     {
-        char playerHPLabel[64];
-        sprintf(playerHPLabel, "HP: %d/%d", uiPlayerHP, uiPlayerMaxHP);
-        CV::color(2);
-        CV::text(10, 5, playerHPLabel);
+        float iconSize = 16;
+        VectorHomo drawingPosition;
+
+        for (int i = 1; i <= uiPlayerMaxHP; i++)
+        {
+            drawingPosition = VectorHomo(2 * iconSize * (i + 1), iconSize);
+            if (i <= uiPlayerHP)
+            {
+                DrawMillenniumFalcon(drawingPosition, 0.5);
+            }
+            else
+            {
+                DrawMillenniumFalconWireframe(drawingPosition, 0.5);
+            }
+        }
     }
 
     void CentralizeTextX(int textY, const char *text)

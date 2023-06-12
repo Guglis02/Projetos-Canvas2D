@@ -176,11 +176,11 @@ protected:
         // A intensidade do brilho é proporcional ao tempo restante de invencibilidade
         if (isInvincible && fmod(invincibilityTimer, 0.2f) < 0.1f)
         {
-            DrawMillenniumFalconWireframe(transform);
+            DrawMillenniumFalconWireframe(transform, 1);
         }
         else
         {
-            DrawMillenniumFalcon(transform);
+            DrawMillenniumFalcon(transform, 1);
         }
 
         if (isShielded)

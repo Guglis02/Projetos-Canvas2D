@@ -94,7 +94,7 @@
 	<stdio.h>
 	<time.h>
 
-1686406228 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
+1686602661 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\player.h
 	<functional>
 	"../gl_canvas2d.h"
 	"../Utils/VectorHomo.h"
@@ -309,7 +309,7 @@
 	<math.h>
 	"VectorHomo.h"
 
-1686340608 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
+1686602948 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\uimanager.h
 	"./Utils/FpsController.h"
 	"./Utils/GlobalConsts.h"
 	"gl_canvas2d.h"
@@ -321,7 +321,7 @@
 1686325292 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\entities\enemyprojectile.h
 	"Projectile.h"
 
-1686413253 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\vectorarts.h
+1686602671 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab3gustavomachadodefreitas\src\utils\vectorarts.h
 	"../gl_canvas2d.h"
 	"VectorHomo.h"
 	"./Matrix.h"
