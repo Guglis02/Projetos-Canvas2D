@@ -1,0 +1,180 @@
+# depslib dependency file v1.0
+1626955631 source:h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1603974868 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1426372440 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1589217858 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\vector2.h
+
+1603975055 source:h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Bola.h"
+	"Relogio.h"
+	"Botao.h"
+
+1589214882 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\bola.h
+	"gl_canvas2d.h"
+
+1193164156 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\relogio.h
+	"gl_canvas2d.h"
+
+1589214891 h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\botao.h
+	"gl_canvas2d.h"
+
+1589218349 source:h:\my drive\ufsm\7 semestre\cg\demos\gl_1_canvasglut\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1626955631 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1603974868 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1589217858 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\vector2.h
+
+1687263570 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	"gl_canvas2d.h"
+	"Utils/VectorHomo3d.h"
+
+1589214882 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\bola.h
+	"gl_canvas2d.h"
+
+1193164156 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\relogio.h
+	"gl_canvas2d.h"
+
+1589214891 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\botao.h
+	"gl_canvas2d.h"
+
+1589218349 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1687263287 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\gl_1_canvasglut\src\utils\vectorhomo3d.h
+	<stdio.h>
+	<math.h>
+
+1687264993 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1687264837 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<vector>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"./Utils/VectorHomo.h"
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\glut.h
+	"freeglut_std.h"
+
+1437579942 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1589217858 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\vector2.h
+
+1687264896 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	<cstdlib>
+	"gl_canvas2d.h"
+	"./Utils/GlobalConsts.h"
+
+1687263287 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo3d.h
+	<stdio.h>
+	<math.h>
+
+1589218349 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1193164156 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\relogio.h
+	"gl_canvas2d.h"
+
+1686413153 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo.h
+	<stdio.h>
+	<math.h>
+
+1687263137 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
+
