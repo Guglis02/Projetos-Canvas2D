@@ -151,13 +151,16 @@
 
 1589217858 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\vector2.h
 
-1687264896 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1687389493 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
 	<cstdlib>
+	<vector>
+	<iostream>
 	"gl_canvas2d.h"
 	"./Utils/GlobalConsts.h"
+	"./Models/Cube.h"
 
 1687263287 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo3d.h
 	<stdio.h>
@@ -177,4 +180,18 @@
 	<math.h>
 
 1687263137 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
+
+1687390385 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"./Model.h"
+
+1687390379 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/Matrix3d.h"
+
+1687266365 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\matrix3d.h
+	<vector>
+	"VectorHomo3d.h"
 
