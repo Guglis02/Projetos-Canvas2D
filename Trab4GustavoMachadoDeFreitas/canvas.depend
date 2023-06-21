@@ -118,11 +118,11 @@
 	<stdio.h>
 	<math.h>
 
-1687264993 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.cpp
+1687377496 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1687264837 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
+1687377471 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -130,7 +130,7 @@
 	<vector>
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
-	"./Utils/VectorHomo.h"
+	"./Utils/VectorHomo3d.h"
 
 1426372440 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\glut.h
 	"freeglut_std.h"

@@ -55,7 +55,7 @@ void CV::point(float x, float y)
    glEnd();
 }
 
-void CV::point(VectorHomo p)
+void CV::point(VectorHomo3d p)
 {
    glBegin(GL_POINTS);
       glVertex2d(p.x, p.y);
@@ -89,7 +89,7 @@ void CV::rectFill( float x1, float y1, float x2, float y2 )
       glVertex2d(x2, y1);
    glEnd();
 }
-void CV::rectFill( VectorHomo p1, VectorHomo p2 )
+void CV::rectFill( VectorHomo3d p1, VectorHomo3d p2 )
 {
    glBegin(GL_QUADS);
       glVertex2d(p1.x, p1.y);
@@ -214,7 +214,7 @@ void CV::translate(float offsetX, float offsetY)
    glTranslated(offsetX, offsetY, 0);
 }
 
-void CV::translate(VectorHomo offset)
+void CV::translate(VectorHomo3d offset)
 {
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
