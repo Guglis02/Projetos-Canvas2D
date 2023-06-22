@@ -99,6 +99,17 @@ public:
         return transformedPoints;
     }
 
+    vector<VectorHomo3d> ApplyToPoints(vector<VectorHomo3d> points)
+    {
+        vector<VectorHomo3d> transformedPoints;
+        for (auto point : points)
+        {
+            VectorHomo3d transformedPoint = *this * (point);
+            transformedPoints.push_back(transformedPoint);
+        }
+        return transformedPoints;
+    }
+
     void Print()
     {
         printf("\n");

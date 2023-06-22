@@ -30,15 +30,8 @@ float ang = 0;
 int r = 30;
 int l = 240;
 
-
-void render(void)
+void render2dEngine()
 {
-    CV::color(1, 0, 0);
-    CV::translate(screenWidth >> 1, screenHeight >> 1);
-    // cube->Transform(anglex, angley, anglez);
-    // cube->Draw();
-
-
     CV::color(0, 1, 0);
     CV::circle(0, 0, r, 32);
 
@@ -48,15 +41,38 @@ void render(void)
     CV::circle(rotatingPoint, r, 32);
 
     CV::color(0, 0, 1);
-    CV::rect(-50, 200, 50, 300);
 
-    pistonBase = VectorHomo3d(0, pistonJoint.y, 0);
+    vector<VectorHomo3d> pistonBox = {
+        VectorHomo3d(-50, 200, 0),
+        VectorHomo3d(-50, 300, 0),
+        VectorHomo3d(50, 300, 0),
+        VectorHomo3d(50, 200, 0)
+    }; 
+
+    Matrix3d* m = new Matrix3d();
+    m->RotationZ(anglez * PI / 180.0f);
+    pistonBox = m->ApplyToPoints(pistonBox);
+
+    CV::polygon(pistonBox);
+
+
+    pistonBase = (pistonBox[0] + pistonBox[3]) * 0.5f;
     VectorHomo3d dir = pistonBase - rotatingPoint;
     dir.normalize();
 
     pistonJoint = rotatingPoint + (dir * l);
     CV::line(rotatingPoint, pistonJoint);
     CV::line(pistonJoint.x - 50, pistonJoint.y, pistonJoint.x + 50, pistonJoint.y);
+}
+
+void render(void)
+{
+    CV::color(1, 0, 0);
+    CV::translate(screenWidth >> 1, screenHeight >> 1);
+    // cube->Transform(anglex, angley, anglez);
+    // cube->Draw();
+
+    render2dEngine();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
