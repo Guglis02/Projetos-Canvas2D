@@ -22,12 +22,41 @@ int anglex = 0;
 int angley = 0;
 int anglez = 0;
 
+VectorHomo3d rotatingPoint;
+VectorHomo3d pistonBase;
+VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
+
+float ang = 0;
+int r = 30;
+int l = 240;
+
+
 void render(void)
 {
     CV::color(1, 0, 0);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
-    cube->Transform(anglex, angley, anglez);
-    cube->Draw();
+    // cube->Transform(anglex, angley, anglez);
+    // cube->Draw();
+
+
+    CV::color(0, 1, 0);
+    CV::circle(0, 0, r, 32);
+
+    ang+= 0.01f;
+    ang = ang > PI_2 ? 0 : ang;
+    rotatingPoint = VectorHomo3d(r * 2 * cos(ang), r * 2 * sin(ang), 0);
+    CV::circle(rotatingPoint, r, 32);
+
+    CV::color(0, 0, 1);
+    CV::rect(-50, 200, 50, 300);
+
+    pistonBase = VectorHomo3d(0, pistonJoint.y, 0);
+    VectorHomo3d dir = pistonBase - rotatingPoint;
+    dir.normalize();
+
+    pistonJoint = rotatingPoint + (dir * l);
+    CV::line(rotatingPoint, pistonJoint);
+    CV::line(pistonJoint.x - 50, pistonJoint.y, pistonJoint.x + 50, pistonJoint.y);
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos

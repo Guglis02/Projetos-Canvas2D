@@ -92,7 +92,7 @@ public:
 
     float norm()
     {
-        return sqrt(x*x + y*y + z*z);
+        return (float)sqrt(x*x + y*y + z*z);
     }
 
     float distance(VectorHomo3d v)
@@ -102,7 +102,19 @@ public:
 
     void normalize()
     {
-        (*this) / norm();
+        float n = norm();
+
+        if(n==0.0)
+        {
+            printf("\n\nNormalize::Divisao por zero");
+            x = 1;
+            y = 1;
+            z = 1;
+            return;
+        }
+        x /= n;
+        y /= n;
+        z /= n;
     }
 };
 

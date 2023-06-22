@@ -195,3 +195,65 @@
 	<vector>
 	"VectorHomo3d.h"
 
+1687391673 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<vector>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"./Utils/VectorHomo3d.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\glut.h
+	"freeglut_std.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1687395221 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo3d.h
+	<stdio.h>
+	<math.h>
+
+1687395574 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdio.h>
+	<cstdlib>
+	<vector>
+	<iostream>
+	"gl_canvas2d.h"
+	"./Utils/GlobalConsts.h"
+	"./Models/Cube.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
+
+1687392238 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"./Model.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/Matrix3d.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\matrix3d.h
+	<vector>
+	"VectorHomo3d.h"
+

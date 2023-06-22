@@ -22,7 +22,6 @@ public:
 
     void Build()
     {
-        printf("\naaa");
         vertices.push_back(new VectorHomo3d(-50, -50, -50));
         vertices.push_back(new VectorHomo3d(-50, -50, 50));
         vertices.push_back(new VectorHomo3d(-50, 50, 50));
