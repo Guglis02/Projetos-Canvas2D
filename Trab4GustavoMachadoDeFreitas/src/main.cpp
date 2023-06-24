@@ -18,7 +18,8 @@ using namespace std;
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 Cube* cube;
-Engine2d* engine2d;
+Engine2d* first2dEngine;
+Engine2d* second2dEngine;
 
 int d = 50;
 int anglex = 0;
@@ -33,7 +34,8 @@ void render(void)
     cube->Transform(anglex, angley, anglez);
     cube->Draw();
 
-    engine2d->Render();
+    first2dEngine->Render();
+    second2dEngine->Render();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -75,7 +77,8 @@ void keyboardUp(int key)
 int main(void)
 {
     cube = new Cube();
-    engine2d = new Engine2d();
+    first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
+    second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

@@ -23,14 +23,14 @@ public:
 
     void Build()
     {
-        vertices.push_back(new VectorHomo3d(-50, -50, -50));
-        vertices.push_back(new VectorHomo3d(-50, -50, 50));
-        vertices.push_back(new VectorHomo3d(-50, 50, 50));
-        vertices.push_back(new VectorHomo3d(-50, 50, -50));
-        vertices.push_back(new VectorHomo3d(50, -50, -50));
-        vertices.push_back(new VectorHomo3d(50, -50, 50));
-        vertices.push_back(new VectorHomo3d(50, 50, 50));
-        vertices.push_back(new VectorHomo3d(50, 50, -50));
+        vertices.push_back(VectorHomo3d(-50, -50, -50));
+        vertices.push_back(VectorHomo3d(-50, -50, 50));
+        vertices.push_back(VectorHomo3d(-50, 50, 50));
+        vertices.push_back(VectorHomo3d(-50, 50, -50));
+        vertices.push_back(VectorHomo3d(50, -50, -50));
+        vertices.push_back(VectorHomo3d(50, -50, 50));
+        vertices.push_back(VectorHomo3d(50, 50, 50));
+        vertices.push_back(VectorHomo3d(50, 50, -50));
 
         std::vector<std::pair<int, int>> edges = {
             {0, 1}, {1, 2}, {2, 3}, {3, 0},
@@ -45,9 +45,11 @@ public:
     {
         transformedVertices.clear();
         transformationMatrix->Reset();
+        transformationMatrix->Translation(GetCenter(vertices));
         transformationMatrix->RotationX(DegToRad(anglex));
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
+        transformationMatrix->Translation(GetCenter(vertices) * -1);
         transformedVertices = transformationMatrix->ApplyToPoints(vertices);
     }
 
@@ -56,7 +58,7 @@ public:
         CV::color(1, 0, 0);
 
         for (unsigned int i = 0; i < edges.size(); i++) {
-            CV::line(*transformedVertices[edges[i].first], *transformedVertices[edges[i].second]);
+            CV::line(transformedVertices[edges[i].first], transformedVertices[edges[i].second]);
         }
     }
 };

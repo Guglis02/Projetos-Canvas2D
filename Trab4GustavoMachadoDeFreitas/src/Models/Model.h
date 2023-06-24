@@ -19,13 +19,13 @@ public:
     }
 
     vector<pair<int, int>> edges;
-    vector<VectorHomo3d*> vertices;
+    vector<VectorHomo3d> vertices;
 
     virtual void Build(){};
     virtual void Draw(){};
 protected:
     Matrix3d* transformationMatrix;
-    vector<VectorHomo3d*> transformedVertices;
+    vector<VectorHomo3d> transformedVertices;
 };
 
 #endif
