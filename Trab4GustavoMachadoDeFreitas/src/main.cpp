@@ -7,8 +7,10 @@
 #include <iostream>
 
 #include "gl_canvas2d.h"
+#include "Engine2d.h"
 #include "./Utils/GlobalConsts.h"
 #include "./Models/Cube.h"
+#include "./Utils/FpsController.h"
 
 using namespace std;
 
@@ -16,63 +18,22 @@ using namespace std;
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 Cube* cube;
+Engine2d* engine2d;
 
 int d = 50;
 int anglex = 0;
 int angley = 0;
 int anglez = 0;
 
-VectorHomo3d rotatingPoint;
-VectorHomo3d pistonBase;
-VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
-
-float ang = 0;
-int r = 30;
-int l = 240;
-
-void render2dEngine()
-{
-    CV::color(0, 1, 0);
-    CV::circle(0, 0, r, 32);
-
-    ang+= 0.01f;
-    ang = ang > PI_2 ? 0 : ang;
-    rotatingPoint = VectorHomo3d(r * 2 * cos(ang), r * 2 * sin(ang), 0);
-    CV::circle(rotatingPoint, r, 32);
-
-    CV::color(0, 0, 1);
-
-    vector<VectorHomo3d> pistonBox = {
-        VectorHomo3d(-50, 200, 0),
-        VectorHomo3d(-50, 300, 0),
-        VectorHomo3d(50, 300, 0),
-        VectorHomo3d(50, 200, 0)
-    }; 
-
-    Matrix3d* m = new Matrix3d();
-    m->RotationZ(anglez * PI / 180.0f);
-    pistonBox = m->ApplyToPoints(pistonBox);
-
-    CV::polygon(pistonBox);
-
-
-    pistonBase = (pistonBox[0] + pistonBox[3]) * 0.5f;
-    VectorHomo3d dir = pistonBase - rotatingPoint;
-    dir.normalize();
-
-    pistonJoint = rotatingPoint + (dir * l);
-    CV::line(rotatingPoint, pistonJoint);
-    CV::line(pistonJoint.x - 50, pistonJoint.y, pistonJoint.x + 50, pistonJoint.y);
-}
-
 void render(void)
 {
+    FpsController::getInstance().updateFrames();
     CV::color(1, 0, 0);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
-    // cube->Transform(anglex, angley, anglez);
-    // cube->Draw();
+    cube->Transform(anglex, angley, anglez);
+    cube->Draw();
 
-    render2dEngine();
+    engine2d->Render();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -114,6 +75,7 @@ void keyboardUp(int key)
 int main(void)
 {
     cube = new Cube();
+    engine2d = new Engine2d();
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

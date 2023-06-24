@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../Utils/VectorHomo3d.h"
+#include "../Utils/PointsUtils.h"
 #include "./Model.h"
 
 using namespace std;
@@ -44,9 +45,9 @@ public:
     {
         transformedVertices.clear();
         transformationMatrix->Reset();
-        transformationMatrix->RotationX(anglex * PI / 180.0f);
-        transformationMatrix->RotationY(angley * PI / 180.0f);
-        transformationMatrix->RotationZ(anglez * PI / 180.0f);
+        transformationMatrix->RotationX(DegToRad(anglex));
+        transformationMatrix->RotationY(DegToRad(angley));
+        transformationMatrix->RotationZ(DegToRad(anglez));
         transformedVertices = transformationMatrix->ApplyToPoints(vertices);
     }
 
