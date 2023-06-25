@@ -7,6 +7,8 @@
 #include "./Utils/FpsController.h"
 #include "./Utils/PointsUtils.h"
 #include "./Models/Cube.h"
+#include "./Models/Cilinder.h"
+#include "./Models/Model.h"
 #include "gl_canvas2d.h"
 
 using namespace std;
@@ -22,20 +24,35 @@ public:
         transformationMatrix = new Matrix3d();
 
         chamber = new Cube(VectorHomo3d(150, 200, 1), 100);
+        chamber->LocalRotate(0, 0, 60 * invertionCoef, true);
+        parts.push_back(chamber);
+
+        rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
+        crankPin = new Cilinder(rotatingPoint, crankShaftAxisRadius, crankShaftAxisRadius, 20);
+        crankPin->LocalRotate(90, 0, 0, true);
+        parts.push_back(crankPin);
+
+        mainJournal = new Cilinder(crankshaftAxis, crankShaftAxisRadius, crankShaftAxisRadius, 20);
+        mainJournal->LocalRotate(90, 0, 0, true);
+        parts.push_back(mainJournal);
     }
     ~Engine3d()
     {
 
     }
 
-    void Render()
+    void Render(float anglex, float angley, float anglez)
     {
+        for (auto part : parts)
+        {
+            part->GlobalRotate(anglex, angley, anglez);
+        }
+
         SpinCrankshaft();
         RenderCrankshaft();
 
         CV::color(0, 0, 1);
 
-        chamber->Transform(0, 0, 60 * invertionCoef);
         chamber->Draw();
 
         // Calculates the piston joint
@@ -52,7 +69,10 @@ public:
 private:
     Matrix3d* transformationMatrix;
 
+    vector<Model*> parts;
     Cube* chamber;
+    Cilinder* mainJournal;
+    Cilinder* crankPin;
 
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
@@ -72,15 +92,17 @@ private:
         ang += (2 * FpsController::getInstance().GetDeltaTime());
         ang = ang > PI_2 ? 0 : ang;
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
+        crankPin->Reposition(rotatingPoint, false);
+        mainJournal->LocalRotate(0, 0, ang, false);
     }
 
     // Desenha o virabrequim
     void RenderCrankshaft()
     {
         CV::color(1, 0, 0);
-        CV::circle(crankshaftAxis, crankShaftAxisRadius, 32);
 
-        CV::circle(rotatingPoint, crankShaftAxisRadius, 32);
+        mainJournal->Draw();
+        crankPin->Draw();
 
         // Desenha o contrapeso
         vector<VectorHomo3d> counterWeight = {
@@ -102,10 +124,10 @@ private:
     // {
     //     // Calcula linha oposta ao pistão
     //     VectorHomo3d chamberDir = chamber[1] - chamber[0];
-    //     chamberDir.normalize();    
-        
+    //     chamberDir.normalize();
+
     //     VectorHomo3d chamberMiddle = (chamber[0] + chamber[1]) * 0.5f;
-        
+
     //     // Linha perpendicular ao fundo da câmara
     //     VectorHomo3d perpDir = VectorHomo3d(-chamberDir.y, chamberDir.x, 0);
 

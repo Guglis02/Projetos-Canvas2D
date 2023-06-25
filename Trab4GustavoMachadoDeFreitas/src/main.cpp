@@ -19,8 +19,6 @@ using namespace std;
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
-Cube* cube;
-Cilinder* cilinder;
 Engine2d* first2dEngine;
 Engine2d* second2dEngine;
 Engine3d* first3dEngine;
@@ -36,12 +34,8 @@ void render(void)
     FpsController::getInstance().updateFrames();
     CV::color(1, 0, 0);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
-    // cube->Transform(anglex, angley, anglez);
-    // cube->Draw();
-    // cilinder->Transform(anglex, angley, anglez);
-    // cilinder->Draw();
 
-    first3dEngine->Render();
+    first3dEngine->Render(anglex, angley, anglez);
 
     // first2dEngine->Render();
     // second2dEngine->Render();
@@ -85,8 +79,6 @@ void keyboardUp(int key)
 
 int main(void)
 {
-    cube = new Cube(VectorHomo3d(0, 0, 0), 100);
-    cilinder = new Cilinder(VectorHomo3d(0, 0, 0), 100, 100, 100);
     first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
     second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
 

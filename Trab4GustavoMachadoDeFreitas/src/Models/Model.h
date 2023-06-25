@@ -25,6 +25,46 @@ public:
         return center;
     }
 
+    void LocalRotate(int anglex, int angley, int anglez, bool isPerm)
+    {
+        transformationMatrix->Reset();
+        transformationMatrix->Translation(center);
+        transformationMatrix->RotationX(DegToRad(anglex));
+        transformationMatrix->RotationY(DegToRad(angley));
+        transformationMatrix->RotationZ(DegToRad(anglez));
+        transformationMatrix->Translation(center * -1);
+            
+        transformedVertices = transformationMatrix->ApplyToPoints(vertices);
+
+        if (isPerm)
+        {
+            vertices = transformationMatrix->ApplyToPoints(vertices);
+        }
+    }
+
+    void Reposition(VectorHomo3d newCenter, bool isPerm)
+    {
+        transformationMatrix->Reset();
+        transformationMatrix->Translation(newCenter);
+
+        transformedVertices = transformationMatrix->ApplyToPoints(vertices);
+
+        if (isPerm)
+        {
+            vertices = transformationMatrix->ApplyToPoints(vertices);
+        }
+    }
+
+    void GlobalRotate(int anglex, int angley, int anglez)
+    {
+        transformationMatrix->Reset();
+        transformationMatrix->RotationX(DegToRad(anglex));
+        transformationMatrix->RotationY(DegToRad(angley));
+        transformationMatrix->RotationZ(DegToRad(anglez));
+        
+        transformedVertices = transformationMatrix->ApplyToPoints(transformedVertices);
+    }
+
     vector<pair<int, int>> edges;
     vector<VectorHomo3d> vertices;
 

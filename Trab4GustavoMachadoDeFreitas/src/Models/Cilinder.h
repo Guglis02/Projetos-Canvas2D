@@ -45,18 +45,8 @@ public:
         }
         vertices = topVertices;
         vertices.insert(vertices.end(), bottomVertices.begin(), bottomVertices.end());
-    }
 
-    void Transform(int anglex, int angley, int anglez)
-    {
-        transformedVertices.clear();
-        transformationMatrix->Reset();
-        transformationMatrix->Translation(center);
-        transformationMatrix->RotationX(DegToRad(anglex));
-        transformationMatrix->RotationY(DegToRad(angley));
-        transformationMatrix->RotationZ(DegToRad(anglez));
-        transformationMatrix->Translation(center * -1);
-        transformedVertices = transformationMatrix->ApplyToPoints(vertices);
+        transformedVertices = vertices;
     }
 
     void Draw()
