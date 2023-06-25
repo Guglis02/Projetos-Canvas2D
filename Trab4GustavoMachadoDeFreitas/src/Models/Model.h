@@ -10,12 +10,19 @@ using namespace std;
 class Model
 {
 public:
-    Model()
+    Model(VectorHomo3d center)
     {
+        this->center = center;
+        transformationMatrix = new Matrix3d();
     }
     ~Model()
     {
-        
+        delete transformationMatrix;
+    }
+
+    VectorHomo3d GetCenter()
+    {
+        return center;
     }
 
     vector<pair<int, int>> edges;
@@ -26,6 +33,7 @@ public:
 protected:
     Matrix3d* transformationMatrix;
     vector<VectorHomo3d> transformedVertices;
+    VectorHomo3d center;
 };
 
 #endif

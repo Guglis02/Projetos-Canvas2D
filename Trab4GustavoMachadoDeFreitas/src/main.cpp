@@ -8,8 +8,10 @@
 
 #include "gl_canvas2d.h"
 #include "Engine2d.h"
+#include "Engine3d.h"
 #include "./Utils/GlobalConsts.h"
 #include "./Models/Cube.h"
+#include "./Models/Cilinder.h"
 #include "./Utils/FpsController.h"
 
 using namespace std;
@@ -18,8 +20,11 @@ using namespace std;
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 Cube* cube;
+Cilinder* cilinder;
 Engine2d* first2dEngine;
 Engine2d* second2dEngine;
+Engine3d* first3dEngine;
+Engine3d* second3dEngine;
 
 int d = 50;
 int anglex = 0;
@@ -31,11 +36,15 @@ void render(void)
     FpsController::getInstance().updateFrames();
     CV::color(1, 0, 0);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
-    cube->Transform(anglex, angley, anglez);
-    cube->Draw();
+    // cube->Transform(anglex, angley, anglez);
+    // cube->Draw();
+    // cilinder->Transform(anglex, angley, anglez);
+    // cilinder->Draw();
 
-    first2dEngine->Render();
-    //second2dEngine->Render();
+    first3dEngine->Render();
+
+    // first2dEngine->Render();
+    // second2dEngine->Render();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -76,9 +85,12 @@ void keyboardUp(int key)
 
 int main(void)
 {
-    cube = new Cube();
+    cube = new Cube(VectorHomo3d(0, 0, 0), 100);
+    cilinder = new Cilinder(VectorHomo3d(0, 0, 0), 100, 100, 100);
     first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
     second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
+
+    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

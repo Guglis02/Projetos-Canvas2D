@@ -11,10 +11,10 @@ using namespace std;
 class Cube : public Model
 {
 public:
-    Cube() : Model()
+    Cube(VectorHomo3d center, float verticeSize) : Model(center)
     {
+        this->verticeSize = verticeSize;
         this->Build();
-        transformationMatrix = new Matrix3d();
     }
     ~Cube()
     {
@@ -23,14 +23,16 @@ public:
 
     void Build()
     {
-        vertices.push_back(VectorHomo3d(-50, -50, -50));
-        vertices.push_back(VectorHomo3d(-50, -50, 50));
-        vertices.push_back(VectorHomo3d(-50, 50, 50));
-        vertices.push_back(VectorHomo3d(-50, 50, -50));
-        vertices.push_back(VectorHomo3d(50, -50, -50));
-        vertices.push_back(VectorHomo3d(50, -50, 50));
-        vertices.push_back(VectorHomo3d(50, 50, 50));
-        vertices.push_back(VectorHomo3d(50, 50, -50));
+        float halfSize = verticeSize * 0.5f;
+
+        vertices.push_back(VectorHomo3d(center.x - halfSize, center.y - halfSize, center.z - halfSize));
+        vertices.push_back(VectorHomo3d(center.x - halfSize, center.y - halfSize, center.z + halfSize));
+        vertices.push_back(VectorHomo3d(center.x - halfSize, center.y + halfSize, center.z + halfSize));
+        vertices.push_back(VectorHomo3d(center.x - halfSize, center.y + halfSize, center.z - halfSize));
+        vertices.push_back(VectorHomo3d(center.x + halfSize, center.y - halfSize, center.z - halfSize));
+        vertices.push_back(VectorHomo3d(center.x + halfSize, center.y - halfSize, center.z + halfSize));
+        vertices.push_back(VectorHomo3d(center.x + halfSize, center.y + halfSize, center.z + halfSize));
+        vertices.push_back(VectorHomo3d(center.x + halfSize, center.y + halfSize, center.z - halfSize));
 
         std::vector<std::pair<int, int>> edges = {
             {0, 1}, {1, 2}, {2, 3}, {3, 0},
@@ -45,11 +47,11 @@ public:
     {
         transformedVertices.clear();
         transformationMatrix->Reset();
-        transformationMatrix->Translation(GetCenter(vertices));
+        transformationMatrix->Translation(center);
         transformationMatrix->RotationX(DegToRad(anglex));
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
-        transformationMatrix->Translation(GetCenter(vertices) * -1);
+        transformationMatrix->Translation(center * -1);
         transformedVertices = transformationMatrix->ApplyToPoints(vertices);
     }
 
@@ -61,6 +63,8 @@ public:
             CV::line(transformedVertices[edges[i].first], transformedVertices[edges[i].second]);
         }
     }
+private:
+    float verticeSize;
 };
 
 #endif
