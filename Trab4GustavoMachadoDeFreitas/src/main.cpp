@@ -35,7 +35,7 @@ void render(void)
     cube->Draw();
 
     first2dEngine->Render();
-    second2dEngine->Render();
+    //second2dEngine->Render();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos

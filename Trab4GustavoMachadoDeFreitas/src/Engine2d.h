@@ -32,12 +32,18 @@ public:
 
         CV::color(0, 0, 1);
 
-        vector<VectorHomo3d> chamber = {
-            crankshaftAxis + VectorHomo3d((invertionCoef * 125), 200, 0),
-            crankshaftAxis + VectorHomo3d((invertionCoef * 125), 300, 0),
-            crankshaftAxis + VectorHomo3d((invertionCoef * 25), 300, 0),
-            crankshaftAxis + VectorHomo3d((invertionCoef * 25), 200, 0)
+        chamber = {
+            crankshaftAxis + VectorHomo3d((invertionCoef * 200), 150, 0),
+            crankshaftAxis + VectorHomo3d((invertionCoef * 200), 250, 0),
+            crankshaftAxis + VectorHomo3d((invertionCoef * 100), 250, 0),
+            crankshaftAxis + VectorHomo3d((invertionCoef * 100), 150, 0)
         };
+
+        transformationMatrix->Reset();
+        transformationMatrix->Translation(GetCenter(chamber));
+        transformationMatrix->RotationZ(DegToRad(60) * invertionCoef);
+        transformationMatrix->Translation(GetCenter(chamber) * -1);
+        chamber = transformationMatrix->ApplyToPoints(chamber);
 
         // Calculates the piston joint
         chamberBase = (chamber[0] + chamber[2]) * 0.5f;
@@ -49,11 +55,15 @@ public:
         pistonJoint = rotatingPoint + (dir * connectingRodLength);
         // Draws the Connecting Rod
         CV::line(rotatingPoint, pistonJoint);
-        // Draws the piston
-        CV::line(pistonJoint.x - crankShaftAxisRadius, pistonJoint.y, pistonJoint.x + crankShaftAxisRadius, pistonJoint.y);
+
+        DrawPiston();
+        // // Draws the piston
+        // CV::line(pistonJoint.x - crankShaftAxisRadius, pistonJoint.y, pistonJoint.x + crankShaftAxisRadius, pistonJoint.y);
     }
 private:
     Matrix3d* transformationMatrix;
+
+    vector<VectorHomo3d> chamber;
 
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
@@ -97,6 +107,31 @@ private:
         transformationMatrix->Translation(rotatingPoint * -1);
 
         CV::polygon(transformationMatrix->ApplyToPoints(counterWeight));
+    }
+
+    void DrawPiston()
+    {
+        // Calcula linha oposta ao pistão
+        VectorHomo3d chamberDir = chamber[1] - chamber[0];
+        chamberDir.normalize();    
+        
+        VectorHomo3d chamberMiddle = (chamber[0] + chamber[1]) * 0.5f;
+        
+        // Linha perpendicular ao fundo da câmara
+        VectorHomo3d perpDir = VectorHomo3d(-chamberDir.y, chamberDir.x, 0);
+
+        // Calcula a projeção do pistão na câmara
+        VectorHomo3d pistonProj = pistonJoint - chamberMiddle;
+        float projLength = pistonProj * (perpDir);
+        VectorHomo3d pistonProjDir = perpDir * projLength;
+        VectorHomo3d pistonProjPoint = chamberMiddle + pistonProjDir;
+
+        // Calcula as pontas do pistão
+        VectorHomo3d pistonStart = pistonProjPoint - (chamberDir * 50);
+        VectorHomo3d pistonEnd = pistonProjPoint + (chamberDir * 50);
+
+        // Desenha o pistão
+        CV::line(pistonStart, pistonEnd);
     }
 };
 
