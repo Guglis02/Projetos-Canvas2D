@@ -24,27 +24,22 @@ public:
     void Build()
     {
         float halfVerticeSize = verticeSize * 0.5;
-      
-        vector<VectorHomo3d> edges; 
-        // Generate the bottom square, and then uses for loops to iterate over the square while incrementing z, to generate the walls of the cube. Then stores the points in the points array.
-        edges.push_back(VectorHomo3d(-halfVerticeSize, -halfVerticeSize, -halfVerticeSize) + center);
-        edges.push_back(VectorHomo3d(halfVerticeSize, -halfVerticeSize, -halfVerticeSize) + center);
-        edges.push_back(VectorHomo3d(halfVerticeSize, halfVerticeSize, -halfVerticeSize) + center);
-        edges.push_back(VectorHomo3d(-halfVerticeSize, halfVerticeSize, -halfVerticeSize) + center);
-        
-        float t = 0;
-        for (int i = 0; i < steps; i++, t += (1 / steps))
+        float diagonal = sqrt(pow(halfVerticeSize, 2) + pow(halfVerticeSize, 2));
+
+        float theta = DegToRad(45);
+        float height = verticeSize;
+        for (int i = 0 ; i < steps; i++, theta += (PI_2 / steps))
         {
             int h = 0;
-            for (int j = 0; j < steps; j++, h += (verticeSize / steps))
+            for (int j = 0; j < steps; j++, h += height / steps)
             {
-                float x = (edges[0] * t + edges[1] * (1 - t)).x;
-                float y = (edges[1] * t + edges[2] * (1 - t)).y;
+                float x = diagonal * cos(theta);
+                float y = diagonal * sin(theta);
                 float z = h;
                 points[i][j].x = x;
                 points[i][j].y = y;
                 points[i][j].z = z;
-                points[i][j] += center;                
+                points[i][j] += center;
             }
         }
     }

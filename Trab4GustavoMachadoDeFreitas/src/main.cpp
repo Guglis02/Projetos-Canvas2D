@@ -46,13 +46,13 @@ void render(void)
     // sphere->LocalRotate(anglex, angley, anglez, false);
     // sphere->Draw(d);
 
-    //cilinder->LocalRotate(anglex, angley, anglez, false);
+    // cilinder->LocalRotate(anglex, angley, anglez, false);
     // cilinder->DrawPerspective(d);
-    //cilinder->DrawOrthogonal();
+    // cilinder->DrawOrthogonal();
 
     cube->LocalRotate(anglex, angley, anglez, false);
     cube->DrawPerspective(d);
-    
+
     // first2dEngine->Render();
     // second2dEngine->Render();
 }
@@ -102,7 +102,7 @@ int main(void)
 
     sphere = new Sphere(VectorHomo3d(0, 0, 200), NM, 100);
     cilinder = new Cilinder(VectorHomo3d(0, 0, 200), NM, 100, 100);
-    cube = new Cube(VectorHomo3d(0, 0, 200), NM, 100);
+    cube = new Cube(VectorHomo3d(0, 0, 200), 4, 100);
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

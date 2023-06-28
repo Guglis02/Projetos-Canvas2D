@@ -77,14 +77,14 @@ public:
 
     void DrawPerspective(int d)
     {
-        for (int i = 0; i < steps; i++)
+        for (unsigned int i = 0; i < transformedPoints.size(); i++)
         {
-            for (int j = 0; j < steps; j++)
+            for (unsigned int j = 0; j < transformedPoints[i].size(); j++)
             {
                 int x = i;
                 int y = j;
-                int nx = (i + 1) % (steps);
-                int ny = (j + 1) % (steps);
+                int nx = (i + 1) % (transformedPoints.size());
+                int ny = (j + 1) % (transformedPoints[i].size());
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[x][nx], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][y], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][ny], d);
@@ -94,14 +94,14 @@ public:
 
     void DrawOrthogonal()
     {
-        for (int i = 0; i < steps; i++)
+        for (int i = 0; i < transformedPoints.size(); i++)
         {
-            for (int j = 0; j < steps; j++)
+            for (int j = 0; j < transformedPoints[i].size(); j++)
             {
                 int x = i;
                 int y = j;
-                int nx = (i + 1) % (steps);
-                int ny = (j + 1) % (steps);
+                int nx = (i + 1) % (transformedPoints.size());
+                int ny = (j + 1) % (transformedPoints[i].size());
                 CV::line(transformedPoints[x][y], transformedPoints[x][nx]);
                 CV::line(transformedPoints[x][y], transformedPoints[nx][y]);
                 CV::line(transformedPoints[x][y], transformedPoints[nx][ny]);
