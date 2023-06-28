@@ -204,7 +204,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
+1687909113 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -231,11 +231,11 @@
 1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1687395221 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo3d.h
+1687915085 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo3d.h
 	<stdio.h>
 	<math.h>
 
-1687395574 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1687916024 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -243,22 +243,27 @@
 	<vector>
 	<iostream>
 	"gl_canvas2d.h"
+	"Engine2d.h"
 	"./Utils/GlobalConsts.h"
 	"./Models/Cube.h"
+	"./Models/Cilinder.h"
+	"./Models/Sphere.h"
+	"./Utils/FpsController.h"
 
 1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
 
-1687392238 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
+1687918572 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
+	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+1687915433 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
 
-1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\matrix3d.h
+1687912804 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\matrix3d.h
 	<vector>
 	"VectorHomo3d.h"
 
@@ -297,4 +302,50 @@
 	"./Models/Cilinder.h"
 	"./Models/Model.h"
 	"gl_canvas2d.h"
+
+1687740385 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine2d.h
+	<vector>
+	"./Utils/VectorHomo3d.h"
+	"./Utils/Matrix3d.h"
+	"./Utils/FpsController.h"
+	"./Utils/PointsUtils.h"
+	"gl_canvas2d.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\fpscontroller.h
+	<stdio.h>
+	<time.h>
+
+1687912943 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
+	<math.h>
+	<vector>
+	"VectorHomo.h"
+	"VectorHomo3d.h"
+	"GlobalConsts.h"
+
+1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\vectorhomo.h
+	<stdio.h>
+	<math.h>
+
+1687740385 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
+	<vector>
+	"./Utils/VectorHomo3d.h"
+	"./Utils/Matrix3d.h"
+	"./Utils/FpsController.h"
+	"./Utils/PointsUtils.h"
+	"./Models/Cube.h"
+	"./Models/Cilinder.h"
+	"./Models/Model.h"
+	"gl_canvas2d.h"
+
+1687914788 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cilinder.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/PointsUtils.h"
+	"./Model.h"
+
+1687915162 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/PointsUtils.h"
+	"./Model.h"
 

@@ -11,7 +11,7 @@ using namespace std;
 class Cilinder : public Model
 {
 public:
-    Cilinder(VectorHomo3d center, float height, float radius, int div) : Model(center)
+    Cilinder(VectorHomo3d center, int steps, float height, float radius) : Model(center, steps)
     {
         this->verticeSize = verticeSize;
         this->radius = radius;
@@ -26,35 +26,21 @@ public:
 
     void Build()
     {
-        float theta = PI_2 / div;
+        float theta = 0;
 
-        vector<VectorHomo3d> topVertices;
-        vector<VectorHomo3d> bottomVertices;
-        for (int i = 0; i < div; i++) {
-            float x = radius * cos(theta * i);
-            float z = radius * sin(theta * i);
-            topVertices.push_back(VectorHomo3d(x, height/2, z));
-            bottomVertices.push_back(VectorHomo3d(x, -height/2, z));
-        }
-
-        for (int i = 0; i < div; i++) {
-            int j = (i + 1) % div;
-            edges.push_back(make_pair(i, j));
-            edges.push_back(make_pair(i + div, j + div));
-            edges.push_back(make_pair(i, i + div));
-        }
-        vertices = topVertices;
-        vertices.insert(vertices.end(), bottomVertices.begin(), bottomVertices.end());
-
-        transformedVertices = vertices;
-    }
-
-    void Draw()
-    {
-        CV::color(1, 0, 0);
-
-        for (unsigned int i = 0; i < edges.size(); i++) {
-            CV::line(transformedVertices[edges[i].first], transformedVertices[edges[i].second]);
+        for (int i = 0 ; i < steps; i++, theta += PI_2 / steps)
+        {
+            int h = 0;
+            for (int j = 0; j < steps; j++, h += height / steps)
+            {
+                float x = radius * cos(theta);
+                float y = radius * sin(theta);
+                float z = h;
+                points[i][j].x = x;
+                points[i][j].y = y;
+                points[i][j].z = z;
+                points[i][j] += center;
+            }
         }
     }
 private:

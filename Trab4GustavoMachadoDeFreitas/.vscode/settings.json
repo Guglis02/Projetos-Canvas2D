@@ -2,7 +2,10 @@
     "files.associations": {
         "iostream": "cpp",
         "vector": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "cmath": "cpp",
+        "list": "cpp",
+        "xstring": "cpp"
     },
     "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\gcc.exe"
 }

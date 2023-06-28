@@ -10,9 +10,15 @@ using namespace std;
 class Model
 {
 public:
-    Model(VectorHomo3d center)
+    Model(VectorHomo3d center, int steps)
     {
         this->center = center;
+        this->steps = steps;
+        this->points.resize(steps);
+        for (int i = 0; i < steps; i++)
+        {
+            this->points[i].resize(steps);
+        }
         transformationMatrix = new Matrix3d();
     }
     ~Model()
@@ -34,11 +40,11 @@ public:
         transformationMatrix->RotationZ(DegToRad(anglez));
         transformationMatrix->Translation(center * -1);
             
-        transformedVertices = transformationMatrix->ApplyToPoints(vertices);
+        transformedPoints = transformationMatrix->ApplyToPoints(points);
 
         if (isPerm)
         {
-            vertices = transformationMatrix->ApplyToPoints(vertices);
+            points = transformationMatrix->ApplyToPoints(points);
         }
     }
 
@@ -47,11 +53,11 @@ public:
         transformationMatrix->Reset();
         transformationMatrix->Translation(newCenter);
 
-        transformedVertices = transformationMatrix->ApplyToPoints(vertices);
+        transformedPoints = transformationMatrix->ApplyToPoints(points);
 
         if (isPerm)
         {
-            vertices = transformationMatrix->ApplyToPoints(vertices);
+            points = transformationMatrix->ApplyToPoints(points);
         }
     }
 
@@ -62,18 +68,51 @@ public:
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
         
-        transformedVertices = transformationMatrix->ApplyToPoints(transformedVertices);
+        transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
     }
 
-    vector<pair<int, int>> edges;
-    vector<VectorHomo3d> vertices;
+    vector<vector<VectorHomo3d>> points;
 
     virtual void Build(){};
-    virtual void Draw(){};
+
+    void DrawPerspective(int d)
+    {
+        for (int i = 0; i < steps; i++)
+        {
+            for (int j = 0; j < steps; j++)
+            {
+                int x = i;
+                int y = j;
+                int nx = (i + 1) % (steps);
+                int ny = (j + 1) % (steps);
+                CV::perspectiveLine(transformedPoints[x][y], transformedPoints[x][nx], d);
+                CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][y], d);
+                CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][ny], d);
+            }
+        }
+    }
+
+    void DrawOrthogonal()
+    {
+        for (int i = 0; i < steps; i++)
+        {
+            for (int j = 0; j < steps; j++)
+            {
+                int x = i;
+                int y = j;
+                int nx = (i + 1) % (steps);
+                int ny = (j + 1) % (steps);
+                CV::line(transformedPoints[x][y], transformedPoints[x][nx]);
+                CV::line(transformedPoints[x][y], transformedPoints[nx][y]);
+                CV::line(transformedPoints[x][y], transformedPoints[nx][ny]);
+            }
+        }
+    }
 protected:
     Matrix3d* transformationMatrix;
-    vector<VectorHomo3d> transformedVertices;
+    vector<vector<VectorHomo3d>> transformedPoints;
     VectorHomo3d center;
+    int steps = 20;
 };
 
 #endif

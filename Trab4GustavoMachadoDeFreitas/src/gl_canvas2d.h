@@ -30,7 +30,11 @@ public:
     static void line( VectorHomo3d p1, VectorHomo3d p2 )
     {
         line(p1.x, p1.y, p2.x, p2.y);
-    } //coordenadas da linha (p1, p2)
+    }
+    static void perspectiveLine( VectorHomo3d p1, VectorHomo3d p2, float d)
+    {
+        line(d * p1.x/p1.z, d * p1.y/p1.z, d * p2.x/p2.z, d * p2.y/p2.z);
+    }
 
     //desenha um retangulo alinhado nos eixos x e y
     static void rect( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2

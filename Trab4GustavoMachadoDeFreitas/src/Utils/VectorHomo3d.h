@@ -85,6 +85,13 @@ public:
 		return( aux );
 	}
 
+    void operator += (const VectorHomo3d& v)
+    {
+        x += v.x;
+        y += v.y;
+        z += v.z;
+    }
+
     bool operator == (const VectorHomo3d& v)
     {
         return (x == v.x && y == v.y && z == v.z);

@@ -31,6 +31,20 @@ static VectorHomo3d GetCenter(vector<VectorHomo3d> points)
     return center;
 }
 
+static VectorHomo3d GetCenter(vector<vector<VectorHomo3d>> points)
+{
+    VectorHomo3d center = VectorHomo3d(0, 0, 0);
+    for (int i = 0; i < points.size(); i++)
+    {
+        for (int j = 0; j < points[i].size(); j++)
+        {
+            center = center + points[i][j];
+        }
+    }
+    center = center / (points.size() * points[0].size());
+    return center;
+}
+
 // Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
 // Adapta��o usando Vector2
 static int pnpoly(int nvert, VectorHomo *vert, VectorHomo test)

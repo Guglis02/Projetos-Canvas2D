@@ -23,7 +23,7 @@ public:
         this->ang = startAngle;
         transformationMatrix = new Matrix3d();
 
-        chamber = new Cube(VectorHomo3d(150, 200, 1), 100);
+        //chamber = new Cube(VectorHomo3d(150, 200, 1), 100);
         chamber->LocalRotate(0, 0, 60 * invertionCoef, true);
         parts.push_back(chamber);
 
