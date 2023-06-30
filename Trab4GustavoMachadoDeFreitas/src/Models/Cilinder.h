@@ -13,7 +13,6 @@ class Cilinder : public Model
 public:
     Cilinder(VectorHomo3d center, int steps, float height, float radius) : Model(center, steps)
     {
-        this->verticeSize = verticeSize;
         this->radius = radius;
         this->height = height;
         this->div = div;
