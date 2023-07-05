@@ -11,14 +11,20 @@ using namespace std;
 class Cube : public Model
 {
 public:
-    Cube(VectorHomo3d center, int steps, float verticeSize) : Model(center, steps)
+    Cube(VectorHomo3d center, int steps, float verticeSize, float height) : Model(center, steps)
     {
         this->verticeSize = verticeSize;
+        this->height = height;
         this->Build();
     }
     ~Cube()
     {
         
+    }
+
+    VectorHomo3d GetDirection()
+    {
+
     }
 
     void Build()
@@ -27,10 +33,10 @@ public:
         float diagonal = sqrt(pow(halfVerticeSize, 2) + pow(halfVerticeSize, 2));
 
         float theta = DegToRad(45);
-        float height = verticeSize;
+        float height = this->height;
         for (int i = 0 ; i < steps; i++, theta += (PI_2 / steps))
         {
-            int h = -1 * height * 0.5;
+            int h = 0;
             for (int j = 0; j < steps; j++, h += height / steps)
             {
                 points[i][j].x = h;
@@ -42,6 +48,7 @@ public:
     }
 private:
     float verticeSize;
+    float height;
 };
 
 #endif

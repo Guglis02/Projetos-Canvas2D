@@ -24,9 +24,10 @@ public:
         this->ang = startAngle;
         transformationMatrix = new Matrix3d();
 
-        int chamberX = invertionCoef == 1 ? 100 : -200;
-        chamber = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150);
-        chamber->LocalRotate(0, 0, DegToRad(60) * invertionCoef, true);
+        int chamberX = 200 * invertionCoef;
+        int chamberAng = invertionCoef == 1 ? DegToRad(240) : DegToRad(60) * -1;
+        chamber = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150, 150);
+        chamber->LocalRotate(0, 0, chamberAng, true);
         parts.push_back(chamber);
 
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
@@ -42,6 +43,10 @@ public:
         connectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
         connectingRod->LocalRotate(0, DegToRad(90), 0, true);
         parts.push_back(connectingRod);
+
+        piston = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150, 40);        
+        piston->LocalRotate(0, 0, chamberAng, true);
+        parts.push_back(piston);
     }
     ~Engine3d()
     {
@@ -74,13 +79,14 @@ public:
             part->DrawOrthogonal();
         }
 
-        //DrawPiston();
+        // DrawPiston();
     }
 private:
     Matrix3d* transformationMatrix;
 
     vector<Model*> parts;
     Cube* chamber;
+    Cube* piston;
     Cilinder* mainJournal;
     Cilinder* crankPin;
     Cilinder* connectingRod;
