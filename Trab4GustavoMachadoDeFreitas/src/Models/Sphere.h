@@ -34,12 +34,9 @@ public:
             phi = 0;
             for (j = 0; j < steps; j++, phi += PI / steps)
             {
-                float x = radius * cos(theta) * sin(phi);
-                float y = radius * sin(theta) * sin(phi);
-                float z = radius * cos(phi);
-                points[i][j].x = x;
-                points[i][j].y = y;
-                points[i][j].z = z;
+                points[i][j].x = radius * cos(theta) * sin(phi);
+                points[i][j].y = radius * sin(theta) * sin(phi);
+                points[i][j].z = radius * cos(phi);
                 points[i][j] += center;
             }
         }

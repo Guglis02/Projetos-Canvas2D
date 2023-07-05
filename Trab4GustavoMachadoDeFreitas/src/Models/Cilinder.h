@@ -32,12 +32,9 @@ public:
             int h = 0;
             for (int j = 0; j < steps; j++, h += height / steps)
             {
-                float x = radius * cos(theta);
-                float y = radius * sin(theta);
-                float z = h;
-                points[i][j].x = x;
-                points[i][j].y = y;
-                points[i][j].z = z;
+                points[i][j].x = radius * cos(theta);
+                points[i][j].y = radius * sin(theta);
+                points[i][j].z = h;
                 points[i][j] += center;
             }
         }

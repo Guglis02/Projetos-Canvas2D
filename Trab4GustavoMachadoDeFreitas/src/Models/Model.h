@@ -31,16 +31,21 @@ public:
         return center;
     }
 
-    void LocalRotate(int anglex, int angley, int anglez, bool isPerm)
+    void LocalRotate(float anglex, float angley, float anglez, bool isPerm)
+    {
+        LocalRotate(anglex, angley, anglez, isPerm, center);
+    } 
+
+    void LocalRotate(float anglex, float angley, float anglez, bool isPerm, VectorHomo3d anchor)
     {
         transformationMatrix->Reset();
-        transformationMatrix->Translation(center);
-        transformationMatrix->RotationX(DegToRad(anglex));
-        transformationMatrix->RotationY(DegToRad(angley));
-        transformationMatrix->RotationZ(DegToRad(anglez));
-        transformationMatrix->Translation(center * -1);
+        transformationMatrix->Translation(anchor);
+        transformationMatrix->RotationX(anglex);
+        transformationMatrix->RotationY(angley);
+        transformationMatrix->RotationZ(anglez);
+        transformationMatrix->Translation(anchor * -1);
             
-        transformedPoints = transformationMatrix->ApplyToPoints(points);
+        transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
 
         if (isPerm)
         {
@@ -51,6 +56,8 @@ public:
     void Reposition(VectorHomo3d newCenter, bool isPerm)
     {
         transformationMatrix->Reset();
+        transformationMatrix->Translation(center * -1);
+        center = newCenter;
         transformationMatrix->Translation(newCenter);
 
         transformedPoints = transformationMatrix->ApplyToPoints(points);
@@ -61,12 +68,19 @@ public:
         }
     }
 
-    void GlobalRotate(int anglex, int angley, int anglez)
+    void ResetTransformedPoints()
+    {
+        transformedPoints = points;
+    }
+
+    void GlobalRotate(int anglex, int angley, int anglez, VectorHomo3d anchor)
     {
         transformationMatrix->Reset();
+        transformationMatrix->Translation(anchor);
         transformationMatrix->RotationX(DegToRad(anglex));
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
+        transformationMatrix->Translation(anchor * -1);
         
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
     }

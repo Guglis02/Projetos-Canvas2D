@@ -235,7 +235,7 @@
 	<stdio.h>
 	<math.h>
 
-1687916024 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1688522058 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -244,6 +244,7 @@
 	<iostream>
 	"gl_canvas2d.h"
 	"Engine2d.h"
+	"Engine3d.h"
 	"./Utils/GlobalConsts.h"
 	"./Models/Cube.h"
 	"./Models/Cilinder.h"
@@ -252,13 +253,13 @@
 
 1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
 
-1687918572 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
+1688522466 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687915433 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+1688521658 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -315,7 +316,7 @@
 	<stdio.h>
 	<time.h>
 
-1687912943 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
+1688521507 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
 	<math.h>
 	<vector>
 	"VectorHomo.h"
@@ -326,7 +327,7 @@
 	<stdio.h>
 	<math.h>
 
-1687740385 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
+1688522496 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
 	<vector>
 	"./Utils/VectorHomo3d.h"
 	"./Utils/Matrix3d.h"
@@ -334,22 +335,29 @@
 	"./Utils/PointsUtils.h"
 	"./Models/Cube.h"
 	"./Models/Cilinder.h"
+	"./Models/CounterWeight.h"
 	"./Models/Model.h"
 	"gl_canvas2d.h"
 
-1687914788 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cilinder.h
+1688160110 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cilinder.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687915162 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
+1688160110 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
 1687981787 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/PointsUtils.h"
+	"./Model.h"
+
+1688515426 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\counterweight.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"

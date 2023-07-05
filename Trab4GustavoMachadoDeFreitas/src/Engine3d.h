@@ -8,6 +8,7 @@
 #include "./Utils/PointsUtils.h"
 #include "./Models/Cube.h"
 #include "./Models/Cilinder.h"
+#include "./Models/CounterWeight.h"
 #include "./Models/Model.h"
 #include "gl_canvas2d.h"
 
@@ -23,46 +24,55 @@ public:
         this->ang = startAngle;
         transformationMatrix = new Matrix3d();
 
-        //chamber = new Cube(VectorHomo3d(150, 200, 1), 100);
-        chamber->LocalRotate(0, 0, 60 * invertionCoef, true);
+        int chamberX = invertionCoef == 1 ? 100 : -200;
+        chamber = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150);
+        chamber->LocalRotate(0, 0, DegToRad(60) * invertionCoef, true);
         parts.push_back(chamber);
 
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
-        crankPin = new Cilinder(rotatingPoint, crankShaftAxisRadius, crankShaftAxisRadius, 20);
-        crankPin->LocalRotate(90, 0, 0, true);
+        crankPin = new Cilinder(rotatingPoint, 20, crankShaftAxisRadius, crankShaftAxisRadius);
         parts.push_back(crankPin);
 
-        mainJournal = new Cilinder(crankshaftAxis, crankShaftAxisRadius, crankShaftAxisRadius, 20);
-        mainJournal->LocalRotate(90, 0, 0, true);
+        mainJournal = new Cilinder(crankshaftAxis, 20, crankShaftAxisRadius, crankShaftAxisRadius);
         parts.push_back(mainJournal);
+
+        counterWeight = new CounterWeight(crankshaftAxis, 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
+        parts.push_back(counterWeight);
+
+        connectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
+        connectingRod->LocalRotate(0, DegToRad(90), 0, true);
+        parts.push_back(connectingRod);
     }
     ~Engine3d()
     {
 
     }
 
-    void Render(float anglex, float angley, float anglez)
+    void Render(float anglex, float angley, float anglez, int d)
     {
         for (auto part : parts)
         {
-            part->GlobalRotate(anglex, angley, anglez);
+            part->ResetTransformedPoints();
         }
 
         SpinCrankshaft();
-        RenderCrankshaft();
-
-        CV::color(0, 0, 1);
-
-        chamber->Draw();
 
         // Calculates the piston joint
         chamberBase = chamber->GetCenter();
         VectorHomo3d dir = chamberBase - rotatingPoint;
         dir.normalize();
 
+        connectingRod->Reposition(rotatingPoint, true);
+        connectingRod->LocalRotate(0, 0, GetAngleWithAxis(dir), false);
+
         pistonJoint = rotatingPoint + (dir * connectingRodLength);
-        // Draws the Connecting Rod
-        CV::line(rotatingPoint, pistonJoint);
+
+        CV::color(1, 0, 0);
+        for (auto part : parts)
+        {
+            part->GlobalRotate(anglex, angley, anglez, crankshaftAxis);
+            part->DrawOrthogonal();
+        }
 
         //DrawPiston();
     }
@@ -73,6 +83,8 @@ private:
     Cube* chamber;
     Cilinder* mainJournal;
     Cilinder* crankPin;
+    Cilinder* connectingRod;
+    CounterWeight* counterWeight;
 
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
@@ -89,35 +101,14 @@ private:
     // Gira a manivela
     void SpinCrankshaft()
     {
-        ang += (2 * FpsController::getInstance().GetDeltaTime());
+        ang += (1.5 * FpsController::getInstance().GetDeltaTime());
         ang = ang > PI_2 ? 0 : ang;
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
-        crankPin->Reposition(rotatingPoint, false);
+        crankPin->Reposition(rotatingPoint, true);
+
+        counterWeight->LocalRotate(0, 0, ang, false, crankshaftAxis);
+        
         mainJournal->LocalRotate(0, 0, ang, false);
-    }
-
-    // Desenha o virabrequim
-    void RenderCrankshaft()
-    {
-        CV::color(1, 0, 0);
-
-        mainJournal->Draw();
-        crankPin->Draw();
-
-        // Desenha o contrapeso
-        vector<VectorHomo3d> counterWeight = {
-            VectorHomo3d(rotatingPoint.x + crankShaftAxisRadius, rotatingPoint.y + crankShaftAxisRadius, 0),
-            VectorHomo3d(rotatingPoint.x + crankShaftAxisRadius, rotatingPoint.y - crankShaftAxisRadius, 0),
-            VectorHomo3d(rotatingPoint.x - (5 * crankShaftAxisRadius), rotatingPoint.y - (3 * crankShaftAxisRadius), 0),
-            VectorHomo3d(rotatingPoint.x - (5 * crankShaftAxisRadius), rotatingPoint.y + (3 * crankShaftAxisRadius), 0)
-        };
-
-        transformationMatrix->Reset();
-        transformationMatrix->Translation(rotatingPoint);
-        transformationMatrix->RotationZ(ang);
-        transformationMatrix->Translation(rotatingPoint * -1);
-
-        CV::polygon(transformationMatrix->ApplyToPoints(counterWeight));
     }
 
     // void DrawPiston()

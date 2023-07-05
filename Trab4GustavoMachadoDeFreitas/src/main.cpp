@@ -8,7 +8,7 @@
 
 #include "gl_canvas2d.h"
 #include "Engine2d.h"
-// #include "Engine3d.h"
+#include "Engine3d.h"
 #include "./Utils/GlobalConsts.h"
 #include "./Models/Cube.h"
 #include "./Models/Cilinder.h"
@@ -22,8 +22,8 @@ int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 Engine2d* first2dEngine;
 Engine2d* second2dEngine;
-// Engine3d* first3dEngine;
-// Engine3d* second3dEngine;
+Engine3d* first3dEngine;
+Engine3d* second3dEngine;
 
 int d = 200;
 int anglex = 0;
@@ -32,8 +32,10 @@ int anglez = 0;
 
 const int NM = 20;
 Sphere* sphere;
-Cube* cube;
 Cilinder* cilinder;
+
+
+bool temp = false;
 
 void render(void)
 {
@@ -41,7 +43,18 @@ void render(void)
     CV::color(1, 0, 0);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
 
-    // first3dEngine->Render(anglex, angley, anglez);
+    anglex = anglex > 360 ? 0 : anglex;
+    angley = angley > 360 ? 0 : angley;
+    anglez = anglez > 360 ? 0 : anglez;
+
+    if (temp)
+    {
+        first3dEngine->Render(anglex, angley, anglez, d);
+        second3dEngine->Render(anglex, angley, anglez, d);
+    } else {
+        first2dEngine->Render();
+        second2dEngine->Render();
+    }
 
     // sphere->LocalRotate(anglex, angley, anglez, false);
     // sphere->Draw(d);
@@ -50,11 +63,6 @@ void render(void)
     // cilinder->DrawPerspective(d);
     // cilinder->DrawOrthogonal();
 
-    cube->LocalRotate(anglex, angley, anglez, false);
-    cube->DrawPerspective(d);
-
-    // first2dEngine->Render();
-    // second2dEngine->Render();
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -69,7 +77,8 @@ void keyboard(int key)
     //cout << key;
 
     if(key == 'd')
-        d--;
+        temp = !temp;
+        //d--;
     if(key == 'f')
         d++;
 
@@ -98,11 +107,11 @@ int main(void)
     first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
     second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
 
-    // first3dEngine = new Engine3d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
+    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 200), false, DegToRad(0));
+    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 600), true, DegToRad(180));
 
     sphere = new Sphere(VectorHomo3d(0, 0, 200), NM, 100);
     cilinder = new Cilinder(VectorHomo3d(0, 0, 200), NM, 100, 100);
-    cube = new Cube(VectorHomo3d(0, 0, 200), 4, 100);
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

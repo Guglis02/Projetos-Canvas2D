@@ -30,15 +30,12 @@ public:
         float height = verticeSize;
         for (int i = 0 ; i < steps; i++, theta += (PI_2 / steps))
         {
-            int h = 0;
+            int h = -1 * height * 0.5;
             for (int j = 0; j < steps; j++, h += height / steps)
             {
-                float x = diagonal * cos(theta);
-                float y = diagonal * sin(theta);
-                float z = h;
-                points[i][j].x = x;
-                points[i][j].y = y;
-                points[i][j].z = z;
+                points[i][j].x = h;
+                points[i][j].y = diagonal * cos(theta);
+                points[i][j].z = diagonal * sin(theta);
                 points[i][j] += center;
             }
         }

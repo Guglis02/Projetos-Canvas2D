@@ -9,15 +9,19 @@
 
 using namespace std;
 
-// Retorna o angulo em radianos entre o vetor e o eixo x
-static float GetAngleWithXAxis(VectorHomo3d v)
+static float GetAngleWithAxis(VectorHomo3d v)
 {
     return atan2(v.y, v.x);
 }
 
 static float DegToRad(float deg)
 {
-    return deg * PI / 180.0f;
+    return deg * (PI / 180.0f);
+}
+
+static float RadToDeg(float rad)
+{
+    return rad * (180.0f / PI);
 }
 
 static VectorHomo3d GetCenter(vector<VectorHomo3d> points)

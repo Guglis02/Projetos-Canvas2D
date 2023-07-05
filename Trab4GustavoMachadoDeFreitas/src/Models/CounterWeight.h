@@ -11,13 +11,11 @@ using namespace std;
 class CounterWeight : public Model
 {
 public:
-    CounterWeight(VectorHomo3d center, int steps, float height, float bigVerticeSize, float smallVerticeSizee) : Model(center, steps)
+    CounterWeight(VectorHomo3d center, int steps, float height, float bigVerticeSize, float smallVerticeSize) : Model(center, steps)
     {
         this->bigVerticeSize = bigVerticeSize;
         this->smallVerticeSize = smallVerticeSize;
-        this->radius = radius;
         this->height = height;
-        this->div = div;
         this->Build();
     }
     ~CounterWeight()
@@ -27,7 +25,10 @@ public:
 
     void Build()
     {
+        float diagonal;
         float halfVerticeSize = bigVerticeSize * 0.5;
+        float bigDiagonal = sqrt(pow(halfVerticeSize, 2) + pow(halfVerticeSize, 2));
+        halfVerticeSize = smallVerticeSize * 0.5;
         float smallDiagonal = sqrt(pow(halfVerticeSize, 2) + pow(halfVerticeSize, 2));
 
         float theta = DegToRad(45);
@@ -36,12 +37,11 @@ public:
             int h = 0;
             for (int j = 0; j < steps; j++, h += height / steps)
             {
-                float x = diagonal * cos(theta);
-                float y = diagonal * sin(theta);
-                float z = h;
-                points[i][j].x = x;
-                points[i][j].y = y;
-                points[i][j].z = z;
+                diagonal = (i != 1 && i != 2) ? smallDiagonal : bigDiagonal;               
+                
+                points[i][j].x = diagonal * cos(theta);
+                points[i][j].y = diagonal * sin(theta);
+                points[i][j].z = h;
                 points[i][j] += center;
             }
         }
@@ -50,7 +50,6 @@ private:
     float bigVerticeSize;
     float smallVerticeSize;
     float height;
-    int div;
 };
 
 #endif
