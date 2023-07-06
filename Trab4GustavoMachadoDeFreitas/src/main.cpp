@@ -20,8 +20,7 @@ using namespace std;
 // Largura e altura inicial da tela. Alteram com o redimensionamento de tela.
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
-Engine2d* first2dEngine;
-Engine2d* second2dEngine;
+Engine2d* engine2d;
 Engine3d* first3dEngine;
 Engine3d* second3dEngine;
 
@@ -30,7 +29,14 @@ int anglex = 0;
 int angley = 0;
 int anglez = 0;
 
-bool temp = false;
+enum class viewMode
+{
+    _2d,
+    _ortho,
+    _perspective
+};
+
+viewMode currentViewMode = viewMode::_2d;
 
 void render(void)
 {
@@ -42,13 +48,21 @@ void render(void)
     angley = angley > 360 ? 0 : angley;
     anglez = anglez > 360 ? 0 : anglez;
 
-    if (temp)
+    switch (currentViewMode)
     {
-        first3dEngine->Render(anglex, angley, anglez, d);
-        second3dEngine->Render(anglex, angley, anglez, d);
-    } else {
-        first2dEngine->Render();
-        second2dEngine->Render();
+        case viewMode::_2d:
+            engine2d->Render();
+            break;
+        case viewMode::_ortho:
+            first3dEngine->Render(anglex, angley, anglez, d);
+            second3dEngine->Render(anglex, angley, anglez, d);
+            break;
+        case viewMode::_perspective:  
+            first3dEngine->Render(anglex, angley, anglez, d);
+            second3dEngine->Render(anglex, angley, anglez, d);
+            break;
+        default:
+            break;
     }
 }
 
@@ -64,8 +78,7 @@ void keyboard(int key)
     //cout << key;
 
     if(key == 'd')
-        temp = !temp;
-        //d--;
+        d--;
     if(key == 'f')
         d++;
 
@@ -91,8 +104,7 @@ void keyboardUp(int key)
 
 int main(void)
 {
-    first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
-    second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
+    engine2d = new Engine2d(VectorHomo3d(0, 0, 0));
 
     first3dEngine = new Engine3d(VectorHomo3d(0, 0, 0));
     second3dEngine = new Engine3d(VectorHomo3d(0, 0, 250));
