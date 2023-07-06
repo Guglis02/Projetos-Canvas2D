@@ -39,8 +39,8 @@ public:
             int h = 0;
             for (int j = 0; j < steps; j++, h += height / steps)
             {
-                points[i][j].x = h;
-                points[i][j].y = diagonal * cos(theta);
+                points[i][j].x = diagonal * cos(theta);
+                points[i][j].y = h;
                 points[i][j].z = diagonal * sin(theta);
                 points[i][j] += center;
             }

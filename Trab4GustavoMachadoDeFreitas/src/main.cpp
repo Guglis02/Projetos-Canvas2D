@@ -30,11 +30,6 @@ int anglex = 0;
 int angley = 0;
 int anglez = 0;
 
-const int NM = 20;
-Sphere* sphere;
-Cilinder* cilinder;
-
-
 bool temp = false;
 
 void render(void)
@@ -55,14 +50,6 @@ void render(void)
         first2dEngine->Render();
         second2dEngine->Render();
     }
-
-    // sphere->LocalRotate(anglex, angley, anglez, false);
-    // sphere->Draw(d);
-
-    // cilinder->LocalRotate(anglex, angley, anglez, false);
-    // cilinder->DrawPerspective(d);
-    // cilinder->DrawOrthogonal();
-
 }
 
 // Funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -107,11 +94,8 @@ int main(void)
     first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
     second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
 
-    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 200), false, DegToRad(0));
-    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 600), true, DegToRad(180));
-
-    sphere = new Sphere(VectorHomo3d(0, 0, 200), NM, 100);
-    cilinder = new Cilinder(VectorHomo3d(0, 0, 200), NM, 100, 100);
+    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 200));
+    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 600));
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

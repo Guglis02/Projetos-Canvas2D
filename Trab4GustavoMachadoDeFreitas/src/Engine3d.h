@@ -17,20 +17,19 @@ using namespace std;
 class Engine3d
 {
 public:
-    Engine3d(VectorHomo3d crankshaftAxis, bool isFlipped, float startAngle = 0)
+    Engine3d(VectorHomo3d crankshaftAxis)
     {
         this->crankshaftAxis = crankshaftAxis;
-        this->invertionCoef = isFlipped ? -1 : 1;
-        this->ang = startAngle;
         transformationMatrix = new Matrix3d();
 
-        int chamberX = 200 * invertionCoef;
-        int chamberAng = invertionCoef == 1 ? DegToRad(240) : DegToRad(60) * -1;
-        chamber = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150, 150);
-        chamber->LocalRotate(0, 0, chamberAng, true);
-        parts.push_back(chamber);
+        chamberBase = crankshaftAxis + VectorHomo3d(0, 250, 0);
+        leftChamber = new Cube(chamberBase, 4, 150, 150);
+        parts.push_back(leftChamber);
 
-        rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
+        rightChamber = new Cube(chamberBase, 4, 150, 150);
+        parts.push_back(rightChamber);
+
+        rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
         crankPin = new Cilinder(rotatingPoint, 20, crankShaftAxisRadius, crankShaftAxisRadius);
         parts.push_back(crankPin);
 
@@ -40,13 +39,21 @@ public:
         counterWeight = new CounterWeight(crankshaftAxis, 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
         parts.push_back(counterWeight);
 
-        connectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
-        connectingRod->LocalRotate(0, DegToRad(90), 0, true);
-        parts.push_back(connectingRod);
+        leftConnectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
+        leftConnectingRod->LocalRotate(0, DegToRad(90), 0, true);
+        parts.push_back(leftConnectingRod);
 
-        piston = new Cube(crankshaftAxis + VectorHomo3d(chamberX, 250, 0), 4, 150, 40);        
-        piston->LocalRotate(0, 0, chamberAng, true);
-        parts.push_back(piston);
+        rightConnectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
+        rightConnectingRod->LocalRotate(0, DegToRad(90), 0, true);
+        parts.push_back(rightConnectingRod);
+
+        leftPiston = new Cube(chamberBase, 4, 150, pistonHeight);
+        leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), true);
+        parts.push_back(leftPiston);
+        
+        rightPiston = new Cube(chamberBase, 4, 150, pistonHeight);
+        rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), true);
+        parts.push_back(rightPiston);
     }
     ~Engine3d()
     {
@@ -61,16 +68,8 @@ public:
         }
 
         SpinCrankshaft();
-
-        // Calculates the piston joint
-        chamberBase = chamber->GetCenter();
-        VectorHomo3d dir = chamberBase - rotatingPoint;
-        dir.normalize();
-
-        connectingRod->Reposition(rotatingPoint, true);
-        connectingRod->LocalRotate(0, 0, GetAngleWithAxis(dir), false);
-
-        pistonJoint = rotatingPoint + (dir * connectingRodLength);
+        LeftPart();
+        RightPart();
 
         CV::color(1, 0, 0);
         for (auto part : parts)
@@ -78,69 +77,92 @@ public:
             part->GlobalRotate(anglex, angley, anglez, crankshaftAxis);
             part->DrawOrthogonal();
         }
-
-        // DrawPiston();
     }
 private:
     Matrix3d* transformationMatrix;
 
     vector<Model*> parts;
-    Cube* chamber;
-    Cube* piston;
+    Cube* leftChamber;
+    Cube* rightChamber;
+    Cube* leftPiston;
+    Cube* rightPiston;
     Cilinder* mainJournal;
     Cilinder* crankPin;
-    Cilinder* connectingRod;
+    Cilinder* leftConnectingRod;
+    Cilinder* rightConnectingRod;
     CounterWeight* counterWeight;
 
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
 
-    float ang = 0;
+    float crankshaftAng = 0;
+    float leftChamberAng = 45;
+    float rightChamberAng = -45;
+
     int crankShaftAxisRadius = 30;
-    int connectingRodLength = 240;
+    int connectingRodLength = 290;
+    int pistonHeight = 40;
 
     VectorHomo3d crankshaftAxis = VectorHomo3d(0, 0, 0);
 
-    int invertionCoef = 1;
+    VectorHomo3d Rotate(VectorHomo3d v, float ang)
+    {
+        transformationMatrix->Reset();
+        transformationMatrix->Translation(crankshaftAxis);
+        transformationMatrix->RotationZ(ang);
+        transformationMatrix->Translation(crankshaftAxis * -1);
+        return *transformationMatrix * v;
+    }
+
+    void LeftPart()
+    {
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * leftChamberAng));        
+        float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
+
+        VectorHomo3d leftPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
+        leftPistonJoint = Rotate(leftPistonJoint, DegToRad(leftChamberAng));
+
+        float connectingRodAng = GetAngleWithAxis(leftPistonJoint - rotatingPoint);
+
+        leftPiston->Reposition(leftPistonJoint, true);
+
+        leftChamber->GlobalRotate(0, 0, leftChamberAng, crankshaftAxis);
+
+        leftConnectingRod->Reposition(rotatingPoint, true);
+        leftConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
+    }
+
+    void RightPart()
+    {
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * rightChamberAng));        
+        float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
+
+        VectorHomo3d rightPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
+        rightPistonJoint = Rotate(rightPistonJoint, DegToRad(rightChamberAng));
+
+        float connectingRodAng = GetAngleWithAxis(rightPistonJoint - rotatingPoint);
+
+        rightPiston->Reposition(rightPistonJoint, true);
+
+        rightChamber->GlobalRotate(0, 0, rightChamberAng, crankshaftAxis);
+
+        rightConnectingRod->Reposition(rotatingPoint, true);
+        rightConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
+    }
 
     // Gira a manivela
     void SpinCrankshaft()
     {
-        ang += (1.5 * FpsController::getInstance().GetDeltaTime());
-        ang = ang > PI_2 ? 0 : ang;
-        rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(ang), crankShaftAxisRadius * 2 * sin(ang), 0);
+        crankshaftAng += (1.5 * FpsController::getInstance().GetDeltaTime());
+        crankshaftAng = crankshaftAng > PI_2 ? 0 : crankshaftAng;
+        rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
         crankPin->Reposition(rotatingPoint, true);
 
-        counterWeight->LocalRotate(0, 0, ang, false, crankshaftAxis);
-        
-        mainJournal->LocalRotate(0, 0, ang, false);
+        counterWeight->LocalRotate(0, 0, crankshaftAng, false, crankshaftAxis);
+
+        mainJournal->LocalRotate(0, 0, crankshaftAng, false);
     }
-
-    // void DrawPiston()
-    // {
-    //     // Calcula linha oposta ao pistão
-    //     VectorHomo3d chamberDir = chamber[1] - chamber[0];
-    //     chamberDir.normalize();
-
-    //     VectorHomo3d chamberMiddle = (chamber[0] + chamber[1]) * 0.5f;
-
-    //     // Linha perpendicular ao fundo da câmara
-    //     VectorHomo3d perpDir = VectorHomo3d(-chamberDir.y, chamberDir.x, 0);
-
-    //     // Calcula a projeção do pistão na câmara
-    //     VectorHomo3d pistonProj = pistonJoint - chamberMiddle;
-    //     float projLength = pistonProj * (perpDir);
-    //     VectorHomo3d pistonProjDir = perpDir * projLength;
-    //     VectorHomo3d pistonProjPoint = chamberMiddle + pistonProjDir;
-
-    //     // Calcula as pontas do pistão
-    //     VectorHomo3d pistonStart = pistonProjPoint - (chamberDir * 50);
-    //     VectorHomo3d pistonEnd = pistonProjPoint + (chamberDir * 50);
-
-    //     // Desenha o pistão
-    //     CV::line(pistonStart, pistonEnd);
-    // }
 };
 
 #endif

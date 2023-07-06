@@ -73,7 +73,7 @@ public:
         transformedPoints = points;
     }
 
-    void GlobalRotate(int anglex, int angley, int anglez, VectorHomo3d anchor)
+    void GlobalRotate(float anglex, float angley, float anglez, VectorHomo3d anchor, bool isPerm)
     {
         transformationMatrix->Reset();
         transformationMatrix->Translation(anchor);
@@ -83,6 +83,16 @@ public:
         transformationMatrix->Translation(anchor * -1);
         
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
+
+        if (isPerm)
+        {
+            points = transformationMatrix->ApplyToPoints(points);
+        }
+    }
+
+    void GlobalRotate(float anglex, float angley, float anglez, VectorHomo3d anchor)
+    {
+        GlobalRotate(anglex, angley, anglez, anchor, false);
     }
 
     vector<vector<VectorHomo3d>> points;

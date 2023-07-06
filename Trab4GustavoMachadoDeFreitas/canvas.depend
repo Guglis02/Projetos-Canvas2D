@@ -151,7 +151,7 @@
 
 1589217858 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\vector2.h
 
-1687982035 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1688665797 source:c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -160,6 +160,7 @@
 	<iostream>
 	"gl_canvas2d.h"
 	"Engine2d.h"
+	"Engine3d.h"
 	"./Utils/GlobalConsts.h"
 	"./Models/Cube.h"
 	"./Models/Cilinder.h"
@@ -185,13 +186,13 @@
 
 1687263137 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
 
-1687982776 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
+1688660011 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cube.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687981963 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+1688661494 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -280,20 +281,20 @@
 	"./Utils/PointsUtils.h"
 	"gl_canvas2d.h"
 
-1687981787 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
+1688660608 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
 	<math.h>
 	<vector>
 	"VectorHomo.h"
 	"VectorHomo3d.h"
 	"GlobalConsts.h"
 
-1687981787 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cilinder.h
+1688584048 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\cilinder.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687703053 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
+1688665958 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
 	<vector>
 	"./Utils/VectorHomo3d.h"
 	"./Utils/Matrix3d.h"
@@ -301,6 +302,7 @@
 	"./Utils/PointsUtils.h"
 	"./Models/Cube.h"
 	"./Models/Cilinder.h"
+	"./Models/CounterWeight.h"
 	"./Models/Model.h"
 	"gl_canvas2d.h"
 
@@ -351,13 +353,19 @@
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1687981787 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
+1688584048 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\sphere.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
 1688515426 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\counterweight.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/PointsUtils.h"
+	"./Model.h"
+
+1688584048 c:\users\gugli\onedrive\documents\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\counterweight.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
