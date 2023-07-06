@@ -94,8 +94,8 @@ int main(void)
     first2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), false, DegToRad(0));
     second2dEngine = new Engine2d(VectorHomo3d(0, 0, 0), true, DegToRad(180));
 
-    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 200));
-    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 600));
+    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 0));
+    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 250));
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();

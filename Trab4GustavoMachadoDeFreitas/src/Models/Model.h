@@ -76,11 +76,9 @@ public:
     void GlobalRotate(float anglex, float angley, float anglez, VectorHomo3d anchor, bool isPerm)
     {
         transformationMatrix->Reset();
-        transformationMatrix->Translation(anchor);
         transformationMatrix->RotationX(DegToRad(anglex));
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
-        transformationMatrix->Translation(anchor * -1);
         
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
 

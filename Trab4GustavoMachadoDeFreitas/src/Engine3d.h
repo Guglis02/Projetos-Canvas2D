@@ -30,14 +30,21 @@ public:
         parts.push_back(rightChamber);
 
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
-        crankPin = new Cilinder(rotatingPoint, 20, crankShaftAxisRadius, crankShaftAxisRadius);
+        crankPin = new Cilinder(rotatingPoint + crankPinOffset, 30, 55, crankShaftAxisRadius);
         parts.push_back(crankPin);
 
-        mainJournal = new Cilinder(crankshaftAxis, 20, crankShaftAxisRadius, crankShaftAxisRadius);
-        parts.push_back(mainJournal);
+        backMainJournal = new Cilinder(crankshaftAxis + VectorHomo3d(0, 0, 15), 20, 150, crankShaftAxisRadius);
+        parts.push_back(backMainJournal);
 
-        counterWeight = new CounterWeight(crankshaftAxis, 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
-        parts.push_back(counterWeight);
+        frontMainJournal = new Cilinder(crankshaftAxis + VectorHomo3d(0, 0, -15), 20, 150, crankShaftAxisRadius);
+        frontMainJournal->LocalRotate(0, DegToRad(180), 0, true);
+        parts.push_back(frontMainJournal);
+
+        backCounterWeight = new CounterWeight(crankshaftAxis + VectorHomo3d(0, 0, 15), 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
+        parts.push_back(backCounterWeight);
+        
+        frontCounterWeight = new CounterWeight(crankshaftAxis + VectorHomo3d(0, 0, -25), 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
+        parts.push_back(frontCounterWeight);
 
         leftConnectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
         leftConnectingRod->LocalRotate(0, DegToRad(90), 0, true);
@@ -86,15 +93,18 @@ private:
     Cube* rightChamber;
     Cube* leftPiston;
     Cube* rightPiston;
-    Cilinder* mainJournal;
+    Cilinder* backMainJournal;
+    Cilinder* frontMainJournal;
     Cilinder* crankPin;
     Cilinder* leftConnectingRod;
     Cilinder* rightConnectingRod;
-    CounterWeight* counterWeight;
+    CounterWeight* frontCounterWeight;
+    CounterWeight* backCounterWeight;
 
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
+    VectorHomo3d crankPinOffset = VectorHomo3d(0, 0, -15);
 
     float crankshaftAng = 0;
     float leftChamberAng = 45;
@@ -157,11 +167,13 @@ private:
         crankshaftAng += (1.5 * FpsController::getInstance().GetDeltaTime());
         crankshaftAng = crankshaftAng > PI_2 ? 0 : crankshaftAng;
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
-        crankPin->Reposition(rotatingPoint, true);
+        crankPin->Reposition(rotatingPoint + crankPinOffset, true);
 
-        counterWeight->LocalRotate(0, 0, crankshaftAng, false, crankshaftAxis);
+        backCounterWeight->LocalRotate(0, 0, crankshaftAng, false, crankshaftAxis);
+        frontCounterWeight->LocalRotate(0, 0, crankshaftAng, false, crankshaftAxis);
 
-        mainJournal->LocalRotate(0, 0, crankshaftAng, false);
+        backMainJournal->LocalRotate(0, 0, crankshaftAng, false);
+        frontMainJournal->LocalRotate(0, 0, crankshaftAng, false);
     }
 };
 
