@@ -107,6 +107,7 @@ public:
                 int y = j;
                 int nx = (i + 1) % (transformedPoints.size());
                 int ny = (j + 1) % (transformedPoints[i].size());
+                
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[x][nx], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][y], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][ny], d);

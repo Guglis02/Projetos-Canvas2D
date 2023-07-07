@@ -33,6 +33,11 @@ public:
     }
     static void perspectiveLine( VectorHomo3d p1, VectorHomo3d p2, float d)
     {
+        if (p1.z <= 0 || p2.z <= 0)
+        {
+            return;
+        }
+
         line(d * p1.x/p1.z, d * p1.y/p1.z, d * p2.x/p2.z, d * p2.y/p2.z);
     }
 

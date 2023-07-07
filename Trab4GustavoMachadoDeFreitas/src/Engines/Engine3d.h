@@ -2,93 +2,128 @@
 #define __ENGINE3D_H__
 
 #include <vector>
-#include "./Utils/VectorHomo3d.h"
-#include "./Utils/Matrix3d.h"
-#include "./Utils/FpsController.h"
-#include "./Utils/PointsUtils.h"
-#include "./Models/Cube.h"
-#include "./Models/Cilinder.h"
-#include "./Models/CounterWeight.h"
-#include "./Models/Model.h"
-#include "gl_canvas2d.h"
+#include "../Utils/VectorHomo3d.h"
+#include "../Utils/Matrix3d.h"
+#include "../Utils/FpsController.h"
+#include "../Utils/PointsUtils.h"
+#include "../Models/Cube.h"
+#include "../Models/Cilinder.h"
+#include "../Models/CounterWeight.h"
+#include "../Models/Model.h"
+#include "../gl_canvas2d.h"
 
 using namespace std;
 
-class Engine3d
+class Engine3d : public Engine
 {
 public:
-    Engine3d(VectorHomo3d crankshaftAxis)
+    Engine3d(VectorHomo3d crankshaftAxis) : Engine(crankshaftAxis)
     {
-        this->crankshaftAxis = crankshaftAxis;
-        transformationMatrix = new Matrix3d();
-
         chamberBase = crankshaftAxis + VectorHomo3d(0, 250, 0);
         leftChamber = new Cube(chamberBase, 4, 150, 150);
         parts.push_back(leftChamber);
+        chamberParts.push_back(leftChamber);
 
         rightChamber = new Cube(chamberBase, 4, 150, 150);
         parts.push_back(rightChamber);
+        chamberParts.push_back(rightChamber);
 
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
         crankPin = new Cilinder(rotatingPoint + crankPinOffset, 30, 55, crankShaftAxisRadius);
         parts.push_back(crankPin);
+        crankshaftParts.push_back(crankPin);
 
         backMainJournal = new Cilinder(crankshaftAxis + VectorHomo3d(0, 0, 15), 20, 150, crankShaftAxisRadius);
         parts.push_back(backMainJournal);
+        crankshaftParts.push_back(backMainJournal);
 
         frontMainJournal = new Cilinder(crankshaftAxis + VectorHomo3d(0, 0, -15), 20, 150, crankShaftAxisRadius);
         frontMainJournal->LocalRotate(0, DegToRad(180), 0, true);
         parts.push_back(frontMainJournal);
+        crankshaftParts.push_back(frontMainJournal);
 
         backCounterWeight = new CounterWeight(crankshaftAxis + VectorHomo3d(0, 0, 15), 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
         parts.push_back(backCounterWeight);
-        
+        crankshaftParts.push_back(backCounterWeight);
+
         frontCounterWeight = new CounterWeight(crankshaftAxis + VectorHomo3d(0, 0, -25), 4, 20, 8 * crankShaftAxisRadius, 3 * crankShaftAxisRadius);
         parts.push_back(frontCounterWeight);
+        crankshaftParts.push_back(frontCounterWeight);
 
         leftConnectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
         leftConnectingRod->LocalRotate(0, DegToRad(90), 0, true);
         parts.push_back(leftConnectingRod);
+        pistonParts.push_back(leftConnectingRod);
 
         rightConnectingRod = new Cilinder(rotatingPoint, 20, connectingRodLength, 5);
         rightConnectingRod->LocalRotate(0, DegToRad(90), 0, true);
         parts.push_back(rightConnectingRod);
+        pistonParts.push_back(rightConnectingRod);
 
         leftPiston = new Cube(chamberBase, 4, 150, pistonHeight);
         leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), true);
         parts.push_back(leftPiston);
-        
+        pistonParts.push_back(leftPiston);
+
         rightPiston = new Cube(chamberBase, 4, 150, pistonHeight);
         rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), true);
         parts.push_back(rightPiston);
+        pistonParts.push_back(rightPiston);
     }
     ~Engine3d()
     {
-
     }
 
-    void Render(float anglex, float angley, float anglez, int d)
+    void RenderOrtho(float anglex, float angley, float anglez)
     {
-        for (auto part : parts)
+        Render(anglex, angley, anglez);
+
+        CV::color(0, 1, 0);
+        for (auto part : chamberParts)
         {
-            part->ResetTransformedPoints();
+            part->DrawOrthogonal();
         }
 
-        SpinCrankshaft();
-        LeftPart();
-        RightPart();
+        CV::color(0, 0, 1);
+        for (auto part : pistonParts)
+        {
+            part->DrawOrthogonal();
+        }
 
         CV::color(1, 0, 0);
-        for (auto part : parts)
+        for (auto part : crankshaftParts)
         {
-            part->GlobalRotate(anglex, angley, anglez, crankshaftAxis);
             part->DrawOrthogonal();
         }
     }
-private:
-    Matrix3d* transformationMatrix;
 
+    void RenderPersp(float anglex, float angley, float anglez, int d)
+    {
+        Render(anglex, angley, anglez);
+
+        CV::color(0, 1, 0);
+        for (auto part : chamberParts)
+        {
+            part->DrawPerspective(d);
+        }
+
+        CV::color(0, 0, 1);
+        for (auto part : pistonParts)
+        {
+            part->DrawPerspective(d);
+        }
+
+        CV::color(1, 0, 0);
+        for (auto part : crankshaftParts)
+        {
+            part->DrawPerspective(d);
+        }
+    }
+private:
     vector<Model*> parts;
+    vector<Model*> chamberParts;
+    vector<Model*> pistonParts;
+    vector<Model*> crankshaftParts;
     Cube* leftChamber;
     Cube* rightChamber;
     Cube* leftPiston;
@@ -114,20 +149,9 @@ private:
     int connectingRodLength = 290;
     int pistonHeight = 40;
 
-    VectorHomo3d crankshaftAxis = VectorHomo3d(0, 0, 0);
-
-    VectorHomo3d Rotate(VectorHomo3d v, float ang)
-    {
-        transformationMatrix->Reset();
-        transformationMatrix->Translation(crankshaftAxis);
-        transformationMatrix->RotationZ(ang);
-        transformationMatrix->Translation(crankshaftAxis * -1);
-        return *transformationMatrix * v;
-    }
-
     void LeftPart()
     {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * leftChamberAng));        
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * leftChamberAng));
         float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
 
         VectorHomo3d leftPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
@@ -145,7 +169,7 @@ private:
 
     void RightPart()
     {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * rightChamberAng));        
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * rightChamberAng));
         float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
 
         VectorHomo3d rightPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
@@ -174,6 +198,23 @@ private:
 
         backMainJournal->LocalRotate(0, 0, crankshaftAng, false);
         frontMainJournal->LocalRotate(0, 0, crankshaftAng, false);
+    }
+
+    void Render(float anglex, float angley, float anglez)
+    {
+        for (auto part : parts)
+        {
+            part->ResetTransformedPoints();
+        }
+
+        SpinCrankshaft();
+        LeftPart();
+        RightPart();
+
+        for (auto part : parts)
+        {
+            part->GlobalRotate(anglex, angley, anglez, crankshaftAxis);
+        }
     }
 };
 

@@ -205,7 +205,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1687909113 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
+1688685842 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -236,7 +236,7 @@
 	<stdio.h>
 	<math.h>
 
-1688680241 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1688689563 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdio.h>
@@ -244,8 +244,8 @@
 	<vector>
 	<iostream>
 	"gl_canvas2d.h"
-	"Engine2d.h"
-	"Engine3d.h"
+	"./Engines/Engine2d.h"
+	"./Engines/Engine3d.h"
 	"./Utils/GlobalConsts.h"
 	"./Models/Cube.h"
 	"./Models/Cilinder.h"
@@ -260,7 +260,7 @@
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1688678775 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
+1688683449 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\models\model.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -318,10 +318,9 @@
 	<stdio.h>
 	<time.h>
 
-1688597020 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
+1688686509 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\pointsutils.h
 	<math.h>
 	<vector>
-	"VectorHomo.h"
 	"VectorHomo3d.h"
 	"GlobalConsts.h"
 
@@ -329,7 +328,7 @@
 	<stdio.h>
 	<math.h>
 
-1688680066 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
+1688683063 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engine3d.h
 	<vector>
 	"./Utils/VectorHomo3d.h"
 	"./Utils/Matrix3d.h"
@@ -370,4 +369,33 @@
 	"../Utils/VectorHomo3d.h"
 	"../Utils/PointsUtils.h"
 	"./Model.h"
+
+1688687451 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine2d.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/Matrix3d.h"
+	"../Utils/FpsController.h"
+	"../Utils/PointsUtils.h"
+	"./Engine.h"
+	"../gl_canvas2d.h"
+
+1688689635 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/Matrix3d.h"
+	"../Utils/FpsController.h"
+	"../Utils/PointsUtils.h"
+	"../gl_canvas2d.h"
+
+1688687618 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine3d.h
+	<vector>
+	"../Utils/VectorHomo3d.h"
+	"../Utils/Matrix3d.h"
+	"../Utils/FpsController.h"
+	"../Utils/PointsUtils.h"
+	"../Models/Cube.h"
+	"../Models/Cilinder.h"
+	"../Models/CounterWeight.h"
+	"../Models/Model.h"
+	"../gl_canvas2d.h"
 

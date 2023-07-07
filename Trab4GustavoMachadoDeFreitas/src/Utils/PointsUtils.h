@@ -3,7 +3,6 @@
 
 #include <math.h>
 #include <vector>
-#include "VectorHomo.h"
 #include "VectorHomo3d.h"
 #include "GlobalConsts.h"
 
@@ -47,19 +46,5 @@ static VectorHomo3d GetCenter(vector<vector<VectorHomo3d>> points)
     }
     center = center / (points.size() * points[0].size());
     return center;
-}
-
-// Retirado de: https://wrfranklin.org/Research/Short_Notes/pnpoly.html#The%20C%20Code
-// Adapta��o usando Vector2
-static int pnpoly(int nvert, VectorHomo *vert, VectorHomo test)
-{
-    int i, j, c = 0;
-    for (i = 0, j = nvert - 1; i < nvert; j = i++)
-    {
-        if (((vert[i].y > test.y) != (vert[j].y > test.y)) &&
-            (test.x < (vert[j].x - vert[i].x) * (test.y - vert[i].y) / (vert[j].y - vert[i].y) + vert[i].x))
-            c = !c;
-    }
-    return c;
 }
 #endif // POINTUTILS_H_INCLUDED

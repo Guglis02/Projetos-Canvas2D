@@ -7,8 +7,8 @@
 #include <iostream>
 
 #include "gl_canvas2d.h"
-#include "Engine2d.h"
-#include "Engine3d.h"
+#include "./Engines/Engine2d.h"
+#include "./Engines/Engine3d.h"
 #include "./Utils/GlobalConsts.h"
 #include "./Models/Cube.h"
 #include "./Models/Cilinder.h"
@@ -21,8 +21,7 @@ using namespace std;
 int screenWidth = ConstScreenWidth, screenHeight = ConstScreenHeight;
 
 Engine2d* engine2d;
-Engine3d* first3dEngine;
-Engine3d* second3dEngine;
+vector<Engine3d*> engines3d;
 
 int d = 200;
 int anglex = 0;
@@ -54,12 +53,16 @@ void render(void)
             engine2d->Render();
             break;
         case viewMode::_ortho:
-            first3dEngine->Render(anglex, angley, anglez, d);
-            second3dEngine->Render(anglex, angley, anglez, d);
+            for (auto engine : engines3d)
+            {
+                engine->RenderOrtho(anglex, angley, anglez);
+            }
             break;
-        case viewMode::_perspective:  
-            first3dEngine->Render(anglex, angley, anglez, d);
-            second3dEngine->Render(anglex, angley, anglez, d);
+        case viewMode::_perspective:
+            for (auto engine : engines3d)
+            {
+                engine->RenderPersp(anglex, angley, anglez, d);
+            }
             break;
         default:
             break;
@@ -77,22 +80,29 @@ void keyboard(int key)
 {
     //cout << key;
 
-    if(key == 'd')
+    if(key == 'x')
         d--;
-    if(key == 'f')
+    if(key == 'z')
         d++;
 
-    if(key == 56) // 8 aumenta angulo x
+    if(key == 'j')
+        currentViewMode = viewMode::_2d;
+    if(key == 'k')
+        currentViewMode = viewMode::_ortho;
+    if(key == 'l')
+        currentViewMode = viewMode::_perspective;
+
+    if(key == 'w')
         anglex++;
-    if(key == 50) // 2 diminui angulo x
+    if(key == 's')
         anglex--;
-    if(key == 52) // 4 aumenta angulo y
+    if(key == 'a')
         angley++;
-    if(key == 54) // 6 diminui angulo y
+    if(key == 'd')
         angley--;
-    if(key == 55) // 7 aumenta angulo z
+    if(key == 'q')
         anglez++;
-    if(key == 57) // 9 diminui angulo z
+    if(key == 'e')
         anglez--;
 }
 
@@ -106,8 +116,8 @@ int main(void)
 {
     engine2d = new Engine2d(VectorHomo3d(0, 0, 0));
 
-    first3dEngine = new Engine3d(VectorHomo3d(0, 0, 0));
-    second3dEngine = new Engine3d(VectorHomo3d(0, 0, 250));
+    Engine3d* first3dEngine = new Engine3d(VectorHomo3d(0, 0, 250));
+    engines3d.push_back(first3dEngine);
 
     CV::init(&screenWidth, &screenHeight, "Trabalho 4 - Gustavo Machado de Freitas");
     CV::run();
