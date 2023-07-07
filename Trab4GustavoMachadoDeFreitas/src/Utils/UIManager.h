@@ -34,8 +34,8 @@ public:
         sprintf(auxLabel, "FPS: %.1f", FpsController::getInstance().getFps());
         CV::color(0, 0, 0);
         CV::text(textX, 10 * textHeight, auxLabel);
-        CV::text(textX, 9 * textHeight, "Para rotacionar utilize WASD nos eixos X e Y, e QE no eixo Z!");
-        CV::text(textX, 8 * textHeight, "Para alterar a visualizacao use J, K e L!");
+        CV::text(textX, 9 * textHeight, "Para rotacionar utilize WASD nos eixos X e Y, e QE no eixo Z.");
+        CV::text(textX, 8 * textHeight, "Para alterar a visualizacao use j, k e l.");
         sprintf(auxLabel, "Visualizacao: %s", ToString(currentViewMode));
         CV::text(textX, 7 * textHeight, auxLabel);
         CV::text(textX, 6 * textHeight, "Exibir: Camaras (c); Pistoes (p); Virabrequim (v);");
@@ -50,18 +50,6 @@ public:
         sprintf(auxLabel, "4 - Coeficiente d: %.1f", d);
         CV::text(textX, textHeight, auxLabel);
     }
-
-    // FPS:
-    // Para rotacionar utilize WASD nos eixos X e Y, e QE no eixo Z!
-
-    // Para alterar a visualização use J, K e L!
-    // Visualização: 2D
-    // Exibir: Camaras (c) [ ]; Pistoes (p) [ ]; Virabrequim (v) [ ];
-    // Use o número para selecionar e +/- para alterar:
-    // 1 - RPM:
-    // 2 - Angulo entre pistões:
-    // 3 - Numero de motores:
-    // 4 - Coeficiente d:
 
 private:
     // Valores que serão desenhados na tela
