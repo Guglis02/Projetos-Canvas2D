@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Classe que representa o modelo de um cubo
 class Cube : public Model
 {
 public:
@@ -20,11 +21,6 @@ public:
     ~Cube()
     {
         
-    }
-
-    VectorHomo3d GetDirection()
-    {
-
     }
 
     void Build()

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Classe base dos modelos 3D usados no programa
 class Model
 {
 public:
@@ -26,16 +27,15 @@ public:
         delete transformationMatrix;
     }
 
-    VectorHomo3d GetCenter()
-    {
-        return center;
-    }
-
+    // Rotaciona o modelo em torno do seu centro
+    // A rotacao pode alterar permanentemente os pontos ou apenas alterar os pontos temporários.
     void LocalRotate(float anglex, float angley, float anglez, bool isPerm)
     {
         LocalRotate(anglex, angley, anglez, isPerm, center);
     } 
 
+    // Rotaciona o modelo em torno de uma ancora.
+    // A rotacao pode alterar permanentemente os pontos ou apenas alterar os pontos temporários.
     void LocalRotate(float anglex, float angley, float anglez, bool isPerm, VectorHomo3d anchor)
     {
         transformationMatrix->Reset();
@@ -53,6 +53,7 @@ public:
         }
     }
 
+    // Reposiciona o modelo no mundo, pode ser permanente ou não.
     void Reposition(VectorHomo3d newCenter, bool isPerm)
     {
         transformationMatrix->Reset();
@@ -73,7 +74,8 @@ public:
         transformedPoints = points;
     }
 
-    void GlobalRotate(float anglex, float angley, float anglez, VectorHomo3d anchor, bool isPerm)
+    // Rotaciona globalmente o modelo em torno da origem
+    void GlobalRotate(float anglex, float angley, float anglez)
     {
         transformationMatrix->Reset();
         transformationMatrix->RotationX(DegToRad(anglex));
@@ -81,22 +83,14 @@ public:
         transformationMatrix->RotationZ(DegToRad(anglez));
         
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
-
-        if (isPerm)
-        {
-            points = transformationMatrix->ApplyToPoints(points);
-        }
     }
 
-    void GlobalRotate(float anglex, float angley, float anglez, VectorHomo3d anchor)
-    {
-        GlobalRotate(anglex, angley, anglez, anchor, false);
-    }
-
+    // Pontos do modelo
     vector<vector<VectorHomo3d>> points;
 
     virtual void Build(){};
 
+    // Desenha o modelo em perspectiva
     void DrawPerspective(int d)
     {
         for (unsigned int i = 0; i < transformedPoints.size(); i++)
@@ -115,6 +109,7 @@ public:
         }
     }
 
+    // Desenha o modelo com camera ortogonal
     void DrawOrthogonal()
     {
         for (int i = 0; i < transformedPoints.size(); i++)

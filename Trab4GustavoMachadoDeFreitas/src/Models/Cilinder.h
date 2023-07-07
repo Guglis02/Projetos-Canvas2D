@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Classe responsável pelo modelo de um cilindro
 class Cilinder : public Model
 {
 public:

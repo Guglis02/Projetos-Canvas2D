@@ -1,6 +1,7 @@
 #ifndef VIEW_MODE_H
 #define VIEW_MODE_H
 
+// Enum que representa os modos de visualização disponíveis no programa.
 enum class viewMode
 {
     _2d,

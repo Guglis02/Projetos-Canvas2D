@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Classe que representa o modelo trapezoide do contrapeso
 class CounterWeight : public Model
 {
 public:

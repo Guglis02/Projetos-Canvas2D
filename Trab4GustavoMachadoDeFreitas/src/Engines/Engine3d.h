@@ -104,6 +104,7 @@ public:
         }
     }
 private:
+    // Peças do motor
     vector<Model*> parts;
     vector<Model*> chamberParts;
     vector<Model*> pistonParts;
@@ -120,6 +121,7 @@ private:
     CounterWeight* frontCounterWeight;
     CounterWeight* backCounterWeight;
 
+    // Pontos importantes para o calculo do pistão
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
@@ -142,7 +144,7 @@ private:
         leftPiston->Reposition(leftPistonJoint, true);
         leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), false);
 
-        leftChamber->GlobalRotate(0, 0, leftChamberAng, crankshaftAxis);
+        leftChamber->GlobalRotate(0, 0, leftChamberAng);
 
         leftConnectingRod->Reposition(rotatingPoint, true);
         leftConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
@@ -161,13 +163,12 @@ private:
         rightPiston->Reposition(rightPistonJoint, true);
         rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), false);
 
-        rightChamber->GlobalRotate(0, 0, rightChamberAng, crankshaftAxis);
+        rightChamber->GlobalRotate(0, 0, rightChamberAng);
 
         rightConnectingRod->Reposition(rotatingPoint, true);
         rightConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
     }
 
-    // Gira a manivela
     void SpinCrankshaft()
     {
         float crankshaftAngIncrement = (rpm / 60.0f) * 2.0f * PI * FpsController::getInstance().GetDeltaTime();
@@ -183,6 +184,7 @@ private:
         frontMainJournal->LocalRotate(0, 0, crankshaftAng, false);
     }
 
+    // Atualiza peças do motor
     void Update(float anglex, float angley, float anglez)
     {
         for (auto part : parts)
@@ -196,7 +198,7 @@ private:
 
         for (auto part : parts)
         {
-            part->GlobalRotate(anglex, angley, anglez, crankshaftAxis);
+            part->GlobalRotate(anglex, angley, anglez);
         }
     }
 };

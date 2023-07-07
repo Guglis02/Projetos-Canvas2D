@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Classe base de um motor, guarda informações em comum dos motores 2D e 3D
 class Engine
 {
 public:
@@ -22,6 +23,8 @@ public:
     {
 
     }
+
+    virtual void Render(){};
 
     void SetRpm(float value)
     {
@@ -55,17 +58,29 @@ public:
     }
 protected:
     Matrix3d* transformationMatrix;
+
+    // Eixo base do virabrequim, setado no construtor dos motores
     VectorHomo3d crankshaftAxis = VectorHomo3d(0, 0, 0);
 
+    // Controladores de qual parte do motor deve ser mostrada
     bool isShowingChamber = true;
     bool isShowingPiston = true;
     bool isShowingCrankshaft = true;
 
     float crankshaftAng = 0;
+
+    // Angulos dos pistões
     float leftChamberAng = 45;
     float rightChamberAng = -45;
 
     float rpm = 0;
+
+    // Roda o virabrequim
+    virtual void SpinCrankshaft(){};
+
+    // Lida com cada lado do motor individualmente
+    virtual void LeftPart(){};
+    virtual void RightPart(){};
 
     VectorHomo3d Rotate(VectorHomo3d v, float ang)
     {

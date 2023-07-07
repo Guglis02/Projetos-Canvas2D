@@ -13,13 +13,13 @@
 #include "./Engines/Engine.h"
 #include "./Models/Cube.h"
 #include "./Models/Cilinder.h"
-#include "./Models/Sphere.h"
 #include "./Utils/FpsController.h"
 #include "./Utils/UIManager.h"
 #include "./Utils/ViewMode.h"
 
 using namespace std;
 
+// Classe responsável por gerenciar todos os motores.
 class EnginesManager
 {
 public:
@@ -48,23 +48,23 @@ public:
 
         switch (currentViewMode)
         {
-        case viewMode::_2d:
-            engine2d->Render();
-            break;
-        case viewMode::_ortho:
-            for (auto engine : engines3d)
-            {
-                engine->Render(anglex, angley, anglez, d, false);
-            }
-            break;
-        case viewMode::_perspective:
-            for (auto engine : engines3d)
-            {
-                engine->Render(anglex, angley, anglez, d, true);
-            }
-            break;
-        default:
-            break;
+            case viewMode::_2d:
+                engine2d->Render();
+                break;
+            case viewMode::_ortho:
+                for (auto engine : engines3d)
+                {
+                    engine->Render(anglex, angley, anglez, d, false);
+                }
+                break;
+            case viewMode::_perspective:
+                for (auto engine : engines3d)
+                {
+                    engine->Render(anglex, angley, anglez, d, true);
+                }
+                break;
+            default:
+                break;
         }
 
         uiManager->Draw();
@@ -74,71 +74,72 @@ public:
     {
         switch (key)
         {
-        case '+':
-            IncrementCurrentVariable(1);
-            break;
-        case '-':
-            IncrementCurrentVariable(-1);
-            break;
-        case 'j':
-            currentViewMode = viewMode::_2d;
-            break;
-        case 'k':
-            currentViewMode = viewMode::_ortho;
-            break;
-        case 'l':
-            currentViewMode = viewMode::_perspective;
-            break;
-        case 'w':
-            anglex++;
-            break;
-        case 's':
-            anglex--;
-            break;
-        case 'a':
-            angley++;
-            break;
-        case 'd':
-            angley--;
-            break;
-        case 'q':
-            anglez++;
-            break;
-        case 'e':
-            anglez--;
-            break;
-        case 'c':
-            for (auto engine : engines)
-            {
-                engine->ToggleChamberView();
-            }
-            break;
-        case 'p':
-            for (auto engine : engines)
-            {
-                engine->TogglePistonView();
-            }
-            break;
-        case 'v':
-            for (auto engine : engines)
-            {
-                engine->ToggleCrankshaftView();
-            }
-            break;
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-            currentVariable = key - '0';
-            break;
-        default:
-            break;
+            case '+':
+                IncrementCurrentVariable(1);
+                break;
+            case '-':
+                IncrementCurrentVariable(-1);
+                break;
+            case 'j':
+                currentViewMode = viewMode::_2d;
+                break;
+            case 'k':
+                currentViewMode = viewMode::_ortho;
+                break;
+            case 'l':
+                currentViewMode = viewMode::_perspective;
+                break;
+            case 'w':
+                anglex++;
+                break;
+            case 's':
+                anglex--;
+                break;
+            case 'a':
+                angley++;
+                break;
+            case 'd':
+                angley--;
+                break;
+            case 'q':
+                anglez++;
+                break;
+            case 'e':
+                anglez--;
+                break;
+            case 'c':
+                for (auto engine : engines)
+                {
+                    engine->ToggleChamberView();
+                }
+                break;
+            case 'p':
+                for (auto engine : engines)
+                {
+                    engine->TogglePistonView();
+                }
+                break;
+            case 'v':
+                for (auto engine : engines)
+                {
+                    engine->ToggleCrankshaftView();
+                }
+                break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+                currentVariable = key - '0';
+                break;
+            default:
+                break;
         }
     }
 
 private:
     Engine2d *engine2d;
     vector<Engine3d *> engines3d;
+    // Vetor usado em situações onde tanto o motor 2D quanto os motores 3D devem ser chamados
     vector<Engine*> engines;
     UIManager *uiManager;
 
@@ -146,7 +147,9 @@ private:
     int engineOffset = 250;
 
     int d = 200;
-    float rpm = 0;
+    // O Rpm pode ser negativado para inverter o sentido da rotação
+    float rpm = 5;
+    // O angulo entre os pistões é limitado entre 60 e 110 conforme a especificação
     int angleBetweenPistons = 90;
 
     int anglex = 0;
@@ -163,6 +166,7 @@ private:
         engines.push_back(engines3d.back());
     }
 
+    // Remove até sobrar no mínimo um motor 3d
     void RemoveEngine()
     {
         if (engines3d.size() > 1)

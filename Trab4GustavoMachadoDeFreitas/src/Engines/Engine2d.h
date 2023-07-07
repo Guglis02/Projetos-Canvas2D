@@ -49,7 +49,6 @@ protected:
     int crankShaftAxisRadius = 30;
     int connectingRodLength = 260;
 
-    // Gira a manivela
     void SpinCrankshaft()
     {
         float crankshaftAngIncrement = (rpm / 60.0f) * 2.0f * PI * FpsController::getInstance().GetDeltaTime();

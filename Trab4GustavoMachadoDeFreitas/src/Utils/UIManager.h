@@ -13,6 +13,7 @@ public:
     UIManager()
     {    }
 
+    // Atualiza os valores que devem ser mostrados na tela
     void Update(float rpm, float angleBetweenPistons, int numberOfEngines, float d, viewMode currentViewMode, int currentOption)
     {
         this->rpm = rpm;
@@ -23,6 +24,7 @@ public:
         this->currentOption = currentOption;
     }
 
+    // Formata e desenha na tela as informações do programa
     void Draw()
     {                
         CV::translate(0, 0);
@@ -61,6 +63,7 @@ public:
     // 4 - Coeficiente d:
 
 private:
+    // Valores que serão desenhados na tela
     float rpm = 0;
     float angleBetweenPistons = 0;
     int numberOfEngines = 1;
@@ -68,8 +71,9 @@ private:
     float d = 0;
     viewMode currentViewMode;
 
-    float textX = 15;
-    float textHeight = 15;
+    // Constantes auxiliares  
+    float const textX = 15;
+    float const textHeight = 15;
 
     char* GetCurrentOption()
     {
