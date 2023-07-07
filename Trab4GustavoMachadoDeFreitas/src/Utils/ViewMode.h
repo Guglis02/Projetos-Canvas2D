@@ -9,7 +9,7 @@ enum class viewMode
     _perspective
 };
 
-static char* ToString(viewMode mode)
+static char *ToString(viewMode mode)
 {
     switch (mode)
     {

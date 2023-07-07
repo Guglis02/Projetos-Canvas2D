@@ -31,6 +31,8 @@ public:
     {
         line(p1.x, p1.y, p2.x, p2.y);
     }
+
+    // Método variante que desenha linhas em perspectiva
     static void perspectiveLine( VectorHomo3d p1, VectorHomo3d p2, float d)
     {
         if (p1.z <= 0 || p2.z <= 0)

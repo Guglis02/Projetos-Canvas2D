@@ -20,7 +20,6 @@ public:
     }
     ~Cube()
     {
-        
     }
 
     void Build()
@@ -30,7 +29,7 @@ public:
 
         float theta = DegToRad(45);
         float height = this->height;
-        for (int i = 0 ; i < steps; i++, theta += (PI_2 / steps))
+        for (int i = 0; i < steps; i++, theta += (PI_2 / steps))
         {
             int h = 0;
             for (int j = 0; j < steps; j++, h += height / steps)
@@ -42,6 +41,7 @@ public:
             }
         }
     }
+
 private:
     float verticeSize;
     float height;

@@ -32,7 +32,7 @@ public:
     void LocalRotate(float anglex, float angley, float anglez, bool isPerm)
     {
         LocalRotate(anglex, angley, anglez, isPerm, center);
-    } 
+    }
 
     // Rotaciona o modelo em torno de uma ancora.
     // A rotacao pode alterar permanentemente os pontos ou apenas alterar os pontos temporários.
@@ -44,7 +44,7 @@ public:
         transformationMatrix->RotationY(angley);
         transformationMatrix->RotationZ(anglez);
         transformationMatrix->Translation(anchor * -1);
-            
+
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
 
         if (isPerm)
@@ -81,7 +81,7 @@ public:
         transformationMatrix->RotationX(DegToRad(anglex));
         transformationMatrix->RotationY(DegToRad(angley));
         transformationMatrix->RotationZ(DegToRad(anglez));
-        
+
         transformedPoints = transformationMatrix->ApplyToPoints(transformedPoints);
     }
 
@@ -101,7 +101,7 @@ public:
                 int y = j;
                 int nx = (i + 1) % (transformedPoints.size());
                 int ny = (j + 1) % (transformedPoints[i].size());
-                
+
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[x][nx], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][y], d);
                 CV::perspectiveLine(transformedPoints[x][y], transformedPoints[nx][ny], d);
@@ -126,8 +126,9 @@ public:
             }
         }
     }
+
 protected:
-    Matrix3d* transformationMatrix;
+    Matrix3d *transformationMatrix;
     vector<vector<VectorHomo3d>> transformedPoints;
     VectorHomo3d center;
     int steps = 20;

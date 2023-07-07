@@ -21,7 +21,6 @@ public:
     }
     ~Engine()
     {
-
     }
 
     virtual void Render(){};
@@ -56,8 +55,9 @@ public:
     {
         isShowingCrankshaft = !isShowingCrankshaft;
     }
+
 protected:
-    Matrix3d* transformationMatrix;
+    Matrix3d *transformationMatrix;
 
     // Eixo base do virabrequim, setado no construtor dos motores
     VectorHomo3d crankshaftAxis = VectorHomo3d(0, 0, 0);

@@ -11,7 +11,8 @@ class UIManager
 {
 public:
     UIManager()
-    {    }
+    {
+    }
 
     // Atualiza os valores que devem ser mostrados na tela
     void Update(float rpm, float angleBetweenPistons, int numberOfEngines, float d, viewMode currentViewMode, int currentOption)
@@ -26,7 +27,7 @@ public:
 
     // Formata e desenha na tela as informações do programa
     void Draw()
-    {                
+    {
         CV::translate(0, 0);
 
         char auxLabel[64];
@@ -71,11 +72,11 @@ private:
     float d = 0;
     viewMode currentViewMode;
 
-    // Constantes auxiliares  
+    // Constantes auxiliares
     float const textX = 15;
     float const textHeight = 15;
 
-    char* GetCurrentOption()
+    char *GetCurrentOption()
     {
         switch (currentOption)
         {

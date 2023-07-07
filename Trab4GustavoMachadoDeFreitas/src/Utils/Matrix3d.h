@@ -87,12 +87,12 @@ public:
     }
 
     // Multiplica a matriz atual por um conjunto de pontos
-    vector<VectorHomo3d*> ApplyToPoints(vector<VectorHomo3d*> points)
+    vector<VectorHomo3d *> ApplyToPoints(vector<VectorHomo3d *> points)
     {
-        vector<VectorHomo3d*> transformedPoints;
+        vector<VectorHomo3d *> transformedPoints;
         for (auto point : points)
         {
-            VectorHomo3d* transformedPoint = new VectorHomo3d();
+            VectorHomo3d *transformedPoint = new VectorHomo3d();
             *transformedPoint = *this * (*point);
             transformedPoints.push_back(transformedPoint);
         }
