@@ -236,21 +236,12 @@
 	<stdio.h>
 	<math.h>
 
-1688689563 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
+1688763569 source:e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
-	<stdio.h>
-	<cstdlib>
-	<vector>
-	<iostream>
 	"gl_canvas2d.h"
-	"./Engines/Engine2d.h"
-	"./Engines/Engine3d.h"
 	"./Utils/GlobalConsts.h"
-	"./Models/Cube.h"
-	"./Models/Cilinder.h"
-	"./Models/Sphere.h"
-	"./Utils/FpsController.h"
+	"./EnginesManager.h"
 
 1687391673 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\globalconsts.h
 
@@ -370,7 +361,7 @@
 	"../Utils/PointsUtils.h"
 	"./Model.h"
 
-1688687451 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine2d.h
+1688765241 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine2d.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -379,7 +370,7 @@
 	"./Engine.h"
 	"../gl_canvas2d.h"
 
-1688689635 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine.h
+1688765418 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -387,7 +378,7 @@
 	"../Utils/PointsUtils.h"
 	"../gl_canvas2d.h"
 
-1688687618 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine3d.h
+1688765767 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\engines\engine3d.h
 	<vector>
 	"../Utils/VectorHomo3d.h"
 	"../Utils/Matrix3d.h"
@@ -398,4 +389,29 @@
 	"../Models/CounterWeight.h"
 	"../Models/Model.h"
 	"../gl_canvas2d.h"
+
+1688765578 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\enginesmanager.h
+	<stdio.h>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<math.h>
+	"gl_canvas2d.h"
+	"./Engines/Engine2d.h"
+	"./Engines/Engine3d.h"
+	"./Engines/Engine.h"
+	"./Models/Cube.h"
+	"./Models/Cilinder.h"
+	"./Models/Sphere.h"
+	"./Utils/FpsController.h"
+	"./Utils/UIManager.h"
+	"./Utils/ViewMode.h"
+
+1688765408 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\uimanager.h
+	"./FpsController.h"
+	"./GlobalConsts.h"
+	"../gl_canvas2d.h"
+	"./ViewMode.h"
+
+1688763723 e:\github\projetos-canvas2d\trab4gustavomachadodefreitas\src\utils\viewmode.h
 

@@ -31,7 +31,10 @@ public:
     void Render()
     {
         SpinCrankshaft();
-        RenderCrankshaft();
+        if (isShowingCrankshaft)
+        {
+            RenderCrankshaft();
+        }
 
         LeftPart();
         RightPart();
@@ -43,27 +46,23 @@ protected:
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
 
-    float crankshaftAng = 0;
-    float leftChamberAng = 45;
-    float rightChamberAng = -45;
-
     int crankShaftAxisRadius = 30;
     int connectingRodLength = 260;
 
     // Gira a manivela
     void SpinCrankshaft()
     {
-        crankshaftAng += (1.5 * FpsController::getInstance().GetDeltaTime());
+        float crankshaftAngIncrement = (rpm / 60.0f) * 2.0f * PI * FpsController::getInstance().GetDeltaTime();
+        crankshaftAng += crankshaftAngIncrement;
         crankshaftAng = crankshaftAng > PI_2 ? 0 : crankshaftAng;
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
     }
 
     // Desenha o virabrequim
     void RenderCrankshaft()
-    {
+    {        
         CV::color(1, 0, 0);
         CV::circle(crankshaftAxis, crankShaftAxisRadius, 32);
-
         CV::circle(rotatingPoint, crankShaftAxisRadius, 32);
 
         // Desenha o contrapeso
@@ -99,12 +98,18 @@ protected:
         transformationMatrix->RotationZ(DegToRad(leftChamberAng));
         vector<VectorHomo3d> transformedChamber = transformationMatrix->ApplyToPoints(chamber);
 
-        CV::color(0, 1, 0);
-        CV::polygon(transformedChamber);
+        if (isShowingChamber)
+        {
+            CV::color(0, 1, 0);
+            CV::polygon(transformedChamber);
+        }
 
-        CV::color(0, 0, 1);
-        CV::line(rotatingPoint, pistonJoint);
-        CV::line(pistonSide1, pistonSide2);
+        if (isShowingPiston)
+        {
+            CV::color(0, 0, 1);
+            CV::line(rotatingPoint, pistonJoint);
+            CV::line(pistonSide1, pistonSide2);
+        }
     }
 
     void RightPart()
@@ -124,12 +129,18 @@ protected:
         transformationMatrix->RotationZ(DegToRad(rightChamberAng));
         vector<VectorHomo3d> transformedChamber = transformationMatrix->ApplyToPoints(chamber);
 
-        CV::color(0, 1, 0);
-        CV::polygon(transformedChamber);
+        if (isShowingChamber)
+        {
+            CV::color(0, 1, 0);
+            CV::polygon(transformedChamber);
+        }
 
-        CV::color(0, 0, 1);
-        CV::line(rotatingPoint, pistonJoint);
-        CV::line(pistonSide1, pistonSide2);
+        if (isShowingPiston)
+        {
+            CV::color(0, 0, 1);
+            CV::line(rotatingPoint, pistonJoint);
+            CV::line(pistonSide1, pistonSide2);
+        }
     }
 };
 

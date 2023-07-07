@@ -61,12 +61,10 @@ public:
         pistonParts.push_back(rightConnectingRod);
 
         leftPiston = new Cube(chamberBase, 4, 150, pistonHeight);
-        leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), true);
         parts.push_back(leftPiston);
         pistonParts.push_back(leftPiston);
 
         rightPiston = new Cube(chamberBase, 4, 150, pistonHeight);
-        rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), true);
         parts.push_back(rightPiston);
         pistonParts.push_back(rightPiston);
     }
@@ -74,49 +72,35 @@ public:
     {
     }
 
-    void RenderOrtho(float anglex, float angley, float anglez)
+    void Render(float anglex, float angley, float anglez, int d, bool shouldDrawPerspective)
     {
-        Render(anglex, angley, anglez);
+        Update(anglex, angley, anglez);
 
-        CV::color(0, 1, 0);
-        for (auto part : chamberParts)
+        if (isShowingChamber)
         {
-            part->DrawOrthogonal();
+            CV::color(0, 1, 0);
+            for (auto part : chamberParts)
+            {
+                shouldDrawPerspective ? part->DrawPerspective(d) : part->DrawOrthogonal();
+            }
         }
 
-        CV::color(0, 0, 1);
-        for (auto part : pistonParts)
+        if (isShowingPiston)
         {
-            part->DrawOrthogonal();
+            CV::color(0, 0, 1);
+            for (auto part : pistonParts)
+            {
+                shouldDrawPerspective ? part->DrawPerspective(d) : part->DrawOrthogonal();
+            }
         }
 
-        CV::color(1, 0, 0);
-        for (auto part : crankshaftParts)
+        if (isShowingCrankshaft)
         {
-            part->DrawOrthogonal();
-        }
-    }
-
-    void RenderPersp(float anglex, float angley, float anglez, int d)
-    {
-        Render(anglex, angley, anglez);
-
-        CV::color(0, 1, 0);
-        for (auto part : chamberParts)
-        {
-            part->DrawPerspective(d);
-        }
-
-        CV::color(0, 0, 1);
-        for (auto part : pistonParts)
-        {
-            part->DrawPerspective(d);
-        }
-
-        CV::color(1, 0, 0);
-        for (auto part : crankshaftParts)
-        {
-            part->DrawPerspective(d);
+            CV::color(1, 0, 0);
+            for (auto part : crankshaftParts)
+            {
+                shouldDrawPerspective ? part->DrawPerspective(d) : part->DrawOrthogonal();
+            }
         }
     }
 private:
@@ -140,11 +124,7 @@ private:
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
     VectorHomo3d crankPinOffset = VectorHomo3d(0, 0, -15);
-
-    float crankshaftAng = 0;
-    float leftChamberAng = 45;
-    float rightChamberAng = -45;
-
+    
     int crankShaftAxisRadius = 30;
     int connectingRodLength = 290;
     int pistonHeight = 40;
@@ -160,6 +140,7 @@ private:
         float connectingRodAng = GetAngleWithAxis(leftPistonJoint - rotatingPoint);
 
         leftPiston->Reposition(leftPistonJoint, true);
+        leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), false);
 
         leftChamber->GlobalRotate(0, 0, leftChamberAng, crankshaftAxis);
 
@@ -178,6 +159,7 @@ private:
         float connectingRodAng = GetAngleWithAxis(rightPistonJoint - rotatingPoint);
 
         rightPiston->Reposition(rightPistonJoint, true);
+        rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), false);
 
         rightChamber->GlobalRotate(0, 0, rightChamberAng, crankshaftAxis);
 
@@ -188,7 +170,8 @@ private:
     // Gira a manivela
     void SpinCrankshaft()
     {
-        crankshaftAng += (1.5 * FpsController::getInstance().GetDeltaTime());
+        float crankshaftAngIncrement = (rpm / 60.0f) * 2.0f * PI * FpsController::getInstance().GetDeltaTime();
+        crankshaftAng += crankshaftAngIncrement;
         crankshaftAng = crankshaftAng > PI_2 ? 0 : crankshaftAng;
         rotatingPoint = crankshaftAxis + VectorHomo3d(crankShaftAxisRadius * 2 * cos(crankshaftAng), crankShaftAxisRadius * 2 * sin(crankshaftAng), 0);
         crankPin->Reposition(rotatingPoint + crankPinOffset, true);
@@ -200,7 +183,7 @@ private:
         frontMainJournal->LocalRotate(0, 0, crankshaftAng, false);
     }
 
-    void Render(float anglex, float angley, float anglez)
+    void Update(float anglex, float angley, float anglez)
     {
         for (auto part : parts)
         {

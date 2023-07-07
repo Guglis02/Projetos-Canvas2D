@@ -22,9 +22,50 @@ public:
     {
 
     }
+
+    void SetRpm(float value)
+    {
+        rpm = value;
+    }
+
+    float GetAngleBetweenPistons()
+    {
+        return fabs(leftChamberAng) + fabs(rightChamberAng);
+    }
+
+    float SetAngleBetweenPistons(float value)
+    {
+        leftChamberAng = value / 2;
+        rightChamberAng = -value / 2;
+    }
+
+    void ToggleChamberView()
+    {
+        isShowingChamber = !isShowingChamber;
+    }
+
+    void TogglePistonView()
+    {
+        isShowingPiston = !isShowingPiston;
+    }
+
+    void ToggleCrankshaftView()
+    {
+        isShowingCrankshaft = !isShowingCrankshaft;
+    }
 protected:
     Matrix3d* transformationMatrix;
     VectorHomo3d crankshaftAxis = VectorHomo3d(0, 0, 0);
+
+    bool isShowingChamber = true;
+    bool isShowingPiston = true;
+    bool isShowingCrankshaft = true;
+
+    float crankshaftAng = 0;
+    float leftChamberAng = 45;
+    float rightChamberAng = -45;
+
+    float rpm = 0;
 
     VectorHomo3d Rotate(VectorHomo3d v, float ang)
     {
