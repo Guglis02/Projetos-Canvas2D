@@ -78,10 +78,6 @@ protected:
     // Roda o virabrequim
     virtual void SpinCrankshaft(){};
 
-    // Lida com cada lado do motor individualmente
-    virtual void LeftPart(){};
-    virtual void RightPart(){};
-
     VectorHomo3d Rotate(VectorHomo3d v, float ang)
     {
         transformationMatrix->Reset();

@@ -103,70 +103,52 @@ public:
             }
         }
     }
+
 private:
     // Peças do motor
-    vector<Model*> parts;
-    vector<Model*> chamberParts;
-    vector<Model*> pistonParts;
-    vector<Model*> crankshaftParts;
-    Cube* leftChamber;
-    Cube* rightChamber;
-    Cube* leftPiston;
-    Cube* rightPiston;
-    Cilinder* backMainJournal;
-    Cilinder* frontMainJournal;
-    Cilinder* crankPin;
-    Cilinder* leftConnectingRod;
-    Cilinder* rightConnectingRod;
-    CounterWeight* frontCounterWeight;
-    CounterWeight* backCounterWeight;
+    vector<Model *> parts;
+    vector<Model *> chamberParts;
+    vector<Model *> pistonParts;
+    vector<Model *> crankshaftParts;
+    Cube *leftChamber;
+    Cube *rightChamber;
+    Cube *leftPiston;
+    Cube *rightPiston;
+    Cilinder *backMainJournal;
+    Cilinder *frontMainJournal;
+    Cilinder *crankPin;
+    Cilinder *leftConnectingRod;
+    Cilinder *rightConnectingRod;
+    CounterWeight *frontCounterWeight;
+    CounterWeight *backCounterWeight;
 
     // Pontos importantes para o calculo do pistão
     VectorHomo3d rotatingPoint;
     VectorHomo3d chamberBase;
     VectorHomo3d pistonJoint = VectorHomo3d(0, 200, 0);
     VectorHomo3d crankPinOffset = VectorHomo3d(0, 0, -15);
-    
+
     int crankShaftAxisRadius = 30;
     int connectingRodLength = 290;
     int pistonHeight = 40;
 
-    void LeftPart()
+    void UpdatePiston(Cube *chamber, Cube *piston, Cilinder *connectingRod, float chamberAng)
     {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * leftChamberAng));
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * chamberAng));
         float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
 
-        VectorHomo3d leftPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
-        leftPistonJoint = Rotate(leftPistonJoint, DegToRad(leftChamberAng));
+        VectorHomo3d pistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
+        pistonJoint = Rotate(pistonJoint, DegToRad(chamberAng));
 
-        float connectingRodAng = GetAngleWithAxis(leftPistonJoint - rotatingPoint);
+        float connectingRodAng = GetAngleWithAxis(pistonJoint - rotatingPoint);
 
-        leftPiston->Reposition(leftPistonJoint, true);
-        leftPiston->LocalRotate(0, 0, DegToRad(leftChamberAng), false);
+        piston->Reposition(pistonJoint, true);
+        piston->LocalRotate(0, 0, DegToRad(chamberAng), false);
 
-        leftChamber->GlobalRotate(0, 0, leftChamberAng);
+        chamber->GlobalRotate(0, 0, chamberAng);
 
-        leftConnectingRod->Reposition(rotatingPoint, true);
-        leftConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
-    }
-
-    void RightPart()
-    {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * rightChamberAng));
-        float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength - pistonHeight * 0.5, 2) - pow(correctedRotationPoint.x, 2));
-
-        VectorHomo3d rightPistonJoint = VectorHomo3d(0, jointY, crankshaftAxis.z);
-        rightPistonJoint = Rotate(rightPistonJoint, DegToRad(rightChamberAng));
-
-        float connectingRodAng = GetAngleWithAxis(rightPistonJoint - rotatingPoint);
-
-        rightPiston->Reposition(rightPistonJoint, true);
-        rightPiston->LocalRotate(0, 0, DegToRad(rightChamberAng), false);
-
-        rightChamber->GlobalRotate(0, 0, rightChamberAng);
-
-        rightConnectingRod->Reposition(rotatingPoint, true);
-        rightConnectingRod->LocalRotate(0, 0, connectingRodAng, false);
+        connectingRod->Reposition(rotatingPoint, true);
+        connectingRod->LocalRotate(0, 0, connectingRodAng, false);
     }
 
     void SpinCrankshaft()
@@ -193,8 +175,8 @@ private:
         }
 
         SpinCrankshaft();
-        LeftPart();
-        RightPart();
+        UpdatePiston(leftChamber, leftPiston, leftConnectingRod, leftChamberAng);
+        UpdatePiston(rightChamber, rightPiston, rightConnectingRod, rightChamberAng);
 
         for (auto part : parts)
         {

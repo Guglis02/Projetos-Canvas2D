@@ -20,12 +20,10 @@ public:
             crankshaftAxis + VectorHomo3d(-60, 200, 0),
             crankshaftAxis + VectorHomo3d(-60, 320, 0),
             crankshaftAxis + VectorHomo3d(60, 320, 0),
-            crankshaftAxis + VectorHomo3d(60, 200, 0)
-        };
+            crankshaftAxis + VectorHomo3d(60, 200, 0)};
     }
     ~Engine2d()
     {
-
     }
 
     void Render()
@@ -36,9 +34,10 @@ public:
             RenderCrankshaft();
         }
 
-        LeftPart();
-        RightPart();
+        UpdatePiston(leftChamberAng);
+        UpdatePiston(rightChamberAng);
     }
+
 protected:
     vector<VectorHomo3d> chamber;
 
@@ -59,7 +58,7 @@ protected:
 
     // Desenha o virabrequim
     void RenderCrankshaft()
-    {        
+    {
         CV::color(1, 0, 0);
         CV::circle(crankshaftAxis, crankShaftAxisRadius, 32);
         CV::circle(rotatingPoint, crankShaftAxisRadius, 32);
@@ -69,8 +68,7 @@ protected:
             VectorHomo3d(rotatingPoint.x + crankShaftAxisRadius, rotatingPoint.y + crankShaftAxisRadius, 0),
             VectorHomo3d(rotatingPoint.x + crankShaftAxisRadius, rotatingPoint.y - crankShaftAxisRadius, 0),
             VectorHomo3d(rotatingPoint.x - (5 * crankShaftAxisRadius), rotatingPoint.y - (3 * crankShaftAxisRadius), 0),
-            VectorHomo3d(rotatingPoint.x - (5 * crankShaftAxisRadius), rotatingPoint.y + (3 * crankShaftAxisRadius), 0)
-        };
+            VectorHomo3d(rotatingPoint.x - (5 * crankShaftAxisRadius), rotatingPoint.y + (3 * crankShaftAxisRadius), 0)};
 
         transformationMatrix->Reset();
         transformationMatrix->Translation(rotatingPoint);
@@ -80,52 +78,21 @@ protected:
         CV::polygon(transformationMatrix->ApplyToPoints(counterWeight));
     }
 
-    void LeftPart()
+    void UpdatePiston(float chamberAngle)
     {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * leftChamberAng));
+        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * chamberAngle));
         float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength, 2) - pow(correctedRotationPoint.x, 2));
 
         pistonJoint = VectorHomo3d(0, jointY, 0);
         VectorHomo3d pistonSide1 = pistonJoint + VectorHomo3d(-60, 0, 0);
         VectorHomo3d pistonSide2 = pistonJoint + VectorHomo3d(60, 0, 0);
 
-        pistonJoint = Rotate(pistonJoint, DegToRad(leftChamberAng));
-        pistonSide1 = Rotate(pistonSide1, DegToRad(leftChamberAng));
-        pistonSide2 = Rotate(pistonSide2, DegToRad(leftChamberAng));
+        pistonJoint = Rotate(pistonJoint, DegToRad(chamberAngle));
+        pistonSide1 = Rotate(pistonSide1, DegToRad(chamberAngle));
+        pistonSide2 = Rotate(pistonSide2, DegToRad(chamberAngle));
 
         transformationMatrix->Reset();
-        transformationMatrix->RotationZ(DegToRad(leftChamberAng));
-        vector<VectorHomo3d> transformedChamber = transformationMatrix->ApplyToPoints(chamber);
-
-        if (isShowingChamber)
-        {
-            CV::color(0, 1, 0);
-            CV::polygon(transformedChamber);
-        }
-
-        if (isShowingPiston)
-        {
-            CV::color(0, 0, 1);
-            CV::line(rotatingPoint, pistonJoint);
-            CV::line(pistonSide1, pistonSide2);
-        }
-    }
-
-    void RightPart()
-    {
-        VectorHomo3d correctedRotationPoint = Rotate(rotatingPoint, DegToRad(-1 * rightChamberAng));
-        float jointY = correctedRotationPoint.y + sqrt(pow(connectingRodLength, 2) - pow(correctedRotationPoint.x, 2));
-
-        pistonJoint = VectorHomo3d(0, jointY, 0);
-        VectorHomo3d pistonSide1 = pistonJoint + VectorHomo3d(-60, 0, 0);
-        VectorHomo3d pistonSide2 = pistonJoint + VectorHomo3d(60, 0, 0);
-
-        pistonJoint = Rotate(pistonJoint, DegToRad(rightChamberAng));
-        pistonSide1 = Rotate(pistonSide1, DegToRad(rightChamberAng));
-        pistonSide2 = Rotate(pistonSide2, DegToRad(rightChamberAng));
-
-        transformationMatrix->Reset();
-        transformationMatrix->RotationZ(DegToRad(rightChamberAng));
+        transformationMatrix->RotationZ(DegToRad(chamberAngle));
         vector<VectorHomo3d> transformedChamber = transformationMatrix->ApplyToPoints(chamber);
 
         if (isShowingChamber)
