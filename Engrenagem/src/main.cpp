@@ -39,7 +39,7 @@ float renderGear(float angIni)
 
         float x2 = raio * cos(ang + angIni);
         float y2 = raio * sin (ang + angIni);
-        
+
         CV::line(x1, y1, x2, y2);
         CV::line(x1, y1, lastX, lastY);
 
@@ -75,7 +75,7 @@ void renderHourClock()
     float passo = (2.0 * PI)/12;
     float offSet = PI * 0.5;
 
-    for (int h = 0; h < 12; i++)
+    for (int h = 0; h < 12; h++)
     {
         float x = raio * cos(ang + offSet);
         float y = raio * sin(ang + offSet);
