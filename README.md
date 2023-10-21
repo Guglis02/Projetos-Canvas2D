@@ -18,14 +18,14 @@ Repositório de projetos desenvolvidos usando a API Canvas2D, desenvolvida pelo 
 
 ## Trabalhos da Disciplina de Computação Gráfica (ELC1015)
 
-# Trabalho 1 
+### Trabalho 1 
 – [Editor de Figuras Vetoriais](Trab1GustavoMachadoDeFreitas/Readme.txt).
 
-# Trabalho 2
+### Trabalho 2
 - [Demonstração da transformada Discreta de Cosseno (Possui erros de implementação)](Trab2GustavoMachadoDeFreitas/Readme.txt).
 
-# Trabalho 3
+### Trabalho 3
 - [Jogo 2D de Nave temático de Star Wars](Trab3GustavoMachadoDeFreitas/Readme.txt).
 
-# Trabalho 4
+### Trabalho 4
 - [Demonstração de um motor 3D a combustão Interna em V](Trab4GustavoMachadoDeFreitas/Readme.txt).
