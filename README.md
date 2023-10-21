@@ -18,8 +18,8 @@ Repositório de projetos desenvolvidos usando a API Canvas2D, desenvolvida pelo 
 
 ## Trabalhos da Disciplina de Computação Gráfica (ELC1015)
 
-### Trabalho 1 
-– [Editor de Figuras Vetoriais](Trab1GustavoMachadoDeFreitas/Readme.txt).
+### Trabalho 1  
+- [Editor de Figuras Vetoriais](Trab1GustavoMachadoDeFreitas/Readme.txt).
 
 ### Trabalho 2
 - [Demonstração da transformada Discreta de Cosseno (Possui erros de implementação)](Trab2GustavoMachadoDeFreitas/Readme.txt).
