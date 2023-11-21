@@ -36,6 +36,9 @@ float x, y, oldX, oldY, n, radius;
 MouseHandler* mouseHandler = NULL;
 Slider* slider = NULL;
 
+int deltaTime = 0;
+int oldTimeSinceStart = 0;
+
 void RenderFourier(float xOrigin, float yOrigin)
 {
     CV::translate(xOrigin, yOrigin);
@@ -71,7 +74,7 @@ void RenderFourier(float xOrigin, float yOrigin)
         CV::point(i * 0.1, wave[i]);
     }
 
-    time += 0.005;
+    time += deltaTime * 0.005f;
 
     if (wave.size() > 5000)
     {
@@ -89,7 +92,10 @@ void render()
     RenderFourier(screenWidth/3, screenHeight >> 1);
     CV::translate(screenWidth >> 1, screenHeight >> 1);
     CV::color(3);
-    CV::superquadrica(0, 0, 100, 100, slider->GetValue() * 10);
+     int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+     deltaTime = timeSinceStart - oldTimeSinceStart;
+     oldTimeSinceStart = timeSinceStart;
+    //CV::superquadrica(0, 0, 100, 100, slider->GetValue() * 10);
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
